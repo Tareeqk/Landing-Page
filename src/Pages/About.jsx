@@ -1,0 +1,123 @@
+import React from 'react';
+import Counters from '../Components/Counters';
+import { useTranslation } from 'react-i18next';
+
+const About = () => {
+    const { t, i18n } = useTranslation();
+    const isUrdu = i18n.language === 'ur';
+
+    return (
+        <>
+            <section id={1}>
+                <div className="container mx-auto px-4 my-20">
+                    <div className="mb-6" data-aos="fade-right">
+                        <span className="text-gray-500 px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles">
+                            {t("about.about")}
+                        </span>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="md:col-span-2" data-aos="fade-up">
+                        <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium max-w-4xl ${isUrdu ? 'leading-loose' : 'leading-tight'}`}>
+                            {t("about.title")}
+                        </h1>
+                        <h4 className={`subtitle text-md sm:text-xs md:text-sm lg:text-xl max-w-xl text-gray-600 mt-5 ${isUrdu ? 'leading-loose' : 'leading-tight'}`}>
+                            {t("about.subtitle")}
+                        </h4>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                            <p className={`text-gray-400 ${isUrdu ? 'leading-loose' : ''}`}>
+                                {t("about.subtitle1")}
+                            </p>
+                            <p className={`text-gray-400 ${isUrdu ? 'leading-loose' : ''}`}>
+                                {t("about.subtitle2")}
+                            </p>
+                        </div>
+
+                        <div className="flex flex-wrap gap-4 mt-6">
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item1")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item2")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item3")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item4")}</b>
+                             {/* "✓";
+  color: var(--primary-yellow); */}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <Counters />
+
+            <section id={2} className="my-20 overflow-x-hidden">
+                <div className="container mx-auto px-4">
+                    <div className="mb-6" data-aos="fade-right">
+                        <span className="px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles text-gray-500">
+                            {t("about2.about")}
+                        </span>
+                    </div>
+
+                    <h1 data-aos="fade-up" className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
+                        {t("about2.title")}
+                    </h1>
+
+                    <p data-aos="fade-up" className={`text-gray-400 mb-8 ${isUrdu ? 'leading-loose' : ''}`}>
+                        {t("about2.subtitle")} <span className='t'>https://order.tareeqk.ae</span>
+                    </p>
+
+                    {/* Changed grid to flex with responsive behavior */}
+                    <div className="flex flex-col xl:flex-row gap-6">
+                        {/* Content Items - Stacked on mobile, side-by-side on xl+ */}
+                        <div className="flex flex-col gap-4 w-full xl:w-1/2">
+                            {[
+                                { icon: "Road", title: "about2.item1title", subtitle: "about2.item1subtitle" },
+                                { icon: "Tow", title: "about2.item2title", subtitle: "about2.item2subtitle" },
+                                { icon: "User", title: "about2.item3title", subtitle: "about2.item3subtitle" }
+                            ].map((item, i) => (
+                                <div
+                                    key={i}
+                                    data-aos="fade-right"
+                                    className="dark-bg text-gray-400 rounded-xl p-4 border border-[var(--secondary-dark-bg)]"
+                                >
+                                    <div className="flex gap-3 items-center">
+                                        <img
+                                            src={`/icons/black/${item.icon}.png`}
+                                            className="w-10 h-10 flex items-center justify-center rounded-full p-1 flex-shrink-0"
+                                            style={{ backgroundColor: 'var(--primary-yellow)' }}
+                                            alt={item.icon}
+                                        />
+                                        <div>
+                                            <h3 className={`text-base md:text-xl font-semibold text-black ${isUrdu ? 'leading-loose' : ''}`}>
+                                                {t(item.title)}
+                                            </h3>
+                                            <p className={`text-gray-400 text-sm ${isUrdu ? 'leading-loose' : ''}`}>
+                                                {t(item.subtitle)}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Image Section - Always visible */}
+                        <div className="w-full xl:w-1/2 mt-6 xl:mt-0">
+                            <div
+                                data-aos="fade-left"
+                                className="relative w-full h-full rounded-xl border border-[var(--secondary-dark-bg)] overflow-hidden"
+                                style={{ minHeight: '300px' }}
+                            >
+                                <img
+                                    src="/towingTareeqk.jpg"
+                                    alt="Towing service"
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                    loading="lazy"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
+    );
+};
+
+export default About;

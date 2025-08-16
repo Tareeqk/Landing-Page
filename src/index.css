@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+/* Root color variables */
+:root {
+  --primary-yellow: #f7b205;
+  --seconday-yellow: #f5d608;
+
+  --primary-dark-bg: #171a1f;
+  --secondary-dark-bg: #364047;
+
+  --primary-pure-white: #ffffff;
+  --secondary-pure-white: #cfcfcf;
+
+  --primary-light-gray: #a6a8ab;
+  --secondary-light-gray: #f2f2f2;
+
+  /* ================= DARK MODE COLORS ================= */
+  --dark-bg-main: #1a1d23; /* Main dark background */
+  --dark-bg-surface: #252b33; /* Card-like surface background */
+  --dark-bg-muted: #2f343c; /* Muted areas or less focus =>>> good one */
+
+  --dark-text-main: #e4e7eb; /* Main readable text */
+  --dark-text-muted: #a6acb3; /* Secondary or hint text */
+  --dark-text-disabled: #6b7280; /* Disabled/placeholder text */
+
+  --dark-border: #2c333a; /* Borders in dark mode */
+  --dark-divider: #383e45; /* Divider lines between sections */
+}
+
+/* Dark Theme Only */
+body.dark {
+  background-color: var(--primary-dark-bg);
+  color: #f0f0f0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark .howItWorks-dark {
+  background-color: var(--primary-dark-bg);
+}
+
+body.dark .nav-color {
+  background-color: var(--dark-bg-surface);
+}
+
+.nav-color {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+  background-color: white;
+  border-bottom: 1px solid var(--primary-yellow);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body.dark .black-text{
+  color: #000;
+}
+
+body.dark .light-text {
+  color: var(--dark-text-main);
+}
+
+body.dark .footer-links {
+  color: black;
+}
+
+body.dark .getTow-btn {
+  background-color: var(--primary-yellow);
+  color: #000;
+}
+
+body.dark .span-titles {
+  color: var(--secondary-pure-white);
+}
+
+body.dark .dark-bg {
+  background-color: var(--dark-bg-muted);
+}
+
+body.dark .light-bg {
+  background-color: var(--dark-text-disabled);
+}
+body.dark .lighter-bg {
+  background-color: var(--primary-light-gray);
+}
+
+body.dark nav a,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark .subtitle {
+  color: var(--secondary-light-gray);
+}
+
+body.dark nav a.active {
+  border-bottom: 2px solid var(--primary-yellow);
+}
+
+/* Optional: Target components, buttons, etc. */
+body.dark button {
+  background-color: #333;
+  color: white;
+  border: 2px solid gray;
+}
+
+body.dark button.book-btn {
+  background-color: #000;
+  
+}
+body.dark button.download-btn {
+  background-color: var(--primary-yellow);
+  color: #000;
+}
+body.dark button.submit {
+  background-color: var(--primary-yellow);
+  color: #fff;
+}
+
+/* Language-specific fonts */
+body[lang="en"] {
+  font-family: "Manrope", sans-serif;
+  direction: ltr;
+}
+
+body[lang="ar"] {
+  font-family: "Noto Kufi Arabic", sans-serif;
+  direction: rtl;
+}
+
+body[lang="ur"] {
+  font-family: "Noto Nastaliq Urdu", serif;
+  direction: rtl;
+}
+
+
+/* Smooth scrolling */
+html,
+body {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  /* overflow-x: hidden; */
+  width: 100%;
+}
+
+/* Container and responsive layout */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1280px;
+  box-sizing: border-box;
+  /* overflow-x: hidden; */
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 720px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 864px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1152px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1600px;
+  }
+}

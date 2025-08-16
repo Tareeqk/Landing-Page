@@ -1,0 +1,215 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About Us",
+    "service": "Service",
+    "media": "Media Center",
+    "contact": "Contact",
+    "call": "CALL NOW"
+  },
+  "landing": {
+    "title": "CAR RECOVERY & TOWING SERVICES",
+    "subtitle": "Tareeqk is Providing the best Recovery and Towing services all over the UAE",
+    "book": "Book Now",
+    "download": "Download The App",
+    "vehicle": "Towing Services for All Kinds of Vehicles"
+  },
+  "about": {
+    "about": "About Us",
+    "title": "Your Trusted Roadside Recovery Partner",
+    "subtitle": "Reliable Vehicle Recovery & Towing at Your Fingertips",
+    "subtitle1": "TAREEQK offers fast and professional roadside recovery services through Application. Book instantly or schedule ahead — with trained drivers and well-equipped recovery vehicles ready to assist you anytime, anywhere.",
+    "subtitle2": "Available 24/7 in Dubai, Abu Dhabi, Sharjah, Ajman, Al Ain, and Ras Al Khaimah. Choose from 3-ton to 20-ton recovery options based on your vehicle type. Download the TAREEQK App on iOS, Android, or Huawei and get moving again in minutes.",
+    "item1": "24/7 Availability",
+    "item2": "Trained & Professional Team",
+    "item3": "Wide Coverage Area",
+    "item4": "Fair & Transparent Pricing"
+  },
+  "about2": {
+    "about": "Roadside Services",
+    "title": "Our Towing & Roadside Services",
+    "subtitle": "Experience fast, reliable roadside and towing services with expert care — anytime, anywhere. Request help now at: ",
+    "item1title": "Roadside Assistance",
+    "item1subtitle": "Expert help for vehicle breakdowns, tire changes, fuel delivery, jump starts, and more — wherever you are.",
+    "item2title": "Towing Services",
+    "item2subtitle": "Safe and efficient towing for all types of vehicles, from motorcycles to heavy trucks, handled by our professional team.",
+    "item3title": "User-Based Services",
+    "item3subtitle": "Personalized support tailored to your needs, ensuring the best possible service experience every time."
+  },
+  "nasir": {
+    "nasir": "Meet Nasir",
+    "title": "Your roadside rescue partner.",
+    "subtitle": "Fast, smart & always ready to help.",
+    "title2": "Smarter Roads Start Here",
+    "content": "Meet Naser—your intelligent roadside robot. Instantly transforming into specialized towing vehicles, he adapts to any situation: a highway breakdown, a tight parking spot, or a nighttime flat tire. With real-time AI, precise location tracking, and direct driver dispatch, Naser takes control within seconds. More than a machine, he’s your vigilant guardian—fast, reliable, and always ready for emergencies."
+  },
+  "counter": {
+    "minutes": "Minutes Avg. Max Arrival Time",
+    "drivers": "Active Drivers on-road",
+    "days": "Days Availability, Nonstop"
+  },
+  "serviceDetails": {
+    "roadside": [
+      {
+        "icon": "/icons/black/Towing.png",
+        "title": "Emergency Response in Under 30 Minutes",
+        "content": "Fast and reliable assistance to get you back on the road quickly."
+      },
+      {
+        "icon": "/icons/black/Settings.png",
+        "title": "Emergency Towing with Quick Fix Options",
+        "content": "Immediate towing with on-the-spot repair solutions."
+      },
+      {
+        "icon": "/icons/black/Trouble.png",
+        "title": "For Your Tow and Troubleshoot On the Spot",
+        "content": "On-site troubleshooting and towing support for any vehicle."
+      }
+    ],
+    "towing": [
+      {
+        "icon": "/icons/black/Map.png",
+        "title": "Get Smart Towing with Mechanical Support",
+        "content": "Expert towing with mechanical assistance included."
+      },
+      {
+        "icon": "/icons/black/Message.png",
+        "title": "Strategically Located for Rapid Rescue",
+        "content": "24/7 assistance for breakdowns, accidents, and stranded vehicles."
+      },
+      {
+        "icon": "/icons/black/Emergency.png",
+        "title": "Emergency Response in Under 30 Minutes",
+        "content": "Quick response to ensure you're never left waiting."
+      }
+    ]
+  },
+  "aboutAccordion": {
+    "serviceDetails": "Service Details",
+    "detailedSupport": "Detailed Support for Every Situation",
+    "comprehensiveSolutions": "Comprehensive solutions tailored to your emergency roadside needs",
+    "roadsideAssistanceServices": "Roadside Assistance Services",
+    "towingServices": "Towing Services"
+  },
+  "howItWorks": {
+    "titleTag": "How it Works",
+    "mainTitle": "Fast Help in 4 Simple Steps",
+    "subtitle": "Easily request towing service, track help as it arrives, and get professional support at your location within minutes.",
+    "cta": "Get Towing Now",
+    "bannerText": "Fast & reliable help anytime, anywhere.",
+    "imageAlt": "Towing service",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Request Assistance Online",
+        "content": "Quickly submit your request through our app or website"
+      },
+      {
+        "number": "2",
+        "title": "Dispatch & Track Your Tow",
+        "content": "Real-time tracking of your service vehicle"
+      },
+      {
+        "number": "3",
+        "title": "On-Site Service & Towing",
+        "content": "Professional assistance at your location"
+      },
+      {
+        "number": "4",
+        "title": "Service Completion",
+        "content": "Fast resolution and payment processing"
+      }
+    ]
+  },
+  "price": {
+    "price": "Pricing",
+    "title": "Choose the right plan for you",
+    "subtitle": "Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
+    "btn" : "Get Started",
+    "mostPopular": "Most Popular",
+    "item1": {
+      "title": "Standard",
+      "tons": "3 Tons",
+      "subtitle": "Ideal for small vehicles and occasional towing needs",
+      "features": ["cars", "Small SUVs", "Motorcycles"],
+      "featured": false
+    },
+    "item2": {
+      "title": "Premium",
+      "tons": "10 Tons",
+      "subtitle": "Heavy-duty towing for commercial vehicles and larger loads",
+      "features": [
+        "Trucks",
+        "Buses",
+        "Heavy Equipment",
+        "Construction Vehicles",
+        "Priority dispatch",
+        "Emergency response",
+        "24/7 Roadside Assistance"
+      ],
+      "featured": true
+    },
+    "item3": {
+      "title": "Intermediate",
+      "tons": "5 Tons",
+      "subtitle": "Perfect for larger personal vehicles",
+      "features": ["Large SUVs", "Vans", "Small Trailers", "Extended coverage"],
+      "featured": false
+    }
+  },
+  "contactForm": {
+    "getInTouch": "Get in Touch",
+    "title": "Contact Us",
+    "description": "Have questions or need help? Fill out the form and our team will get back to you soon.",
+    "fields": {
+      "name": "Name",
+      "mobile": "Mobile Number*",
+      "mobilePlaceholder": "+971xxxxxxxxx",
+      "email": "Email Address*",
+      "emailPlaceholder": "your@email.com",
+      "subject": "Subject*",
+      "message": "Your Message*"
+    },
+    "button": "Send Message"
+  },
+  "footer": {
+    "brandDescription": "Founded in 2022, Tareeqk was born from a bold vision — to simplify roadside experiences and support drivers across the UAE with reliable, on-demand assistance.",
+    "socials": {
+      "snapchat": "Snapchat",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "youtube": "YouTube"
+    },
+    "home": {
+      "title": "HOME",
+      "links": {
+        "home": "Home",
+        "faqs": "FAQs",
+        "driverFaqs": "Driver's FAQs"
+      }
+    },
+    "registration": {
+      "title": "REGISTRATION",
+      "links": {
+        "driver": "Driver",
+        "vendor": "Vendor",
+        "customer": "Customer"
+      }
+    },
+    "policies": {
+      "title": "POLICIES",
+      "links": {
+        "terms": "Terms and Conditions",
+        "privacy": "Privacy Policy"
+      }
+    },
+    "contact": {
+      "title": "REACH US",
+      "address": "Tareeqk Office #126, Ras Al Khor, Dubai - UAE",
+      "phone": "+971 4 223 2269",
+      "email": "info@tareeqk.ae"
+    },
+    "copyright": "© {{year}} Tareeqk. All Rights Reserved."
+  }
+}

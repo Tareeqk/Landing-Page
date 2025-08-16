@@ -1,0 +1,101 @@
+/* Landing page specific styles */
+.landing-page {
+  overflow-x: hidden; /* Apply overflow control to the landing page only */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Landing page specific container */
+.landing-container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  max-width: 1280px;
+  box-sizing: border-box;
+}
+
+/* Mobile-specific adjustments for landing page */
+@media (max-width: 640px) {
+  .landing-container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .landing-page img {
+    max-width: 100%;
+    height: auto;
+  }
+  .landing-page .flex {
+    flex-wrap: wrap;
+  }
+  .landing-page .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  .landing-page .vehicle-icons {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    -ms-overflow-style: none; /* Hide scrollbar in IE and Edge */
+    scrollbar-width: none; /* Hide scrollbar in Firefox */
+  }
+  .landing-page .vehicle-icons::-webkit-scrollbar {
+    display: none; /* Hide scrollbar in Chrome, Safari, and Opera */
+  }
+}
+
+/* Larger screen adjustments */
+@media (min-width: 640px) {
+  .landing-container {
+    max-width: 720px;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .landing-container {
+    max-width: 864px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .landing-container {
+    max-width: 1152px;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .landing-container {
+    max-width: 1400px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .landing-container {
+    max-width: 1600px;
+  }
+}
+
+/* Ensure background images fit within viewport */
+.landing-page .absolute.inset-0 img {
+  min-width: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+
+/* Specific fixes for landing page elements */
+.landing-page .vehicle-icons img {
+  flex-shrink: 0;
+  height: 10rem;
+  width: auto;
+}
+
+.landing-page .flex-col {
+  width: 100%;
+}

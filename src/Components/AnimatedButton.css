@@ -1,0 +1,86 @@
+/* AnimatedButton.css */
+.animated-btn {
+  padding: 8px 16px;
+  border: 2px solid var(--dark-border, gray);
+  border-radius: 15px;
+  color: var(--dark-text-main, #212121);
+  z-index: 1;
+  background: var(--primary-yellow, #e8e8e8);
+  position: relative;
+  font-weight: 600;
+  font-size: 15px;
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+  overflow: hidden;
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+}
+
+.animated-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  border-radius: 15px;
+  background-color: var(--seconday-yellow, #f0f0f0);
+  z-index: -1;
+  box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+  transition: all 250ms;
+}
+
+.animated-btn:hover {
+  color: var(--dark-text-main, #000);
+  transform: translateY(-2px);
+}
+
+.animated-btn:hover::before {
+  width: 100%;
+}
+
+/* Size variations */
+.animated-btn--small {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+
+.animated-btn--large {
+  padding: 12px 24px;
+  font-size: 17px;
+}
+
+/* Color variations */
+.animated-btn--primary {
+  background: var(--primary-yellow);
+}
+.animated-btn--primary::before {
+  background-color: var(--seconday-yellow);
+}
+
+.animated-btn--secondary {
+  background: var(--secondary-light-gray);
+}
+.animated-btn--secondary::before {
+  background-color: var(--primary-light-gray);
+}
+
+.animated-btn--dark {
+  background: var(--dark-bg-surface);
+  color: var(--dark-text-main);
+}
+.animated-btn--dark::before {
+  background-color: var(--dark-bg-muted);
+}
+
+/* Dark mode specific styles */
+body.dark .animated-btn {
+  border-color: var(--dark-border);
+  color: var(--dark-text-main);
+}
+
+body.dark .animated-btn::before {
+  background-color: var(--dark-bg-muted);
+}
