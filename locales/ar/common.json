@@ -51,34 +51,34 @@
   "serviceDetails": {
     "roadside": [
       {
-        "icon": "/icons/black/Towing.png",
+        "icon": "icons/black/Towing.png",
         "title": "الاستجابة الطارئة خلال أقل من 30 دقيقة",
         "content": "مساعدة سريعة وموثوقة لإعادتك إلى الطريق بسرعة."
       },
       {
-        "icon": "/icons/black/Settings.png",
+        "icon": "icons/black/Settings.png",
         "title": "سحب الطوارئ مع خيارات الإصلاح السريع",
         "content": "سحب فوري مع حلول إصلاح في الموقع."
       },
       {
-        "icon": "/icons/black/Trouble.png",
+        "icon": "icons/black/Trouble.png",
         "title": "لسحب مركبتك وحل المشاكل في الموقع",
         "content": "دعم فني وسحب في الموقع لأي مركبة."
       }
     ],
     "towing": [
       {
-        "icon": "/icons/black/Map.png",
+        "icon": "icons/black/Map.png",
         "title": "سحب ذكي مع دعم ميكانيكي",
         "content": "سحب احترافي مع دعم ميكانيكي متكامل."
       },
       {
-        "icon": "/icons/black/Message.png",
+        "icon": "icons/black/Message.png",
         "title": "موقع استراتيجي للإنقاذ السريع",
         "content": "مساعدة على مدار 24/7 لحالات الأعطال، الحوادث، والمركبات العالقة."
       },
       {
-        "icon": "/icons/black/Emergency.png",
+        "icon": "icons/black/Emergency.png",
         "title": "الاستجابة الطارئة خلال أقل من 30 دقيقة",
         "content": "استجابة سريعة لضمان عدم تركك تنتظر."
       }

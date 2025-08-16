@@ -51,34 +51,34 @@
   "serviceDetails": {
     "roadside": [
       {
-        "icon": "/icons/black/Towing.png",
+        "icon": "icons/black/Towing.png",
         "title": "Emergency Response in Under 30 Minutes",
         "content": "Fast and reliable assistance to get you back on the road quickly."
       },
       {
-        "icon": "/icons/black/Settings.png",
+        "icon": "icons/black/Settings.png",
         "title": "Emergency Towing with Quick Fix Options",
         "content": "Immediate towing with on-the-spot repair solutions."
       },
       {
-        "icon": "/icons/black/Trouble.png",
+        "icon": "icons/black/Trouble.png",
         "title": "For Your Tow and Troubleshoot On the Spot",
         "content": "On-site troubleshooting and towing support for any vehicle."
       }
     ],
     "towing": [
       {
-        "icon": "/icons/black/Map.png",
+        "icon": "icons/black/Map.png",
         "title": "Get Smart Towing with Mechanical Support",
         "content": "Expert towing with mechanical assistance included."
       },
       {
-        "icon": "/icons/black/Message.png",
+        "icon": "icons/black/Message.png",
         "title": "Strategically Located for Rapid Rescue",
         "content": "24/7 assistance for breakdowns, accidents, and stranded vehicles."
       },
       {
-        "icon": "/icons/black/Emergency.png",
+        "icon": "icons/black/Emergency.png",
         "title": "Emergency Response in Under 30 Minutes",
         "content": "Quick response to ensure you're never left waiting."
       }
