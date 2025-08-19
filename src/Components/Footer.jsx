@@ -10,21 +10,22 @@ import {
   FaMapMarkerAlt,
 } from 'react-icons/fa';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const Footer = ({ isDark }) => {
   const { t } = useTranslation();
 
   return (
     <footer className="nav-color bg-white border-t text-black">
-      <div className="max-w-7xl mx-auto py-10 grid grid-cols-1 md:grid-cols-6 gap-6 px-4">
+      <div className="max-w-7xl mx-auto py-10 grid grid-cols-1 md:grid-cols-6 gap-6 px-4 ">
         {/* Brand Info */}
-        <div className="md:col-span-2 lg:col-span-2">
+        <div className="md:col-span-2 lg:col-span-2 ">
           <img
-            src={isDark ? '/LogoW.png' : '/Logo.png'}
+            src={isDark ? 'LogoW.png' : 'Logo.png'}
             alt="Tareeqk Logo"
             className="h-10 mb-4"
           />
-          <p className="text-sm max-w-md span-titles">
+          <p className="text-sm max-w-md span-titles" style={{ width: '90%' }}>
             {t('footer.brandDescription')}
           </p>
           <div className="flex space-x-4 mt-4 text-xl text-gray-600 span-titles">
@@ -50,9 +51,9 @@ const Footer = ({ isDark }) => {
             <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.home.title')}</h3>
             <div className="w-8 mb-4" />
             <ul className="space-y-2 text-sm">
-              <li><a href="#" className="hover:underline span-titles">{t('footer.home.links.home')}</a></li>
-              <li><a href="#" className="hover:underline span-titles">{t('footer.home.links.faqs')}</a></li>
-              <li><a href="#" className="hover:underline span-titles">{t('footer.home.links.driverFaqs')}</a></li>
+              <li><a href="/" className="hover:underline span-titles">{t('footer.home.links.home')}</a></li>
+              <li><Link to="/faq" className="hover:underline span-titles">{t('footer.home.links.faqs')}</Link></li>
+              <li><Link to="/drivers-FAQs" className="hover:underline span-titles">{t('footer.home.links.driverFaqs')}</Link></li>
             </ul>
           </div>
         </div>
@@ -62,9 +63,9 @@ const Footer = ({ isDark }) => {
           <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.registration.title')}</h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:underline span-titles">{t('footer.registration.links.driver')}</a></li>
-            <li><a href="#" className="hover:underline span-titles">{t('footer.registration.links.vendor')}</a></li>
-            <li><a href="#" className="hover:underline span-titles">{t('footer.registration.links.customer')}</a></li>
+            <li><a href="https://order.tareeqk.ae/page/driver-registration" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.driver')}</a></li>
+            <li><a href="https://order.tareeqk.ae/page/vendor-registration" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.vendor')}</a></li>
+            <li><a href="https://order.tareeqk.ae" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.customer')}</a></li>
           </ul>
         </div>
 
@@ -73,8 +74,8 @@ const Footer = ({ isDark }) => {
           <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.policies.title')}</h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:underline span-titles">{t('footer.policies.links.terms')}</a></li>
-            <li><a href="#" className="hover:underline span-titles">{t('footer.policies.links.privacy')}</a></li>
+            <li><Link to="/terms" className="hover:underline span-titles">{t('footer.policies.links.terms')}</Link></li>
+            <li><Link to="/privacy-policy" className="hover:underline span-titles">{t('footer.policies.links.privacy')}</Link></li>
           </ul>
         </div>
 

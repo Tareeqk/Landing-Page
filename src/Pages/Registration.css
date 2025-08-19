@@ -90,13 +90,17 @@
   font-size: 1rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  border: 2px solid var(--dark-border);
+  border: 2px solid var(--primary-light-gray);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   background-color: var(--primary-yellow);
   color: var(--primary-dark-bg);
+}
+body.dark .register-button{
+    border: 2px solid gray;
+
 }
 
 .register-button:hover {

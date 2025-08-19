@@ -3,12 +3,16 @@ import './App.css';
 import Home from './Pages/Home';
 import Service from './Pages/Service';
 import About from './Pages/About';
+import FAQs from './Pages/FAQs';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import TermsAndConditions from './Pages/TermsAndConditions';
 import MainLayout from './Components/MainLayout';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useTranslation } from 'react-i18next';
+import "./i18n";
+import DriversFAQs from './Pages/DriversFAQs';
+import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
 
 
 function App() {
@@ -36,13 +40,16 @@ function App() {
   }, [isDark]);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Landing-Page/">
       <Routes >
         <Route element={<MainLayout isDark={isDark} setIsDark={setIsDark} />}>
           <Route path='/' element={<Home />} />
+          <Route path='/faq' element={<FAQs />} />
+          <Route path='/drivers-FAQs' element={<DriversFAQs />} />
           <Route path='/about' element={<About />} />
           <Route path='/service' element={<Service />} />
           <Route path='/terms' element={<TermsAndConditions />} />
+          <Route path='/privacy-policy' element={<PrivacyAndPolicy />} />
         </Route>
       </Routes>
     </BrowserRouter>

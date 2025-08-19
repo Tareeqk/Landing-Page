@@ -51,34 +51,34 @@
   "serviceDetails": {
     "roadside": [
       {
-        "icon": "/icons/black/Towing.png",
+        "icon": "icons/black/Towing.png",
         "title": "Emergency Response in Under 30 Minutes",
         "content": "Fast and reliable assistance to get you back on the road quickly."
       },
       {
-        "icon": "/icons/black/Settings.png",
+        "icon": "icons/black/Settings.png",
         "title": "Emergency Towing with Quick Fix Options",
         "content": "Immediate towing with on-the-spot repair solutions."
       },
       {
-        "icon": "/icons/black/Trouble.png",
+        "icon": "icons/black/Trouble.png",
         "title": "For Your Tow and Troubleshoot On the Spot",
         "content": "On-site troubleshooting and towing support for any vehicle."
       }
     ],
     "towing": [
       {
-        "icon": "/icons/black/Map.png",
+        "icon": "icons/black/Map.png",
         "title": "Get Smart Towing with Mechanical Support",
         "content": "Expert towing with mechanical assistance included."
       },
       {
-        "icon": "/icons/black/Message.png",
+        "icon": "icons/black/Message.png",
         "title": "Strategically Located for Rapid Rescue",
         "content": "24/7 assistance for breakdowns, accidents, and stranded vehicles."
       },
       {
-        "icon": "/icons/black/Emergency.png",
+        "icon": "icons/black/Emergency.png",
         "title": "Emergency Response in Under 30 Minutes",
         "content": "Quick response to ensure you're never left waiting."
       }
@@ -173,7 +173,7 @@
     "button": "Send Message"
   },
   "footer": {
-    "brandDescription": "Founded in 2022, Tareeqk was born from a bold vision — to simplify roadside experiences and support drivers across the UAE with reliable, on-demand assistance.",
+    "brandDescription": "Founded in 2022, Tareeqk was born from a bold vision to simplify roadside experiences and support drivers across the UAE with reliable, on-demand assistance.",
     "socials": {
       "snapchat": "Snapchat",
       "instagram": "Instagram",
@@ -211,5 +211,46 @@
       "email": "info@tareeqk.ae"
     },
     "copyright": "© {{year}} Tareeqk. All Rights Reserved."
+  },
+  "register": {
+    "title": "Registration",
+    "heading": "Become a Service Provider",
+    "subtitle": "Be Part of Our Car Recovery Network",
+    "driver": {
+      "title": "Driver Registration",
+      "description": "Join our network of professional towing and recovery drivers",
+      "benefits": [
+        "Flexible working hours",
+        "Competitive pay rates",
+        "Instant job notifications"
+      ],
+      "button": "Register Now"
+    },
+    "vendor": {
+      "title": "Vendor Registration",
+      "description": "Connect your towing company or garage with our network",
+      "benefits": [
+        "Increased business visibility",
+        "Streamlined operations",
+        "Dedicated support"
+      ],
+      "button": "Register Now"
+    }
+  },
+  "policy": {
+    "title": "Privacy Policy",
+    "subtitle": "Learn how we collect, use, and protect your personal information"
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to the most common questions about Tareeqk services and how to get the best out of our platform"
+  },
+  "drivers-faqs": {
+    "title": "Frequently Drivers Asked Questions",
+    "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform"
+  },
+  "terms": {
+    "title": "Frequently Drivers Asked Questions",
+    "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform"
   }
 }

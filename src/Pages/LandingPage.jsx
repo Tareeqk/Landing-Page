@@ -20,12 +20,12 @@ export default function LandingPage() {
         {/* Background */}
         <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full"> {/* Changed to h-full, removed overflow-hidden */}
           <img
-            src="/NewBGMob.png"
+            src="NewBGMob.png"
             alt="Background"
             className="w-full h-full object-cover md:hidden"
           />
           <img
-            src="/NewBG.png"
+            src="NewBG.png"
             alt="Background"
             className="w-full h-full object-cover hidden md:block"
           />
@@ -74,7 +74,7 @@ export default function LandingPage() {
                   {['Bike', 'Car', 'Jeep', 'Bus'].map((v, i) => (
                     <img
                       key={i}
-                      src={`/icons/black/${v}.png`}
+                      src={`icons/black/${v}.png`}
                       alt={v}
                       className="w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0"
                     />
@@ -86,7 +86,7 @@ export default function LandingPage() {
             {/* Image */}
             <div data-aos="fade-left" className="flex justify-center items-center order-1 lg:order-2 lg:items-end">
               <img
-                src="/NewNasir.png"
+                src="NewNasir.png"
                 alt="Tareeqk Representative"
                 className="max-h-[30vh] sm:max-h-[40vh] lg:max-h-[50vh] object-contain mt-2 sm:mt-3 lg:mt-0"
               />

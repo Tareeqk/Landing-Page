@@ -80,7 +80,7 @@ const About = () => {
                                 >
                                     <div className="flex gap-3 items-center">
                                         <img
-                                            src={`/icons/black/${item.icon}.png`}
+                                            src={`icons/black/${item.icon}.png`}
                                             className="w-10 h-10 flex items-center justify-center rounded-full p-1 flex-shrink-0"
                                             style={{ backgroundColor: 'var(--primary-yellow)' }}
                                             alt={item.icon}
@@ -106,7 +106,7 @@ const About = () => {
                                 style={{ minHeight: '300px' }}
                             >
                                 <img
-                                    src="/towingTareeqk.jpg"
+                                    src="towingTareeqk.jpg"
                                     alt="Towing service"
                                     className="absolute inset-0 w-full h-full object-cover"
                                     loading="lazy"

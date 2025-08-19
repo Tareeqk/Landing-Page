@@ -52,7 +52,7 @@ body.dark .nav-color {
   box-sizing: border-box;
 }
 
-body.dark .black-text{
+body.dark .black-text {
   color: #000;
 }
 
@@ -100,12 +100,34 @@ body.dark nav a.active {
 body.dark button {
   background-color: #333;
   color: white;
-  border: 2px solid gray;
+}
+
+body[lang="ur"] .terms-content p,
+body[lang="ur"] .terms-content span {
+  margin: 8px 0; /* avoids spaghetti effect */
+  display: block; /* force block layout for readability */
+}
+
+body.dark .policy-content,
+body.dark .policy-content * {
+  color: var(
+    --dark-text-main
+  ) !important; 
+}
+
+/* White color for headers and strong tags in dark mode */
+body.dark .policy-content h1,
+body.dark .policy-content h2,
+body.dark .policy-content h3,
+body.dark .policy-content h4,
+body.dark .policy-content h5,
+body.dark .policy-content h6,
+body.dark .policy-content strong {
+  color: #ffffff !important; /* White for headers and strong tags */
 }
 
 body.dark button.book-btn {
   background-color: #000;
-  
 }
 body.dark button.download-btn {
   background-color: var(--primary-yellow);
@@ -131,7 +153,6 @@ body[lang="ur"] {
   font-family: "Noto Nastaliq Urdu", serif;
   direction: rtl;
 }
-
 
 /* Smooth scrolling */
 html,

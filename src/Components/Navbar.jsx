@@ -43,7 +43,7 @@ export default function Navbar({ isDark, setIsDark }) {
                             {/* Logo */}
                             <Link to="/" className="flex items-center">
                                 <img
-                                    src={isDark ? '/LogoW.png' : '/Logo.png'}
+                                    src={isDark ? 'LogoW.png' : 'Logo.png'}
                                     alt="Logo"
                                     className="h-7 sm:h-8 w-auto"
                                     loading="lazy"
