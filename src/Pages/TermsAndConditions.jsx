@@ -11,7 +11,7 @@ const TermsAndConditions = () => {
     async function fetchTerms() {
       try {
         const response = await axios.get(
-          `${baseUrl}/pages?slug=terms-conditions&lang=${i18n.language}`
+          `https://order.tareeqk.ae/pages?slug=terms-conditions&lang=${i18n.language}`
         );
         console.log(response.data);
 
@@ -114,10 +114,10 @@ const TermsAndConditions = () => {
           padding: '0 20px',
         }}
       >
-        <h2 className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
+        <h2 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
           {t('terms.title')}
         </h2>
-        <p style={{ fontSize: '18px', maxWidth: '600px' }} className='text-gray-300'>
+        <p data-aos="fade-up" style={{ fontSize: '18px', maxWidth: '600px' }} className='text-gray-300'>
           {t('terms.subtitle')}
         </p>
       </div>
@@ -133,7 +133,7 @@ const TermsAndConditions = () => {
         }}
       >
         {terms.map((section, idx) => (
-          <div key={idx} style={{ marginBottom: '1.5rem' }}>
+          <div data-aos="fade-up" key={idx} style={{ marginBottom: '1.5rem' }}>
             <h2 style={{ padding: '10px 0', fontSize: '20px', fontWeight: 'bold' }}>{section.heading}</h2>
             <div
               className='terms-content'

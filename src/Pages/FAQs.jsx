@@ -11,7 +11,7 @@ export default function FAQs() {
 
     useEffect(() => {
         async function fetchFAQs() {
-            const response = await axios.get(`${baseUrl}/pages?slug=faqs&lang=${i18n.language}`);
+            const response = await axios.get(`https://order.tareeqk.ae/pages?slug=faqs&lang=${i18n.language}`);
             const htmlString = response.data.html;
 
             // Convert the HTML into question/answer pairs
@@ -59,10 +59,10 @@ export default function FAQs() {
                     padding: '0 20px',
                 }}
             >
-                <h2 className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
+                <h2 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
                     {t('faqs.title')}
                 </h2>
-                <p style={{ fontSize: '18px', maxWidth: '600px' }} className='text-gray-300'>
+                <p data-aos="fade-up" style={{ fontSize: '18px', maxWidth: '600px' }} className='text-gray-300'>
                     {t('faqs.subtitle')}
                 </p>
             </div>
@@ -72,7 +72,7 @@ export default function FAQs() {
                     <p>Loading...</p>
                 ) : (
                     faqs.map((faq, idx) => (
-                        <div key={idx} className="border border-gray-400 rounded-md">
+                        <div data-aos="fade-up" key={idx} className="border border-gray-400 rounded-md">
                             <button
                                 onClick={() => toggleAccordion(idx)}
                                 className="w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center cursor-pointer"

@@ -12,7 +12,7 @@ const PrivacyAndPolicy = () => {
         async function fetchPolicy() {
             try {
                 const response = await axios.get(
-                    `${baseUrl}/pages?slug=privacy-policy&lang=${i18n.language}`
+                    `https://order.tareeqk.ae/pages?slug=privacy-policy&lang=${i18n.language}`
                 );
 
                 let htmlString = response.data.html || '';
@@ -107,10 +107,10 @@ const PrivacyAndPolicy = () => {
                     padding: '0 20px',
                 }}
             >
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
+                <h2 data-aos="fade-up" className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
                     {t('policy.title')}
                 </h2>
-                <p
+                <p data-aos="fade-up"
                     style={{ fontSize: '18px', maxWidth: '600px', fontFamily }}
                     className="text-gray-300"
                 >
@@ -118,7 +118,7 @@ const PrivacyAndPolicy = () => {
                 </p>
             </div>
 
-            <div
+            <div 
                 className="container mx-auto px-4 py-10 policy-content"
                 style={{
                     direction: isRTL ? 'rtl' : 'ltr',
@@ -129,7 +129,7 @@ const PrivacyAndPolicy = () => {
                     wordBreak: 'break-word',
                 }}
             >
-                <h1
+                <h1 data-aos="fade-up"
                     style={{
                         fontSize: '32px',
                         fontWeight: 'bold',
@@ -140,7 +140,7 @@ const PrivacyAndPolicy = () => {
                 >
                     {t('policy.title')}
                 </h1>
-                <div
+                <div data-aos="fade-up"
                     className="policy-content"
                     dangerouslySetInnerHTML={{ __html: policy }}
                 />
