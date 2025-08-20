@@ -51,7 +51,7 @@ const Footer = ({ isDark }) => {
             <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.home.title')}</h3>
             <div className="w-8 mb-4" />
             <ul className="space-y-2 text-sm">
-              <li><a href="/" className="hover:underline span-titles">{t('footer.home.links.home')}</a></li>
+              <li><Link to="/" className="hover:underline span-titles">{t('footer.home.links.home')}</Link></li>
               <li><Link to="/faq" className="hover:underline span-titles">{t('footer.home.links.faqs')}</Link></li>
               <li><Link to="/drivers-FAQs" className="hover:underline span-titles">{t('footer.home.links.driverFaqs')}</Link></li>
             </ul>

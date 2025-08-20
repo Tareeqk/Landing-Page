@@ -163,6 +163,11 @@ body {
   width: 100%;
 }
 
+html[dir="rtl"], body[dir="rtl"] {
+  overflow-x: clip;
+  overflow-y: auto; 
+}
+
 /* Container and responsive layout */
 .container {
   width: 100%;

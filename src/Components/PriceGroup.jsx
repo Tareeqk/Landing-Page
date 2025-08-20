@@ -56,7 +56,7 @@ export default function PriceGroup() {
                             tier.featured
                                 ? 'scale-[1.02] transform shadow-xl border-2 border-[var(--primary-yellow)] dark-bg'
                                 : 'border border-gray-200 dark-bg',
-                            'relative rounded-xl bg-white dark-bg p-6 sm:p-8 transition-all duration-300 hover:shadow-md',
+                            'relative rounded-xl bg-white dark-bg p-6 sm:p-8 transition-all duration-300 hover:shadow-md ',
                             tier.featured ? 'featured-card' : 'standard-card'
                         )}
                     >
