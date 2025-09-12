@@ -15,6 +15,7 @@ import DriversFAQs from './Pages/DriversFAQs';
 import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
 import DriverRegistrationPage from './Pages/DriverRegistration';
 import VendorRegistration from './Pages/VendorRegistration';
+import NotFound from './Pages/NotFound';
 
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route path='/driver-registration' element={<DriverRegistrationPage />} />
           <Route path='/vendor-registration' element={<VendorRegistration />} />
           <Route path='/privacy-policy' element={<PrivacyAndPolicy />} />
+          <Route path='/*' element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
