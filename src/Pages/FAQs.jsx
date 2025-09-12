@@ -42,7 +42,7 @@ export default function FAQs() {
         <>
             <div
                 style={{
-                    backgroundImage: `url('/Landing-Page/newTruckk.jpg')`,
+                    backgroundImage: `url(https://tareek-assets.s3.me-central-1.amazonaws.com/banner/WhatsApp+Image+2025-09-12+at+15.04.44.jpeg)`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center',

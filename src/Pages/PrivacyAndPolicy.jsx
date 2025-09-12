@@ -90,14 +90,14 @@ const PrivacyAndPolicy = () => {
             <div
                 style={{
                     backgroundImage:
-                        'url(https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/prods/IPLwKlOXBovFAmGLPIJX3TZSrfMhPBRJgSonGN6q.jpg)',
+                        'url(https://tareek-assets.s3.me-central-1.amazonaws.com/banner/WhatsApp+Image+2025-09-12+at+15.04.44.jpeg)',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center',
                     backgroundBlendMode: 'multiply',
                     backgroundColor: 'rgba(0,0,0,0.65)',
                     width: '100%',
-                    height: '300px',
+                    height: '450px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',

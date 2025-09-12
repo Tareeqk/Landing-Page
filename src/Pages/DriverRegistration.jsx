@@ -40,7 +40,7 @@ export default function DriverRegistrationPage() {
       {/* Hero Section */}
       <div
         style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/Landing-Page/newTruckk.jpg')`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(https://tareek-assets.s3.me-central-1.amazonaws.com/banner/WhatsApp+Image+2025-09-12+at+15.04.44.jpeg)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           width: '100%',
