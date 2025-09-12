@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,9 +21,42 @@ export default function ContactForm() {
     }));
   };
 
-  const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+
+    try {
+      // Prepare URL-encoded data like PHP
+      const params = new URLSearchParams();
+      params.append('name', formData.name);
+      params.append('email', formData.email);
+      params.append('phone', formData.mobile);
+      params.append('subject', formData.subject);
+      params.append('message', formData.message);
+      params.append('dial_code', '+971'); // Or dynamically if needed
+      params.append('submit', 'true');
+
+      const response = await axios.post(
+        'https://order.tareeqk.ae/contact-us',
+        params,
+      );
+
+      if (response.data.status === 200) {
+        alert('Message sent successfully!');
+        setFormData({
+          name: '',
+          mobile: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        alert('Error: ' + (response.data.message || 'Something went wrong.'));
+      }
+
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -31,19 +65,18 @@ export default function ContactForm() {
         <div className="mb-6" data-aos="fade-right">
           <span
             className="inline-block px-4 py-2 rounded-full border border-[var(--primary-light-gray)] text-[var(--secondary-dark-bg)] text-sm md:text-base span-titles"
-            data-aos="fade-up"
           >
             {t('contactForm.getInTouch')}
           </span>
-        </div>
 
-        <h1 data-aos="fade-up" className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
+        <h1  className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
           {t('contactForm.title')}
         </h1>
 
-        <p data-aos="fade-up" className="text-gray-400 mb-8 text-sm">
+        <p  className="text-gray-400 mb-8 text-sm">
           {t('contactForm.description')}
         </p>
+        </div>
 
         <div data-aos="fade-up" className="max-w-2xl mx-auto w-full">
           <div className="dark-bg text-gray-400 rounded-xl p-6 border border-[var(--secondary-dark-bg)]">
@@ -72,7 +105,6 @@ export default function ContactForm() {
                     value={formData.mobile}
                     onChange={handleChange}
                     required
-                    pattern="[0-9]{7,9}"
                     className="px-4 py-3 text-base rounded-lg border border-[var(--primary-light-gray)] w-full bg-transparent"
                     placeholder={t('contactForm.fields.mobilePlaceholder')}
                   />

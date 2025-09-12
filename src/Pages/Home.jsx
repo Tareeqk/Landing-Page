@@ -13,7 +13,7 @@ import Registration from './Registration';
 
 export default function Home() {
   return (
-    <>
+    <div>
       <LandingPage/>
       <CJI />
       <AboutUs />
@@ -22,6 +22,6 @@ export default function Home() {
       <Registration />
       <PriceGroup />
       <ContactForm />
-    </>
+    </div>
   )
 }

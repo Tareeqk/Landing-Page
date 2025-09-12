@@ -9,7 +9,7 @@ const About = () => {
     return (
         <>
             <section id={1}>
-                <div className="container mx-auto px-4 my-20">
+                <div className="container mx-auto px-4 my-8">
                     <div className="mb-6" data-aos="fade-right">
                         <span className="text-gray-500 px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles">
                             {t("about.about")}
@@ -17,7 +17,7 @@ const About = () => {
                     </div>
 
                     {/* Content Section */}
-                    <div className="md:col-span-2" data-aos="fade-up">
+                    <div className="md:col-span-2" data-aos="fade-right">
                         <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium max-w-4xl ${isUrdu ? 'leading-loose' : 'leading-tight'}`}>
                             {t("about.title")}
                         </h1>
@@ -39,8 +39,6 @@ const About = () => {
                             <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item2")}</b>
                             <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item3")}</b>
                             <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item4")}</b>
-                             {/* "✓";
-  color: var(--primary-yellow); */}
                         </div>
                     </div>
                 </div>
@@ -54,20 +52,18 @@ const About = () => {
                         <span className="px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles text-gray-500">
                             {t("about2.about")}
                         </span>
-                    </div>
 
-                    <h1 data-aos="fade-up" className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
+                    <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
                         {t("about2.title")}
                     </h1>
 
-                    <p data-aos="fade-up" className={`text-gray-400 mb-8 ${isUrdu ? 'leading-loose' : ''}`}>
+                    <p className={`text-gray-400 mb-8 ${isUrdu ? 'leading-loose' : ''}`}>
                         {t("about2.subtitle")} <span className='t'>https://order.tareeqk.ae</span>
                     </p>
+                    </div>
 
-                    {/* Changed grid to flex with responsive behavior */}
                     <div className="flex flex-col xl:flex-row gap-6">
-                        {/* Content Items - Stacked on mobile, side-by-side on xl+ */}
-                        <div className="flex flex-col gap-4 w-full xl:w-1/2">
+                        <div data-aos="fade-right" className="flex flex-col gap-4 w-full xl:w-1/2">
                             {[
                                 { icon: "Road", title: "about2.item1title", subtitle: "about2.item1subtitle" },
                                 { icon: "Tow", title: "about2.item2title", subtitle: "about2.item2subtitle" },
@@ -75,7 +71,6 @@ const About = () => {
                             ].map((item, i) => (
                                 <div
                                     key={i}
-                                    data-aos="fade-right"
                                     className="dark-bg text-gray-400 rounded-xl p-4 border border-[var(--secondary-dark-bg)]"
                                 >
                                     <div className="flex gap-3 items-center">

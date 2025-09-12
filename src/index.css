@@ -43,9 +43,6 @@ body.dark .nav-color {
 }
 
 .nav-color {
-  position: sticky !important;
-  top: 0 !important;
-  z-index: 50 !important;
   background-color: white;
   border-bottom: 1px solid var(--primary-yellow);
   width: 100%;
@@ -71,6 +68,9 @@ body.dark .getTow-btn {
 
 body.dark .span-titles {
   color: var(--secondary-pure-white);
+}
+body.dark .coming-soon {
+  color: var(--primary-yellow);
 }
 
 body.dark .dark-bg {
@@ -159,13 +159,17 @@ html,
 body {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
   width: 100%;
 }
 
-html[dir="rtl"], body[dir="rtl"] {
+/* html[dir="rtl"], body[dir="rtl"] {
   overflow-x: clip;
   overflow-y: auto; 
+} */
+
+body[lang="ur"] h1 {
+  line-height: 1.3; /* prevent tall Urdu Nastaliq line height */
 }
 
 /* Container and responsive layout */

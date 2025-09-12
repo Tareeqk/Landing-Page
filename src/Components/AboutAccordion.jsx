@@ -21,22 +21,19 @@ function AboutAccordion() {
     return (
             <div className="container max-w-7xl mx-auto">
                 {/* Header */}
-                <div className="mb-4 md:mb-8" data-aos="fade-up">
+                <div className="mb-4 md:mb-8" data-aos="fade-right">
                     <span
                         className="inline-block px-4 py-2 rounded-full border border-[var(--primary-light-gray)] text-[var(--secondary-dark-bg)] text-sm md:text-base span-titles"
-                        data-aos="fade-up"
                     >
                         {t('aboutAccordion.serviceDetails')}
                     </span>
                     <h1
                         className="text-3xl sm:text-4xl md:text-5xl font-medium my-4"
-                        data-aos="fade-up"
                     >
                         {t('aboutAccordion.detailedSupport')}
                     </h1>
                     <p
                         className={`text-[var(--primary-light-gray)] ${isUrdu ? 'mt-8' : 'mt-3' } max-w-2xl text-sm sm:text-base`}
-                        data-aos="fade-up"
                     >
                         {t('aboutAccordion.comprehensiveSolutions')}
                     </p>

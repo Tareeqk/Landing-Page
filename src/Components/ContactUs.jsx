@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 const ContactUs = ({ name }) => {
   const { t } = useTranslation()
-  console.log(name);
   
   return (
     <StyledWrapper>

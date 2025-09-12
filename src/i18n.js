@@ -5,15 +5,15 @@ import Backend from "i18next-http-backend";
 
 i18n
   .use(Backend)
-  .use(initReactI18next)   // 👈 THIS was missing
+  .use(initReactI18next)
   .init({
     lng: "en",
     fallbackLng: "en",
     ns: ["common"],
     defaultNS: "common",
-    debug: true,
+    debug: false,
     backend: {
-      loadPath: "/Landing-Page/locales/{{lng}}/{{ns}}.json", // ✅ includes repo name
+      loadPath: "/Landing-Page/locales/{{lng}}/{{ns}}.json",
     },
   });
 

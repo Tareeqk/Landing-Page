@@ -51,9 +51,9 @@ const Footer = ({ isDark }) => {
             <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.home.title')}</h3>
             <div className="w-8 mb-4" />
             <ul className="space-y-2 text-sm">
-              <li><Link to="/" className="hover:underline span-titles">{t('footer.home.links.home')}</Link></li>
-              <li><Link to="/faq" className="hover:underline span-titles">{t('footer.home.links.faqs')}</Link></li>
-              <li><Link to="/drivers-FAQs" className="hover:underline span-titles">{t('footer.home.links.driverFaqs')}</Link></li>
+              <li><Link onClick={() => window.scrollTo(0, 0)} to="/" className="hover:underline span-titles">{t('footer.home.links.home')}</Link></li>
+              <li><Link onClick={() => window.scrollTo(0, 0)} to="/faq" className="hover:underline span-titles">{t('footer.home.links.faqs')}</Link></li>
+              <li><Link onClick={() => window.scrollTo(0, 0)} to="/drivers-FAQs" className="hover:underline span-titles">{t('footer.home.links.driverFaqs')}</Link></li>
             </ul>
           </div>
         </div>
@@ -63,9 +63,9 @@ const Footer = ({ isDark }) => {
           <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.registration.title')}</h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-2 text-sm">
-            <li><a href="https://order.tareeqk.ae/page/driver-registration" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.driver')}</a></li>
-            <li><a href="https://order.tareeqk.ae/page/vendor-registration" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.vendor')}</a></li>
-            <li><a href="https://order.tareeqk.ae" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.customer')}</a></li>
+            <li><Link onClick={() => window.scrollTo(0, 0)} to="/driver-registration" className="hover:underline span-titles">{t('footer.registration.links.driver')}</Link></li>
+            <li><Link onClick={() => window.scrollTo(0, 0)} to="/vendor-registration" className="hover:underline span-titles">{t('footer.registration.links.vendor')}</Link></li>
+            <li><a href="https://apps.apple.com/in/app/tareeqk-order/id6480442854" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.customer')}</a></li>
           </ul>
         </div>
 
@@ -74,8 +74,8 @@ const Footer = ({ isDark }) => {
           <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.policies.title')}</h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-2 text-sm">
-            <li><Link to="/terms" className="hover:underline span-titles">{t('footer.policies.links.terms')}</Link></li>
-            <li><Link to="/privacy-policy" className="hover:underline span-titles">{t('footer.policies.links.privacy')}</Link></li>
+            <li><Link onClick={() => window.scrollTo(0, 0)} to="/terms" className="hover:underline span-titles">{t('footer.policies.links.terms')}</Link></li>
+            <li><Link onClick={() => window.scrollTo(0, 0)} to="/privacy-policy" className="hover:underline span-titles">{t('footer.policies.links.privacy')}</Link></li>
           </ul>
         </div>
 

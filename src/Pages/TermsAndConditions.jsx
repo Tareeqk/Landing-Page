@@ -13,7 +13,6 @@ const TermsAndConditions = () => {
         const response = await axios.get(
           `https://order.tareeqk.ae/pages?slug=terms-conditions&lang=${i18n.language}`
         );
-        console.log(response.data);
 
         const htmlString = response.data.html;
         if (!htmlString) return;
@@ -77,7 +76,6 @@ const TermsAndConditions = () => {
           sections.push(currentSection);
         }
 
-        console.log('Sections:', sections); // Debug the final sections array
         setTerms(sections);
       } catch (err) {
         console.error('Error fetching terms:', err);

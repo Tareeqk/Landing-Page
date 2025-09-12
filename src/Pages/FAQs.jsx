@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function FAQs() {
-    const { t,i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [faqs, setFaqs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [openIndexs, setOpenIndexs] = useState([]);
@@ -42,14 +42,14 @@ export default function FAQs() {
         <>
             <div
                 style={{
-                    backgroundImage: 'url(https://s3.us-west-2.amazonaws.com/royoorders2.0-assets/prods/IPLwKlOXBovFAmGLPIJX3TZSrfMhPBRJgSonGN6q.jpg)',
+                    backgroundImage: `url('/Landing-Page/newTruckk.jpg')`,
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: 'cover',
                     backgroundPosition: 'center center',
                     backgroundBlendMode: 'multiply',
                     backgroundColor: 'rgba(0,0,0,0.65)',
                     width: '100%',
-                    height: '300px',
+                    height: '350px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',

@@ -253,5 +253,61 @@
   "terms": {
     "title": "Frequently Drivers Asked Questions",
     "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform"
+  },
+  "driverRegistration": {
+    "hero": {
+      "title": "Join Our Team of Professional Drivers",
+      "subtitle": "Registration with Tareeqk is the easiest, fastest way to start earning — and it's completely FREE!",
+      "features": "No registration fees • Quick approval process • Flexible hours • Only in 5 Minutes"
+    },
+    "benefits": {
+      "title": "Why Choose Tareeqk?",
+      "items": [
+        {
+          "title": "Easy Registration",
+          "desc": "Our streamlined process gets you on the road quickly with minimal paperwork."
+        },
+        {
+          "title": "Fast Approval",
+          "desc": "Get approved quickly and start accepting jobs almost immediately."
+        },
+        {
+          "title": "Zero Cost",
+          "desc": "No registration fees or hidden charges. Start earning from day one."
+        }
+      ]
+    },
+    "process": {
+      "title": "Start Your Journey With Us",
+      "subtitle": "Follow these simple steps to become a Tareeqk driver partner",
+      "intro": "To start your journey as a driver, you will need to download our Driver App and complete the signup process there. The app will guide you step by step to upload your personal details and required documents.",
+      "requirementsTitle": "What You Need to Prepare:",
+      "requirements": [
+        "A valid Emirates ID",
+        "Your Driving License",
+        "Your Vehicle Registration (Mulkiah)",
+        "A recent Profile Picture",
+        "Active Mobile Number and Email Address",
+        "Any additional required documents"
+      ],
+      "howToRegisterTitle": "How to Register:",
+      "steps": [
+        "Download the Driver App from the Google Play Store or Apple App Store.",
+        "Open the app and click on Sign Up.",
+        "Fill in your personal details: Name, Email, Password, and Phone Number.",
+        "Upload your profile picture.",
+        "Upload the required documents (Emirates ID, License, Mulkiah, etc.).",
+        "If you have a referral code, you can enter it during signup.",
+        "Submit your application and wait for approval."
+      ],
+      "note": "Make sure all your documents are valid and clearly visible when uploading. Incomplete or incorrect applications may delay the approval process."
+    },
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join hundreds of drivers who are already earning with Tareeqk. The process is simple, fast, and completely free!"
+    }
+  },
+  "vendorRegistration": {
+    "comingSoon": "VENDOR REGISTRATION, COMING SOON!"
   }
 }

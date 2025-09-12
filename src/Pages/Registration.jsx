@@ -2,6 +2,7 @@ import './Registration.css';
 import React from 'react';
 import { FaTruckPickup, FaWarehouse } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { Link } from 'react-router-dom';
 
 export default function Registration() {
     const { t } = useTranslation();
@@ -33,13 +34,11 @@ export default function Registration() {
                         <li>{t('register.driver.benefits.1')}</li>
                         <li>{t('register.driver.benefits.2')}</li>
                     </ul>
-                    <a
-                        href="https://order.tareeqk.ae/page/driver-registration"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        to="/driver-registration"
                     >
                         <button className="register-button">{t('register.driver.button')}</button>
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Vendor Registration */}
@@ -54,13 +53,11 @@ export default function Registration() {
                         <li>{t('register.vendor.benefits.1')}</li>
                         <li>{t('register.vendor.benefits.2')}</li>
                     </ul>
-                    <a
-                        href="https://order.tareeqk.ae/page/vendor-registration"
-                        target="_blank"
-                        rel="noopener noreferrer"
+                    <Link
+                        to="/vendor-registration"
                     >
                         <button className="register-button">{t('register.vendor.button')}</button>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

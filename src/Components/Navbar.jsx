@@ -3,9 +3,9 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 import { useLocation, Link } from 'react-router-dom';
 import ContactUs from './ContactUs';
 import DarkMode from './DarkMode';
-import { HashLink } from 'react-router-hash-link';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import { HashLink } from 'react-router-hash-link';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ');
@@ -25,8 +25,9 @@ export default function Navbar({ isDark, setIsDark }) {
     ];
 
     return (
-        <div className="nav-color bg-white sticky top-0 z-50 border-b border-[var(--primary-yellow)]">
-            <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl" 
+        <div className="nav-color bg-white fixed top-0 left-0 w-full z-50 border-b border-[var(--primary-yellow)]">
+
+            <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl"
             // data-aos="fade-down"
             >
                 <Disclosure as="nav" className="relative">
@@ -71,6 +72,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                         </HashLink>
                                     ) : (
                                         <Link
+                                            onClick={() => window.scrollTo(0, 0)}
                                             key={item.name}
                                             to={item.href}
                                             className={classNames(
@@ -103,18 +105,35 @@ export default function Navbar({ isDark, setIsDark }) {
                     <DisclosurePanel className="lg:hidden">
                         <div className="space-y-1 px-2 pt-2 pb-3">
                             {navigation.map((item) => (
-                                <DisclosureButton
-                                    key={item.name}
-                                    as={Link}
-                                    to={item.href}
-                                    className={classNames(
-                                        item.current ? 'text-gray-900 border-b-2 border-[var(--primary-yellow)]'
-                                            : 'text-gray-600 hover:text-gray-900 border-b-2 border-transparent hover:border-[var(--primary-yellow)]',
-                                        'block px-3 py-2 rounded-md text-base font-medium'
-                                    )}
-                                >
-                                    {item.name}
-                                </DisclosureButton>
+                                item.name === t('navbar.contact') ? (
+                                    <HashLink
+                                        key={item.name}
+                                        to={item.href}
+                                        className={classNames(
+                                            item.current
+                                                ? 'text-gray-900 border-b-2 border-[var(--primary-yellow)]'
+                                                : 'text-gray-600 hover:text-gray-900 border-b-2 border-transparent hover:border-[var(--primary-yellow)]',
+                                            'px-2 py-2 text-sm sm:text-base font-medium transition-all duration-200 whitespace-nowrap'
+                                        )}
+                                    >
+                                        {item.name}
+                                    </HashLink>
+                                ) : (
+
+                                    <DisclosureButton
+                                        onClick={() => window.scrollTo(0, 0)}
+                                        key={item.name}
+                                        as={Link}
+                                        to={item.href}
+                                        className={classNames(
+                                            item.current ? 'text-gray-900 border-b-2 border-[var(--primary-yellow)]'
+                                                : 'text-gray-600 hover:text-gray-900 border-b-2 border-transparent hover:border-[var(--primary-yellow)]',
+                                            'block px-3 py-2 rounded-md text-base font-medium'
+                                        )}
+                                    >
+                                        {item.name}
+                                    </DisclosureButton>
+                                )
                             ))}
                             <ContactUs name='call' mobile />
                         </div>

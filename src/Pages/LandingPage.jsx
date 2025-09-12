@@ -18,7 +18,7 @@ export default function LandingPage() {
     <>
       <div className="relative w-full h-auto py-4 md:py-6 overflow-x-hidden landing-container"> {/* Keep overflow-x-hidden */}
         {/* Background */}
-        <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full"> {/* Changed to h-full, removed overflow-hidden */}
+        <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full overflow-x-hidden"> {/* Changed to h-full, removed overflow-hidden */}
           <img
             src="NewBGMob.png"
             alt="Background"
@@ -36,16 +36,16 @@ export default function LandingPage() {
           <div className="max-w-screen-xl mx-auto px-4 md:px-6 grid grid-cols-1 mt-10 lg:grid-cols-2 gap-4 md:gap-6">
             {/* Text Content */}
             <div data-aos="fade-right" className="flex flex-col justify-center order-2 lg:order-1">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 black-text">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 black-text max-w-lg">
                 {t('landing.title')}
               </h1>
-              <p className="text-base sm:text-lg md:text-xl mb-2 md:mb-3 black-text">
+              <p className="text-base sm:text-lg md:text-xl mb-2 md:mb-3 black-text max-w-lg">
                 {t('landing.subtitle')}
               </p>
 
               {/* Buttons */}
               <div className="flex flex-row flex-wrap gap-2 mb-2">
-                <a
+                {/* <a
                   href="https://order.tareeqk.ae/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -54,7 +54,7 @@ export default function LandingPage() {
                   <button className="w-full px-4 py-1.5 sm:px-5 sm:py-2 bg-black book-btn text-white rounded-xl hover:opacity-90 cursor-pointer whitespace-nowrap text-sm sm:text-base border-2 border-gray-500">
                     {t("landing.book")}
                   </button>
-                </a>
+                </a> */}
 
                 <button
                   onClick={scrollToDownload}
@@ -96,8 +96,8 @@ export default function LandingPage() {
       </div>
 
       {/* Download Section */}
-      <div ref={downloadRef} className="w-full overflow-x-hidden download-apps-container">
-        <DownloadApps />
+      <div ref={downloadRef} className="w-full overflow-x-hidden download-apps-container bg-[var(--secondary-light-gray)] dark-bg py-10 px-4" id="target-section">
+        <DownloadApps type="customer"/>
       </div>
     </>
   );

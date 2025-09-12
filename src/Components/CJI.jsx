@@ -13,32 +13,28 @@ export default function CJI() {
       >
         <span
           className="inline-block px-4 py-2 rounded-full border border-[var(--primary-light-gray)] text-[var(--secondary-dark-bg)] text-sm md:text-base span-titles"
-          data-aos="fade-up"
         >
           {t('nasir.nasir')}
         </span>
+
+        <h1
+          className={`text-2xl sm:text-3xl md:text-4xl font-medium my-2 ${isUrdu ? 'leading-loose' : ''}`}
+        >
+          {t('nasir.title')}
+        </h1>
+
+        <p
+          className={`text-gray-400 mb-4 ${isUrdu ? 'leading-loose' : ''}`}
+        >
+          {t('nasir.subtitle')}
+        </p>
       </div>
 
-      <h1
-        data-aos="fade-up"
-        className={`text-2xl sm:text-3xl md:text-4xl font-medium my-2 ${isUrdu ? 'leading-loose' : ''}`}
-      >
-        {t('nasir.title')}
-      </h1>
-
-      <p
-        data-aos="fade-up"
-        className={`text-gray-400 mb-4 ${isUrdu ? 'leading-loose' : ''}`}
-      >
-        {t('nasir.subtitle')}
-      </p>
-
-      {/* Changed responsive behavior here */}
       <div className="flex flex-col lg:flex-row gap-4 w-full">
         {/* Text Content */}
         <div className="w-full lg:w-1/2">
           <div
-            data-aos="fade-up"
+            data-aos="fade-right"
             className={`dark-bg text-gray-400 rounded-2xl p-4 md:p-5 border border-[var(--secondary-dark-bg)] h-full w-full ${isUrdu ? 'leading-loose' : ''}`}
           >
             <h3

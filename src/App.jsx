@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import "./i18n";
 import DriversFAQs from './Pages/DriversFAQs';
 import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
+import DriverRegistrationPage from './Pages/DriverRegistration';
+import VendorRegistration from './Pages/VendorRegistration';
 
 
 function App() {
@@ -49,6 +51,8 @@ function App() {
           <Route path='/about' element={<About />} />
           <Route path='/service' element={<Service />} />
           <Route path='/terms' element={<TermsAndConditions />} />
+          <Route path='/driver-registration' element={<DriverRegistrationPage />} />
+          <Route path='/vendor-registration' element={<VendorRegistration />} />
           <Route path='/privacy-policy' element={<PrivacyAndPolicy />} />
         </Route>
       </Routes>
