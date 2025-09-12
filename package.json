@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://tareeqk.github.io/Landing-Page",
+  "homepage": "https://tareeqk.ae",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

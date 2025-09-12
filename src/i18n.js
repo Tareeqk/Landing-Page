@@ -13,7 +13,7 @@ i18n
     defaultNS: "common",
     debug: false,
     backend: {
-      loadPath: "/Landing-Page/locales/{{lng}}/{{ns}}.json",
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
   });
 

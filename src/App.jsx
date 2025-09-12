@@ -42,7 +42,7 @@ function App() {
   }, [isDark]);
 
   return (
-    <BrowserRouter basename="/Landing-Page/">
+    <BrowserRouter basename="/">
       <Routes >
         <Route element={<MainLayout isDark={isDark} setIsDark={setIsDark} />}>
           <Route path='/' element={<Home />} />
