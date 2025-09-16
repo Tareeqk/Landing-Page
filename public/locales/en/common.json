@@ -126,7 +126,7 @@
     "price": "Pricing",
     "title": "Choose the right plan for you",
     "subtitle": "Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
-    "btn" : "Get Started",
+    "btn": "Get Started",
     "mostPopular": "Most Popular",
     "item1": {
       "title": "Standard",
@@ -251,8 +251,8 @@
     "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform"
   },
   "terms": {
-    "title": "Frequently Drivers Asked Questions",
-    "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform"
+    "title": "Terms and Conditions",
+    "subtitle": "Learn about the terms and conditions that govern your use of the Tareeqk website and application"
   },
   "driverRegistration": {
     "hero": {
