@@ -49,7 +49,7 @@ export default function DriversFAQs() {
                     backgroundBlendMode: 'multiply',
                     backgroundColor: 'rgba(0,0,0,0.65)',
                     width: '100%',
-                    height: '450px',
+                    height: '400px',
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'center',
