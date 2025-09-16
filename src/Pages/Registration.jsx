@@ -35,6 +35,7 @@ export default function Registration() {
                         <li>{t('register.driver.benefits.2')}</li>
                     </ul>
                     <Link
+                        onClick={() => window.scrollTo(0, 0)}
                         to="/driver-registration"
                     >
                         <button className="register-button">{t('register.driver.button')}</button>
@@ -55,6 +56,7 @@ export default function Registration() {
                     </ul>
                     <Link
                         to="/vendor-registration"
+                        onClick={() => window.scrollTo(0, 0)}
                     >
                         <button className="register-button">{t('register.vendor.button')}</button>
                     </Link>
