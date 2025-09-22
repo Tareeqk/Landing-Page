@@ -1,0 +1,50 @@
+/* Add these styles to Nasir.css for separate version */
+.nasir-wrapper-separate {
+  position: relative;
+  width: 180px;
+  height: 200px;
+  transition: transform 0.3s ease;
+}
+
+.nasir-head {
+  width: 100%;
+  height: 60%;
+  object-fit: contain;
+}
+
+.message-box {
+  width: 100%;
+  height: 40%;
+  object-fit: contain;
+  margin-top: -10px;
+}
+
+.whatsapp-button {
+  position: absolute;
+  bottom: 45%;
+  left: 25%;
+  right: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  gap: 6px;
+}
+
+/* Responsive adjustments for separate version */
+@media (max-width: 768px) {
+  .nasir-wrapper-separate {
+    width: 140px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nasir-wrapper-separate {
+    width: 120px;
+    height: 140px;
+  }
+}

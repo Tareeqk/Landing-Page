@@ -29,10 +29,10 @@ export default function PriceGroup() {
     <div className="container relative isolate px-6 py-6 sm:py-10 lg:px-8">
       {/* Header */}
       <div className="mb-4 md:mb-8" data-aos="fade-right">
-        <span className="inline-block px-4 py-2 rounded-full border border-[var(--primary-light-gray)] text-[var(--secondary-dark-bg)] text-sm md:text-base span-titles">
+        <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block span-titles">
           {t("price.price")}
         </span>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-medium my-4">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium my-4">
           {t("price.title")}
         </h1>
         <p className="text-[var(--primary-light-gray)] mt-3 max-w-2xl text-sm sm:text-base">

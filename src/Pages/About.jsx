@@ -11,7 +11,7 @@ const About = () => {
             <section id={1}>
                 <div className="container mx-auto px-4 my-8">
                     <div className="mb-6" data-aos="fade-right">
-                        <span className="text-gray-500 px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles">
+                        <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block span-titles">
                             {t("about.about")}
                         </span>
                     </div>
@@ -35,10 +35,10 @@ const About = () => {
                         </div>
 
                         <div className="flex flex-wrap gap-4 mt-6">
-                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item1")}</b>
-                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item2")}</b>
-                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item3")}</b>
-                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{color:"var(--primary-yellow)"}}>✓</span> {t("about.item4")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item1")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item2")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item3")}</b>
+                            <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item4")}</b>
                         </div>
                     </div>
                 </div>
@@ -49,17 +49,18 @@ const About = () => {
             <section id={2} className="my-20 overflow-x-hidden">
                 <div className="container mx-auto px-4">
                     <div className="mb-6" data-aos="fade-right">
-                        <span className="px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles text-gray-500">
+                        <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block span-titles mb-4">
                             {t("about2.about")}
                         </span>
 
-                    <h1 className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
-                        {t("about2.title")}
-                    </h1>
+                        <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
+                            {t("about2.title")}
+                        </h1>
 
-                    <p className={`text-gray-400 mb-8 ${isUrdu ? 'leading-loose' : ''}`}>
-                        {t("about2.subtitle")} <span className='t'>https://order.tareeqk.ae</span>
-                    </p>
+                        <p className={`text-gray-400 mb-8 ${isUrdu ? 'leading-loose' : ''}`}>
+                            {t("about2.subtitle")} 
+                            {/* <span className='t'>https://order.tareeqk.ae</span> */}
+                        </p>
                     </div>
 
                     <div className="flex flex-col xl:flex-row gap-6">

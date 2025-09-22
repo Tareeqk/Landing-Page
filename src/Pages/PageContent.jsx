@@ -19,7 +19,7 @@ const PageContent = () => {
       const page = location.pathname.split("/").pop();
 
       const slug = slugMap[page];
-      if (!slug) return; // skip if slug not found
+      if (!slug) return;
 
       const baseUrl = "http://10.255.254.20:8000";
       const apiUrl = `${baseUrl}/pages?slug=${slug}&lang=${lang}`;

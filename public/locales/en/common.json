@@ -29,7 +29,7 @@
   "about2": {
     "about": "Roadside Services",
     "title": "Our Towing & Roadside Services",
-    "subtitle": "Experience fast, reliable roadside and towing services with expert care — anytime, anywhere. Request help now at: ",
+    "subtitle": "Experience fast, reliable roadside and towing services with expert care — anytime, anywhere.",
     "item1title": "Roadside Assistance",
     "item1subtitle": "Expert help for vehicle breakdowns, tire changes, fuel delivery, jump starts, and more — wherever you are.",
     "item2title": "Towing Services",
@@ -69,7 +69,7 @@
     ],
     "towing": [
       {
-        "icon": "icons/black/Map.png",
+        "icon": "icons/black/location.png",
         "title": "Get Smart Towing with Mechanical Support",
         "content": "Expert towing with mechanical assistance included."
       },
@@ -94,7 +94,7 @@
   },
   "howItWorks": {
     "titleTag": "How it Works",
-    "mainTitle": "Fast Help in 4 Simple Steps",
+    "mainTitle": "Fast Help in 3 Simple Steps",
     "subtitle": "Easily request towing service, track help as it arrives, and get professional support at your location within minutes.",
     "cta": "Get Towing Now",
     "bannerText": "Fast & reliable help anytime, anywhere.",
@@ -112,11 +112,6 @@
       },
       {
         "number": "3",
-        "title": "On-Site Service & Towing",
-        "content": "Professional assistance at your location"
-      },
-      {
-        "number": "4",
         "title": "Service Completion",
         "content": "Fast resolution and payment processing"
       }
@@ -258,7 +253,7 @@
     "hero": {
       "title": "Join Our Team of Professional Drivers",
       "subtitle": "Registration with Tareeqk is the easiest, fastest way to start earning — and it's completely FREE!",
-      "features": "No registration fees • Quick approval process • Flexible hours • Only in 5 Minutes"
+      "features": "No registration fees • Quick approval process • Only in 5 Minutes"
     },
     "benefits": {
       "title": "Why Choose Tareeqk?",

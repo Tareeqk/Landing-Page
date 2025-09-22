@@ -20,12 +20,12 @@ export default function LandingPage() {
         {/* Background */}
         <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full overflow-x-hidden"> {/* Changed to h-full, removed overflow-hidden */}
           <img
-            src="NewBGMob.png"
+            src="NewBG2.png"
             alt="Background"
             className="w-full h-full object-cover md:hidden"
           />
           <img
-            src="NewBG.png"
+            src="NewBGG.png"
             alt="Background"
             className="w-full h-full object-cover hidden md:block"
           />
@@ -36,7 +36,7 @@ export default function LandingPage() {
           <div className="max-w-screen-xl mx-auto px-4 md:px-6 grid grid-cols-1 mt-10 lg:grid-cols-2 gap-4 md:gap-6">
             {/* Text Content */}
             <div data-aos="fade-right" className="flex flex-col justify-center order-2 lg:order-1">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 black-text max-w-lg">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 black-text max-w-lg whitespace-pre-line">
                 {t('landing.title')}
               </h1>
               <p className="text-base sm:text-lg md:text-xl mb-2 md:mb-3 black-text max-w-lg">

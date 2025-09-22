@@ -18,11 +18,11 @@ export default function HowItWorks() {
         <div className="mx-auto px-4 my-8 container">
             {/* Section Header */}
             <div className="mb-6" data-aos="fade-right">
-                <span className="px-5 py-2 border rounded-full border-[var(--primary-light-gray)] inline-block span-titles text-gray-500">
+                <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block mb-4 span-titles">
                     {t("howItWorks.titleTag")}
                 </span>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium mb-4 text-[var(--primary-dark-bg)]">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 text-[var(--primary-dark-bg)]">
                 {t("howItWorks.mainTitle")}
             </h1>
 
@@ -39,16 +39,16 @@ export default function HowItWorks() {
                     <div className="w-full lg:w-1/2 space-y-4 flex flex-col" data-aos="fade-right">
                         {steps.map((step, index) => (
                             <div key={index} className="flex group">
-                                <div className="flex-shrink-0 mr-3">
-                                    <div className="w-9 h-9 rounded-full bg-[var(--primary-yellow)] flex items-center justify-center text-[var(--primary-dark-bg)] font-bold text-base">
+                                <div className="flex-shrink-0">
+                                    <div className="w-9 h-9 rounded-full bg-[var(--primary-yellow)] flex items-center justify-center text-[var(--primary-dark-bg)] font-bold text-base ">
                                         {step.number}
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 className="text-base md:text-lg font-bold text-[var(--primary-dark-bg)] mb-1 group-hover:text-[var(--primary-yellow)] transition-colors">
+                                    <h3 className="text-base md:text-lg font-bold text-[var(--primary-dark-bg)] mb-1 group-hover:text-[var(--primary-yellow)] transition-colors mx-3">
                                         {step.title}
                                     </h3>
-                                    <p className="text-[var(--primary-light-gray)] text-xs sm:text-sm leading-relaxed">
+                                    <p className="text-[var(--primary-light-gray)] text-xs sm:text-sm leading-relaxed mx-3">
                                         {step.content}
                                     </p>
                                 </div>

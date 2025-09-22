@@ -61,12 +61,26 @@ export default function DriverRegistrationPage() {
           <p data-aos="fade-up" data-aos-delay="100" className='text-xl text-gray-100 mb-8'>
             {t("driverRegistration.hero.subtitle")}
           </p>
-          <div data-aos="fade-up" data-aos-delay="200" className="bg-[var(--dark-bg-muted)] dark-bg inline-flex items-center px-4 py-2 rounded-full">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            <span>{t("driverRegistration.hero.features")}</span>
+          <div
+            data-aos="fade-up"
+            data-aos-delay="200"
+            className="bg-[var(--dark-bg-muted)] dark-bg inline-flex items-center px-3 py-1.5 sm:px-4 sm:py-2 rounded-full"
+          >
+            {/* <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-4 w-4 sm:h-5 sm:w-5 mr-1.5 sm:mr-2 text-yellow-400"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                clipRule="evenodd"
+              />
+            </svg> */}
+            <span className="text-sm sm:text-base">{t("driverRegistration.hero.features")}</span>
           </div>
+
         </div>
       </div>
 
@@ -93,12 +107,12 @@ export default function DriverRegistrationPage() {
         <div data-aos="fade-up" className="max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-2 text-gray-800">{t("driverRegistration.process.title")}</h2>
           <p className="text-center text-gray-400 mb-8">{t("driverRegistration.process.subtitle")}</p>
-          
+
           <div className="dark-bg text-gray-400 rounded-xl shadow-md p-6 mb-8" data-aos="fade-up">
             <p className="text-lg mb-6 text-center span-titles text-gray-800">
               {t("driverRegistration.process.intro")}
             </p>
-            
+
             <div className="bg-gray-200 p-4 rounded-lg mb-6">
               <h4 className="text-xl font-semibold mb-4 flex items-center text-gray-800">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,7 +146,7 @@ export default function DriverRegistrationPage() {
 
             <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
               <p className="text-gray-800 flex items-start">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 flex-shrink-0 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2 flex-shrink-0 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
                 <span>

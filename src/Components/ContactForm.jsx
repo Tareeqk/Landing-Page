@@ -63,13 +63,11 @@ export default function ContactForm() {
     <section id="contact" className="my-20">
       <div className="container mx-auto px-4">
         <div className="mb-6" data-aos="fade-right">
-          <span
-            className="inline-block px-4 py-2 rounded-full border border-[var(--primary-light-gray)] text-[var(--secondary-dark-bg)] text-sm md:text-base span-titles"
-          >
+          <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block span-titles mb-4">
             {t('contactForm.getInTouch')}
           </span>
 
-        <h1  className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
+        <h1  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-2">
           {t('contactForm.title')}
         </h1>
 
