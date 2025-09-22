@@ -9,17 +9,16 @@ import TermsAndConditions from './Pages/TermsAndConditions';
 import MainLayout from './Components/MainLayout';
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useTranslation } from 'react-i18next';
-import "./i18n";
 import DriversFAQs from './Pages/DriversFAQs';
 import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
 import DriverRegistrationPage from './Pages/DriverRegistration';
 import VendorRegistration from './Pages/VendorRegistration';
 import NotFound from './Pages/NotFound';
+import usePageViews from './hooks/usePageViews';
 
 
 function App() {
-  const { t } = useTranslation();
+  usePageViews()
 
   useEffect(() => {
     AOS.init({
