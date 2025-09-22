@@ -7,9 +7,10 @@ import "./i18n.js";
 import "@fontsource/manrope";
 import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/700.css";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <BrowserRouter>
     <App />
-  </React.StrictMode>
+  </BrowserRouter>
 );
