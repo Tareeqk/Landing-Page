@@ -34,7 +34,7 @@ const About = () => {
                             </p>
                         </div>
 
-                        <div className="flex flex-wrap gap-4 mt-6">
+                        <div className="flex flex-wrap justify-evenly gap-4 mt-6">
                             <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item1")}</b>
                             <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item2")}</b>
                             <b className={`text-sm md:text-base ${isUrdu ? 'leading-loose' : ''}`}> <span style={{ color: "var(--primary-yellow)" }}>✓</span> {t("about.item3")}</b>

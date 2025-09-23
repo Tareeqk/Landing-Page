@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { featureIcons } from "./priceIconMap"; // adjust path
+// import { featureIcons } from "./featureIcons"; 
+import { featureIcons } from './priceIconMap';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -19,7 +20,7 @@ export default function PriceGroup() {
       name: item.title,
       package: item.tons,
       description: item.subtitle,
-      features: item.features || [],
+      features: item.features || {},
       featured: item.featured || false,
       href: "#",
     };
@@ -41,7 +42,10 @@ export default function PriceGroup() {
       </div>
 
       {/* Plans */}
-      <div data-aos="fade-up" className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-3">
+      <div
+        data-aos="fade-up"
+        className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-3"
+      >
         {tiers.map((tier) => (
           <div
             key={tier.id}
@@ -82,10 +86,10 @@ export default function PriceGroup() {
 
               {/* Features */}
               <ul className="mt-6 space-y-3 flex-1">
-                {tier.features.map((feature) => {
-                  const Icon = featureIcons[feature] || featureIcons["cars"];
+                {Object.entries(tier.features).map(([featureKey, featureLabel]) => {
+                  const Icon = featureIcons[featureKey] || featureIcons["cars"];
                   return (
-                    <li key={feature} className="flex items-center">
+                    <li key={featureKey} className="flex items-center">
                       <Icon
                         className={classNames(
                           tier.featured
@@ -94,9 +98,7 @@ export default function PriceGroup() {
                           "h-5 w-5 flex-shrink-0"
                         )}
                       />
-                      <span className="ml-3 text-sm">
-                        {t(`price.features.${feature}`, feature)}
-                      </span>
+                      <span className="text-sm mx-2">{featureLabel}</span>
                     </li>
                   );
                 })}

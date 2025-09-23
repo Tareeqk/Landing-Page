@@ -34,8 +34,8 @@
     "item1subtitle": "Expert help for vehicle breakdowns, tire changes, fuel delivery, jump starts, and more — wherever you are.",
     "item2title": "Towing Services",
     "item2subtitle": "Safe and efficient towing for all types of vehicles, from motorcycles to heavy trucks, handled by our professional team.",
-    "item3title": "User-Based Services",
-    "item3subtitle": "Personalized support tailored to your needs, ensuring the best possible service experience every time."
+    "item3title": "Desert Recovery Services",
+    "item3subtitle": "Quick and reliable vehicle recovery from desert terrains anywhere in the UAE."
   },
   "nasir": {
     "nasir": "Meet Nasir",
@@ -53,35 +53,35 @@
     "roadside": [
       {
         "icon": "icons/black/Towing.png",
-        "title": "Emergency Response in Under 30 Minutes",
-        "content": "Fast and reliable assistance to get you back on the road quickly."
+        "title": "Fast Vehicle Recovery – Under 12 Minutes",
+        "content": "Quick dispatch for stranded vehicles across the UAE."
       },
       {
         "icon": "icons/black/Settings.png",
-        "title": "Emergency Towing with Quick Fix Options",
-        "content": "Immediate towing with on-the-spot repair solutions."
+        "title": "24/7 Emergency Towing",
+        "content": "Round-the-clock recovery service whenever and wherever you need it."
       },
       {
         "icon": "icons/black/Trouble.png",
-        "title": "For Your Tow and Troubleshoot On the Spot",
-        "content": "On-site troubleshooting and towing support for any vehicle."
+        "title": "Desert & Off-Road Recovery",
+        "content": "Specialized recovery for vehicles stuck in sand or off-road areas."
       }
     ],
     "towing": [
       {
         "icon": "icons/black/location.png",
-        "title": "Get Smart Towing with Mechanical Support",
-        "content": "Expert towing with mechanical assistance included."
+        "title": "Flatbed & Tow Truck Recovery",
+        "content": "Safe transport for all types of vehicles with flatbeds and tow trucks."
       },
       {
         "icon": "icons/black/Message.png",
-        "title": "Strategically Located for Rapid Rescue",
-        "content": "24/7 assistance for breakdowns, accidents, and stranded vehicles."
+        "title": "Accident & Breakdown Recovery",
+        "content": "Reliable recovery support during accidents or sudden breakdowns."
       },
       {
         "icon": "icons/black/Emergency.png",
-        "title": "Emergency Response in Under 30 Minutes",
-        "content": "Quick response to ensure you're never left waiting."
+        "title": "Long-Distance Recovery Across UAE",
+        "content": "Secure transport for vehicles between cities and emirates."
       }
     ]
   },
@@ -102,54 +102,60 @@
     "steps": [
       {
         "number": "1",
-        "title": "Request Assistance Online",
-        "content": "Quickly submit your request through our app or website"
+        "title": "Book Your Recovery",
+        "content": "Request recovery through our app or website and confirm your pickup details."
       },
       {
         "number": "2",
-        "title": "Dispatch & Track Your Tow",
-        "content": "Real-time tracking of your service vehicle"
+        "title": "Driver Assigned Automatically",
+        "content": "Our system instantly assigns the nearest driver and they move towards your location."
       },
       {
         "number": "3",
-        "title": "Service Completion",
-        "content": "Fast resolution and payment processing"
+        "title": "Pickup & Secure Loading",
+        "content": "Your vehicle is safely picked up and loaded onto the recovery truck."
+      },
+      {
+        "number": "3",
+        "title": "4. Payment & Drop-off",
+        "content": "Complete the payment, and the driver heads to your selected destination for a smooth handover."
       }
     ]
   },
   "price": {
     "price": "Pricing",
     "title": "Choose the right plan for you",
-    "subtitle": "Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.",
+    "subtitle": "Our pricing is calculated automatically based on distance and time. Simply select the service type that matches your vehicle, and you’ll see an instant fare estimate before booking",
     "btn": "Get Started",
     "mostPopular": "Most Popular",
     "item1": {
-      "title": "Standard",
       "tons": "3 Tons",
-      "subtitle": "Ideal for small vehicles and occasional towing needs",
-      "features": ["cars", "Small SUVs", "Motorcycles"],
+      "subtitle": "Ideal for small vehicles and light towing needs.",
+      "features": {
+        "cars": "Cars",
+        "smallSUV": "Small SUVs",
+        "motorcycles": "Motorcycles"
+      },
       "featured": false
     },
     "item2": {
-      "title": "Premium",
-      "tons": "10 Tons",
-      "subtitle": "Heavy-duty towing for commercial vehicles and larger loads",
-      "features": [
-        "Trucks",
-        "Buses",
-        "Heavy Equipment",
-        "Construction Vehicles",
-        "Priority dispatch",
-        "Emergency response",
-        "24/7 Roadside Assistance"
-      ],
+      "tons": "5 Tons Recovery",
+      "subtitle": "Perfect for larger personal and mid-sized vehicles.",
+      "features": {
+        "largeSUV": "Large SUVs",
+        "vans": "Vans",
+        "miniTrucks": "Mini Trucks / Small Trailers"
+      },
       "featured": true
     },
     "item3": {
-      "title": "Intermediate",
-      "tons": "5 Tons",
-      "subtitle": "Perfect for larger personal vehicles",
-      "features": ["Large SUVs", "Vans", "Small Trailers", "Extended coverage"],
+      "tons": "10 Ton Recovery",
+      "subtitle": "Heavy-duty recovery for commercial and industrial vehicles.",
+      "features": {
+        "trucksBuses": "Trucks & Buses",
+        "construction": "Construction Vehicles",
+        "heavyEquipment": "Heavy Equipment / Machinery"
+      },
       "featured": false
     }
   },
@@ -169,7 +175,7 @@
     "button": "Send Message"
   },
   "footer": {
-    "brandDescription": "Founded in 2022, Tareeqk was born from a bold vision to simplify roadside experiences and support drivers across the UAE with reliable, on-demand assistance.",
+    "brandDescription": "Tareeqk Portal, founded in 2022, is a UAE-based platform dedicated to providing fast, reliable, and on-demand vehicle recovery services, simplifying roadside experiences for drivers across the country.",
     "socials": {
       "snapchat": "Snapchat",
       "instagram": "Instagram",
@@ -302,7 +308,6 @@
       "subtitle": "Join hundreds of drivers who are already earning with Tareeqk. The process is simple, fast, and completely free!"
     }
   },
-  "vendorRegistration": {
-    "comingSoon": "VENDOR REGISTRATION, COMING SOON!"
-  }
+  "comingSoon": "VENDOR REGISTRATION, COMING SOON!",
+  "whatsapp": "Contact us via WhatsApp"
 }

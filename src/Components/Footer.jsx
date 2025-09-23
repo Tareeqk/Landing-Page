@@ -21,7 +21,7 @@ const Footer = ({ isDark }) => {
         {/* Brand Info */}
         <div className="md:col-span-2 lg:col-span-2 ">
           <img
-            src={isDark ? 'LogoW.png' : 'Logo.png'}
+            src={isDark ? 'LogoW.png' : 'text-logo.png'}
             alt="Tareeqk Logo"
             className="h-10 mb-4"
           />

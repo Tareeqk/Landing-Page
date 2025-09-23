@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FaWhatsapp } from "react-icons/fa";
 
 export default function Nasir() {
   const [show, setShow] = useState(true);
   const handleShow = () => setShow(false);
-
+  const {t, i18n} = useTranslation()
+  
   return (
-    <div className="fixed bottom-4 left-4 z-50 flex items-start space-x-2">
+    <div className="fixed bottom-4 left-4 z-50 flex items-start space-x-2 rtl:left-auto rtl:right-4">
       {show && (
         <>
           {/* Nasir Head */}
@@ -14,6 +16,7 @@ export default function Nasir() {
             src="/Nasir_Head.png"
             alt="Nasir"
             className="w-20 h-20 object-contain"
+            style={{ transform: i18n.dir() === 'rtl' ? 'scaleX(-1)' : 'none' }}
           />
 
           {/* Chat Bubble */}
@@ -26,7 +29,7 @@ export default function Nasir() {
               className="flex items-center space-x-2 "
             >
               <FaWhatsapp className="text-lg" />
-              <span className="hover:text-gray-100 transition">Contact us on WhatsApp</span>
+              <span className="hover:text-gray-100 transition">{t("whatsapp")}</span>
             </a>
 
             {/* Close Button */}

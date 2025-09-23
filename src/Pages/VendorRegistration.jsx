@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function VendorRegistration() {
     const { t } = useTranslation();
-    const translatedText = t('vendorRegistration.comingSoon');
+    const translatedText = t('comingSoon');
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
