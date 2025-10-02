@@ -67,8 +67,8 @@ export default function HowItWorks() {
                     <div className="w-full lg:w-1/2">
                         <div data-aos="fade-left" className="relative h-full rounded-lg overflow-hidden">
                             <img
-                                src="tareeqktow.jpg"
-                                alt={t('howItWorks.imageAlt')}
+                                src="new/third_img.webp"
+                                alt="towing service in dubai"
                                 className="w-full h-full object-cover min-h-[220px] sm:min-h-[280px] md:min-h-[320px]"
                                 loading="lazy"
                             />

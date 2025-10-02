@@ -42,23 +42,31 @@ export default function DriversFAQs() {
         <>
             <div
                 style={{
-                    backgroundImage: 'url(https://tareek-assets.s3.me-central-1.amazonaws.com/banner/WhatsApp+Image+2025-09-12+at+15.04.44.jpeg)',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center center',
-                    backgroundBlendMode: 'multiply',
-                    backgroundColor: 'rgba(0,0,0,0.65)',
-                    width: '100%',
-                    height: '400px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    color: '#fff',
-                    textAlign: 'center',
-                    padding: '0 20px',
+                    position: "relative",
+                    width: "100%",
+                    height: "400px",
+                    overflow: "hidden",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    color: "#fff",
+                    textAlign: "center",
+                    padding: "0 20px",
                 }}
             >
+                <img
+                    src="/new/second_img.webp"
+                    alt="towing service in dubai"
+                    style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        filter: "brightness(0.35)",
+                    }}
+                />
                 <h2 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
                      {t('drivers-faqs.title')}
                 </h2>

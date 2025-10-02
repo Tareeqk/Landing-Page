@@ -74,7 +74,7 @@ export default function LandingPage() {
                   {['Bike', 'Car', 'Jeep', 'Bus'].map((v, i) => (
                     <img
                       key={i}
-                      src={`icons/black/${v}.png`}
+                      src={`new/${v}.svg`}
                       alt={v}
                       className="w-8 h-8 sm:w-9 sm:h-9 flex-shrink-0"
                     />
@@ -86,8 +86,8 @@ export default function LandingPage() {
             {/* Image */}
             <div data-aos="fade-left" className="flex justify-center items-center order-1 lg:order-2 lg:items-end">
               <img
-                src="NewNasir.png"
-                alt="Tareeqk Representative"
+                src="new/NewNasir.webp"
+                alt="car recovery in dubai"
                 className="max-h-[30vh] sm:max-h-[40vh] lg:max-h-[50vh] object-contain mt-2 sm:mt-3 lg:mt-0"
               />
             </div>

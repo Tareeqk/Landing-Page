@@ -19,8 +19,8 @@ export default function Navbar({ isDark, setIsDark }) {
         { name: t('navbar.home'), href: '/', current: location.pathname === '/' },
         { name: t('navbar.about'), href: '/about', current: location.pathname === '/about' },
         { name: t('navbar.service'), href: '/service', current: location.pathname === '/service' },
-        // { name: t('navbar.media'), href: '/media-center', current: location.pathname === '/media-center' },
-        { name: t('navbar.terms'), href: '/terms', current: location.pathname === '/terms' },
+        { name: t('navbar.gallery'), href: '/media-center', current: location.pathname === '/media-center' },
+        // { name: t('navbar.terms'), href: '/terms', current: location.pathname === '/terms' },
         { name: t('navbar.contact'), href: '/#contact' },
     ];
 

@@ -3,14 +3,14 @@
     "home": "Home",
     "about": "About Us",
     "service": "Service",
-    "media": "Media Center",
+    "gallery": "Gallery",
     "terms": "Terms and Conditions",
     "contact": "Contact",
     "call": "CALL NOW"
   },
   "landing": {
     "title": "CAR RECOVERY & TOWING SERVICES",
-    "subtitle": "Tareeqk is Providing the best Recovery and Towing services all over the UAE",
+    "subtitle": "Tareeqk offers the best car recovery in Dubai and across the UAE with fast and reliable service.",
     "book": "Book Now",
     "download": "Download The App",
     "vehicle": "Towing Services for All Kinds of Vehicles"
@@ -52,34 +52,34 @@
   "serviceDetails": {
     "roadside": [
       {
-        "icon": "icons/black/Towing.png",
+        "icon": "new/Tow.svg",
         "title": "Fast Vehicle Recovery – Under 12 Minutes",
         "content": "Quick dispatch for stranded vehicles across the UAE."
       },
       {
-        "icon": "icons/black/Settings.png",
+        "icon": "new/Settings.svg",
         "title": "24/7 Emergency Towing",
         "content": "Round-the-clock recovery service whenever and wherever you need it."
       },
       {
-        "icon": "icons/black/Trouble.png",
+        "icon": "new/Trouble.svg",
         "title": "Desert & Off-Road Recovery",
         "content": "Specialized recovery for vehicles stuck in sand or off-road areas."
       }
     ],
     "towing": [
       {
-        "icon": "icons/black/location.png",
+        "icon": "new/Location.svg",
         "title": "Flatbed & Tow Truck Recovery",
         "content": "Safe transport for all types of vehicles with flatbeds and tow trucks."
       },
       {
-        "icon": "icons/black/Message.png",
+        "icon": "new/Message.svg",
         "title": "Accident & Breakdown Recovery",
         "content": "Reliable recovery support during accidents or sudden breakdowns."
       },
       {
-        "icon": "icons/black/Emergency.png",
+        "icon": "new/Emergency.svg",
         "title": "Long-Distance Recovery Across UAE",
         "content": "Secure transport for vehicles between cities and emirates."
       }

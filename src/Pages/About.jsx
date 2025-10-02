@@ -67,7 +67,7 @@ const About = () => {
                         <div data-aos="fade-right" className="flex flex-col gap-4 w-full xl:w-1/2">
                             {[
                                 { icon: "Road", title: "about2.item1title", subtitle: "about2.item1subtitle" },
-                                { icon: "Tow", title: "about2.item2title", subtitle: "about2.item2subtitle" },
+                                { icon: "Towing", title: "about2.item2title", subtitle: "about2.item2subtitle" },
                                 { icon: "User", title: "about2.item3title", subtitle: "about2.item3subtitle" }
                             ].map((item, i) => (
                                 <div
@@ -76,7 +76,7 @@ const About = () => {
                                 >
                                     <div className="flex gap-3 items-center">
                                         <img
-                                            src={`icons/black/${item.icon}.png`}
+                                            src={`new/${item.icon}.svg`}
                                             className="w-10 h-10 flex items-center justify-center rounded-full p-1 flex-shrink-0"
                                             style={{ backgroundColor: 'var(--primary-yellow)' }}
                                             alt={item.icon}
@@ -102,8 +102,8 @@ const About = () => {
                                 style={{ minHeight: '300px' }}
                             >
                                 <img
-                                    src="towingTareeqk.jpg"
-                                    alt="Towing service"
+                                    src="new/Recovery_Van.webp"
+                                    alt="car recovery in dubai"
                                     className="absolute inset-0 w-full h-full object-cover"
                                     loading="lazy"
                                 />
