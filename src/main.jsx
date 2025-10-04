@@ -8,9 +8,12 @@ import "@fontsource/manrope";
 import "@fontsource/manrope/500.css";
 import "@fontsource/manrope/700.css";
 import { BrowserRouter } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <HelmetProvider>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </HelmetProvider>
 );

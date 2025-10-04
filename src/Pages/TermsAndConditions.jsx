@@ -11,7 +11,7 @@ const TermsAndConditions = () => {
     async function fetchTerms() {
       try {
         const response = await axios.get(
-          `https://order.tareeqk.ae/pages?slug=terms-conditions&lang=${i18n.language}`
+          `${baseUrl}/pages?slug=terms-conditions&lang=${i18n.language}`
         );
 
         const htmlString = response.data.html;
@@ -83,7 +83,7 @@ const TermsAndConditions = () => {
     }
 
     fetchTerms();
-  }, [i18n.language]);
+  }, [i18n.language, baseUrl]);
 
   if (!terms.length) {
     return <p>Loading terms...</p>;
@@ -93,7 +93,7 @@ const TermsAndConditions = () => {
 
   return (
     <>
-      <div
+      <section
         style={{
           position: "relative",
           width: "100%",
@@ -120,13 +120,15 @@ const TermsAndConditions = () => {
             filter: "brightness(0.35)",
           }}
         />
-        <h2 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
+        <div className='d-flex'>
+        <h1 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
           {t('terms.title')}
-        </h2>
+        </h1>
         <p data-aos="fade-up" style={{ fontSize: '18px', maxWidth: '600px' }} className='text-gray-300'>
           {t('terms.subtitle')}
         </p>
-      </div>
+        </div>
+      </section>
       <div
         className='container mx-auto px-4 my-20'
         style={{

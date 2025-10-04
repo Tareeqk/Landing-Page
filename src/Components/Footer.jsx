@@ -21,9 +21,9 @@ const Footer = ({ isDark }) => {
         {/* Brand Info */}
         <div className="md:col-span-2 lg:col-span-2 ">
           <img
-            src={isDark ? 'LogoW.png' : 'text-logo.png'}
-            alt="Tareeqk Logo"
-            className="h-10 mb-4"
+            src={isDark ? 'new/LogoW.webp' : 'new/Logo.webp'}
+            alt="car recovery in dubai"
+            className="h-12 mb-4"
           />
           <p className="text-sm max-w-md span-titles" style={{ width: '90%' }}>
             {t('footer.brandDescription')}

@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 
-export default function HowItWorks() {
+export default function HowItWorks({ isSection = false }) {
     const { t } = useTranslation();
     const steps = t('howItWorks.steps', { returnObjects: true });
+    const HeadingTag = isSection ? 'h2' : 'h1';
 
     const scrollToDownload = () => {
         const element = document.getElementById('download-buttons');
@@ -22,9 +23,9 @@ export default function HowItWorks() {
                     {t("howItWorks.titleTag")}
                 </span>
 
-            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 text-[var(--primary-dark-bg)]">
+            <HeadingTag className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 text-[var(--primary-dark-bg)]">
                 {t("howItWorks.mainTitle")}
-            </h1>
+            </HeadingTag>
 
             <p className="text-[var(--primary-light-gray)] mb-8">
                 {t("howItWorks.subtitle")}

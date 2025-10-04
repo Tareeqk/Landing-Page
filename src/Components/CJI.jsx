@@ -15,11 +15,11 @@ export default function CJI() {
           {t('nasir.nasir')}
         </span>
 
-        <h1
+        <h2
           className={`text-2xl sm:text-3xl md:text-4xl font-medium my-2 ${isUrdu ? 'leading-loose' : ''}`}
         >
           {t('nasir.title')}
-        </h1>
+        </h2>
 
         <p
           className={`text-gray-400 mb-4 ${isUrdu ? 'leading-loose' : ''}`}

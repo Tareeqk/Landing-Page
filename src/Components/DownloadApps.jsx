@@ -38,7 +38,7 @@ export const DownloadApps = ({ type }) => {
           <img
             src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
             alt="Download on the App Store"
-            className="w-60 h-auto"
+            className="w-65 h-auto"
 
           />
         </a>

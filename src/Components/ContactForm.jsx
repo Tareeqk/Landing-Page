@@ -67,9 +67,9 @@ export default function ContactForm() {
             {t('contactForm.getInTouch')}
           </span>
 
-        <h1  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-2">
+        <h2  className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-2">
           {t('contactForm.title')}
-        </h1>
+        </h2>
 
         <p  className="text-gray-400 mb-8 text-sm">
           {t('contactForm.description')}

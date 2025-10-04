@@ -13,9 +13,9 @@ export default function Registration() {
                 <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block span-titles">
                     {t('register.title')}
                 </span>
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium my-4">
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium my-4">
                     {t('register.heading')}
-                </h1>
+                </h2>
                 <p className="text-[var(--primary-light-gray)] mt-3 max-w-2xl text-sm sm:text-base">
                     {t('register.subtitle')}
                 </p>

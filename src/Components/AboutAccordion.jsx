@@ -25,11 +25,11 @@ function AboutAccordion() {
                     <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block span-titles">
                         {t('aboutAccordion.serviceDetails')}
                     </span>
-                    <h1
+                    <h2
                         className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium my-4"
                     >
                         {t('aboutAccordion.detailedSupport')}
-                    </h1>
+                    </h2>
                     <p
                         className={`text-[var(--primary-light-gray)] ${isUrdu ? 'mt-8' : 'mt-3' } max-w-2xl text-sm sm:text-base`}
                     >

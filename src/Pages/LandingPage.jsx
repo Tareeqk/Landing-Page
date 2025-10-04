@@ -20,13 +20,13 @@ export default function LandingPage() {
         {/* Background */}
         <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full overflow-x-hidden"> {/* Changed to h-full, removed overflow-hidden */}
           <img
-            src="NewBG2.png"
-            alt="Background"
+            src="new/NewBG2.webp"
+            alt="vehicle recovery  in dubai"
             className="w-full h-full object-cover md:hidden"
           />
           <img
-            src="NewBGG.png"
-            alt="Background"
+            src="new/NewBGG.webp"
+            alt="towing service in dubai"
             className="w-full h-full object-cover hidden md:block"
           />
         </div>

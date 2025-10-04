@@ -2,9 +2,10 @@ import React from 'react';
 import Counters from '../Components/Counters';
 import { useTranslation } from 'react-i18next';
 
-const About = () => {
+const About = ({ isSection = false }) => {
     const { t, i18n } = useTranslation();
     const isUrdu = i18n.language === 'ur';
+    const HeadingTag = isSection ? 'h2' : 'h1'; 
 
     return (
         <>
@@ -18,9 +19,9 @@ const About = () => {
 
                     {/* Content Section */}
                     <div className="md:col-span-2" data-aos="fade-right">
-                        <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium max-w-4xl ${isUrdu ? 'leading-loose' : 'leading-tight'}`}>
+                        <HeadingTag className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium max-w-4xl ${isUrdu ? 'leading-loose' : 'leading-tight'}`}>
                             {t("about.title")}
-                        </h1>
+                        </HeadingTag>
                         <h4 className={`subtitle text-md sm:text-xs md:text-sm lg:text-xl max-w-xl text-gray-600 mt-5 ${isUrdu ? 'leading-loose' : 'leading-tight'}`}>
                             {t("about.subtitle")}
                         </h4>
@@ -53,9 +54,9 @@ const About = () => {
                             {t("about2.about")}
                         </span>
 
-                        <h1 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
+                        <h2 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-4 ${isUrdu ? 'leading-loose' : ''}`}>
                             {t("about2.title")}
-                        </h1>
+                        </h2>
 
                         <p className={`text-gray-400 mb-8 ${isUrdu ? 'leading-loose' : ''}`}>
                             {t("about2.subtitle")} 

@@ -19,8 +19,8 @@ export default function Navbar({ isDark, setIsDark }) {
         { name: t('navbar.home'), href: '/', current: location.pathname === '/' },
         { name: t('navbar.about'), href: '/about', current: location.pathname === '/about' },
         { name: t('navbar.service'), href: '/service', current: location.pathname === '/service' },
-        { name: t('navbar.gallery'), href: '/media-center', current: location.pathname === '/media-center' },
-        // { name: t('navbar.terms'), href: '/terms', current: location.pathname === '/terms' },
+        // { name: t('navbar.gallery'), href: '/media-center', current: location.pathname === '/media-center' },
+        { name: t('navbar.terms'), href: '/terms', current: location.pathname === '/terms' },
         { name: t('navbar.contact'), href: '/#contact' },
     ];
 
@@ -45,8 +45,8 @@ export default function Navbar({ isDark, setIsDark }) {
                             {/* Logo */}
                             <Link to="/" className="flex items-center">
                                 <img
-                                    src={isDark ? 'LogoW.png' : 'Logo.png'}
-                                    alt="Logo"
+                                    src={isDark ? 'new/LogoW.webp' : 'new/Logo.webp'}
+                                    alt="car recovery in dubai"
                                     className="h-7 sm:h-8 w-auto"
                                     loading="lazy"
                                 />

@@ -55,9 +55,9 @@ export default function DriverRegistrationPage() {
         }}
       >
         <div className="max-w-4xl">
-          <h2 data-aos="fade-up" className='text-3xl sm:text-4xl md:text-5xl font-bold mb-4'>
+          <h1 data-aos="fade-up" className='text-3xl sm:text-4xl md:text-5xl font-bold mb-4'>
             {t("driverRegistration.hero.title")}
-          </h2>
+          </h1>
           <p data-aos="fade-up" data-aos-delay="100" className='text-xl text-gray-100 mb-8'>
             {t("driverRegistration.hero.subtitle")}
           </p>

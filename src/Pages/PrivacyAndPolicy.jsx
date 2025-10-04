@@ -87,7 +87,7 @@ const PrivacyAndPolicy = () => {
 
     return (
         <>
-            <div
+            <section
                 style={{
                     position: "relative",
                     width: "100%",
@@ -114,16 +114,19 @@ const PrivacyAndPolicy = () => {
                         filter: "brightness(0.35)",
                     }}
                 />
-                <h2 data-aos="fade-up" className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
+                <div className='d-flex'>
+                    
+                <h1 data-aos="fade-up" className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
                     {t('policy.title')}
-                </h2>
+                </h1>
                 <p data-aos="fade-up"
                     style={{ fontSize: '18px', maxWidth: '600px', fontFamily }}
                     className="text-gray-300"
-                >
+                    >
                     {t('policy.subtitle')}
                 </p>
-            </div>
+                    </div>
+            </section>
 
             <div 
                 className="container mx-auto px-4 py-10 policy-content"

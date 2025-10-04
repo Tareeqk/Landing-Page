@@ -11,7 +11,7 @@ export default function FAQs() {
 
     useEffect(() => {
         async function fetchFAQs() {
-            const response = await axios.get(`https://order.tareeqk.ae/pages?slug=faqs&lang=${i18n.language}`);
+            const response = await axios.get(`${baseUrl}/pages?slug=faqs&lang=${i18n.language}`);
             const htmlString = response.data.html;
 
             // Convert the HTML into question/answer pairs
@@ -28,7 +28,7 @@ export default function FAQs() {
         }
 
         fetchFAQs();
-    }, [i18n.language]);
+    }, [i18n.language, baseUrl]);
 
     const toggleAccordion = index => {
         if (openIndexs.includes(index)) {
@@ -40,7 +40,7 @@ export default function FAQs() {
 
     return (
         <>
-            <div
+            <section
                 style={{
                     position: "relative",
                     width: "100%",
@@ -67,13 +67,16 @@ export default function FAQs() {
                         filter: "brightness(0.35)",
                     }}
                 />
-                <h2 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
+                <div className='d-flex'>
+
+                <h1 data-aos="fade-up" className='text-2xl sm:text-3xl md:text-4xl font-medium mb-2'>
                     {t('faqs.title')}
-                </h2>
+                </h1>
                 <p data-aos="fade-up" style={{ fontSize: '18px', maxWidth: '600px' }} className='text-gray-300'>
                     {t('faqs.subtitle')}
                 </p>
-            </div>
+                </div>
+            </section>
 
             <div className="space-y-4 max-w-3xl mx-auto my-4 " id="faqAccordion">
                 {loading ? (
