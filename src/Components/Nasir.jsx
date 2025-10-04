@@ -33,12 +33,12 @@ export default function Nasir() {
             </a>
 
             {/* Close Button */}
-            <button
+            <span
               onClick={handleShow}
               className="ml-1 sm:ml-2 text-white hover:text-gray-800 transition cursor-pointer text-sm sm:text-base"
             >
               &#x2715;
-            </button>
+            </span>
           </div>
         </>
       )}
