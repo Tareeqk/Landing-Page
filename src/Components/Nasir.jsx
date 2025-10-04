@@ -13,8 +13,8 @@ export default function Nasir() {
         <>
           {/* Nasir Head */}
           <img
-            src="/Nasir_Head.png"
-            alt="Nasir"
+            src="new/Nasir_Head.webp"
+            alt="desert recovery dubai"
             className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"
             style={{ transform: i18n.dir() === "rtl" ? "scaleX(-1)" : "none" }}
           />
