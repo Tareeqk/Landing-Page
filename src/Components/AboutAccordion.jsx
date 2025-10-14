@@ -64,7 +64,7 @@ function AboutAccordion() {
                                         <div className="flex items-center">
                                             <img
                                                 src={item.icon}
-                                                alt=""
+                                                alt="car recovery in dubai "
                                                 className="w-8 h-8 p-1 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-[var(--primary-yellow)] text-[var(--primary-dark-bg)] font-bold mx-1 sm:mx-2 md:mx-3 lg:mx-4"
                                             />
                                             <span className="light-text text-sm sm:text-base font-medium text-[var(--primary-dark-bg)]">
@@ -116,7 +116,7 @@ function AboutAccordion() {
                                         <div className="flex items-center">
                                             <img
                                                 src={item.icon}
-                                                alt=""
+                                                alt="towing service in dubai"
                                                 className="p-1 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-[var(--primary-yellow)] text-[var(--primary-dark-bg)] font-bold mx-1 sm:mx-2 md:mx-3 lg:mx-4"
                                             />
                                             <span className="light-text text-sm sm:text-base font-medium text-[var(--primary-dark-bg)]">

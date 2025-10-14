@@ -12,9 +12,8 @@ const PrivacyAndPolicy = () => {
         async function fetchPolicy() {
             try {
                 const response = await axios.get(
-                    `https://order.tareeqk.ae/pages?slug=privacy-policy&lang=${i18n.language}`
+                    `${baseUrl}/pages?slug=privacy-policy&lang=${i18n.language}`
                 );
-
                 let htmlString = response.data.html || '';
                 if (!htmlString) {
                     setPolicy('');

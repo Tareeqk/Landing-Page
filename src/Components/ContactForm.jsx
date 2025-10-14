@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 export default function ContactForm() {
   const { t } = useTranslation();
-
+  const baseUrl = import.meta.env.VITE_BASE_URL;
   const [formData, setFormData] = useState({
     name: '',
     mobile: '',
@@ -36,7 +36,7 @@ export default function ContactForm() {
       params.append('submit', 'true');
 
       const response = await axios.post(
-        'https://order.tareeqk.ae/contact-us',
+        `${baseUrl}/contact-us`,
         params,
       );
 
