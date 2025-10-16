@@ -162,7 +162,7 @@
   "contactForm": {
     "getInTouch": "Get in Touch",
     "title": "Contact Us",
-    "description": "Have questions or need help? Fill out the form and our team will get back to you soon.",
+    "description": "Need support? Send us your details, and we’ll reach out soon",
     "fields": {
       "name": "Name",
       "mobile": "Mobile Number*",
@@ -298,7 +298,7 @@
         "Fill in your personal details: Name, Email, Password, and Phone Number.",
         "Upload your profile picture.",
         "Upload the required documents (Emirates ID, License, Mulkiah, etc.).",
-        "If you have a referral code, you can enter it during signup.",
+        "If you have a referral code, enter it when you sign up",
         "Submit your application and wait for approval."
       ],
       "note": "Make sure all your documents are valid and clearly visible when uploading. Incomplete or incorrect applications may delay the approval process."
