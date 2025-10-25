@@ -1,6 +1,7 @@
 import React from 'react';
 import Counters from '../Components/Counters';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 const About = ({ isSection = false }) => {
     const { t, i18n } = useTranslation();
@@ -9,6 +10,10 @@ const About = ({ isSection = false }) => {
 
     return (
         <>
+              <Helmet>
+                <meta name="robots" content="index, follow" />
+                <title>Best Roadside Assistance In Dubai </title>
+              </Helmet>
             <section id={1}>
                 <div className="container mx-auto px-4 my-8">
                     <div className="mb-6" data-aos="fade-right">
@@ -28,7 +33,10 @@ const About = ({ isSection = false }) => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
                             <p className={`text-gray-400 ${isUrdu ? 'leading-loose' : ''}`}>
-                                {t("about.subtitle1")}
+                                <Trans 
+                                i18nKey="about.subtitle1" 
+                                components={{ 1: <a key="about-link" href="https://www.tareeqk.ae/about" className="text-[var(--primary-yellow)]" /> }} 
+                            />
                             </p>
                             <p className={`text-gray-400 ${isUrdu ? 'leading-loose' : ''}`}>
                                 {t("about.subtitle2")}

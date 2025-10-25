@@ -15,6 +15,11 @@ import { Helmet } from "react-helmet-async";
 export default function Home() {
   return (
     <>
+
+      <Helmet>
+        <meta name="robots" content="index, follow" />
+        <title>Car Recovery in Dubai </title>
+      </Helmet>
       <div>
         <LandingPage />
         <CJI />
