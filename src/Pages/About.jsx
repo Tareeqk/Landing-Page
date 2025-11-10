@@ -10,10 +10,6 @@ const About = ({ isSection = false }) => {
 
     return (
         <>
-              <Helmet>
-                <meta name="robots" content="index, follow" />
-                <title>Best Roadside Assistance In Dubai </title>
-              </Helmet>
             <section id={1}>
                 <div className="container mx-auto px-4 my-8">
                     <div className="mb-6" data-aos="fade-right">
