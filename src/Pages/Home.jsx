@@ -10,16 +10,10 @@ import CJI from "../Components/CJI";
 import ContactForm from "../Components/ContactForm";
 import PriceGroup from "../Components/PriceGroup";
 import Registration from "./Registration";
-import { Helmet } from "react-helmet-async";
 
 export default function Home() {
   return (
     <>
-
-      <Helmet>
-        <meta name="robots" content="index, follow" />
-        <title>Car Recovery in Dubai </title>
-      </Helmet>
       <div>
         <LandingPage />
         <CJI />

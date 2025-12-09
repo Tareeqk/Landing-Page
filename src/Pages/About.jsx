@@ -7,7 +7,10 @@ const About = ({ isSection = false }) => {
     const { t, i18n } = useTranslation();
     const isUrdu = i18n.language === 'ur';
     const HeadingTag = isSection ? 'h2' : 'h1'; 
-
+        <Helmet>
+        <meta name="robots" content="index, follow" />
+        <title>ABOUT US </title>
+      </Helmet>
     return (
         <>
             <section id={1}>

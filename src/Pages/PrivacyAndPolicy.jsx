@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 const PrivacyAndPolicy = () => {
     const { t, i18n } = useTranslation();
@@ -8,6 +9,10 @@ const PrivacyAndPolicy = () => {
     const [loading, setLoading] = useState(true);
     const baseUrl = import.meta.env.VITE_BASE_URL;
 
+            <Helmet>
+            <meta name="robots" content="index, follow" />
+            <title>Privacy Policy </title>
+          </Helmet>
     useEffect(() => {
         async function fetchPolicy() {
             try {

@@ -1,11 +1,15 @@
 import React from 'react'
 import SplitText from "../Components/ComingSoon";
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 export default function VendorRegistration() {
     const { t } = useTranslation();
     const translatedText = t('comingSoon');
-
+    <Helmet>
+            <meta name="robots" content="index, follow" />
+            <title>Vendor Registration </title>
+          </Helmet>
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
             <SplitText

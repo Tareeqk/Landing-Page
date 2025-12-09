@@ -7,7 +7,7 @@ export function parseHtmlSections(htmlString, language = "en") {
     .replace(/\\"/g, '"')
     .replace(/\\n/g, "")
     .replace(/<o:p>|<\/o:p>/g, "")
-    .replace(/<span[^>]*>|<\/span>/g, "")
+    .replace(/<span[^>]*>\s*<\/span>/g, "")
     .replace(/<font[^>]*>|<\/font>/g, "")
     .replace(/style="[^"]*"/g, ""); // remove inline style entirely
 
@@ -47,7 +47,7 @@ export function parseHtmlSections(htmlString, language = "en") {
     const isHeading = tag.match(/^h[1-6]$/);
 
     // Numbered or textual heading (like "Interpretation and Definitions")
-    if (isHeading || text.match(/^\d+\.\s/) || /^[A-Z]/.test(text)) {
+    if (isHeading || text.match(/^\d+\.\s/)) {
       if (currentSection) sections.push(currentSection);
       currentSection = {
         heading: text,

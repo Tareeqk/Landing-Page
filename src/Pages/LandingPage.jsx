@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { DownloadApps } from '../Components/DownloadApps';
 import { useTranslation } from 'react-i18next';
-import ContactUs from '../Components/ContactUs';
+import { Helmet } from "react-helmet-async";
 
 export default function LandingPage() {
   const { t } = useTranslation();
@@ -13,6 +13,10 @@ export default function LandingPage() {
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
+        <Helmet>
+        <meta name="robots" content="index, follow" />
+        <title>Car Recovery in Dubai </title>
+      </Helmet>
 
   return (
     <>

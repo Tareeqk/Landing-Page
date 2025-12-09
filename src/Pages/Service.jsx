@@ -1,12 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-
+import { Helmet } from 'react-helmet-async';
 
 export default function HowItWorks({ isSection = false }) {
     const { t } = useTranslation();
     const steps = t('howItWorks.steps', { returnObjects: true });
     const HeadingTag = isSection ? 'h2' : 'h1';
-
+        <Helmet>
+                <meta name="robots" content="index, follow" />
+                <title>Services </title>
+              </Helmet>
     const scrollToDownload = () => {
         const element = document.getElementById('download-buttons');
         if (element) {

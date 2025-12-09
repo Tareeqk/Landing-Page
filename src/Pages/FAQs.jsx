@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from "react-helmet-async";
 
 export default function FAQs() {
     const { t, i18n } = useTranslation();
@@ -37,7 +38,10 @@ export default function FAQs() {
             setOpenIndexs([...openIndexs, index]);
         }
     };
-
+        <Helmet>
+        <meta name="robots" content="index, follow" />
+        <title>FAQ </title>
+      </Helmet>
     return (
         <>
             <section

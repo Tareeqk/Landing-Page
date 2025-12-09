@@ -1,10 +1,14 @@
 import { useTranslation } from "react-i18next";
 import { DownloadApps } from "../Components/DownloadApps";
+import { Helmet } from 'react-helmet-async';
 
 export default function DriverRegistrationPage() {
   const { t } = useTranslation();
 
-  // Hardcoded icons for each benefit
+<Helmet>
+        <meta name="robots" content="index, follow" />
+        <title>Driver Registration </title>
+      </Helmet>
   const benefits = [
     {
       title: t("driverRegistration.benefits.items.0.title"),
