@@ -8,6 +8,7 @@ const About = ({ isSection = false }) => {
     const isUrdu = i18n.language === 'ur';
     const HeadingTag = isSection ? 'h2' : 'h1'; 
         <Helmet>
+        <link rel="canonical" href="https://tareeqk.ae/about" />    
         <meta name="robots" content="index, follow" />
         <title>ABOUT US </title>
       </Helmet>

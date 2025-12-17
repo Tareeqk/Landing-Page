@@ -1,8 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 
 export default function DriversFAQs() {
+
+  <Helmet>
+          <link rel="canonical" href="https://tareeqk.ae/drivers-FAQs" />
+          <meta name="robots" content="index, follow" />
+          <title>Driver FAQ </title>
+        </Helmet>
+
   const { t, i18n } = useTranslation();
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);

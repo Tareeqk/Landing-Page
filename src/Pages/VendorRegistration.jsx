@@ -7,6 +7,7 @@ export default function VendorRegistration() {
     const { t } = useTranslation();
     const translatedText = t('comingSoon');
     <Helmet>
+            <link rel="canonical" href="https://tareeqk.ae/vendor-registration" />
             <meta name="robots" content="index, follow" />
             <title>Vendor Registration </title>
           </Helmet>

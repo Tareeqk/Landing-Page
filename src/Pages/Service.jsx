@@ -7,6 +7,7 @@ export default function HowItWorks({ isSection = false }) {
     const steps = t('howItWorks.steps', { returnObjects: true });
     const HeadingTag = isSection ? 'h2' : 'h1';
         <Helmet>
+                <link rel="canonical" href="https://tareeqk.ae/service" />
                 <meta name="robots" content="index, follow" />
                 <title>Services </title>
               </Helmet>

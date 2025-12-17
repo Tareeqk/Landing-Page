@@ -14,6 +14,7 @@ export default function LandingPage() {
     }
   };
         <Helmet>
+        <link rel="canonical" href="https://tareeqk.ae/" />
         <meta name="robots" content="index, follow" />
         <title>Car Recovery in Dubai </title>
       </Helmet>

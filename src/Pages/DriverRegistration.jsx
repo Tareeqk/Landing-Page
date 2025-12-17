@@ -6,6 +6,7 @@ export default function DriverRegistrationPage() {
   const { t } = useTranslation();
 
 <Helmet>
+        <link rel="canonical" href="https://tareeqk.ae/driver-registration" />
         <meta name="robots" content="index, follow" />
         <title>Driver Registration </title>
       </Helmet>

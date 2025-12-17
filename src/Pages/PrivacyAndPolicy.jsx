@@ -10,6 +10,7 @@ const PrivacyAndPolicy = () => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
 
             <Helmet>
+            <link rel="canonical" href="https://tareeqk.ae/privacy-policy" />
             <meta name="robots" content="index, follow" />
             <title>Privacy Policy </title>
           </Helmet>
