@@ -5,11 +5,6 @@ import { Helmet } from 'react-helmet-async';
 export default function DriverRegistrationPage() {
   const { t } = useTranslation();
 
-<Helmet>
-        <link rel="canonical" href="https://tareeqk.ae/driver-registration" />
-        <meta name="robots" content="index, follow" />
-        <title>Driver Registration </title>
-      </Helmet>
   const benefits = [
     {
       title: t("driverRegistration.benefits.items.0.title"),
@@ -42,6 +37,12 @@ export default function DriverRegistrationPage() {
 
   return (
     <>
+
+<Helmet>
+        <link rel="canonical" href="https://tareeqk.ae/driver-registration" />
+        <meta name="robots" content="index, follow" />
+        <title>Driver Registration </title>
+      </Helmet>
       {/* Hero Section */}
       <div
         style={{

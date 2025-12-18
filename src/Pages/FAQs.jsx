@@ -38,13 +38,13 @@ export default function FAQs() {
             setOpenIndexs([...openIndexs, index]);
         }
     };
-        <Helmet>
+    return (
+        <>
+                <Helmet>
         <link rel="canonical" href="https://tareeqk.ae/faq" />
         <meta name="robots" content="index, follow" />
         <title>FAQ </title>
       </Helmet>
-    return (
-        <>
             <section
                 style={{
                     position: "relative",

@@ -7,13 +7,13 @@ const About = ({ isSection = false }) => {
     const { t, i18n } = useTranslation();
     const isUrdu = i18n.language === 'ur';
     const HeadingTag = isSection ? 'h2' : 'h1'; 
-        <Helmet>
+    return (
+        <>
+                <Helmet>
         <link rel="canonical" href="https://tareeqk.ae/about" />    
         <meta name="robots" content="index, follow" />
         <title>ABOUT US </title>
       </Helmet>
-    return (
-        <>
             <section id={1}>
                 <div className="container mx-auto px-4 my-8">
                     <div className="mb-6" data-aos="fade-right">
@@ -35,7 +35,7 @@ const About = ({ isSection = false }) => {
                             <p className={`text-gray-400 ${isUrdu ? 'leading-loose' : ''}`}>
                                 <Trans 
                                 i18nKey="about.subtitle1" 
-                                components={{ 1: <a key="about-link" href="https://www.tareeqk.ae/about" className="text-[var(--primary-yellow)]" /> }} 
+                                components={{ 1: <a key="about-link" href="https://www.tareeqk.ae/service" className="text-[var(--primary-yellow)]" /> }} 
                             />
                             </p>
                             <p className={`text-gray-400 ${isUrdu ? 'leading-loose' : ''}`}>

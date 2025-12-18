@@ -6,11 +6,6 @@ import { Helmet } from "react-helmet-async"
 
 const TermsAndConditions = () => {
 
-    <Helmet>
-            <link rel="canonical" href="https://tareeqk.ae/terms" />
-            <meta name="robots" content="index, follow" />
-            <title>Terms Conditions </title>
-          </Helmet>
   const { t, i18n } = useTranslation()
   const [terms, setTerms] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -55,6 +50,11 @@ const TermsAndConditions = () => {
 
   return (
     <>
+        <Helmet>
+            <link rel="canonical" href="https://tareeqk.ae/terms" />
+            <meta name="robots" content="index, follow" />
+            <title>Terms Conditions </title>
+          </Helmet>
       <section
         style={{
           position: "relative",

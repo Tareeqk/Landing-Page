@@ -6,11 +6,6 @@ export default function HowItWorks({ isSection = false }) {
     const { t } = useTranslation();
     const steps = t('howItWorks.steps', { returnObjects: true });
     const HeadingTag = isSection ? 'h2' : 'h1';
-        <Helmet>
-                <link rel="canonical" href="https://tareeqk.ae/service" />
-                <meta name="robots" content="index, follow" />
-                <title>Services </title>
-              </Helmet>
     const scrollToDownload = () => {
         const element = document.getElementById('download-buttons');
         if (element) {
@@ -20,6 +15,13 @@ export default function HowItWorks({ isSection = false }) {
     };
 
     return (
+        <>
+                <Helmet>
+                <link rel="canonical" href="https://tareeqk.ae/service" />
+                <meta name="robots" content="index, follow" />
+                <title>Services </title>
+              </Helmet>
+              
         <div className="mx-auto px-4 my-8 container">
             {/* Section Header */}
             <div className="mb-6" data-aos="fade-right">
@@ -87,5 +89,6 @@ export default function HowItWorks({ isSection = false }) {
                 </div>
             </div>
         </div>
+        </>
     );
 }

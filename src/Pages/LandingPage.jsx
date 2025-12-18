@@ -13,14 +13,15 @@ export default function LandingPage() {
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
-        <Helmet>
+
+  return (
+    <>
+            <Helmet>
         <link rel="canonical" href="https://tareeqk.ae/" />
         <meta name="robots" content="index, follow" />
         <title>Car Recovery in Dubai </title>
       </Helmet>
 
-  return (
-    <>
       <div className="relative w-full h-auto py-4 md:py-6 overflow-x-hidden landing-container"> {/* Keep overflow-x-hidden */}
         {/* Background */}
         <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full overflow-x-hidden"> {/* Changed to h-full, removed overflow-hidden */}

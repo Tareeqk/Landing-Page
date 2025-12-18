@@ -5,11 +5,6 @@ import { useTranslation } from "react-i18next";
 
 export default function DriversFAQs() {
 
-  <Helmet>
-          <link rel="canonical" href="https://tareeqk.ae/drivers-FAQs" />
-          <meta name="robots" content="index, follow" />
-          <title>Driver FAQ </title>
-        </Helmet>
 
   const { t, i18n } = useTranslation();
   const [faqs, setFaqs] = useState([]);
@@ -50,6 +45,13 @@ export default function DriversFAQs() {
 
   return (
     <>
+
+  <Helmet>
+          <link rel="canonical" href="https://tareeqk.ae/drivers-FAQs" />
+          <meta name="robots" content="index, follow" />
+          <title>Driver FAQ </title>
+        </Helmet>
+        
       <section
         style={{
           position: "relative",
