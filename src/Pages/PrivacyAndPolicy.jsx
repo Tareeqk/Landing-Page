@@ -88,7 +88,6 @@ const PrivacyAndPolicy = () => {
     return (
         <>
                     <Helmet>
-            <link rel="canonical" href="https://tareeqk.ae/privacy-policy" />
             <meta name="robots" content="index, follow" />
             <title>Privacy Policy </title>
           </Helmet>

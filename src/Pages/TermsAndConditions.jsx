@@ -51,7 +51,6 @@ const TermsAndConditions = () => {
   return (
     <>
         <Helmet>
-            <link rel="canonical" href="https://tareeqk.ae/terms" />
             <meta name="robots" content="index, follow" />
             <title>Terms Conditions </title>
           </Helmet>

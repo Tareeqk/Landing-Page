@@ -41,7 +41,6 @@ export default function FAQs() {
     return (
         <>
                 <Helmet>
-        <link rel="canonical" href="https://tareeqk.ae/faq" />
         <meta name="robots" content="index, follow" />
         <title>FAQ </title>
       </Helmet>

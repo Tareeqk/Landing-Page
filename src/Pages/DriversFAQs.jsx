@@ -47,11 +47,10 @@ export default function DriversFAQs() {
     <>
 
   <Helmet>
-          <link rel="canonical" href="https://tareeqk.ae/drivers-FAQs" />
           <meta name="robots" content="index, follow" />
           <title>Driver FAQ </title>
         </Helmet>
-        
+
       <section
         style={{
           position: "relative",

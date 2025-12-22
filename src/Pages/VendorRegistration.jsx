@@ -9,7 +9,6 @@ export default function VendorRegistration() {
     return (
         <>
         <Helmet>
-            <link rel="canonical" href="https://tareeqk.ae/vendor-registration" />
             <meta name="robots" content="index, follow" />
             <title>Vendor Registration </title>
           </Helmet>

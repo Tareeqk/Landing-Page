@@ -17,7 +17,6 @@ export default function HowItWorks({ isSection = false }) {
     return (
         <>
                 <Helmet>
-                <link rel="canonical" href="https://tareeqk.ae/service" />
                 <meta name="robots" content="index, follow" />
                 <title>Services </title>
               </Helmet>

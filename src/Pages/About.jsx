@@ -10,7 +10,6 @@ const About = ({ isSection = false }) => {
     return (
         <>
                 <Helmet>
-        <link rel="canonical" href="https://tareeqk.ae/about" />    
         <meta name="robots" content="index, follow" />
         <title>ABOUT US </title>
       </Helmet>
