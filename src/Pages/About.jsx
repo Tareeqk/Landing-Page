@@ -74,9 +74,9 @@ const About = ({ isSection = false }) => {
                     <div className="flex flex-col xl:flex-row gap-6">
                         <div data-aos="fade-right" className="flex flex-col gap-4 w-full xl:w-1/2">
                             {[
-                                { icon: "Road", title: "about2.item1title", subtitle: "about2.item1subtitle" },
-                                { icon: "Towing", title: "about2.item2title", subtitle: "about2.item2subtitle" },
-                                { icon: "User", title: "about2.item3title", subtitle: "about2.item3subtitle" }
+                                { icon: "Road", alt: "Roadside Assistance in Dubai", title: "about2.item1title", subtitle: "about2.item1subtitle" },
+                                { icon: "Towing", alt: "Towing Service in Dubai", title: "about2.item2title", subtitle: "about2.item2subtitle" },
+                                { icon: "User", alt: "Desert Recovery in Dubai", title: "about2.item3title", subtitle: "about2.item3subtitle" }
                             ].map((item, i) => (
                                 <div
                                     key={i}
@@ -87,7 +87,7 @@ const About = ({ isSection = false }) => {
                                             src={`new/${item.icon}.svg`}
                                             className="w-10 h-10 flex items-center justify-center rounded-full p-1 flex-shrink-0"
                                             style={{ backgroundColor: 'var(--primary-yellow)' }}
-                                            alt={item.icon}
+                                            alt={item.alt}
                                         />
                                         <div>
                                             <h3 className={`text-base md:text-xl font-semibold text-black ${isUrdu ? 'leading-loose' : ''}`}>
@@ -111,7 +111,7 @@ const About = ({ isSection = false }) => {
                             >
                                 <img
                                     src="new/Recovery_Van.webp"
-                                    alt="car recovery in dubai"
+                                    alt="Roadside assistance in Dubai"
                                     className="absolute inset-0 w-full h-full object-cover"
                                     loading="lazy"
                                 />

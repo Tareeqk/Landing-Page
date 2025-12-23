@@ -16,9 +16,9 @@ export default function LandingPage() {
 
   return (
     <>
-            <Helmet>
+      <Helmet>
         <meta name="robots" content="index, follow" />
-        <title>Car Recovery in Dubai </title>
+        <title>Car Recovery Service in Dubai </title>
       </Helmet>
 
       <div className="relative w-full h-auto py-4 md:py-6 overflow-x-hidden landing-container"> {/* Keep overflow-x-hidden */}
@@ -26,12 +26,12 @@ export default function LandingPage() {
         <div className="absolute inset-x-0 top-0 bottom-0 z-0 h-full overflow-x-hidden"> {/* Changed to h-full, removed overflow-hidden */}
           <img
             src="new/NewBG2.webp"
-            alt="vehicle recovery  in dubai"
+            alt="car recovery service in Dubai"
             className="w-full h-full object-cover md:hidden"
           />
           <img
             src="new/NewBGG.webp"
-            alt="towing service in dubai"
+            alt="car recovery service in Dubai"
             className="w-full h-full object-cover hidden md:block"
           />
         </div>

@@ -46,7 +46,7 @@ export default function Navbar({ isDark, setIsDark }) {
                             <Link to="/" className="flex items-center">
                                 <img
                                     src={isDark ? 'new/LogoW.webp' : 'new/Logo.webp'}
-                                    alt="car recovery in dubai"
+                                    alt="Towing service in Dubai"
                                     className="h-7 sm:h-8 w-auto"
                                     loading="lazy"
                                 />

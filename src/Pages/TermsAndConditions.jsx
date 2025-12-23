@@ -70,7 +70,7 @@ const TermsAndConditions = () => {
       >
         <img
           src="/new/second_img.webp"
-          alt="best towing service in dubai"
+          alt="Best car recovery in Dubai"
           style={{
             position: "absolute",
             top: 0,
