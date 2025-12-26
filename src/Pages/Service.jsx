@@ -16,10 +16,12 @@ export default function HowItWorks({ isSection = false }) {
 
     return (
         <>
-                <Helmet>
+        {!isSection && (
+            <Helmet>
                 <meta name="robots" content="index, follow" />
-                <title>Services </title>
-              </Helmet>
+                <title>Services</title>
+            </Helmet>
+        )}
               
         <div className="mx-auto px-4 my-8 container">
             {/* Section Header */}
