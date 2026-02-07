@@ -3,7 +3,7 @@
     "home": "Home",
     "about": "About Us",
     "service": "Service",
-    "gallery": "Gallery",
+    "blogs": "Blogs",
     "terms": "Terms and Conditions",
     "contact": "Contact",
     "call": "CALL NOW"
@@ -14,6 +14,13 @@
     "book": "Book Now",
     "download": "Download The App",
     "vehicle": "Towing Services for All Kinds of Vehicles"
+  },
+  "blogs": {
+    "title": "Our Blogs",
+    "subtitle": "Expert insights, tips, and news about car maintenance, roadside assistance, and automotive trends in the UAE",
+    "no_blogs": "No blogs yet",
+    "mins": "mins read",
+    "readMore": "Read More"
   },
   "about": {
     "about": "About Us",

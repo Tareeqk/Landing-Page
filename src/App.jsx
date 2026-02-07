@@ -15,6 +15,8 @@ import DriverRegistrationPage from './Pages/DriverRegistration';
 import VendorRegistration from './Pages/VendorRegistration';
 import NotFound from './Pages/NotFound';
 import usePageViews from './hooks/usePageViews';
+import Blogs from './Pages/Blogs';
+import BlogPage from './Pages/BlogPage';
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
         <Route path='/faq' element={<FAQs />} />
         <Route path='/drivers-FAQs' element={<DriversFAQs />} />
         <Route path='/about' element={<About />} />
+        <Route path='/blogs' element={<Blogs />} />
+        <Route path='/page/:blogSlug' element={<BlogPage />} />
         <Route path='/service' element={<Service />} />
         <Route path='/terms' element={<TermsAndConditions />} />
         <Route path='/driver-registration' element={<DriverRegistrationPage />} />

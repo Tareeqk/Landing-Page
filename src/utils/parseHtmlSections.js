@@ -74,3 +74,11 @@ export function parseHtmlSections(htmlString, language = "en") {
 
   return sections;
 }
+
+
+export function fixImageUrl(url){
+  let cleaned = url.replace(/^\/sm\/0\/plain\//, '');
+  cleaned = cleaned.replace(/@webp$/, '');
+  
+  return cleaned;
+}
