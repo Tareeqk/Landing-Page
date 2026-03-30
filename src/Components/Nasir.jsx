@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { FaWhatsapp } from "react-icons/fa";
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import { FaWhatsapp } from "react-icons/fa"
 
 export default function Nasir() {
-  const [show, setShow] = useState(true);
-  const handleShow = () => setShow(false);
-  const { t, i18n } = useTranslation();
+  const [show, setShow] = useState(true)
+  const handleShow = () => setShow(false)
+  const { t, i18n } = useTranslation()
 
   return (
     <div className="fixed bottom-4 left-4 z-50 flex items-start space-x-2 rtl:left-auto rtl:right-4">
@@ -13,7 +13,7 @@ export default function Nasir() {
         <>
           {/* Nasir Head */}
           <img
-            src="new/Nasir_Head.webp"
+            src="/new/Nasir_Head.webp"
             alt="desert recovery dubai"
             className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"
             style={{ transform: i18n.dir() === "rtl" ? "scaleX(-1)" : "none" }}
@@ -29,7 +29,9 @@ export default function Nasir() {
               className="flex items-center space-x-1 sm:space-x-2"
             >
               <FaWhatsapp className="text-sm sm:text-lg" />
-              <span className="hover:text-gray-100 transition">{t("whatsapp")}</span>
+              <span className="hover:text-gray-100 transition">
+                {t("whatsapp")}
+              </span>
             </a>
 
             {/* Close Button */}
@@ -43,5 +45,5 @@ export default function Nasir() {
         </>
       )}
     </div>
-  );
+  )
 }
