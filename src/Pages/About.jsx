@@ -12,7 +12,8 @@ const About = ({ isSection = false }) => {
       {!isSection && (
         <Helmet>
           <meta name="robots" content="index, follow" />
-          <title>About Us</title>
+          <title>{t("meta.about.title")}</title>
+          <meta name="description" content={t("meta.about.description")} />
         </Helmet>
       )}
       <section id={1}>

@@ -4,235 +4,235 @@
 
   <!-- Homepage -->
   <url>
-    <loc>https://www.tareeqk.ae/en</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en"/>
+    <loc>https://www.tareeqk.ae/</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/"/>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/"/>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/"/>
     <priority>1.0</priority>
   </url>
 
   <!-- About -->
   <url>
-    <loc>https://www.tareeqk.ae/en/about</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/about"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/about"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/about"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/about"/>
+    <loc>https://www.tareeqk.ae/about</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/about"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/about"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/about"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/about</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/about"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/about"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/about"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/about"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/about"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/about"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/about"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/about</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/about"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/about"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/about"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/about"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/about"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/about"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/about"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/about"/>
     <priority>0.8</priority>
   </url>
 
   <!-- Services -->
   <url>
-    <loc>https://www.tareeqk.ae/en/service</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/service"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/service"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/service"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/service"/>
+    <loc>https://www.tareeqk.ae/service</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/service"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/service"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/service"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/service"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/service</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/service"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/service"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/service"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/service"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/service"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/service"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/service"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/service"/>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/service</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/service"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/service"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/service"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/service"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/service"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/service"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/service"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/service"/>
     <priority>0.8</priority>
   </url>
 
   <!-- FAQs -->
   <url>
-    <loc>https://www.tareeqk.ae/en/faq</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/faq"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/faq"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/faq"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/faq"/>
+    <loc>https://www.tareeqk.ae/faq</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/faq"/>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/faq</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/faq"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/faq"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/faq"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/faq"/>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/faq</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/faq"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/faq"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/faq"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/faq"/>
     <priority>0.7</priority>
   </url>
 
   <!-- Drivers FAQs -->
   <url>
-    <loc>https://www.tareeqk.ae/en/drivers-FAQs</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/drivers-FAQs"/>
+    <loc>https://www.tareeqk.ae/drivers-FAQs</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/drivers-FAQs"/>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/drivers-FAQs</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/drivers-FAQs"/>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/drivers-FAQs</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/drivers-FAQs"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/drivers-FAQs"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/drivers-FAQs"/>
     <priority>0.7</priority>
   </url>
 
   <!-- Terms & Conditions -->
   <url>
-    <loc>https://www.tareeqk.ae/en/terms</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/terms"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/terms"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/terms"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/terms"/>
+    <loc>https://www.tareeqk.ae/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/terms"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/terms</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/terms"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/terms"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/terms"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/terms"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/terms</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/terms"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/terms"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/terms"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/terms"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/terms"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/terms"/>
     <priority>0.6</priority>
   </url>
 
   <!-- Privacy Policy -->
   <url>
-    <loc>https://www.tareeqk.ae/en/privacy-policy</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/privacy-policy"/>
+    <loc>https://www.tareeqk.ae/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/privacy-policy"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/privacy-policy</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/privacy-policy"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/privacy-policy</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/privacy-policy"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/privacy-policy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/privacy-policy"/>
     <priority>0.6</priority>
   </url>
 
   <!-- Driver Registration -->
   <url>
-    <loc>https://www.tareeqk.ae/en/driver-registration</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/driver-registration"/>
+    <loc>https://www.tareeqk.ae/driver-registration</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/driver-registration"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/driver-registration</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/driver-registration"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/driver-registration</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/driver-registration"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/driver-registration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/driver-registration"/>
     <priority>0.6</priority>
   </url>
 
   <!-- Vendor Registration -->
   <url>
-    <loc>https://www.tareeqk.ae/en/vendor-registration</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/vendor-registration"/>
+    <loc>https://www.tareeqk.ae/vendor-registration</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/vendor-registration"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ar/vendor-registration</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/vendor-registration"/>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.tareeqk.ae/ur/vendor-registration</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.tareeqk.ae/en/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://www.tareeqk.ae/ar/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="ur" href="https://www.tareeqk.ae/ur/vendor-registration"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/en/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://www.tareeqk.ae/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://www.tareeqk.ae/ar/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://www.tareeqk.ae/ur/vendor-registration"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.tareeqk.ae/vendor-registration"/>
     <priority>0.6</priority>
   </url>
 

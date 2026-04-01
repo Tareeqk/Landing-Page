@@ -316,5 +316,27 @@
     }
   },
   "comingSoon": "VENDOR REGISTRATION, COMING SOON!",
-  "whatsapp": "WhatsApp us"
+  "whatsapp": "WhatsApp us",
+  "meta": {
+    "home": {
+      "title": "Tareeqk - Towing & Roadside Assistance in Dubai",
+      "description": "Fast, reliable towing and roadside assistance in Dubai. Available 24/7 for car recovery, battery jump start, tire change and more."
+    },
+    "about": {
+      "title": "About Us - Tareeqk Dubai",
+      "description": "Learn about Tareeqk, Dubai's trusted towing and roadside assistance service provider operating across the UAE."
+    },
+    "service": {
+      "title": "Our Services - Towing, Recovery & Roadside Assistance Dubai",
+      "description": "Explore Tareeqk's full range of services including car towing, desert recovery, battery jump start, tire change and fuel delivery in Dubai."
+    },
+    "blogs": {
+      "title": "Blog - Car Tips & Roadside Assistance Guides | Tareeqk",
+      "description": "Read Tareeqk's latest articles on car recovery, roadside safety tips, and driving guides for Dubai and the UAE."
+    },
+    "faqs": {
+      "title": "FAQs - Towing & Roadside Assistance Dubai | Tareeqk",
+      "description": "Got questions? Find answers about Tareeqk's towing and roadside assistance services, pricing, and coverage areas in Dubai."
+    }
+  }
 }

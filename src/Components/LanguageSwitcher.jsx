@@ -1,14 +1,16 @@
 import { useState, useRef, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { ChevronDownIcon } from "@heroicons/react/20/solid"
-import { useNavigate, useLocation } from "react-router-dom" // ← ADD THIS
+import { useNavigate, useLocation } from "react-router-dom"
+
+const LANG_PREFIXES = ["ar", "ur"] // English has no prefix
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
-  const navigate = useNavigate() // ← ADD THIS
-  const location = useLocation() // ← ADD THIS
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const languages = [
     { code: "en", label: "English" },
@@ -16,34 +18,41 @@ function LanguageSwitcher() {
     { code: "ur", label: "اردو" },
   ]
 
-  // useEffect(() => {
-  //   const savedLang = localStorage.getItem("i18nextLng")
-  //   if (savedLang && savedLang !== i18n.language) {
-  //     i18n.changeLanguage(savedLang)
-  //     document.documentElement.dir =
-  //       savedLang === "ar" || savedLang === "ur" ? "rtl" : "ltr"
-  //     document.body.lang = savedLang
-  //   } else {
-  //     document.documentElement.dir =
-  //       i18n.language === "ar" || i18n.language === "ur" ? "rtl" : "ltr"
-  //     document.body.lang = i18n.language
-  //   }
-  // }, [i18n])
-
   const currentLanguage = languages.find((lang) => lang.code === i18n.language)
 
   const changeLang = (lng) => {
     i18n.changeLanguage(lng)
     localStorage.setItem("i18nextLng", lng)
     document.documentElement.dir = lng === "ar" || lng === "ur" ? "rtl" : "ltr"
-    document.body.lang = lng
+    document.documentElement.lang = lng
     setIsOpen(false)
 
-    // ← ADD THIS BLOCK: swap the lang segment in the current URL
-    // Assumes URL pattern /:lang/... e.g. /en/about → /ar/about
-    const segments = location.pathname.split("/") // ["", "en", "about"]
-    segments[1] = lng // ["", "ar", "about"]
-    navigate(segments.join("/") + location.search + location.hash)
+    const segments = location.pathname.split("/") // e.g. ["", "ar", "about"] or ["", "about"]
+    const currentLangPrefix = LANG_PREFIXES.includes(segments[1])
+      ? segments[1]
+      : null
+
+    let newPath
+    if (lng === "en") {
+      // Going to English: strip the lang prefix
+      // ["", "ar", "about"] → "/about"
+      // ["", "about"] → "/about" (already English, no change)
+      newPath = currentLangPrefix
+        ? "/" + segments.slice(2).join("/")
+        : location.pathname
+    } else {
+      // Going to Arabic/Urdu: swap or add the lang prefix
+      // ["", "ar", "about"] → "/ur/about"  (swap)
+      // ["", "about"] → "/ar/about"         (add)
+      newPath = currentLangPrefix
+        ? "/" + lng + "/" + segments.slice(2).join("/")
+        : "/" + lng + location.pathname
+    }
+
+    // Clean up double slashes e.g. /ar/ → /ar
+    newPath = newPath.replace(/\/+$/, "") || "/"
+
+    navigate(newPath + location.search + location.hash)
   }
 
   useEffect(() => {
@@ -53,9 +62,7 @@ function LanguageSwitcher() {
       }
     }
     document.addEventListener("mousedown", handleClickOutside)
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
+    return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
   return (

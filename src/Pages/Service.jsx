@@ -19,7 +19,8 @@ export default function HowItWorks({ isSection = false }) {
       {!isSection && (
         <Helmet>
           <meta name="robots" content="index, follow" />
-          <title>Services</title>
+          <title>{t("meta.service.title")}</title>
+          <meta name="description" content={t("meta.service.description")} />
         </Helmet>
       )}
 

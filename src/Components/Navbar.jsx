@@ -4,7 +4,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react"
 import { Bars3Icon } from "@heroicons/react/24/outline"
-import { useLocation, Link } from "react-router-dom"
+import { useLocation, Link, useParams } from "react-router-dom"
 import ContactUs from "./ContactUs"
 import DarkMode from "./DarkMode"
 import LanguageSwitcher from "./LanguageSwitcher"
@@ -18,31 +18,31 @@ function classNames(...classes) {
 
 export default function Navbar({ isDark, setIsDark }) {
   const location = useLocation()
+  const { lang } = useParams() // ← ADD
   const { t } = useTranslation()
   const langLink = useLangLink()
 
+  const barePath = lang // ← ADD
+    ? location.pathname.replace(`/${lang}`, "")
+    : location.pathname
+
   const navigation = [
-    {
-      name: t("navbar.home"),
-      href: langLink("/"),
-      current: location.pathname === "/",
-    },
+    { name: t("navbar.home"), href: langLink("/"), current: barePath === "/" },
     {
       name: t("navbar.about"),
       href: langLink("/about"),
-      current: location.pathname === "/about",
+      current: barePath === "/about",
     },
     {
       name: t("navbar.service"),
       href: langLink("/service"),
-      current: location.pathname === "/service",
+      current: barePath === "/service",
     },
     {
       name: t("navbar.blogs"),
       href: langLink("/blogs"),
-      current: location.pathname === "/blogs",
+      current: barePath === "/blogs",
     },
-    // { name: t('navbar.terms'), href: langLink('/terms'), current: location.pathname === '/terms' },
     { name: t("navbar.contact"), href: langLink("/#contact") },
   ]
 

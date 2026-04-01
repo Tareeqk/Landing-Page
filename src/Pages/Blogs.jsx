@@ -55,11 +55,8 @@ export default function Blogs() {
     <>
       <Helmet>
         <meta name="robots" content="index, follow" />
-        <title>Blogs - Expert Automotive Insights & Tips</title>
-        <meta
-          name="description"
-          content="Read our latest blogs on car maintenance, roadside assistance, safety tips, and automotive trends in Dubai and UAE."
-        />
+        <title>{t("meta.blogs.title")}</title>
+        <meta name="description" content={t("meta.blogs.description")} />
       </Helmet>
 
       <section

@@ -1,22 +1,20 @@
 // hooks/useLangLink.js
-// Use this instead of hardcoding /${lang} in every Link and navigate() call
-//
-// Usage:
-//   const langLink = useLangLink()
-//   <Link to={langLink('/about')}>About</Link>
-//   <Link to={langLink('/blogs')}>Blogs</Link>
-//
-// Instead of:
-//   <Link to={`/${lang}/about`}>About</Link>
-
 import { useParams } from "react-router-dom"
+
+const LANG_PREFIXES = ["ar", "ur"] // English has no prefix
 
 export default function useLangLink() {
   const { lang } = useParams()
 
   return (path) => {
-    // Normalize: ensure path starts with /
     const normalized = path.startsWith("/") ? path : `/${path}`
+
+    // If we're on an English route, lang is undefined → no prefix
+    if (!lang || !LANG_PREFIXES.includes(lang)) {
+      return normalized
+    }
+
+    // Arabic/Urdu → prepend the lang prefix
     return `/${lang}${normalized}`
   }
 }
