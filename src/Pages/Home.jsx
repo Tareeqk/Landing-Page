@@ -11,6 +11,7 @@ import ContactForm from "../Components/ContactForm"
 import PriceGroup from "../Components/PriceGroup"
 import Registration from "./Registration"
 import { useTranslation } from "react-i18next"
+import { Helmet } from "react-helmet-async"
 
 export default function Home() {
   const { t } = useTranslation()
