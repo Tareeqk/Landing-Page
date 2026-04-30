@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { DownloadApps } from '../Components/DownloadApps';
+ 
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import CarModel from './CarModel';
@@ -231,14 +231,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <div
-        ref={downloadRef}
-        id="target-section"
-        className="w-full overflow-x-hidden download-apps-container bg-[var(--secondary-light-gray)] dark-bg py-16 px-4"
-        data-testid="landing-download-section"
-      >
-        <DownloadApps type="customer" />
-      </div>
+       
     </>
   );
 }

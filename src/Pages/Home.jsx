@@ -3,7 +3,7 @@ import Navbar from "./../Components/Navbar";
 import Footer from "./../Components/Footer";
 import LandingPage from "./LandingPage";
 import AboutUs from "./About";
-import { DownloadApps } from "../Components/DownloadApps";
+ 
 import AboutAccordion from "../Components/AboutAccordion";
 import HowItWorks from "./Service";
 import CJI from "../Components/CJI";
