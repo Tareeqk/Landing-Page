@@ -170,46 +170,34 @@ export default function LandingPage() {
 
               {/* App Store & Google Play badges */}
               <div className="tk-store-badges" data-testid="landing-store-badges">
-                <a
-                  href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="tk-store-badge"
-                  aria-label="Download on the App Store"
-                >
-                  <svg viewBox="0 0 120 40" xmlns="http://www.w3.org/2000/svg" className="tk-store-badge__svg">
-                    <rect width="120" height="40" rx="7" fill="#000"/>
-                    <rect width="120" height="40" rx="7" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1"/>
-                    <g transform="translate(7,7) scale(0.54)">
-                      <path d="M22.2 9.8c.9-1.1 1.5-2.6 1.3-4.1-1.3.1-2.8.9-3.7 2-.8 1-1.5 2.5-1.3 4 1.4.1 2.8-.7 3.7-1.9z" fill="#fff"/>
-                      <path d="M15.5 20.1c0-3.2 2.6-4.7 2.7-4.8-1.5-2.2-3.8-2.5-4.6-2.5-2 0-3.8 1.2-4.8 1.2-1 0-2.5-1.1-4.2-1.1-2.1 0-4.1 1.3-5.2 3.2-2.2 3.9-.6 9.6 1.6 12.8 1.1 1.6 2.3 3.3 4 3.3 1.6-.1 2.2-1 4.2-1 1.9 0 2.5 1 4.2 1 1.7 0 2.9-1.6 3.9-3.1.9-1.3 1.3-2.7 1.3-2.8-.1 0-3.1-1.2-3.1-4.2z" fill="#fff"/>
-                    </g>
-                    <text x="33" y="15" fill="white" fontSize="7" fontFamily="'Helvetica Neue',Arial,sans-serif" fontWeight="400" letterSpacing="0.3">Download on the</text>
-                    <text x="33" y="28" fill="white" fontSize="13" fontFamily="'Helvetica Neue',Arial,sans-serif" fontWeight="600">App Store</text>
-                  </svg>
-                </a>
+  <a
+    href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="tk-store-badge"
+    aria-label="Download on the App Store"
+  >
+    <img
+      src="/applestore.png"
+      alt="Download on the App Store"
+      className="tk-store-badge__img"
+    />
+  </a>
 
-                <a
-                  href="https://play.google.com/store/apps/details?id=com.tareeqk.order"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="tk-store-badge"
-                  aria-label="Get it on Google Play"
-                >
-                  <svg viewBox="0 0 135 40" xmlns="http://www.w3.org/2000/svg" className="tk-store-badge__svg">
-                    <rect width="135" height="40" rx="7" fill="#000"/>
-                    <rect width="135" height="40" rx="7" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1"/>
-                    <g transform="translate(8,10)">
-                      <path d="M1.2 0.5L11 10.4 1.2 20.3c-.4-.2-.7-.6-.7-1.1V1.6C.5 1.1.8.7 1.2.5z" fill="#4FC3F7"/>
-                      <path d="M14.5 7L11 10.4 1.2.5C1.5.3 1.9.3 2.2.5L14.5 7z" fill="#81C784"/>
-                      <path d="M14.5 13.8L2.2 20.3c-.3.2-.7.2-1 0L11 10.4l3.5 3.4z" fill="#F44336"/>
-                      <path d="M18.5 10.4c0 .8-.4 1.5-1 1.9l-3 1.5-3.5-3.4L14.5 7l3 1.5c.6.4 1 1.1 1 1.9z" fill="#FFCA28"/>
-                    </g>
-                    <text x="33" y="15" fill="white" fontSize="7" fontFamily="'Helvetica Neue',Arial,sans-serif" fontWeight="400" letterSpacing="0.3">GET IT ON</text>
-                    <text x="33" y="28" fill="white" fontSize="13" fontFamily="'Helvetica Neue',Arial,sans-serif" fontWeight="600">Google Play</text>
-                  </svg>
-                </a>
-              </div>
+  <a
+    href="https://play.google.com/store/apps/details?id=com.tareeqk.order"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="tk-store-badge"
+    aria-label="Get it on Google Play"
+  >
+    <img
+      src="playstore.png"
+      alt="Get it on Google Play"
+      className="tk-store-badge__img"
+    />
+  </a>
+</div>
 
               <div className="tk-vehicles" data-testid="landing-vehicle-row">
                 <span className="tk-vehicles__label">

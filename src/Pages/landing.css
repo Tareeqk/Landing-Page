@@ -279,18 +279,50 @@
    ============================================================ */
 .tk-store-badges {
   display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
+  gap: 14px;
   align-items: center;
+  flex-wrap: nowrap; /* keep side by side */
 }
 
 .tk-store-badge {
-  display: inline-block;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-  border-radius: 7px;
-  overflow: hidden;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  height: 52px;
+  flex-shrink: 0;
+}
+
+.tk-store-badge__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .tk-store-badges {
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .tk-store-badge {
+    width: 135px;
+    height: 42px;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+  .tk-store-badges {
+    gap: 8px;
+  }
+
+  .tk-store-badge {
+    width: 118px;
+    height: 38px;
+  }
 }
 
 .tk-store-badge:hover {
