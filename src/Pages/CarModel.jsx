@@ -13,7 +13,7 @@ export default function CarModel({ type = "flatbed" }) {
   const idle = useRef(0);
 
   // Pull camera further back on mobile so the full truck fits in frame
-  const RADIUS = isMobile ? "12m" : "8.5m";
+  const RADIUS = isMobile ? "7m" : "10m";
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 1024);
