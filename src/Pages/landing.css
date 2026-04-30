@@ -1,0 +1,465 @@
+/* ============================================================
+   TAREEQK — PREMIUM LANDING HERO
+   Dark cinematic charcoal + amber accent for high-end feel
+   ============================================================ */
+
+:root {
+  --tk-ink:         #0b0d10;
+  --tk-ink-2:       #141820;
+  --tk-ink-3:       #1b2029;
+  --tk-line:        rgba(255, 255, 255, 0.08);
+  --tk-line-strong: rgba(255, 255, 255, 0.18);
+  --tk-text:        #ECECEE;
+  --tk-text-soft:   rgba(236, 236, 238, 0.72);
+  --tk-text-mute:   rgba(236, 236, 238, 0.55);
+
+  --tk-amber:       #F5B301;
+  --tk-amber-2:     #FFC94A;
+  --tk-amber-deep:  #C98A00;
+
+  --tk-radius-lg:   22px;
+  --tk-radius-md:   14px;
+  --tk-radius-pill: 999px;
+
+  --tk-display: "Sora", "Syne", "Space Grotesk", ui-sans-serif, system-ui, -apple-system,
+                "Segoe UI", Roboto, sans-serif;
+  --tk-body:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                Roboto, sans-serif;
+}
+
+/* ============================================================
+   HERO SHELL
+   KEY FIX: overflow MUST be visible so the 3D truck is never clipped.
+   The background layer clips itself independently via .tk-hero__bg.
+   ============================================================ */
+.tk-hero {
+  position: relative;
+  width: 100%;
+  min-height: clamp(640px, 92vh, 960px);
+  color: var(--tk-text);
+  font-family: var(--tk-body);
+  isolation: isolate;
+  overflow: visible;            
+  background: var(--tk-ink);
+}
+
+/* The background layer clips itself — the truck never lives here */
+.tk-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;            /* decorative layer clips fine */
+  pointer-events: none;
+}
+
+.tk-hero__bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(0.75) brightness(0.55) contrast(1.05);
+}
+
+.tk-hero__veil {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(100deg,
+      rgba(11,13,16,0.96) 0%,
+      rgba(11,13,16,0.82) 38%,
+      rgba(11,13,16,0.45) 62%,
+      rgba(11,13,16,0.20) 100%),
+    radial-gradient(120% 80% at 80% 40%,
+      rgba(255,176,42,0.10) 0%,
+      transparent 55%),
+    radial-gradient(80% 60% at 10% 100%,
+      rgba(0,0,0,0.55) 0%,
+      transparent 70%);
+}
+
+.tk-hero__horizon {
+  position: absolute;
+  left: 35%;
+  right: -10%;
+  bottom: 0;
+  height: 45%;
+  background:
+    radial-gradient(60% 100% at 60% 100%,
+      rgba(255,170,40,0.22) 0%,
+      rgba(255,120,0,0.08) 40%,
+      transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.tk-hero__grain {
+  position: absolute; inset: 0;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.9'/></svg>");
+}
+
+/* ============================================================
+   CONTENT GRID
+   ============================================================ */
+.tk-hero__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: clamp(28px, 6vw, 80px) clamp(20px, 4vw, 56px);
+  min-height: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.tk-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: clamp(24px, 5vw, 64px);
+  width: 100%;
+  align-items: center;
+}
+
+/* ============================================================
+   TEXT SIDE
+   ============================================================ */
+.tk-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border: 1px solid var(--tk-line-strong);
+  border-radius: var(--tk-radius-pill);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tk-text-soft);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.tk-eyebrow__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34,197,94,0.18);
+  animation: tk-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes tk-pulse {
+  0%,100% { box-shadow: 0 0 0 4px rgba(34,197,94,0.18); }
+  50%     { box-shadow: 0 0 0 8px rgba(34,197,94,0.06); }
+}
+
+.tk-hero__title {
+  margin: 20px 0 16px;
+  font-family: var(--tk-display);
+  font-weight: 800;
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+
+.tk-hero__subtitle {
+  font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.6;
+  color: var(--tk-text-soft);
+  max-width: 48ch;
+  margin-bottom: 24px;
+}
+
+/* ============================================================
+   TRUST CHIPS
+   Desktop: all 3 shown side-by-side (default, no cycling)
+   Mobile: single cycling chip (JS toggles data-mobile attr)
+   ============================================================ */
+.tk-trust {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tk-trust__chip {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px;
+  border: 1px solid var(--tk-line);
+  border-radius: var(--tk-radius-md);
+  background: rgba(255,255,255,0.025);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  min-width: 108px;
+}
+
+.tk-trust__chip strong {
+  font-family: var(--tk-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.tk-trust__chip span {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--tk-text-mute);
+  margin-top: 2px;
+}
+
+/* Mobile-only cycling container */
+.tk-trust--cycle {
+  min-height: 68px;
+  align-items: center;
+}
+
+.tk-trust__chip--cycle {
+  min-width: 150px;
+  border-color: var(--tk-amber);
+  background: rgba(245, 179, 1, 0.06);
+}
+
+@keyframes tk-chip-slide-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+@keyframes tk-chip-slide-out {
+  from { opacity: 1; transform: translateY(0)     scale(1);    }
+  to   { opacity: 0; transform: translateY(-14px) scale(0.95); }
+}
+
+.tk-chip-enter { animation: tk-chip-slide-in  0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.tk-chip-exit  { animation: tk-chip-slide-out 0.35s cubic-bezier(0.55, 0, 1, 0.45) both; }
+
+/* ---------- CTAs ---------- */
+.tk-cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: var(--tk-radius-pill);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tk-btn--primary {
+  color: #111;
+  background: linear-gradient(180deg, var(--tk-amber-2) 0%, var(--tk-amber) 100%);
+  box-shadow: 0 10px 24px rgba(245, 179, 1, 0.3);
+}
+
+.tk-btn--ghost {
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--tk-line-strong);
+}
+
+/* ============================================================
+   APP STORE BADGES
+   ============================================================ */
+.tk-store-badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  align-items: center;
+}
+
+.tk-store-badge {
+  display: inline-block;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  border-radius: 7px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.tk-store-badge:hover {
+  transform: translateY(-2px);
+  opacity: 0.88;
+}
+
+.tk-store-badge__svg {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
+/* ---------- vehicle coverage ---------- */
+.tk-vehicles { display: flex; flex-direction: column; gap: 12px; }
+
+.tk-vehicles__label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tk-text-mute);
+}
+
+.tk-vehicles__icons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tk-vehicles__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--tk-line);
+}
+
+.tk-vehicles__icon img {
+  width: 26px;
+  height: 26px;
+  filter: invert(1) brightness(1.6);
+}
+
+/* ============================================================
+   TRUCK STAGE — overflow visible everywhere in the chain
+   ============================================================ */
+.tk-hero__stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 650px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.tk-hero__stage-inner {
+  width: 100%;
+  max-width: 1000px;
+  height: clamp(600px, 80vh, 900px);
+  position: relative;
+  overflow: visible;
+  margin: 0 auto;
+  transform: translateY(30px) scale(1.15);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tk-hero__tagline {
+  position: absolute;
+  right: 0;
+  bottom: 5%;
+  font-family: var(--tk-display);
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--tk-text-mute);
+  opacity: 0.4;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   MOBILE-ONLY INLINE TRUCK  (inside text column, above CTAs)
+   Hidden on desktop — shown only at ≤1024px
+   ============================================================ */
+.tk-hero__stage--inline-mobile {
+  display: none;
+}
+
+/* ============================================================
+   RESPONSIVE ≤1024 px  —  text top, truck inline, chips cycle
+   ============================================================ */
+@media (max-width: 1024px) {
+  .tk-hero__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tk-hero__text {
+    order: 1;
+    text-align: center;
+    align-items: center;
+  }
+
+  /* Hide the desktop right-column truck entirely */
+  .tk-hero__stage--desktop {
+    display: none !important;
+  }
+
+  /* Show the inline mobile truck */
+  .tk-hero__stage--inline-mobile {
+    display: block;
+    /* Full-bleed: break out of text column padding */
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    /* Fixed height — enough for the truck, doesn't crowd elements */
+    height: 260px;
+    /* CRITICAL: clip to this box — no edge bleed in any orientation */
+    overflow: hidden;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  /* Inner stage fills the container — reset any desktop transforms */
+  .tk-hero__stage--inline-mobile .tk-hero__stage-inner {
+    width: 100%;
+    height: 100%;
+    transform: none;
+    overflow: hidden;
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .tk-cta-row,
+  .tk-store-badges,
+  .tk-trust,
+  .tk-vehicles__icons {
+    justify-content: center;
+  }
+}
+
+/* ≤640px portrait phones */
+@media (max-width: 640px) {
+  .tk-hero__inner { padding: 16px 16px 40px; }
+
+  .tk-hero__stage--inline-mobile {
+    height: 240px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+  }
+
+  .tk-hero__title { font-size: 30px; }
+  .tk-store-badge__svg { height: 36px; }
+}
+
+/* Landscape phones — shorter but still fully contained */
+@media (max-width: 900px) and (orientation: landscape) {
+  .tk-hero__stage--inline-mobile {
+    height: 200px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+}
+
+/* RTL Support */
+[dir="rtl"] .tk-hero__tagline { right: auto; left: 0; }
+[dir="rtl"] .tk-hero__title   { text-align: right; }
+[dir="rtl"] .tk-hero__subtitle{ text-align: right; margin-left: auto; }
