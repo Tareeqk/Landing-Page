@@ -3,6 +3,19 @@
    Dark cinematic charcoal + amber accent for high-end feel
    ============================================================ */
 
+.tk-typing-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--tk-amber, #F5B301);
+  font-weight: 400;
+  animation: tk-blink 1s step-end infinite;
+}
+
+@keyframes tk-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
 :root {
   --tk-ink:         #0b0d10;
   --tk-ink-2:       #141820;

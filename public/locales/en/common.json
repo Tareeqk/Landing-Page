@@ -9,7 +9,12 @@
     "call": "CALL NOW"
   },
   "landing": {
-    "title": "CAR RECOVERY & TOWING SERVICES",
+    "title": "Car Recovery & Towing Services",
+    "services": [
+      "Car Recovery & Towing Services",
+      "Battery Jump-Start",
+      "Emergency Tyre Swap"
+    ],
     "subtitle": "Tareeqk offers the best car recovery service in Dubai with a fast and reliable response.",
     "book": "Book Now",
     "download": "Download The App",

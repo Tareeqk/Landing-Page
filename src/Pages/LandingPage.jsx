@@ -63,6 +63,55 @@ function TrustChips() {
   );
 }
 
+const TYPING_SPEED   = 80;
+const DELETING_SPEED = 40;
+const PAUSE_AFTER    = 2200;
+
+function TypingTitle() {
+  const { t, i18n } = useTranslation();
+  const services = t('landing.services', { returnObjects: true });
+
+  const [index, setIndex] = useState(0);
+  const [display, setDisplay] = useState('');
+  const [phase, setPhase]     = useState('typing');
+
+  // Reset to first service and re-type when language changes
+  useEffect(() => {
+    setIndex(0);
+    setDisplay('');
+    setPhase('typing');
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [i18n.language]);
+
+  useEffect(() => {
+    const target = services[index] ?? services[0];
+
+    if (phase === 'typing') {
+      if (display.length >= target.length) { setPhase('pause'); return; }
+      const id = setTimeout(() => setDisplay(target.slice(0, display.length + 1)), TYPING_SPEED);
+      return () => clearTimeout(id);
+    }
+
+    if (phase === 'pause') {
+      const id = setTimeout(() => setPhase('deleting'), PAUSE_AFTER);
+      return () => clearTimeout(id);
+    }
+
+    if (phase === 'deleting') {
+      if (display.length === 0) { setIndex(prev => (prev + 1) % services.length); setPhase('typing'); return; }
+      const id = setTimeout(() => setDisplay(prev => prev.slice(0, -1)), DELETING_SPEED);
+      return () => clearTimeout(id);
+    }
+  }, [display, phase, index, services]);
+
+  return (
+    <>
+      {display}
+      <span className="tk-typing-cursor" aria-hidden="true">|</span>
+    </>
+  );
+}
+
 export default function LandingPage() {
   const { t } = useTranslation();
   const downloadRef = useRef(null);
@@ -124,10 +173,10 @@ export default function LandingPage() {
               </span>
 
               <h1
-                className="tk-hero__title whitespace-pre-line"
+                className="tk-hero__title"
                 data-testid="landing-title"
               >
-                {t('landing.title')}
+                <TypingTitle />
               </h1>
 
               <p className="tk-hero__subtitle" data-testid="landing-subtitle">
