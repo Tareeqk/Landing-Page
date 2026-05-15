@@ -1,55 +1,69 @@
-import { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
+import { useState, useRef, useEffect } from "react"
+import { useTranslation } from "react-i18next"
+import { ChevronDownIcon } from "@heroicons/react/20/solid"
+import { useNavigate, useLocation } from "react-router-dom"
+
+const LANG_PREFIXES = ["ar", "ur"] // English has no prefix
 
 function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const { i18n } = useTranslation()
+  const [isOpen, setIsOpen] = useState(false)
+  const dropdownRef = useRef(null)
+  const navigate = useNavigate()
+  const location = useLocation()
 
   const languages = [
-    { code: 'en', label: 'English' },
-    { code: 'ar', label: 'العربية' },
-    { code: 'ur', label: 'اردو' },
-  ];
+    { code: "en", label: "English" },
+    { code: "ar", label: "العربية" },
+    { code: "ur", label: "اردو" },
+  ]
 
-  // 🟡 Load saved language on first render
-  useEffect(() => {
-    const savedLang = localStorage.getItem('i18nextLng');
-    if (savedLang && savedLang !== i18n.language) {
-      i18n.changeLanguage(savedLang);
-      document.documentElement.dir = savedLang === 'ar' || savedLang === 'ur' ? 'rtl' : 'ltr';
-      document.body.lang = savedLang;
-    } else {
-      // Ensure direction is set correctly on mount
-      document.documentElement.dir = i18n.language === 'ar' || i18n.language === 'ur' ? 'rtl' : 'ltr';
-      document.body.lang = i18n.language;
-    }
-  }, [i18n]);
+  const currentLanguage = languages.find((lang) => lang.code === i18n.language)
 
-  const currentLanguage = languages.find((lang) => lang.code === i18n.language);
-
-  // 🟢 Change language and persist to localStorage
   const changeLang = (lng) => {
-    i18n.changeLanguage(lng);
-    localStorage.setItem('i18nextLng', lng);
-    document.documentElement.dir = lng === 'ar' || lng === 'ur' ? 'rtl' : 'ltr';
-    document.body.lang = lng;
-    setIsOpen(false);
-  };
+    i18n.changeLanguage(lng)
+    localStorage.setItem("i18nextLng", lng)
+    document.documentElement.dir = lng === "ar" || lng === "ur" ? "rtl" : "ltr"
+    document.documentElement.lang = lng
+    setIsOpen(false)
 
-  // 🔵 Close dropdown on click outside
+    const segments = location.pathname.split("/") // e.g. ["", "ar", "about"] or ["", "about"]
+    const currentLangPrefix = LANG_PREFIXES.includes(segments[1])
+      ? segments[1]
+      : null
+
+    let newPath
+    if (lng === "en") {
+      // Going to English: strip the lang prefix
+      // ["", "ar", "about"] → "/about"
+      // ["", "about"] → "/about" (already English, no change)
+      newPath = currentLangPrefix
+        ? "/" + segments.slice(2).join("/")
+        : location.pathname
+    } else {
+      // Going to Arabic/Urdu: swap or add the lang prefix
+      // ["", "ar", "about"] → "/ur/about"  (swap)
+      // ["", "about"] → "/ar/about"         (add)
+      newPath = currentLangPrefix
+        ? "/" + lng + "/" + segments.slice(2).join("/")
+        : "/" + lng + location.pathname
+    }
+
+    // Clean up double slashes e.g. /ar/ → /ar
+    newPath = newPath.replace(/\/+$/, "") || "/"
+
+    navigate(newPath + location.search + location.hash)
+  }
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
+        setIsOpen(false)
       }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -65,7 +79,7 @@ function LanguageSwitcher() {
         <span className="font-medium">{currentLanguage?.label}</span>
         <ChevronDownIcon
           className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${
-            isOpen ? 'rotate-180' : ''
+            isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
@@ -79,8 +93,8 @@ function LanguageSwitcher() {
               className={`block w-full text-left px-3 py-1 text-xs sm:text-sm
                 ${
                   i18n.language === lang.code
-                    ? 'bg-[var(--primary-yellow)] text-[var(--primary-dark-bg)]'
-                    : 'text-gray-700 hover:bg-gray-100'
+                    ? "bg-[var(--primary-yellow)] text-[var(--primary-dark-bg)]"
+                    : "text-gray-700 hover:bg-gray-100"
                 }`}
             >
               {lang.label}
@@ -89,7 +103,7 @@ function LanguageSwitcher() {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default LanguageSwitcher;
+export default LanguageSwitcher

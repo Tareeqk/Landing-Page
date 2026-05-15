@@ -12,8 +12,15 @@ import PriceGroup from "../Components/PriceGroup";
 import Registration from "./Registration";
 
 export default function Home() {
+  const { t } = useTranslation()
+
   return (
     <>
+      <Helmet>
+        <meta name="robots" content="index, follow" />
+        <title>{t("meta.home.title")}</title>
+        <meta name="description" content={t("meta.home.description")} />
+      </Helmet>
       <div>
         <LandingPage />
         <CJI />
@@ -25,5 +32,5 @@ export default function Home() {
         <ContactForm />
       </div>
     </>
-  );
+  )
 }

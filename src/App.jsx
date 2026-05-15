@@ -54,13 +54,15 @@ function App() {
     setTimeout(() => { AOS.refresh(); }, 100);
   }, []);
 
-  const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
+  const [isDark, setIsDark] = useState(
+    () => localStorage.getItem("theme") === "dark",
+  )
 
   useEffect(() => {
-    document.body.classList.remove("light", "dark");
-    document.body.classList.add(isDark ? "dark" : "light");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
-  }, [isDark]);
+    document.body.classList.remove("light", "dark")
+    document.body.classList.add(isDark ? "dark" : "light")
+    localStorage.setItem("theme", isDark ? "dark" : "light")
+  }, [isDark])
 
   return (
     <Suspense fallback={<PageLoader />}>
@@ -102,4 +104,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

@@ -112,28 +112,21 @@ export default function LandingPage() {
           <div className="tk-hero__grain" />
           <div className="tk-hero__horizon" />
         </div>
-
-        <div className="tk-hero__inner">
-          <div className="tk-hero__grid">
+        {/* Content */}
+        <div className="relative z-10 flex items-center h-auto min-h-screen">
+          {" "}
+          {/* Added min-h-screen for content */}
+          <div className="max-w-screen-xl mx-auto px-4 md:px-6 grid grid-cols-1 mt-10 lg:grid-cols-2 gap-4 md:gap-6">
+            {/* Text Content */}
             <div
               data-aos="fade-right"
-              className="tk-hero__text"
-              data-testid="landing-hero-text"
+              className="flex flex-col justify-center order-2 lg:order-1"
             >
-              <span className="tk-eyebrow" data-testid="landing-eyebrow">
-                <span className="tk-eyebrow__dot" />
-                24 / 7 · Dubai · Licensed RTA Operator
-              </span>
-
-              <h1
-                className="tk-hero__title whitespace-pre-line"
-                data-testid="landing-title"
-              >
-                {t('landing.title')}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 black-text max-w-lg whitespace-pre-line">
+                {t("landing.title")}
               </h1>
-
-              <p className="tk-hero__subtitle" data-testid="landing-subtitle">
-                {t('landing.subtitle')}
+              <p className="text-base sm:text-lg md:text-xl mb-2 md:mb-3 black-text max-w-lg">
+                {t("landing.subtitle")}
               </p>
 
               <div className="tk-hero__stage--inline-mobile">
@@ -205,5 +198,5 @@ export default function LandingPage() {
         </div>
       </section>
     </>
-  );
+  )
 }

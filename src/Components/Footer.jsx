@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react"
 import {
   FaSnapchatGhost,
   FaInstagram,
@@ -8,12 +8,12 @@ import {
   FaPhoneAlt,
   FaEnvelope,
   FaMapMarkerAlt,
-} from 'react-icons/fa';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+} from "react-icons/fa"
+import { useTranslation } from "react-i18next"
+import { Link } from "react-router-dom"
 
 const Footer = ({ isDark }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <footer className="nav-color bg-white border-t text-black">
@@ -21,67 +21,176 @@ const Footer = ({ isDark }) => {
         {/* Brand Info */}
         <div className="md:col-span-2 lg:col-span-2 ">
           <img
-            src={isDark ? 'new/LogoW.webp' : 'new/Logo.webp'}
+            src={isDark ? "/new/LogoW.webp" : "/new/Logo.webp"}
             alt="car recovery in dubai"
             className="h-12 mb-4"
           />
-          <p className="text-sm max-w-md span-titles" style={{ width: '90%' }}>
-            {t('footer.brandDescription')}
+          <p className="text-sm max-w-md span-titles" style={{ width: "90%" }}>
+            {t("footer.brandDescription")}
           </p>
           <div className="flex space-x-4 mt-4 text-xl text-gray-600 span-titles">
-            <a href="https://www.snapchat.com/add/tareeqkportal" target="_blank" rel="noopener noreferrer">
-              <FaSnapchatGhost className="hover:text-black cursor-pointer" title={t('footer.socials.snapchat')} />
+            <a
+              href="https://www.snapchat.com/add/tareeqkportal"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaSnapchatGhost
+                className="hover:text-black cursor-pointer"
+                title={t("footer.socials.snapchat")}
+              />
             </a>
-            <a href="https://www.instagram.com/tareeqk.ae/" target="_blank" rel="noopener noreferrer">
-              <FaInstagram className="hover:text-black cursor-pointer" title={t('footer.socials.instagram')} />
+            <a
+              href="https://www.instagram.com/tareeqk.ae/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram
+                className="hover:text-black cursor-pointer"
+                title={t("footer.socials.instagram")}
+              />
             </a>
-            <a href="https://www.facebook.com/tareeqk.ae" target="_blank" rel="noopener noreferrer">
-              <FaFacebookF className="hover:text-black cursor-pointer" title={t('footer.socials.facebook')} />
+            <a
+              href="https://www.facebook.com/tareeqk.ae"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebookF
+                className="hover:text-black cursor-pointer"
+                title={t("footer.socials.facebook")}
+              />
             </a>
-            <a href="https://x.com/Tareeqkportal" target="_blank" rel="noopener noreferrer">
-              <FaTwitter className="hover:text-black cursor-pointer" title={t('footer.socials.twitter')} />
+            <a
+              href="https://x.com/Tareeqkportal"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaTwitter
+                className="hover:text-black cursor-pointer"
+                title={t("footer.socials.twitter")}
+              />
             </a>
-            <a href="https://www.youtube.com/@tareeqk?" target="_blank" rel="noopener noreferrer"><FaYoutube className="hover:text-black cursor-pointer" title={t('footer.socials.youtube')} /></a>
+            <a
+              href="https://www.youtube.com/@tareeqk?"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaYoutube
+                className="hover:text-black cursor-pointer"
+                title={t("footer.socials.youtube")}
+              />
+            </a>
           </div>
         </div>
 
         {/* HOME Links */}
         <div className="md:col-span-1 lg:col-span-1">
           <div>
-            <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.home.title')}</h3>
+            <h3 className="text-lg font-semibold mb-2 footer-links span-titles">
+              {t("footer.home.title")}
+            </h3>
             <div className="w-8 mb-4" />
             <ul className="space-y-2 text-sm">
-              <li><Link onClick={() => window.scrollTo(0, 0)} to="/" className="hover:underline span-titles">{t('footer.home.links.home')}</Link></li>
-              <li><Link onClick={() => window.scrollTo(0, 0)} to="/faq" className="hover:underline span-titles">{t('footer.home.links.faqs')}</Link></li>
-              <li><Link onClick={() => window.scrollTo(0, 0)} to="/drivers-FAQs" className="hover:underline span-titles">{t('footer.home.links.driverFaqs')}</Link></li>
+              <li>
+                <Link
+                  onClick={() => window.scrollTo(0, 0)}
+                  to="/"
+                  className="hover:underline span-titles"
+                >
+                  {t("footer.home.links.home")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={() => window.scrollTo(0, 0)}
+                  to="/faq"
+                  className="hover:underline span-titles"
+                >
+                  {t("footer.home.links.faqs")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  onClick={() => window.scrollTo(0, 0)}
+                  to="/drivers-FAQs"
+                  className="hover:underline span-titles"
+                >
+                  {t("footer.home.links.driverFaqs")}
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
 
         {/* REGISTRATION Links */}
         <div className="md:col-span-1 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.registration.title')}</h3>
+          <h3 className="text-lg font-semibold mb-2 footer-links span-titles">
+            {t("footer.registration.title")}
+          </h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-2 text-sm">
-            <li><Link onClick={() => window.scrollTo(0, 0)} to="/driver-registration" className="hover:underline span-titles">{t('footer.registration.links.driver')}</Link></li>
-            <li><Link onClick={() => window.scrollTo(0, 0)} to="/vendor-registration" className="hover:underline span-titles">{t('footer.registration.links.vendor')}</Link></li>
-            <li><a href="https://apps.apple.com/in/app/tareeqk-order/id6480442854" target='_blank' className="hover:underline span-titles">{t('footer.registration.links.customer')}</a></li>
+            <li>
+              <Link
+                onClick={() => window.scrollTo(0, 0)}
+                to="/driver-registration"
+                className="hover:underline span-titles"
+              >
+                {t("footer.registration.links.driver")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                onClick={() => window.scrollTo(0, 0)}
+                to="/vendor-registration"
+                className="hover:underline span-titles"
+              >
+                {t("footer.registration.links.vendor")}
+              </Link>
+            </li>
+            <li>
+              <a
+                href="https://apps.apple.com/in/app/tareeqk-order/id6480442854"
+                target="_blank"
+                className="hover:underline span-titles"
+              >
+                {t("footer.registration.links.customer")}
+              </a>
+            </li>
           </ul>
         </div>
 
         {/* POLICIES Links */}
         <div className="md:col-span-1 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.policies.title')}</h3>
+          <h3 className="text-lg font-semibold mb-2 footer-links span-titles">
+            {t("footer.policies.title")}
+          </h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-2 text-sm">
-            <li><Link onClick={() => window.scrollTo(0, 0)} to="/terms" className="hover:underline span-titles">{t('footer.policies.links.terms')}</Link></li>
-            <li><Link onClick={() => window.scrollTo(0, 0)} to="/privacy-policy" className="hover:underline span-titles">{t('footer.policies.links.privacy')}</Link></li>
+            <li>
+              <Link
+                onClick={() => window.scrollTo(0, 0)}
+                to="/terms"
+                className="hover:underline span-titles"
+              >
+                {t("footer.policies.links.terms")}
+              </Link>
+            </li>
+            <li>
+              <Link
+                onClick={() => window.scrollTo(0, 0)}
+                to="/privacy-policy"
+                className="hover:underline span-titles"
+              >
+                {t("footer.policies.links.privacy")}
+              </Link>
+            </li>
           </ul>
         </div>
 
         {/* CONTACT */}
         <div className="md:col-span-1 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-2 footer-links span-titles">{t('footer.contact.title')}</h3>
+          <h3 className="text-lg font-semibold mb-2 footer-links span-titles">
+            {t("footer.contact.title")}
+          </h3>
           <div className="w-8 mb-4" />
           <ul className="space-y-4 text-sm">
             <li className="flex items-start gap-2">
@@ -92,26 +201,36 @@ const Footer = ({ isDark }) => {
                 rel="noopener noreferrer"
                 className="hover:underline span-titles"
               >
-                {t('footer.contact.address')}
+                {t("footer.contact.address")}
               </a>
             </li>
             <li className="flex items-center gap-2">
               <FaPhoneAlt className="span-titles" />
-              <a href="tel:+97142232269" className="hover:underline span-titles">{t('footer.contact.phone')}</a>
+              <a
+                href="tel:+97142232269"
+                className="hover:underline span-titles"
+              >
+                {t("footer.contact.phone")}
+              </a>
             </li>
             <li className="flex items-center gap-2">
               <FaEnvelope className="span-titles" />
-              <a href="mailto:info@tareeqk.ae" className="hover:underline span-titles">{t('footer.contact.email')}</a>
+              <a
+                href="mailto:info@tareeqk.ae"
+                className="hover:underline span-titles"
+              >
+                {t("footer.contact.email")}
+              </a>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="bg-black text-white text-center py-3 text-sm">
-        {t('footer.copyright', { year: new Date().getFullYear() })}
+        {t("footer.copyright", { year: new Date().getFullYear() })}
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer
