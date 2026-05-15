@@ -1,38 +1,57 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+// Existing Components & Layout
+import MainLayout from './Components/MainLayout';
+import usePageViews from './hooks/usePageViews';
+
+// Existing Pages
 import Home from './Pages/Home';
 import Service from './Pages/Service';
 import About from './Pages/About';
 import FAQs from './Pages/FAQs';
-import {Routes, Route } from 'react-router-dom';
 import TermsAndConditions from './Pages/TermsAndConditions';
-import MainLayout from './Components/MainLayout';
-import AOS from "aos";
-import "aos/dist/aos.css";
 import DriversFAQs from './Pages/DriversFAQs';
 import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
 import DriverRegistrationPage from './Pages/DriverRegistration';
 import VendorRegistration from './Pages/VendorRegistration';
-import NotFound from './Pages/NotFound';
-import usePageViews from './hooks/usePageViews';
 import Blogs from './Pages/Blogs';
 import BlogPage from './Pages/BlogPage';
+import NotFound from './Pages/NotFound';
 
+// ── NEW SEO SERVICE PAGES (Lazy Loaded) ───────────────────────────
+const CarRecoveryDubai       = lazy(() => import('./pages/services/CarRecoveryDubai'));
+const BatteryServiceDubai    = lazy(() => import('./pages/services/BatteryServiceDubai'));
+const FlatTyreRepairDubai    = lazy(() => import('./pages/services/FlatTyreRepairDubai'));
+const FuelDeliveryDubai      = lazy(() => import('./pages/services/FuelDeliveryDubai'));
+const AccidentRecoveryDubai  = lazy(() => import('./pages/services/AccidentRecoveryDubai'));
+
+// ── NEW LOCATION PAGES ─────────────────────────────────────────────
+import {
+  CarRecoveryDubaiMarina,
+  CarRecoveryJVC,
+  CarRecoveryBusinessBay,
+  CarRecoveryDeira,
+  CarRecoveryAlQuoz,
+  CarRecoveryJumeirah,
+} from './pages/locations';
+
+// Loading Fallback for Lazy Routes
+const PageLoader = () => (
+  <div className="flex justify-center items-center h-64">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-yellow-500" />
+  </div>
+);
 
 function App() {
-  usePageViews()
+  usePageViews();
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      // once: false, // Ensure animations can trigger every time element comes into view
-      // mirror: true, // Elements will animate out while scrolling past them
-    });
-
-    // Refresh AOS after initialization to catch all elements
-    setTimeout(() => {
-      AOS.refresh();
-    }, 100);
+    AOS.init({ duration: 1000 });
+    setTimeout(() => { AOS.refresh(); }, 100);
   }, []);
 
   const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
@@ -44,22 +63,42 @@ function App() {
   }, [isDark]);
 
   return (
-    <Routes >
-      <Route element={<MainLayout isDark={isDark} setIsDark={setIsDark} />}>
-        <Route path='/' element={<Home />} />
-        <Route path='/faq' element={<FAQs />} />
-        <Route path='/drivers-FAQs' element={<DriversFAQs />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/blogs' element={<Blogs />} />
-        <Route path='/page/:blogSlug' element={<BlogPage />} />
-        <Route path='/service' element={<Service />} />
-        <Route path='/terms' element={<TermsAndConditions />} />
-        <Route path='/driver-registration' element={<DriverRegistrationPage />} />
-        <Route path='/vendor-registration' element={<VendorRegistration />} />
-        <Route path='/privacy-policy' element={<PrivacyAndPolicy />} />
-        <Route path='/*' element={<NotFound />} />
-      </Route>
-    </Routes>
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route element={<MainLayout isDark={isDark} setIsDark={setIsDark} />}>
+          {/* PRIMARY PAGES */}
+          <Route path='/' element={<Home />} />
+          <Route path='/faq' element={<FAQs />} />
+          <Route path='/drivers-FAQs' element={<DriversFAQs />} />
+          <Route path='/about' element={<About />} />
+          <Route path='/blogs' element={<Blogs />} />
+          <Route path='/page/:blogSlug' element={<BlogPage />} />
+          <Route path='/service' element={<Service />} />
+          <Route path='/terms' element={<TermsAndConditions />} />
+          <Route path='/driver-registration' element={<DriverRegistrationPage />} />
+          <Route path='/vendor-registration' element={<VendorRegistration />} />
+          <Route path='/privacy-policy' element={<PrivacyAndPolicy />} />
+
+          {/* NEW SERVICE SEO PAGES */}
+          <Route path="/car-recovery-dubai"      element={<CarRecoveryDubai />} />
+          <Route path="/battery-service-dubai"   element={<BatteryServiceDubai />} />
+          <Route path="/flat-tyre-repair-dubai"  element={<FlatTyreRepairDubai />} />
+          <Route path="/fuel-delivery-dubai"     element={<FuelDeliveryDubai />} />
+          <Route path="/accident-recovery-dubai" element={<AccidentRecoveryDubai />} />
+
+          {/* NEW LOCATION SEO PAGES */}
+          <Route path="/car-recovery-dubai-marina"  element={<CarRecoveryDubaiMarina />} />
+          <Route path="/car-recovery-jvc"           element={<CarRecoveryJVC />} />
+          <Route path="/car-recovery-business-bay"  element={<CarRecoveryBusinessBay />} />
+          <Route path="/car-recovery-deira"         element={<CarRecoveryDeira />} />
+          <Route path="/car-recovery-al-quoz"        element={<CarRecoveryAlQuoz />} />
+          <Route path="/car-recovery-jumeirah"      element={<CarRecoveryJumeirah />} />
+
+          {/* 404 CATCH-ALL */}
+          <Route path='/*' element={<NotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

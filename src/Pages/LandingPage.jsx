@@ -1,9 +1,14 @@
+// pages/LandingPage.jsx — Updated with LocalBusiness schema
+// Changes from original:
+//   1. Import LocalBusinessSchema
+//   2. Render <LocalBusinessSchema /> inside the component
+
 import React, { useRef, useState, useEffect } from 'react';
- 
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import CarModel from './CarModel';
 import './landing.css';
+import LocalBusinessSchema from '../schemas/LocalBusinessSchema'; // ← NEW
 
 const CHIPS = [
   { strong: '5-min', span: 'avg. dispatch' },
@@ -11,20 +16,17 @@ const CHIPS = [
   { strong: '4.9★',  span: '1,200+ reviews' },
 ];
 
- 
 function TrustChips() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const [active, setActive]     = useState(0);
   const [anim, setAnim]         = useState('tk-chip-enter');
 
-  // Track viewport width
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 1024);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // Cycling — only runs when isMobile
   useEffect(() => {
     if (!isMobile) return;
     const id = setInterval(() => {
@@ -38,7 +40,6 @@ function TrustChips() {
   }, [isMobile]);
 
   if (!isMobile) {
-    // Desktop — all chips, original layout
     return (
       <ul className="tk-trust" data-testid="landing-trust-row">
         {CHIPS.map(({ strong, span }) => (
@@ -51,7 +52,6 @@ function TrustChips() {
     );
   }
 
-  // Mobile — single cycling chip
   const chip = CHIPS[active];
   return (
     <ul className="tk-trust tk-trust--cycle" data-testid="landing-trust-row">
@@ -65,7 +65,6 @@ function TrustChips() {
 
 export default function LandingPage() {
   const { t } = useTranslation();
-  const downloadRef = useRef(null);
 
   const handleDownloadRedirect = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -79,14 +78,19 @@ export default function LandingPage() {
 
   return (
     <>
+      {/* ── PAGE SEO ── */}
       <Helmet>
         <meta name="robots" content="index, follow" />
-        <title>Car Recovery Service in Dubai — Tareeqk</title>
+        <title>Car Recovery Service in Dubai</title>
         <meta
           name="description"
           content="Premium 24/7 car recovery & towing in Dubai. Flatbed, heavy recovery, and emergency roadside assistance with 5-minute dispatch."
         />
+        <link rel="canonical" href="https://www.tareeqk.ae/" />
       </Helmet>
+
+      {/* ── LOCAL BUSINESS SCHEMA (NEW) ── */}
+      <LocalBusinessSchema />
 
       <section
         className="tk-hero"
@@ -111,8 +115,6 @@ export default function LandingPage() {
 
         <div className="tk-hero__inner">
           <div className="tk-hero__grid">
-
-        
             <div
               data-aos="fade-right"
               className="tk-hero__text"
@@ -134,14 +136,12 @@ export default function LandingPage() {
                 {t('landing.subtitle')}
               </p>
 
-              {/* ── TRUCK: mobile only — sits between subtitle and trust chips ── */}
               <div className="tk-hero__stage--inline-mobile">
                 <div className="tk-hero__stage-inner">
                   <CarModel />
                 </div>
               </div>
 
-              
               <TrustChips />
 
               <div className="tk-cta-row" data-testid="landing-cta-row">
@@ -168,41 +168,17 @@ export default function LandingPage() {
                 </a>
               </div>
 
-              {/* App Store & Google Play badges */}
               <div className="tk-store-badges" data-testid="landing-store-badges">
-  <a
-    href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="tk-store-badge"
-    aria-label="Download on the App Store"
-  >
-    <img
-      src="/applestore.png"
-      alt="Download on the App Store"
-      className="tk-store-badge__img"
-    />
-  </a>
-
-  <a
-    href="https://play.google.com/store/apps/details?id=com.tareeqk.order"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="tk-store-badge"
-    aria-label="Get it on Google Play"
-  >
-    <img
-      src="playstore.png"
-      alt="Get it on Google Play"
-      className="tk-store-badge__img"
-    />
-  </a>
-</div>
+                <a href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854" target="_blank" rel="noopener noreferrer" className="tk-store-badge" aria-label="Download on the App Store">
+                  <img src="/applestore.png" alt="Download on the App Store" className="tk-store-badge__img" />
+                </a>
+                <a href="https://play.google.com/store/apps/details?id=com.tareeqk.order" target="_blank" rel="noopener noreferrer" className="tk-store-badge" aria-label="Get it on Google Play">
+                  <img src="playstore.png" alt="Get it on Google Play" className="tk-store-badge__img" />
+                </a>
+              </div>
 
               <div className="tk-vehicles" data-testid="landing-vehicle-row">
-                <span className="tk-vehicles__label">
-                  {t("landing.vehicle")}
-                </span>
+                <span className="tk-vehicles__label">{t("landing.vehicle")}</span>
                 <div className="tk-vehicles__icons">
                   {['Bike', 'Car', 'Jeep', 'Bus'].map((v) => (
                     <div key={v} className="tk-vehicles__icon" title={v} data-testid={`landing-vehicle-${v.toLowerCase()}`}>
@@ -213,7 +189,6 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* ── TRUCK STAGE (desktop only — hidden on mobile) ── */}
             <div
               data-aos="fade-left"
               className="tk-hero__stage tk-hero__stage--desktop"
@@ -226,12 +201,9 @@ export default function LandingPage() {
                 Beyond Reliable
               </span>
             </div>
-
           </div>
         </div>
       </section>
-
-       
     </>
   );
 }

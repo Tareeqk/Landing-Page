@@ -17,9 +17,9 @@ export default function Home() {
       <div>
         <LandingPage />
         <CJI />
-        <AboutUs isSection />
+        {/* <AboutUs isSection /> */}
         <AboutAccordion />
-        <HowItWorks isSection />
+        {/* <HowItWorks isSection /> */}
         <Registration />
         <PriceGroup />
         <ContactForm />
