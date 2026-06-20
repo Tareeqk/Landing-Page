@@ -1,29 +1,90 @@
-// pages/LandingPage.jsx — Updated with LocalBusiness schema
-// Changes from original:
-//   1. Import LocalBusinessSchema
-//   2. Render <LocalBusinessSchema /> inside the component
-
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from "react-helmet-async";
 import CarModel from './CarModel';
 import './landing.css';
-import LocalBusinessSchema from '../schemas/LocalBusinessSchema'; // ← NEW
 
-const CHIPS = [
-  { strong: '5-min', span: 'avg. dispatch' },
-  { strong: '24/7',  span: 'around the clock' },
-  { strong: '4.9★',  span: '1,200+ reviews' },
-];
+// Keys map to `landing.services.<key>` in each locale file
+const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
+
+/* ── Typing-animation hero title ──
+   Cycles through the translated service names with a type/delete loop.
+   Respects prefers-reduced-motion (falls back to a static first phrase). */
+function TypingTitle() {
+  const { t } = useTranslation();
+  const phrases = SERVICE_KEYS.map((key) => t(`landing.services.${key}`));
+  const phrasesKey = phrases.join('|');
+
+  const reduceMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const [text, setText] = useState(reduceMotion ? phrases[0] : '');
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Reset the cycle whenever the language (and thus the phrases) changes
+  useEffect(() => {
+    setPhraseIndex(0);
+    setIsDeleting(false);
+    setText(reduceMotion ? phrases[0] : '');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phrasesKey]);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+
+    const currentPhrase = phrases[phraseIndex % phrases.length];
+    const typingSpeed = isDeleting ? 35 : 75;
+    let timeout;
+
+    if (!isDeleting && text === currentPhrase) {
+      timeout = setTimeout(() => setIsDeleting(true), 1800);
+    } else if (isDeleting && text === '') {
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      }, 400);
+    } else {
+      timeout = setTimeout(() => {
+        setText((prev) =>
+          isDeleting
+            ? currentPhrase.slice(0, prev.length - 1)
+            : currentPhrase.slice(0, prev.length + 1)
+        );
+      }, typingSpeed);
+    }
+
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text, isDeleting, phraseIndex, phrasesKey, reduceMotion]);
+
+  return (
+    <h1 className="tk-hero__title tk-hero__title--typing" data-testid="landing-title">
+      <span className="tk-typing-text" aria-hidden="true">{text}</span>
+      {!reduceMotion && <span className="tk-typing-cursor" aria-hidden="true" />}
+      {/* Full list stays readable for screen readers / SEO crawlers */}
+      <span className="tk-visually-hidden">{phrases.join(', ')}</span>
+    </h1>
+  );
+}
 
 function TrustChips() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const { t } = useTranslation();
+  const CHIPS = [
+    { id: 'dispatch',     strong: t('landing.trust.dispatchValue'),     span: t('landing.trust.dispatchLabel') },
+    { id: 'availability', strong: t('landing.trust.availabilityValue'), span: t('landing.trust.availabilityLabel') },
+    { id: 'rating',       strong: t('landing.trust.ratingValue'),       span: t('landing.trust.ratingLabel') },
+  ];
+
+  const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 1024);
   const [active, setActive]     = useState(0);
   const [anim, setAnim]         = useState('tk-chip-enter');
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth <= 1024);
-    window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize, { passive: true });
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
@@ -37,13 +98,15 @@ function TrustChips() {
       }, 350);
     }, 2400);
     return () => clearInterval(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
   if (!isMobile) {
     return (
       <ul className="tk-trust" data-testid="landing-trust-row">
-        {CHIPS.map(({ strong, span }) => (
-          <li key={strong} className="tk-trust__chip">
+        {CHIPS.map(({ id, strong, span }) => (
+          <li key={id} className="tk-trust__chip">
+            <span className="tk-trust__pulse" aria-hidden="true" />
             <strong>{strong}</strong>
             <span>{span}</span>
           </li>
@@ -56,6 +119,7 @@ function TrustChips() {
   return (
     <ul className="tk-trust tk-trust--cycle" data-testid="landing-trust-row">
       <li className={`tk-trust__chip tk-trust__chip--cycle ${anim}`} key={active}>
+        <span className="tk-trust__pulse" aria-hidden="true" />
         <strong>{chip.strong}</strong>
         <span>{chip.span}</span>
       </li>
@@ -65,6 +129,7 @@ function TrustChips() {
 
 export default function LandingPage() {
   const { t } = useTranslation();
+  const downloadRef = useRef(null);
 
   const handleDownloadRedirect = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -78,19 +143,31 @@ export default function LandingPage() {
 
   return (
     <>
-      {/* ── PAGE SEO ── */}
       <Helmet>
         <meta name="robots" content="index, follow" />
-        <title>Car Recovery Service in Dubai</title>
+        <title>Car Recovery in Dubai | 24/7 Towing & Roadside Assistance</title>
         <meta
           name="description"
           content="Premium 24/7 car recovery & towing in Dubai. Flatbed, heavy recovery, and emergency roadside assistance with 5-minute dispatch."
         />
-        <link rel="canonical" href="https://www.tareeqk.ae/" />
-      </Helmet>
+        <meta
+          name="keywords"
+          content="car recovery, towing, roadside assistance, Dubai, 24/7"
+        />
+        <meta property="og:title" content="Car Recovery in Dubai | 24/7 Towing & Roadside Assistance" />
+        <meta
+          property="og:description"
+          content="Premium 24/7 car recovery & towing in Dubai. Flatbed, heavy recovery, and emergency roadside assistance with 5-minute dispatch."
+        />
+        <meta property="og:image" content="/og-image.jpg" />
+        <meta property="og:url" content="https://www.tareeqk.com/" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
 
-      {/* ── LOCAL BUSINESS SCHEMA (NEW) ── */}
-      <LocalBusinessSchema />
+        {/* Preconnect to the CDN that serves the model-viewer ESM module */}
+        <link rel="preconnect" href="https://ajax.googleapis.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://ajax.googleapis.com" />
+      </Helmet>
 
       <section
         className="tk-hero"
@@ -106,29 +183,37 @@ export default function LandingPage() {
               className="tk-hero__bg-img"
               loading="eager"
               decoding="async"
+              fetchpriority="high"
             />
           </picture>
           <div className="tk-hero__veil" />
           <div className="tk-hero__grain" />
           <div className="tk-hero__horizon" />
+          <div className="tk-hero__beam" aria-hidden="true" />
         </div>
-        {/* Content */}
-        <div className="relative z-10 flex items-center h-auto min-h-screen">
-          {" "}
-          {/* Added min-h-screen for content */}
-          <div className="max-w-screen-xl mx-auto px-4 md:px-6 grid grid-cols-1 mt-10 lg:grid-cols-2 gap-4 md:gap-6">
-            {/* Text Content */}
+
+        <div className="tk-hero__inner">
+          <div className="tk-hero__grid">
+
             <div
               data-aos="fade-right"
-              className="flex flex-col justify-center order-2 lg:order-1"
+              className="tk-hero__text"
+              data-testid="landing-hero-text"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-1 md:mb-2 black-text max-w-lg whitespace-pre-line">
-                {t("landing.title")}
-              </h1>
-              <p className="text-base sm:text-lg md:text-xl mb-2 md:mb-3 black-text max-w-lg">
-                {t("landing.subtitle")}
+              <span className="tk-eyebrow" data-testid="landing-eyebrow">
+                <span className="tk-eyebrow__dot" />
+                {t('landing.eyebrow')}
+              </span>
+              <br />
+              <br/>
+
+              <TypingTitle />
+
+              <p className="tk-hero__subtitle" data-testid="landing-subtitle">
+                {t('landing.subtitle')}
               </p>
 
+              {/* ── TRUCK: mobile only ── */}
               <div className="tk-hero__stage--inline-mobile">
                 <div className="tk-hero__stage-inner">
                   <CarModel />
@@ -157,31 +242,64 @@ export default function LandingPage() {
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                  Call now
+                  {t('landing.callNow')}
                 </a>
               </div>
 
               <div className="tk-store-badges" data-testid="landing-store-badges">
-                <a href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854" target="_blank" rel="noopener noreferrer" className="tk-store-badge" aria-label="Download on the App Store">
-                  <img src="/applestore.png" alt="Download on the App Store" className="tk-store-badge__img" />
+                <a
+                  href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tk-store-badge"
+                  aria-label="Download on the App Store"
+                >
+                  <img
+                    src="/applestore.png"
+                    alt="Download on the App Store"
+                    className="tk-store-badge__img"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </a>
-                <a href="https://play.google.com/store/apps/details?id=com.tareeqk.order" target="_blank" rel="noopener noreferrer" className="tk-store-badge" aria-label="Get it on Google Play">
-                  <img src="playstore.png" alt="Get it on Google Play" className="tk-store-badge__img" />
+
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.tareeqk.order"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="tk-store-badge"
+                  aria-label="Get it on Google Play"
+                >
+                  <img
+                    src="playstore.png"
+                    alt="Get it on Google Play"
+                    className="tk-store-badge__img"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </a>
               </div>
 
               <div className="tk-vehicles" data-testid="landing-vehicle-row">
-                <span className="tk-vehicles__label">{t("landing.vehicle")}</span>
+                <span className="tk-vehicles__label">
+                  {t("landing.vehicle")}
+                </span>
                 <div className="tk-vehicles__icons">
                   {['Bike', 'Car', 'Jeep', 'Bus'].map((v) => (
-                    <div key={v} className="tk-vehicles__icon" title={v} data-testid={`landing-vehicle-${v.toLowerCase()}`}>
-                      <img src={`new/${v}.svg`} alt={v} />
+                    <div
+                      key={v}
+                      className="tk-vehicles__icon"
+                      title={v}
+                      data-testid={`landing-vehicle-${v.toLowerCase()}`}
+                    >
+                      <img src={`new/${v}.svg`} alt={v} loading="lazy" decoding="async" />
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
+            {/* ── TRUCK STAGE (desktop only) ── */}
             <div
               data-aos="fade-left"
               className="tk-hero__stage tk-hero__stage--desktop"
@@ -194,9 +312,10 @@ export default function LandingPage() {
                 Beyond Reliable
               </span>
             </div>
+
           </div>
         </div>
       </section>
     </>
-  )
+  );
 }

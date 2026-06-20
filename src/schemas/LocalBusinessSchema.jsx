@@ -76,7 +76,7 @@ const schema = {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": [
       "Monday", "Tuesday", "Wednesday", "Thursday",
-      "Friday", "Saturday", "Sunday"
+      "Friday", "Saturday",
     ],
     "opens": "00:00",
     "closes": "23:59"
@@ -105,7 +105,7 @@ const schema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Battery Boost Service Dubai",
+          "name": "Battery Jump Start Dubai",
           "url": "https://www.tareeqk.ae/battery-service-dubai"
         }
       },

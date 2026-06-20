@@ -1,49 +1,57 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { FaWhatsapp } from "react-icons/fa"
+import "./Nasir.css"
+
+const WHATSAPP_NUMBER = "97142232269"
 
 export default function Nasir() {
-  const [show, setShow] = useState(true)
-  const handleShow = () => setShow(false)
   const { t, i18n } = useTranslation()
+  const isRtl = i18n.dir() === "rtl"
+
+  // Used to trigger the entrance animation after first paint rather than on load.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}`
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 flex items-start space-x-2 rtl:left-auto rtl:right-4">
-      {show && (
-        <>
-          {/* Nasir Head */}
-          <img
-            src="/new/Nasir_Head.webp"
-            alt="desert recovery dubai"
-            className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"
-            style={{ transform: i18n.dir() === "rtl" ? "scaleX(-1)" : "none" }}
-          />
+    <div
+      dir={i18n.dir()}
+      className={`fixed bottom-4 z-50 ${isRtl ? "right-4" : "left-4"}`}
+    >
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("nasir.cta", "Chat with us on WhatsApp")}
+        className={`nasir-float relative block rounded-full transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 ${
+          mounted ? "nasir-pop-in" : "opacity-0"
+        }`}
+      >
+        <img
+          src="/new/Nasir_Head.webp"
+          alt={t(
+            "nasir.avatarAlt",
+            "Tareeqk car recovery Dubai support assistant"
+          )}
+          className="h-12 w-12 object-contain sm:h-16 sm:w-16 md:h-20 md:w-20"
+          style={{ transform: isRtl ? "scaleX(-1)" : "none" }}
+          loading="lazy"
+        />
 
-          {/* Chat Bubble */}
-          <div className="relative bg-green-500 text-white font-semibold text-xs sm:text-sm md:text-base px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl shadow-lg flex items-center space-x-2">
-            {/* WhatsApp Link */}
-            <a
-              href="https://wa.me/97142232269"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-1 sm:space-x-2"
-            >
-              <FaWhatsapp className="text-sm sm:text-lg" />
-              <span className="hover:text-gray-100 transition">
-                {t("whatsapp")}
-              </span>
-            </a>
-
-            {/* Close Button */}
-            <span
-              onClick={handleShow}
-              className="ml-1 sm:ml-2 text-white hover:text-gray-800 transition cursor-pointer text-sm sm:text-base"
-            >
-              &#x2715;
-            </span>
-          </div>
-        </>
-      )}
+        {/* WhatsApp icon badge */}
+        <span
+          className={`absolute bottom-0 flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-white shadow-md sm:h-7 sm:w-7 ${
+            isRtl ? "left-0" : "right-0"
+          }`}
+        >
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
+          <FaWhatsapp className="relative text-xs sm:text-sm" />
+        </span>
+      </a>
     </div>
   )
 }

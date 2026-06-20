@@ -2,15 +2,17 @@
 // Premium redesign — bold, editorial aesthetic for Tareeqk brand
 
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
+import useLangLink from '../../hooks/useLangLink';
 
 const ALL_SERVICES = [
   { label: 'Car Recovery Dubai', href: '/car-recovery-dubai', icon: '🚗' },
   { label: 'Battery Service Dubai', href: '/battery-service-dubai', icon: '🔋' },
   { label: 'Flat Tyre Repair Dubai', href: '/flat-tyre-repair-dubai', icon: '🔧' },
-  { label: 'Fuel Delivery Dubai', href: '/fuel-delivery-dubai', icon: '⛽' },
+  // { label: 'Fuel Delivery Dubai', href: '/fuel-delivery-dubai', icon: '⛽' },
   { label: 'Accident Recovery Dubai', href: '/accident-recovery-dubai', icon: '🚨' },
   { label: 'Towing Service Dubai', href: '/towing-service-dubai', icon: '🚛' },
 ];
@@ -202,11 +204,13 @@ const styles = {
 };
 
 export default function ServicePageTemplate({ config }) {
+  const { lang } = useParams();
+  const langLink = useLangLink();
   const schemaFaqs = config.faqs.map(f => ({ question: f.q, answer: f.a }));
   const [openFaq, setOpenFaq] = React.useState(null);
 
-  const handleCall = () => { window.location.href = 'tel:+97180082773375'; };
-  const handleWhatsApp = () => { window.open('https://wa.me/97180082773375', '_blank'); };
+  const handleCall = () => { window.location.href = 'tel:+97142232269'; };
+  const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
   const handleDownload = () => {
     const ua = navigator.userAgent || '';
     const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
@@ -224,11 +228,11 @@ export default function ServicePageTemplate({ config }) {
         <title>{config.metaTitle}</title>
         <meta name="description" content={config.metaDesc} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://www.tareeqk.ae/${config.slug}`} />
+        <link rel="canonical" href={`https://www.tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:title" content={config.metaTitle} />
         <meta property="og:description" content={config.metaDesc} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.tareeqk.ae/${config.slug}`} />
+        <meta property="og:url" content={`https://www.tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:image" content={`https://www.tareeqk.ae${config.heroImage}`} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -238,7 +242,7 @@ export default function ServicePageTemplate({ config }) {
       <ServiceSchema
         service={{
           name: config.schemaName,
-          url: `https://www.tareeqk.ae/${config.slug}`,
+          url: `https://www.tareeqk.ae/${lang}/${config.slug}`,
           description: config.schemaDesc,
           image: `https://www.tareeqk.ae${config.heroImage}`,
           areas: config.areas,
@@ -294,8 +298,8 @@ export default function ServicePageTemplate({ config }) {
               <h2 style={styles.sectionH2}>What Is {config.schemaName}?</h2>
               <p style={styles.sectionP}>{config.whatIsService}</p>
               <div style={{ marginTop: '24px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <a href="/about" style={{ ...styles.linkPill }}>About Us →</a>
-                <a href="/contact" style={{ ...styles.linkPill }}>Contact →</a>
+                <a href={langLink('/about')} style={{ ...styles.linkPill }}>About Us →</a>
+                <a href={langLink('/contact')} style={{ ...styles.linkPill }}>Contact →</a>
               </div>
             </div>
             <div data-aos="fade-left">
@@ -391,7 +395,7 @@ export default function ServicePageTemplate({ config }) {
               <p style={styles.sectionP}>
                 Tareeqk covers all major Dubai districts. Need service in a specific area?
                 <br />
-                <a href="/contact" style={{ color: '#fbbf24', fontWeight: 700, textDecoration: 'none' }}>
+                <a href={langLink('/contact')} style={{ color: '#fbbf24', fontWeight: 700, textDecoration: 'none' }}>
                   Contact us →
                 </a>
               </p>
@@ -401,7 +405,7 @@ export default function ServicePageTemplate({ config }) {
                 </span>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {ALL_LOCATIONS.map(loc => (
-                    <a key={loc.href} href={loc.href} style={{ ...styles.linkPill, fontSize: '12px' }}>
+                    <a key={loc.href} href={langLink(loc.href)} style={{ ...styles.linkPill, fontSize: '12px' }}>
                       {loc.label}
                     </a>
                   ))}
@@ -474,7 +478,7 @@ export default function ServicePageTemplate({ config }) {
           <h2 style={{ ...styles.sectionH2, marginBottom: '32px' }}>Our Other Services in Dubai</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '14px' }}>
             {relatedServices.map(svc => (
-              <a key={svc.href} href={svc.href} style={styles.svcCard}
+              <a key={svc.href} href={langLink(svc.href)} style={styles.svcCard}
                 onMouseEnter={e => {
                   e.currentTarget.style.borderColor = '#fbbf24';
                   e.currentTarget.style.boxShadow = '0 4px 20px rgba(251,191,36,0.15)';
@@ -492,7 +496,7 @@ export default function ServicePageTemplate({ config }) {
           <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid #eee' }}>
             <span style={{ fontWeight: 700, fontSize: '13px', color: '#111', marginRight: '12px' }}>Service Areas:</span>
             {ALL_LOCATIONS.map(loc => (
-              <a key={loc.href} href={loc.href} style={{ ...styles.linkPill, marginRight: '8px', marginBottom: '8px' }}>
+              <a key={loc.href} href={langLink(loc.href)} style={{ ...styles.linkPill, marginRight: '8px', marginBottom: '8px' }}>
                 {loc.label}
               </a>
             ))}

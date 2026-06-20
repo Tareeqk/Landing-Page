@@ -2,17 +2,21 @@ import React from "react";
 import Navbar from "./../Components/Navbar";
 import Footer from "./../Components/Footer";
 import LandingPage from "./LandingPage";
-import AboutUs from "./About";
+import AboutPreview from "../Components/AboutComponent";
+import ServiceComponent from "../Components/ServiceComponent";
+import HowItWorks from "../Components/HowItWorks";
  
 import AboutAccordion from "../Components/AboutAccordion";
-import HowItWorks from "./Service";
+// import HowItWorks from "./Service";
 import CJI from "../Components/CJI";
 import ContactForm from "../Components/ContactForm";
 import PriceGroup from "../Components/PriceGroup";
 import Registration from "./Registration";
+import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 export default function Home() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   return (
     <>
@@ -23,12 +27,15 @@ export default function Home() {
       </Helmet>
       <div>
         <LandingPage />
+         <AboutPreview />
         <CJI />
-        {/* <AboutUs isSection /> */}
-        <AboutAccordion />
+       
+        {/* <AboutAccordion /> */}
+        <ServiceComponent /> 
+        <HowItWorks />
         {/* <HowItWorks isSection /> */}
-        <Registration />
-        <PriceGroup />
+        {/* <Registration />
+        <PriceGroup /> */}
         <ContactForm />
       </div>
     </>

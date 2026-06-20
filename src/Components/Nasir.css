@@ -1,50 +1,37 @@
-/* Add these styles to Nasir.css for separate version */
-.nasir-wrapper-separate {
-  position: relative;
-  width: 180px;
-  height: 200px;
-  transition: transform 0.3s ease;
-}
 
-.nasir-head {
-  width: 100%;
-  height: 60%;
-  object-fit: contain;
-}
 
-.message-box {
-  width: 100%;
-  height: 40%;
-  object-fit: contain;
-  margin-top: -10px;
-}
-
-.whatsapp-button {
-  position: absolute;
-  bottom: 45%;
-  left: 25%;
-  right: 15%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 8px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  gap: 6px;
-}
-
-/* Responsive adjustments for separate version */
-@media (max-width: 768px) {
-  .nasir-wrapper-separate {
-    width: 140px;
-    height: 160px;
+@keyframes nasir-pop-in {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-@media (max-width: 480px) {
-  .nasir-wrapper-separate {
-    width: 120px;
-    height: 140px;
+@keyframes nasir-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.nasir-pop-in {
+  animation: nasir-pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nasir-float {
+  animation: nasir-float 3.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nasir-pop-in,
+  .nasir-float {
+    animation: none;
   }
 }

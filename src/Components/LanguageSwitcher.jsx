@@ -21,39 +21,33 @@ function LanguageSwitcher() {
   const currentLanguage = languages.find((lang) => lang.code === i18n.language)
 
   const changeLang = (lng) => {
-    i18n.changeLanguage(lng)
-    localStorage.setItem("i18nextLng", lng)
-    document.documentElement.dir = lng === "ar" || lng === "ur" ? "rtl" : "ltr"
-    document.documentElement.lang = lng
-    setIsOpen(false)
+  i18n.changeLanguage(lng);
+  localStorage.setItem("i18nextLng", lng);
+  document.documentElement.dir = (lng === "ar" || lng === "ur") ? "rtl" : "ltr";
+  document.documentElement.lang = lng;
+  setIsOpen(false);
 
-    const segments = location.pathname.split("/") // e.g. ["", "ar", "about"] or ["", "about"]
-    const currentLangPrefix = LANG_PREFIXES.includes(segments[1])
-      ? segments[1]
-      : null
+  // 1. Get current segments, e.g., ["", "ar", "about"]
+  const segments = location.pathname.split("/");
+  
+  // 2. Determine if the current path already has a language prefix
+  const hasLangPrefix = ["en", "ar", "ur"].includes(segments[1]);
 
-    let newPath
-    if (lng === "en") {
-      // Going to English: strip the lang prefix
-      // ["", "ar", "about"] → "/about"
-      // ["", "about"] → "/about" (already English, no change)
-      newPath = currentLangPrefix
-        ? "/" + segments.slice(2).join("/")
-        : location.pathname
-    } else {
-      // Going to Arabic/Urdu: swap or add the lang prefix
-      // ["", "ar", "about"] → "/ur/about"  (swap)
-      // ["", "about"] → "/ar/about"         (add)
-      newPath = currentLangPrefix
-        ? "/" + lng + "/" + segments.slice(2).join("/")
-        : "/" + lng + location.pathname
-    }
-
-    // Clean up double slashes e.g. /ar/ → /ar
-    newPath = newPath.replace(/\/+$/, "") || "/"
-
-    navigate(newPath + location.search + location.hash)
+  let newPath;
+  if (hasLangPrefix) {
+    // Replace the existing language prefix with the new one
+    // e.g., ["", "ar", "about"] -> ["", "en", "about"] -> "/en/about"
+    segments[1] = lng;
+    newPath = segments.join("/");
+  } else {
+    // No prefix found (shouldn't happen with your new App.jsx, but safe to handle)
+    // e.g., "/about" -> "/en/about"
+    newPath = `/${lng}${location.pathname}`;
   }
+
+  // 3. Navigate
+  navigate(newPath + location.search + location.hash);
+};
 
   useEffect(() => {
     const handleClickOutside = (event) => {

@@ -1,11 +1,9 @@
 // pages/Service.jsx
-// Redesigned: refined typography, custom IntersectionObserver scroll animations, unique layout
-
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 
-// ── Service Schema ─────────────────────────────────────────────────────────
+// ── Schemas ────────────────────────────────────────────────────────────────
 function ServicesPageSchema() {
   const schema = {
     "@context": "https://schema.org",
@@ -13,22 +11,19 @@ function ServicesPageSchema() {
     "name": "Tareeqk Roadside Assistance Services Dubai",
     "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery.",
     "url": "https://www.tareeqk.ae/service",
-    "numberOfItems": 6,
+    "numberOfItems": 5,
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://www.tareeqk.ae/car-recovery-dubai", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://www.tareeqk.ae/battery-service-dubai", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://www.tareeqk.ae/flat-tyre-repair-dubai", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Fuel Delivery Dubai", "url": "https://www.tareeqk.ae/fuel-delivery-dubai", "description": "Emergency petrol delivery to your exact location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://www.tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://www.tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://www.tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://www.tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
     ]
   };
-
   const howToSchema = {
     "@context": "https://schema.org",
     "@type": "HowTo",
     "name": "How to Request Roadside Assistance in Dubai",
-    "description": "Step-by-step guide to booking Tareeqk car recovery and roadside assistance in Dubai.",
     "step": [
       { "@type": "HowToStep", "position": 1, "name": "Call, WhatsApp, or Open the App", "text": "Contact Tareeqk via phone, WhatsApp, or the mobile app and share your location." },
       { "@type": "HowToStep", "position": 2, "name": "Confirm Your Request", "text": "Confirm the service you need and get an upfront price before we dispatch." },
@@ -36,7 +31,6 @@ function ServicesPageSchema() {
       { "@type": "HowToStep", "position": 4, "name": "Problem Solved", "text": "Your vehicle is recovered, repaired, or transported — you're back on the road." },
     ]
   };
-
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -45,55 +39,220 @@ function ServicesPageSchema() {
   );
 }
 
-// ── Scroll Animation Hook ──────────────────────────────────────────────────
-function useScrollReveal() {
+// ── Styles ─────────────────────────────────────────────────────────────────
+function useServiceStyles() {
   useEffect(() => {
+    if (document.getElementById('trq-svc-styles')) return;
     const style = document.createElement('style');
     style.id = 'trq-svc-styles';
     style.textContent = `
-     
-      .trq-reveal {
+      /* ── Scroll reveal ── */
+      .svc-reveal {
         opacity: 0;
         transform: translateY(28px);
-        transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+        transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+                    transform 0.75s cubic-bezier(0.16,1,0.3,1);
       }
-      .trq-reveal.trq-reveal--left  { transform: translateX(-28px); }
-      .trq-reveal.trq-reveal--right { transform: translateX(28px); }
-      .trq-reveal.trq-reveal--scale { transform: scale(0.95) translateY(14px); }
-      .trq-reveal.is-visible { opacity: 1; transform: none; }
+      .svc-reveal.svc-left  { transform: translateX(-28px); }
+      .svc-reveal.svc-right { transform: translateX(28px); }
+      .svc-reveal.svc-scale { transform: scale(0.96); }
+      .svc-reveal.svc-fade  { transform: none; }
+      .svc-reveal.svc-visible { opacity: 1 !important; transform: none !important; }
 
-      .trq-svc-card {
-        transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease;
+      /* RTL flip reveals */
+      [dir="rtl"] .svc-reveal.svc-left  { transform: translateX(28px); }
+      [dir="rtl"] .svc-reveal.svc-right { transform: translateX(-28px); }
+
+      /* ── "Who we are" label pill (Annex style) ── */
+      .svc-pill-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(0,0,0,0.10);
+        border-radius: 999px;
+        padding: 6px 14px 6px 10px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #444;
+        background: #fff;
+        margin-bottom: 28px;
       }
-      .trq-svc-card:hover {
+      .svc-pill-label .svc-pill-dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--primary-yellow);
+        flex-shrink: 0;
+      }
+      body.dark .svc-pill-label {
+        background: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.1)) !important;
+        color: var(--dark-text-muted, #aaa) !important;
+      }
+
+      /* ── Service cards (Annex-style: image top, clean white) ── */
+      .svc-card {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.07);
+        overflow: hidden;
+        transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                    box-shadow 0.35s ease,
+                    border-color 0.25s ease;
+        text-decoration: none;
+        display: block;
+        cursor: pointer;
+      }
+      .svc-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 28px 64px rgba(0,0,0,0.10);
+        border-color: var(--primary-yellow);
+      }
+      .svc-card-top-bar {
+        height: 3px;
+        background: var(--primary-yellow);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      }
+      [dir="rtl"] .svc-card-top-bar { transform-origin: right; }
+      .svc-card:hover .svc-card-top-bar { transform: scaleX(1); }
+
+      body.dark .svc-card {
+        background: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+      }
+      body.dark .svc-card:hover {
+        box-shadow: 0 28px 64px rgba(0,0,0,0.40) !important;
+      }
+      body.dark .svc-card-title  { color: var(--dark-text-main, #f0f0f0) !important; }
+      body.dark .svc-card-body   { color: var(--dark-text-muted, #aaa) !important; }
+      body.dark .svc-card-icon   { background: var(--dark-bg-muted, #252525) !important; }
+      body.dark .svc-feat-item   {
+        background: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+      }
+      body.dark .svc-feat-label  { color: var(--dark-text-muted, #ccc) !important; }
+      body.dark .svc-bullet-text { color: var(--dark-text-muted, #aaa) !important; }
+
+      /* ── Step rows ── */
+      .svc-step-row {
+        transition: background 0.22s ease, transform 0.28s ease;
+        border-radius: 12px;
+      }
+      .svc-step-row:hover {
+        background: rgba(247,178,5,0.05) !important;
+        transform: translateX(5px);
+      }
+      [dir="rtl"] .svc-step-row:hover { transform: translateX(-5px); }
+
+      /* ── Why cards ── */
+      .svc-why-card {
+        transition: transform 0.32s cubic-bezier(0.16,1,0.3,1),
+                    box-shadow 0.32s ease, border-color 0.25s ease;
+      }
+      .svc-why-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 20px 48px rgba(251,191,36,0.12) !important;
-        border-color: #fbbf24 !important;
+        box-shadow: 0 20px 48px rgba(247,178,5,0.10), 0 4px 12px rgba(0,0,0,0.06) !important;
+        border-color: var(--primary-yellow) !important;
       }
-      .trq-why-card {
-        transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+      .svc-why-card:hover .svc-why-icon { background: var(--primary-yellow) !important; }
+      body.dark .svc-why-card {
+        background: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
       }
-      .trq-why-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 32px rgba(251,191,36,0.1) !important;
-        border-color: #fbbf24 !important;
-      }
-      .trq-pill-hover {
-        transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
-      }
-      .trq-pill-hover:hover { background: #fbbf24 !important; color: #000 !important; transform: translateY(-1px); }
-      .trq-btn-yellow {
+      body.dark .svc-why-title { color: var(--dark-text-main, #f0f0f0) !important; }
+      body.dark .svc-why-body  { color: var(--dark-text-muted, #aaa) !important; }
+      body.dark .svc-why-icon  { background: var(--dark-bg-muted, #252525) !important; }
+
+      /* ── CTA buttons ── */
+      .svc-btn-primary {
         transition: transform 0.2s ease, box-shadow 0.2s ease;
       }
-      .trq-btn-yellow:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(251,191,36,0.35); }
-      .trq-step-row { transition: background 0.2s ease; }
-      .trq-step-row:hover { background: rgba(251,191,36,0.04); }
-      .trq-area-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
-      .trq-area-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.08); }
+      .svc-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 28px rgba(247,178,5,0.40);
+      }
+      .svc-btn-ghost {
+        transition: background 0.2s ease, border-color 0.2s ease;
+      }
+      .svc-btn-ghost:hover {
+        background: rgba(255,255,255,0.13) !important;
+        border-color: rgba(255,255,255,0.40) !important;
+      }
+
+      /* ── Location pills ── */
+      .svc-loc-pill {
+        transition: background 0.18s ease, color 0.18s ease,
+                    border-color 0.18s ease, transform 0.18s ease;
+      }
+      .svc-loc-pill:hover {
+        background: var(--primary-yellow) !important;
+        color: #000 !important;
+        border-color: var(--primary-yellow) !important;
+        transform: translateY(-1px);
+      }
+
+      /* ── Stat bar (Annex-style horizontal stats) ── */
+      .svc-stat-bar {
+        display: flex;
+        gap: 0;
+        border-top: 1px solid rgba(0,0,0,0.06);
+        padding-top: 28px;
+        margin-top: 36px;
+        flex-wrap: wrap;
+      }
+      body.dark .svc-stat-bar { border-color: var(--dark-divider, rgba(255,255,255,0.08)) !important; }
+      .svc-stat-item {
+        padding-inline-end: 28px;
+        margin-inline-end: 28px;
+        border-inline-end: 1px solid rgba(0,0,0,0.08);
+      }
+      .svc-stat-item:last-child { border-inline-end: none; }
+      body.dark .svc-stat-item { border-color: var(--dark-divider, rgba(255,255,255,0.08)) !important; }
+      .svc-stat-num { font-size: 22px; font-weight: 800; color: var(--primary-dark-bg); line-height: 1; }
+      body.dark .svc-stat-num { color: var(--dark-text-main, #f0f0f0) !important; }
+      .svc-stat-label { font-size: 10px; color: #9b9b9b; margin-top: 3px; letter-spacing: 0.08em; text-transform: uppercase; }
+      body.dark .svc-stat-label { color: var(--dark-text-disabled, #666) !important; }
+
+      /* ── Gold glow animation ── */
+      @keyframes svc-gold-pulse {
+        0%, 100% { text-shadow: none; }
+        50% { text-shadow: 0 0 32px rgba(247,178,5,0.25); }
+      }
+      .svc-gold-glow { animation: svc-gold-pulse 4s ease-in-out infinite; }
+
+      /* ── Dark mode section roots ── */
+      body.dark .svc-page-root      { background-color: var(--dark-bg-main, #0f0f0f) !important; }
+      body.dark .svc-intro-section  { background-color: var(--dark-bg-main, #0f0f0f) !important; }
+      body.dark .svc-cards-section  { background-color: var(--dark-bg-muted, #1a1a1a) !important; }
+      body.dark .svc-steps-section  { background-color: var(--dark-bg-main, #0f0f0f) !important; }
+      body.dark .svc-why-section    { background-color: var(--dark-bg-muted, #1a1a1a) !important; }
+      body.dark .svc-cta-section    { background-color: var(--dark-bg-main, #0f0f0f) !important; }
+      body.dark .svc-h2             { color: var(--dark-text-main, #f0f0f0) !important; }
+      body.dark .svc-body-text      { color: var(--dark-text-muted, #aaa) !important; }
+      body.dark .svc-step-title     { color: var(--dark-text-main, #f0f0f0) !important; }
+      body.dark .svc-step-body      { color: var(--dark-text-muted, #aaa) !important; }
+
+      /* ── Responsive ── */
+      @media (max-width: 1024px) {
+        .svc-cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        .svc-why-grid   { grid-template-columns: repeat(2, 1fr) !important; }
+      }
+      @media (max-width: 900px) {
+        .svc-intro-grid    { grid-template-columns: 1fr !important; }
+        .svc-coverage-grid { grid-template-columns: 1fr !important; }
+        .svc-steps-header  { flex-direction: column !important; align-items: flex-start !important; }
+      }
+      @media (max-width: 768px) {
+        .svc-cards-grid  { grid-template-columns: 1fr !important; }
+        .svc-why-grid    { grid-template-columns: 1fr 1fr !important; }
+        .svc-hero-stats  { display: none !important; }
+        .svc-inner       { padding: 0 1.25rem !important; }
+      }
+      @media (max-width: 480px) {
+        .svc-why-grid    { grid-template-columns: 1fr !important; }
+      }
     `;
-    if (!document.getElementById('trq-svc-styles')) {
-      document.head.appendChild(style);
-    }
+    document.head.appendChild(style);
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -101,16 +260,15 @@ function useScrollReveal() {
           if (entry.isIntersecting) {
             const el = entry.target;
             const delay = parseInt(el.dataset.delay || 0);
-            setTimeout(() => el.classList.add('is-visible'), delay);
+            setTimeout(() => el.classList.add('svc-visible'), delay);
             observer.unobserve(el);
           }
         });
       },
       { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
     );
-
     setTimeout(() => {
-      document.querySelectorAll('.trq-reveal').forEach(el => observer.observe(el));
+      document.querySelectorAll('.svc-reveal').forEach(el => observer.observe(el));
     }, 50);
 
     return () => {
@@ -121,173 +279,31 @@ function useScrollReveal() {
   }, []);
 }
 
-// ── Data ───────────────────────────────────────────────────────────────────
-const SERVICES = [
-  {
-    icon: '🚗',
-    title: 'Car Recovery Dubai',
-    href: '/car-recovery-dubai',
-    tag: 'Most Requested',
-    tagColor: '#fbbf24',
-    tagText: '#000',
-    desc: 'Broken down anywhere in Dubai? Our flatbed and wheel-lift recovery trucks reach you in an average of 20 minutes, day or night. We handle everything from minor breakdowns to full vehicle extraction.',
-    bullets: ['Flatbed & wheel-lift trucks', 'Transport to any address', 'Highway-capable recovery', '24/7 including holidays'],
-  },
-  {
-    icon: '🚛',
-    title: 'Towing Service Dubai',
-    href: '/towing-service-dubai',
-    tag: null,
-    desc: 'Need your vehicle moved across Dubai — to a workshop, dealership, or any address? Our licensed towing fleet handles all vehicle types with full care and insurance documentation.',
-    bullets: ['All vehicle sizes', 'Cross-Dubai transport', 'Insurance company drop-offs', 'Damage-free loading guarantee'],
-  },
-  {
-    icon: '🔋',
-    title: 'Battery Boost & Replacement',
-    href: '/battery-service-dubai',
-    tag: '#1 Breakdown Cause',
-    tagColor: '#ef4444',
-    tagText: '#fff',
-    desc: "Dead battery in Dubai's intense heat? We test, jump-start, or replace your battery on the spot — no towing required. We carry OEM-compatible batteries for all major makes.",
-    bullets: ['On-site battery diagnostics', 'OEM-compatible batteries', 'All makes & models', 'Warranty on replacement'],
-  },
-  {
-    icon: '🔧',
-    title: 'Flat Tyre Repair',
-    href: '/flat-tyre-repair-dubai',
-    tag: null,
-    desc: "Flat tyre on a Dubai highway or in a parking structure? Our mobile technicians arrive with puncture repair kits and replacement tyres. Safe, fast, and fully equipped for any location.",
-    bullets: ['Puncture repair on-site', 'Tyre swap available', 'Highway-safe service', 'Valve and rim inspection included'],
-  },
-  {
-    icon: '⛽',
-    title: 'Emergency Fuel Delivery',
-    href: '/fuel-delivery-dubai',
-    tag: null,
-    desc: 'Run out of fuel anywhere in Dubai? We deliver petrol directly to you within 20 minutes — enough to reach the nearest station safely. Available for both Special 95 and Super 98.',
-    bullets: ['Special 95 & Super 98', '5–10 litre emergency supply', 'All Dubai areas covered', 'No membership required'],
-  },
-  {
-    icon: '🚨',
-    title: 'Accident Recovery',
-    href: '/accident-recovery-dubai',
-    tag: '24/7 Emergency',
-    tagColor: '#f97316',
-    tagText: '#fff',
-    desc: "Been in an accident? Stay safe and stay still — we handle the entire recovery. Heavy-duty flatbeds for non-driveable vehicles, coordination with Dubai Police, and direct delivery to approved workshops.",
-    bullets: ['Non-driveable vehicle recovery', 'Dubai Police coordination', 'Insurance-approved garage drop-offs', 'Scene safety assessment'],
-  },
-];
-
-const LOCATIONS = [
-  { label: 'Dubai Marina', href: '/car-recovery-dubai-marina' },
-  { label: 'JVC', href: '/car-recovery-jvc' },
-  { label: 'Business Bay', href: '/car-recovery-business-bay' },
-  { label: 'Deira', href: '/car-recovery-deira' },
-  { label: 'Al Quoz', href: '/car-recovery-al-quoz' },
-  { label: 'Jumeirah', href: '/car-recovery-jumeirah' },
-  { label: 'Downtown Dubai', href: '/car-recovery-downtown-dubai' },
-  { label: 'Al Barsha', href: '/car-recovery-al-barsha' },
-  { label: 'Mirdif', href: '/car-recovery-mirdif' },
-];
-
-const HOW_STEPS = [
-  {
-    num: '01',
-    icon: '📱',
-    title: 'Call, WhatsApp, or Open the App',
-    body: 'Contact us via phone, WhatsApp, or the Tareeqk app. Share your live GPS pin so our dispatcher finds you instantly — no guesswork, no delays.',
-  },
-  {
-    num: '02',
-    icon: '💰',
-    title: 'Receive an Upfront Price',
-    body: 'The full price is shown and confirmed before we dispatch. No hidden fees, no revised invoices. What you see is what you pay — every time.',
-  },
-  {
-    num: '03',
-    icon: '🚛',
-    title: 'We Dispatch Immediately',
-    body: 'The nearest certified technician is on their way within minutes. Track their arrival live on the Tareeqk app. Our average on-scene time across Dubai is 20 minutes.',
-  },
-  {
-    num: '04',
-    icon: '✅',
-    title: "You're Back on the Road",
-    body: 'Vehicle recovered, tyre repaired, battery replaced, or fuel delivered — problem resolved cleanly and fast. You rate the job and we improve continuously.',
-  },
-];
-
-const WHY_POINTS = [
-  { icon: '⚡', title: '20-Min Average Response', body: 'We track every unit in real-time and dispatch the closest certified technician to your location.' },
-  { icon: '🏆', title: 'RTA-Licensed Operators', body: "Every Tareeqk operator holds a valid Roads and Transport Authority licence — Dubai's highest standard." },
-  { icon: '💰', title: 'Transparent Pricing', body: 'Full price confirmed before dispatch — in the app or on the call. Always. No surprises, no add-ons.' },
-  { icon: '🕐', title: '24/7, No Exceptions', body: 'Every hour of every day, including UAE public holidays, Ramadan nights, and National Day.' },
-  { icon: '👷', title: 'Certified Technicians', body: 'Trained, background-checked, and equipped for every scenario — from simple jump starts to highway vehicle extractions.' },
-  { icon: '📱', title: 'Live GPS Tracking', body: 'Watch your technician approach in real-time on the Tareeqk app — exact ETA, no more guessing when help will arrive.' },
-  { icon: '🛡️', title: 'Fully Insured Jobs', body: 'Your vehicle is covered from the moment our operator arrives. Every recovery is logged and accountable.' },
-  { icon: '⭐', title: '4.9-Star Rated Service', body: 'Over 1,200 verified five-star reviews across Google and the Tareeqk app. Customer satisfaction drives every decision.' },
-];
-
-const AREA_ZONES = [
-  { area: 'Marina & JBR', detail: 'Palm Jumeirah, Marina Walk', icon: '🏙️' },
-  { area: 'Downtown & DIFC', detail: 'Burj Khalifa area, DIFC', icon: '🏢' },
-  { area: 'Business Bay', detail: 'Bay Square, Executive Towers', icon: '💼' },
-  { area: 'Deira & Al Nahda', detail: 'Airport area, Al Qusais', icon: '✈️' },
-  { area: 'Al Quoz & Barsha', detail: 'Industrial & residential zones', icon: '🔧' },
-  { area: 'JVC & Motor City', detail: 'Springs, Meadows, Lakes', icon: '🌿' },
-];
-
-// ── Styles ─────────────────────────────────────────────────────────────────
-const s = {
-  eyebrow: {
-    fontSize: '10px', fontWeight: 700, letterSpacing: '4px',
-    textTransform: 'uppercase', color: '#fbbf24',
-    marginBottom: '12px', display: 'block',
-    fontFamily: "'Outfit', sans-serif",
-  },
-  h1: {
-    fontSize: 'clamp(1.85rem, 4vw, 3rem)', fontWeight: 800,
-    letterSpacing: '-0.03em', lineHeight: 1.1,
-    fontFamily: "'Outfit', sans-serif",
-  },
-  h2: {
-    fontSize: 'clamp(1.35rem, 2.4vw, 1.9rem)', fontWeight: 700,
-    color: '#111', letterSpacing: '-0.025em', marginBottom: '14px',
-    lineHeight: 1.2, fontFamily: "'Outfit', sans-serif",
-  },
-  p: { color: '#6b7280', lineHeight: 1.75, fontSize: '14px', fontFamily: "'Outfit', sans-serif" },
-  inner: { maxWidth: '1140px', margin: '0 auto', padding: '0 24px' },
-  section: { padding: '72px 0' },
-  linkPill: {
-    display: 'inline-flex', alignItems: 'center',
-    border: '1.5px solid #e5e7eb', color: '#374151',
-    padding: '6px 14px', borderRadius: '100px',
-    fontSize: '12px', fontWeight: 600, textDecoration: 'none',
-  },
-  btnPrimary: {
-    display: 'inline-flex', alignItems: 'center', gap: '7px',
-    background: '#fbbf24', color: '#000', textDecoration: 'none',
-    padding: '12px 24px', borderRadius: '8px', fontSize: '13.5px',
-    fontWeight: 700, cursor: 'pointer', border: 'none',
-    fontFamily: "'Outfit', sans-serif",
-  },
-  btnGhost: {
-    display: 'inline-flex', alignItems: 'center', gap: '7px',
-    background: 'transparent', color: '#fff', textDecoration: 'none',
-    padding: '12px 24px', borderRadius: '8px', fontSize: '13.5px',
-    fontWeight: 600, border: '1.5px solid rgba(255,255,255,0.25)',
-    cursor: 'pointer', fontFamily: "'Outfit', sans-serif",
-    transition: 'border-color 0.2s ease, color 0.2s ease',
-  },
+// ── Shared tokens ──────────────────────────────────────────────────────────
+const eyebrow = {
+  fontSize: '10px',
+  fontWeight: 700,
+  letterSpacing: '0.32em',
+  textTransform: 'uppercase',
+  color: 'var(--primary-yellow)',
+  marginBottom: '12px',
+  display: 'block',
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
 export default function Service({ isSection = false }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRTL = i18n.dir() === 'rtl';
   const HeadingTag = isSection ? 'h2' : 'h1';
-  const [activeService, setActiveService] = useState(null);
-  useScrollReveal();
+  useServiceStyles();
+
+  const inner = {
+    maxWidth: '1280px',
+    margin: '0 auto',
+    padding: '0 3rem',
+    width: '100%',
+    boxSizing: 'border-box',
+  };
 
   const scrollToDownload = () => {
     const el = document.getElementById('download-buttons');
@@ -297,667 +313,999 @@ export default function Service({ isSection = false }) {
     }
   };
 
+  // ── Data (i18n-driven) ─────────────────────────────────────────────────
+  const SERVICES = [
+    {
+      icon: '🚗',
+      href: '/car-recovery-dubai',
+      tag: t('service.svc1Tag'),
+      tagBg: 'rgba(247,178,5,0.10)',
+      tagColor: '#b07c00',
+      title: t('service.svc1Title'),
+      desc: t('service.svc1Desc'),
+      bullets: [t('service.svc1b1'), t('service.svc1b2'), t('service.svc1b3'), t('service.svc1b4')],
+    },
+    {
+      icon: '🚛',
+      href: '/towing-service-dubai',
+      tag: null,
+      title: t('service.svc2Title'),
+      desc: t('service.svc2Desc'),
+      bullets: [t('service.svc2b1'), t('service.svc2b2'), t('service.svc2b3'), t('service.svc2b4')],
+    },
+    {
+      icon: '🔋',
+      href: '/battery-service-dubai',
+      tag: t('service.svc3Tag'),
+      tagBg: 'rgba(239,68,68,0.07)',
+      tagColor: '#c93030',
+      title: t('service.svc3Title'),
+      desc: t('service.svc3Desc'),
+      bullets: [t('service.svc3b1'), t('service.svc3b2'), t('service.svc3b3'), t('service.svc3b4')],
+    },
+    {
+      icon: '🔧',
+      href: '/flat-tyre-repair-dubai',
+      tag: null,
+      title: t('service.svc4Title'),
+      desc: t('service.svc4Desc'),
+      bullets: [t('service.svc4b1'), t('service.svc4b2'), t('service.svc4b3'), t('service.svc4b4')],
+    },
+    {
+      icon: '🚨',
+      href: '/accident-recovery-dubai',
+      tag: t('service.svc5Tag'),
+      tagBg: 'rgba(249,115,22,0.07)',
+      tagColor: '#c04f00',
+      title: t('service.svc5Title'),
+      desc: t('service.svc5Desc'),
+      bullets: [t('service.svc5b1'), t('service.svc5b2'), t('service.svc5b3'), t('service.svc5b4')],
+    },
+  ];
+
+  const HOW_STEPS = [
+    { num: '01', icon: '📱', title: t('service.step1Title'), body: t('service.step1Body') },
+    { num: '02', icon: '💰', title: t('service.step2Title'), body: t('service.step2Body') },
+    { num: '03', icon: '🚛', title: t('service.step3Title'), body: t('service.step3Body') },
+    { num: '04', icon: '✅', title: t('service.step4Title'), body: t('service.step4Body') },
+  ];
+
+  const WHY_POINTS = [
+    { icon: '⚡', title: t('service.why1Title'), body: t('service.why1Body') },
+    { icon: '🏆', title: t('service.why2Title'), body: t('service.why2Body') },
+    { icon: '💰', title: t('service.why3Title'), body: t('service.why3Body') },
+    { icon: '🕐', title: t('service.why4Title'), body: t('service.why4Body') },
+    { icon: '👷', title: t('service.why5Title'), body: t('service.why5Body') },
+    { icon: '📱', title: t('service.why6Title'), body: t('service.why6Body') },
+  ];
+
+  const LOCATIONS = [
+    { label: 'Dubai Marina',   href: '/car-recovery-dubai-marina' },
+    { label: 'JVC',            href: '/car-recovery-jvc' },
+    { label: 'Business Bay',   href: '/car-recovery-business-bay' },
+    { label: 'Deira',          href: '/car-recovery-deira' },
+    { label: 'Al Quoz',        href: '/car-recovery-al-quoz' },
+    { label: 'Jumeirah',       href: '/car-recovery-jumeirah' },
+    { label: 'Downtown Dubai', href: '/car-recovery-downtown-dubai' },
+    { label: 'Al Barsha',      href: '/car-recovery-al-barsha' },
+    { label: 'Mirdif',         href: '/car-recovery-mirdif' },
+  ];
+
+  const FEATS = [
+    { icon: '⚡', label: t('service.feat1') },
+    { icon: '👷', label: t('service.feat2') },
+    { icon: '📍', label: t('service.feat3') },
+    { icon: '💰', label: t('service.feat4') },
+    { icon: '🏆', label: t('service.feat5') },
+    { icon: '📱', label: t('service.feat6') },
+  ];
+
   return (
-    <>
+    <div className="svc-page-root" dir={isRTL ? 'rtl' : 'ltr'}>
       {!isSection && (
         <Helmet>
-          <title>Tareeqk Services – Car Recovery, Towing & Roadside Assistance Dubai | 24/7</title>
-          <meta name="description" content="Tareeqk offers 24/7 car recovery, towing, battery service, flat tyre repair, fuel delivery, and accident recovery across all Dubai areas. RTA-licensed, 20-minute response." />
+          <title>{t('meta.service.title')}</title>
+          <meta name="description" content={t('meta.service.description')} />
           <meta name="robots" content="index, follow" />
           <link rel="canonical" href="https://www.tareeqk.ae/service" />
-          <meta property="og:title" content="Tareeqk Services – 24/7 Roadside Assistance Dubai" />
-          <meta property="og:description" content="Car recovery, towing, battery, tyre, fuel delivery and accident recovery across Dubai. RTA-licensed, 20-minute average response." />
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://www.tareeqk.ae/service" />
-          <meta property="og:image" content="https://www.tareeqk.ae/new/Recovery_Van.webp" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
         </Helmet>
       )}
 
       <ServicesPageSchema />
 
-      <div style={{ fontFamily: "'Outfit', sans-serif" }}>
-
-        {/* ══ HERO ══════════════════════════════════════════════════════════ */}
-        {!isSection && (
-          <section style={{
-            background: '#0a0a0a',
-            backgroundImage: `
-              radial-gradient(ellipse at 20% 50%, rgba(251,191,36,0.09) 0%, transparent 55%),
-              radial-gradient(ellipse at 80% 80%, rgba(251,191,36,0.04) 0%, transparent 50%)
-            `,
-            padding: '104px 24px 84px',
-            color: '#fff',
+      {/* ══════════════════════════════════════════════════════════════════
+          HERO — cinematic, overlay-heavy (Annex pattern: right-aligned content)
+      ══════════════════════════════════════════════════════════════════ */}
+      {!isSection && (
+        <section
+          className="svc-hero-section"
+          style={{
             position: 'relative',
             overflow: 'hidden',
-          }}>
-            <div style={{
+            minHeight: '480px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          {/* Background image */}
+          <div
+            style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)',
-              backgroundSize: '64px 64px',
-            }} />
-            <div style={{
-              position: 'absolute', right: '-30px', top: '50%',
-              transform: 'translateY(-50%)',
-              fontSize: 'clamp(140px, 18vw, 260px)', fontWeight: 900,
-              color: 'rgba(251,191,36,0.035)', lineHeight: 1,
-              userSelect: 'none', letterSpacing: '-0.05em', zIndex: 0,
-              fontFamily: "'Outfit', sans-serif",
-            }}>24/7</div>
+              backgroundImage: 'url("new/Recovery_Van.webp")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 40%',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
 
-            <div style={{ ...s.inner, position: 'relative', zIndex: 1 }}>
-              <div style={{ maxWidth: '640px' }}>
-                <span className="trq-reveal" data-delay="0" style={s.eyebrow}>
-                  Dubai Roadside Assistance
-                </span>
-                <HeadingTag className="trq-reveal" data-delay="80" style={s.h1}>
-                  Every service you need,{' '}
-                  <em style={{
-                    fontStyle: 'normal',
-                    color: '#fbbf24',
-                    fontFamily: "'Crimson Pro', serif",
+          {/* Dark overlay — directional based on direction */}
+          <div
+            style={{
+              position: 'absolute', inset: 0, zIndex: 1,
+              background: isRTL
+                ? `linear-gradient(100deg,rgba(10,10,10,0.25) 0%,rgba(10,10,10,0.70) 55%,rgba(10,10,10,0.92) 100%),
+                   linear-gradient(0deg,rgba(10,10,10,0.60) 0%,transparent 50%)`
+                : `linear-gradient(260deg,rgba(10,10,10,0.92) 0%,rgba(10,10,10,0.70) 45%,rgba(10,10,10,0.25) 100%),
+                   linear-gradient(0deg,rgba(10,10,10,0.60) 0%,transparent 50%)`,
+            }}
+          />
+
+          {/* Gold accent line — bottom-right (or bottom-left in RTL) */}
+          <div
+            style={{
+              position: 'absolute', bottom: 0,
+              right: isRTL ? 'auto' : 0,
+              left: isRTL ? 0 : 'auto',
+              width: '32%', height: '3px', zIndex: 2,
+              background: isRTL
+                ? 'linear-gradient(90deg, var(--primary-yellow), transparent)'
+                : 'linear-gradient(270deg, var(--primary-yellow), transparent)',
+            }}
+          />
+
+          {/* Content — aligned to the dark side */}
+          <div
+            className="svc-inner"
+            style={{
+              ...inner,
+              position: 'relative', zIndex: 3,
+              paddingTop: '80px', paddingBottom: '80px',
+              display: 'flex',
+              justifyContent: isRTL ? 'flex-start' : 'flex-end',
+            }}
+          >
+            <div style={{ maxWidth: '600px', width: '100%' }}>
+              <span className="svc-reveal svc-fade" data-delay="0" style={eyebrow}>
+                {t('service.heroTag')}
+              </span>
+
+              <HeadingTag
+                className="svc-reveal"
+                data-delay="80"
+                style={{
+                  fontSize: 'clamp(2rem, 4.5vw, 3.4rem)',
+                  fontWeight: 800,
+                  color: '#fff',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.04,
+                  margin: '0 0 20px',
+                }}
+              >
+                {t('service.heroTitle')}{' '}
+                <span
+                  style={{
+                    color: 'var(--primary-yellow)',
+                    display: 'block',
                     fontWeight: 300,
+                    fontStyle: 'italic',
                     fontSize: '1.06em',
-                  }}>
-                    in 20 minutes
-                  </em>
-                </HeadingTag>
-
-                <p
-                  className="trq-reveal"
-                  data-delay="160"
-                  style={{ ...s.p, color: '#9ca3af', fontSize: '15px', marginTop: '20px', maxWidth: '500px', lineHeight: 1.75 }}
-                >
-                  Tareeqk operates a fleet of RTA-licensed recovery units, mobile technicians, and tow trucks — positioned across Dubai so help is always close, always fast, always professional.
-                </p>
-
-                <div
-                  className="trq-reveal"
-                  data-delay="240"
-                  style={{ marginTop: '32px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}
-                >
-                  <a href="tel:+97180082773375" className="trq-btn-yellow" style={s.btnPrimary}>
-                    📞 Call Now
-                  </a>
-                  <a
-                    href="https://wa.me/97180082773375"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{
-                      ...s.btnGhost,
-                      background: 'rgba(37,211,102,0.12)',
-                      borderColor: 'rgba(37,211,102,0.4)',
-                      color: '#4ade80',
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.background = '#25D366'; e.currentTarget.style.color = '#fff'; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,211,102,0.12)'; e.currentTarget.style.color = '#4ade80'; }}
-                  >
-                    💬 WhatsApp
-                  </a>
-                  <button onClick={scrollToDownload} style={{ ...s.btnGhost, cursor: 'pointer' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#fbbf24'; e.currentTarget.style.color = '#fbbf24'; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = '#fff'; }}
-                  >
-                    📱 Get the App
-                  </button>
-                </div>
-
-                {/* Stat row */}
-                <div
-                  className="trq-reveal"
-                  data-delay="320"
-                  style={{
-                    display: 'flex', gap: '0', flexWrap: 'wrap', marginTop: '44px',
-                    borderTop: '1px solid rgba(255,255,255,0.07)', paddingTop: '24px',
                   }}
                 >
-                  {[
-                    { num: '20 min', label: 'Avg. response' },
-                    { num: '24/7', label: 'No exceptions' },
-                    { num: '4.9★', label: '1,200+ reviews' },
-                    { num: 'RTA', label: 'Licensed' },
-                  ].map((stat, i, arr) => (
-                    <div key={i} style={{
-                      padding: '0 28px 0 0', marginRight: '28px',
-                      borderRight: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
-                    }}>
-                      <div style={{
-                        fontSize: '19px', fontWeight: 800, color: '#fbbf24',
-                        letterSpacing: '-0.02em', fontFamily: "'Outfit', sans-serif",
-                      }}>
-                        {stat.num}
-                      </div>
-                      <div style={{ fontSize: '11px', color: '#6b7280', fontWeight: 600, marginTop: '2px' }}>
-                        {stat.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-        )}
+                  {t('service.heroHighlight')}
+                </span>
+              </HeadingTag>
 
-        {/* ── TRUST BAR ── */}
-        <div style={{
-          background: '#fbbf24', padding: '12px 24px',
-          display: 'flex', justifyContent: 'center',
-          flexWrap: 'wrap', gap: '0',
-        }}>
-          {['⚡ 20-Min Response', '🕐 24/7 Available', '⭐ 4.9 · 1,200+ Reviews', '🏆 RTA Licensed'].map((item, i, arr) => (
-            <span key={i} style={{
-              padding: '4px 20px',
-              borderRight: i < arr.length - 1 ? '1.5px solid rgba(0,0,0,0.15)' : 'none',
-              fontWeight: 700, fontSize: '12px', color: '#000',
-              letterSpacing: '0.02em', fontFamily: "'Outfit', sans-serif",
-            }}>
-              {item}
-            </span>
-          ))}
-        </div>
+              <p
+                className="svc-reveal"
+                data-delay="160"
+                style={{
+                  color: 'rgba(255,255,255,0.70)',
+                  fontSize: '15px',
+                  lineHeight: 1.75,
+                  maxWidth: '500px',
+                  margin: '0 0 32px',
+                  fontWeight: 400,
+                }}
+              >
+                {t('service.heroSubtitle')}
+              </p>
 
-        {/* ══ ALL SERVICES GRID ════════════════════════════════════════════ */}
-        <section style={{ ...s.section, background: '#fff' }}>
-          <div style={s.inner}>
-            <div
-              className="trq-reveal"
-              data-delay="0"
-              style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '20px', marginBottom: '44px' }}
-            >
-              <div>
-                <span style={s.eyebrow}>What We Do</span>
-                <h2 style={{ ...s.h2, marginBottom: '8px' }}>All Services in Dubai</h2>
-                <p style={{ ...s.p, maxWidth: '480px' }}>
-                  Six specialised roadside services, one number to call. Available across all Dubai districts, 24 hours a day, every day of the year.
-                </p>
-              </div>
-              <a href="/contact" className="trq-pill-hover" style={s.linkPill}>Book a service →</a>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: '16px' }}>
-              {SERVICES.map((svc, i) => (
-                <div
-                  key={i}
-                  className="trq-reveal trq-svc-card"
-                  data-delay={`${i * 80}`}
+              <div
+                className="svc-reveal"
+                data-delay="240"
+                style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '44px' }}
+              >
+                <button
+                  onClick={scrollToDownload}
+                  className="svc-btn-primary getTow-btn"
                   style={{
-                    background: '#fff', borderRadius: '14px',
-                    border: `1.5px solid ${activeService === i ? '#fbbf24' : '#f0f0f0'}`,
-                    padding: '24px',
-                    boxShadow: activeService === i ? '0 16px 48px rgba(251,191,36,0.12)' : '0 2px 10px rgba(0,0,0,0.04)',
-                    position: 'relative', overflow: 'hidden', cursor: 'default',
-                  }}
-                  onMouseEnter={() => setActiveService(i)}
-                  onMouseLeave={() => setActiveService(null)}
-                >
-                  {svc.tag && (
-                    <span style={{
-                      position: 'absolute', top: '16px', right: '16px',
-                      background: svc.tagColor, color: svc.tagText,
-                      fontSize: '9px', fontWeight: 800, letterSpacing: '1.5px',
-                      textTransform: 'uppercase', padding: '3px 9px', borderRadius: '100px',
-                      fontFamily: "'Outfit', sans-serif",
-                    }}>
-                      {svc.tag}
-                    </span>
-                  )}
-
-                  {/* Left accent bar */}
-                  <div style={{
-                    position: 'absolute', left: 0, top: '20%', bottom: '20%',
-                    width: '3px', background: '#fbbf24', borderRadius: '0 2px 2px 0',
-                    opacity: activeService === i ? 1 : 0, transition: 'opacity 0.25s ease',
-                  }} />
-
-                  <div style={{
-                    width: '44px', height: '44px', borderRadius: '10px',
-                    background: '#fffbeb', display: 'flex', alignItems: 'center',
-                    justifyContent: 'center', fontSize: '22px', marginBottom: '14px',
-                  }}>
-                    {svc.icon}
-                  </div>
-
-                  <h3 style={{
-                    fontSize: '15px', fontWeight: 700, color: '#111',
-                    marginBottom: '8px', letterSpacing: '-0.015em',
-                    fontFamily: "'Outfit', sans-serif",
-                  }}>
-                    {svc.title}
-                  </h3>
-                  <p style={{ ...s.p, fontSize: '13px', marginBottom: '14px', lineHeight: 1.7 }}>
-                    {svc.desc}
-                  </p>
-
-                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 16px', display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    {svc.bullets.map((b, j) => (
-                      <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '7px', fontSize: '12.5px', fontWeight: 500, color: '#374151' }}>
-                        <span style={{
-                          width: '15px', height: '15px', borderRadius: '50%',
-                          background: '#fffbeb', display: 'flex', alignItems: 'center',
-                          justifyContent: 'center', flexShrink: 0,
-                          fontSize: '8px', fontWeight: 800, color: '#92400e',
-                        }}>✓</span>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <a
-                    href={svc.href}
-                    style={{
-                      display: 'inline-flex', alignItems: 'center', gap: '5px',
-                      color: '#111', fontWeight: 700, fontSize: '12.5px',
-                      textDecoration: 'none', paddingBottom: '2px',
-                      borderBottom: '1.5px solid #fbbf24',
-                      transition: 'color 0.18s ease',
-                      fontFamily: "'Outfit', sans-serif",
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.color = '#92400e'}
-                    onMouseLeave={e => e.currentTarget.style.color = '#111'}
-                  >
-                    Learn more →
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══ HOW IT WORKS ════════════════════════════════════════════════ */}
-        <section style={{ ...s.section, background: '#0a0a0a' }}>
-          <div style={s.inner}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '64px', alignItems: 'center' }}>
-
-              <div className="trq-reveal trq-reveal--left" data-delay="0" style={{ position: 'relative' }}>
-                <div style={{ borderRadius: '16px', overflow: 'hidden', position: 'relative' }}>
-                  <img
-                    src="new/third_img.webp"
-                    alt="Tareeqk roadside assistance in Dubai"
-                    style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }}
-                    loading="lazy"
-                  />
-                  <div style={{
-                    position: 'absolute', bottom: '16px', left: '16px',
-                    background: '#fbbf24', borderRadius: '10px', padding: '12px 18px',
-                  }}>
-                    <div style={{ fontWeight: 800, fontSize: '20px', color: '#000', fontFamily: "'Outfit', sans-serif" }}>20 min</div>
-                    <div style={{ fontWeight: 600, fontSize: '11px', color: 'rgba(0,0,0,0.7)' }}>Average response</div>
-                  </div>
-                </div>
-                <div style={{
-                  position: 'absolute', top: '-12px', right: '-12px',
-                  width: '64px', height: '64px', borderRadius: '50%',
-                  background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.2)',
-                  zIndex: 0,
-                }} />
-              </div>
-
-              <div className="trq-reveal trq-reveal--right" data-delay="80">
-                <span style={{ ...s.eyebrow }}>How It Works</span>
-                <h2 style={{ ...s.h2, color: '#fff', marginBottom: '32px' }}>
-                  From stranded to sorted in 4 steps
-                </h2>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-                  {HOW_STEPS.map((step, i) => (
-                    <div
-                      key={i}
-                      className="trq-reveal trq-step-row"
-                      data-delay={`${i * 100 + 120}`}
-                      style={{
-                        display: 'flex', gap: '16px', padding: '18px 10px',
-                        borderBottom: i < HOW_STEPS.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                        borderRadius: '8px',
-                      }}
-                    >
-                      <div style={{
-                        flexShrink: 0, width: '44px', height: '44px',
-                        borderRadius: '10px',
-                        background: i === 0 ? '#fbbf24' : 'rgba(255,255,255,0.05)',
-                        border: `1.5px solid ${i === 0 ? '#fbbf24' : 'rgba(255,255,255,0.1)'}`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontWeight: 800, fontSize: '13px',
-                        color: i === 0 ? '#000' : 'rgba(255,255,255,0.3)',
-                        fontFamily: "'Outfit', sans-serif",
-                      }}>
-                        {step.num}
-                      </div>
-                      <div>
-                        <div style={{ fontSize: '17px', marginBottom: '4px' }}>{step.icon}</div>
-                        <h3 style={{
-                          fontSize: '13.5px', fontWeight: 700, color: '#fff',
-                          marginBottom: '5px', fontFamily: "'Outfit', sans-serif",
-                        }}>
-                          {step.title}
-                        </h3>
-                        <p style={{ ...s.p, color: '#6b7280', fontSize: '13px' }}>{step.body}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="trq-reveal" data-delay="520" style={{ marginTop: '28px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                  <a href="tel:+97180082773375" className="trq-btn-yellow" style={s.btnPrimary}>📞 Call Now</a>
-                  <button onClick={scrollToDownload} style={{ ...s.btnGhost, cursor: 'pointer' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#fbbf24'; e.currentTarget.style.color = '#fbbf24'; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = '#fff'; }}
-                  >
-                    📱 Download App
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ══ WHY TAREEQK ════════════════════════════════════════════════ */}
-        <section style={{ ...s.section, background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
-          <div style={s.inner}>
-            <div className="trq-reveal" data-delay="0" style={{ textAlign: 'center', marginBottom: '48px' }}>
-              <span style={s.eyebrow}>Why Choose Us</span>
-              <h2 style={{ ...s.h2, maxWidth: '520px', margin: '0 auto' }}>
-                The standard Dubai expects. The service Dubai deserves.
-              </h2>
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '14px' }}>
-              {WHY_POINTS.map((pt, i) => (
-                <div
-                  key={i}
-                  className="trq-reveal trq-why-card"
-                  data-delay={`${i * 70}`}
-                  style={{
-                    background: '#fff', borderRadius: '12px',
-                    border: '1.5px solid #f0f0f0', padding: '20px',
+                    background: 'var(--primary-yellow)',
+                    color: '#000',
+                    padding: '13px 30px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '14px',
+                    letterSpacing: '0.01em',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
                   }}
                 >
-                  <div style={{
-                    width: '36px', height: '36px', borderRadius: '8px',
-                    background: '#fffbeb', display: 'flex',
-                    alignItems: 'center', justifyContent: 'center',
-                    fontSize: '17px', marginBottom: '12px',
-                  }}>
-                    {pt.icon}
-                  </div>
-                  <h3 style={{
-                    fontSize: '13px', fontWeight: 700, color: '#111',
-                    marginBottom: '6px', lineHeight: 1.35,
-                    fontFamily: "'Outfit', sans-serif",
-                  }}>
-                    {pt.title}
-                  </h3>
-                  <p style={{ ...s.p, fontSize: '12.5px' }}>{pt.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ══ PRICING TRANSPARENCY ════════════════════════════════════════ */}
-        <section style={{ ...s.section, background: '#fff', borderTop: '1px solid #f0f0f0' }}>
-          <div style={s.inner}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '64px', alignItems: 'center' }}>
-              <div className="trq-reveal trq-reveal--left" data-delay="0">
-                <span style={s.eyebrow}>Pricing</span>
-                <h2 style={{ ...s.h2, marginBottom: '16px' }}>No surprises. Ever.</h2>
-                <p style={{ ...s.p, marginBottom: '14px' }}>
-                  We built Tareeqk on a simple principle: you should know exactly what you're paying before anyone shows up. That's why every service has a confirmed price displayed before dispatch — whether you're calling, messaging, or using the app.
-                </p>
-                <p style={s.p}>
-                  No surge pricing. No after-service add-ons. No "additional charges" once the job is done. The price we quote is the price you pay.
-                </p>
-                <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
-                  <a href="/contact" className="trq-pill-hover" style={{ ...s.linkPill, borderColor: '#fbbf24', color: '#111' }}>
-                    Get a quote →
-                  </a>
-                </div>
+                  {t('service.heroCta')}
+                </button>
+                <a
+                  href="https://wa.me/97180082773375"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="svc-btn-ghost"
+                  style={{
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.22)',
+                    color: '#fff',
+                    padding: '13px 30px',
+                    borderRadius: '8px',
+                    fontWeight: 500,
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    display: 'inline-block',
+                  }}
+                >
+                  {t('service.heroWhatsapp')}
+                </a>
               </div>
-              <div className="trq-reveal trq-reveal--right" data-delay="120">
+
+              {/* Hero stat strip */}
+              <div
+                className="svc-reveal svc-hero-stats"
+                data-delay="320"
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '0',
+                  borderTop: '1px solid rgba(255,255,255,0.12)',
+                  paddingTop: '22px',
+                }}
+              >
                 {[
-                  { label: 'Price shown before dispatch', icon: '✅' },
-                  { label: 'No hidden fees or add-ons', icon: '✅' },
-                  { label: 'Payment via cash or card', icon: '✅' },
-                  { label: 'Invoice provided for every job', icon: '✅' },
-                  { label: 'Insurance documentation available', icon: '✅' },
-                ].map((item, i) => (
+                  { stat: '20 min', label: t('service.statAvgResponse') },
+                  { stat: '5',      label: t('service.statServices') },
+                  { stat: '4.9★',  label: t('service.statReviews') },
+                  { stat: 'RTA',    label: t('service.statLicensed') },
+                ].map((m, i, arr) => (
                   <div
                     key={i}
-                    className="trq-reveal"
-                    data-delay={`${i * 70 + 150}`}
                     style={{
-                      display: 'flex', alignItems: 'center', gap: '12px',
-                      padding: '13px 0',
-                      borderBottom: i < 4 ? '1px solid #f5f5f5' : 'none',
+                      paddingInlineEnd: '26px',
+                      marginInlineEnd: '26px',
+                      borderInlineEnd: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.10)' : 'none',
                     }}
                   >
-                    <span style={{
-                      width: '22px', height: '22px', borderRadius: '50%',
-                      background: '#fffbeb', display: 'flex', alignItems: 'center',
-                      justifyContent: 'center', fontSize: '11px', flexShrink: 0,
-                      color: '#92400e', fontWeight: 800,
-                    }}>
-                      {item.icon}
-                    </span>
-                    <span style={{ fontWeight: 600, fontSize: '13.5px', color: '#374151' }}>{item.label}</span>
+                    <div style={{ fontSize: '19px', fontWeight: 800, color: 'var(--primary-yellow)', letterSpacing: '-0.02em', lineHeight: 1 }}>
+                      {m.stat}
+                    </div>
+                    <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', fontWeight: 500, marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                      {m.label}
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </section>
+      )}
 
-        {/* ══ AREA COVERAGE ═══════════════════════════════════════════════ */}
-        <section style={{ ...s.section, background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
-          <div style={s.inner}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '64px', alignItems: 'center' }}>
-              <div className="trq-reveal trq-reveal--left" data-delay="0">
-                <span style={s.eyebrow}>Coverage</span>
-                <h2 style={{ ...s.h2, marginBottom: '12px' }}>All Dubai areas, one call away</h2>
-                <p style={{ ...s.p, marginBottom: '22px' }}>
-                  From the Marina to Deira, Business Bay to Al Quoz — our technicians are positioned across Dubai so wait times stay consistently short. We also cover Sharjah border areas on request.
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
-                  {LOCATIONS.map(loc => (
-                    <a
-                      key={loc.href}
-                      href={loc.href}
-                      className="trq-pill-hover"
-                      style={s.linkPill}
-                    >
-                      {loc.label}
-                    </a>
-                  ))}
+      {/* ══════════════════════════════════════════════════════════════════
+          INTRO — Annex "Who we are" two-column (pill label + stat row)
+      ══════════════════════════════════════════════════════════════════ */}
+      {!isSection && (
+        <section
+          className="svc-intro-section"
+          style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+        >
+          <div className="svc-inner" style={inner}>
+            <div
+              className="svc-intro-grid"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '1fr 1fr',
+                gap: '80px',
+                alignItems: 'start',
+              }}
+            >
+              {/* Left column */}
+              <div style={{ order: isRTL ? 2 : 1 }}>
+                {/* Annex-style "Who we are" pill */}
+                <div className="svc-reveal svc-fade" data-delay="0">
+                  <span className="svc-pill-label">
+                    <span className="svc-pill-dot" />
+                    {t('service.whoWeAreTag')}
+                  </span>
                 </div>
-                <a href="/contact" className="trq-pill-hover" style={{ ...s.linkPill, borderColor: '#fbbf24' }}>
-                  Not listed? Contact us →
-                </a>
-              </div>
 
-              <div className="trq-reveal trq-reveal--right" data-delay="80">
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-                  {AREA_ZONES.map((area, i) => (
-                    <div
-                      key={i}
-                      className="trq-reveal trq-area-card"
-                      data-delay={`${i * 80 + 100}`}
-                      style={{
-                        background: i === 0 ? '#0a0a0a' : '#fff',
-                        border: `1.5px solid ${i === 0 ? '#222' : '#f0f0f0'}`,
-                        borderRadius: '12px', padding: '16px',
-                        color: i === 0 ? '#fff' : '#111',
-                      }}
-                    >
-                      <div style={{ fontSize: '20px', marginBottom: '8px' }}>{area.icon}</div>
-                      <div style={{
-                        fontWeight: 700, fontSize: '12.5px', marginBottom: '3px',
-                        color: i === 0 ? '#fbbf24' : '#111',
-                        fontFamily: "'Outfit', sans-serif",
-                      }}>
-                        {area.area}
-                      </div>
-                      <div style={{ fontSize: '11px', color: i === 0 ? '#6b7280' : '#9ca3af', fontWeight: 400 }}>
-                        {area.detail}
-                      </div>
+                <h2
+                  className="svc-h2 svc-reveal svc-left"
+                  data-delay="70"
+                  style={{
+                    fontSize: 'clamp(1.75rem, 3vw, 2.6rem)',
+                    fontWeight: 800,
+                    color: 'var(--primary-dark-bg)',
+                    letterSpacing: '-0.03em',
+                    lineHeight: 1.1,
+                    marginBottom: '20px',
+                    marginTop: '6px',
+                  }}
+                >
+                  {t('service.whoWeAreTitle')}
+                </h2>
+                <p
+                  className="svc-body-text svc-reveal"
+                  data-delay="150"
+                  style={{ color: '#555', fontSize: '15px', lineHeight: 1.78, marginBottom: '20px' }}
+                >
+                  {t('service.whoWeAreP1').split('roadside assistance in Dubai').map((part, i, arr) =>
+                    i < arr.length - 1
+                      ? <React.Fragment key={i}>{part}<span style={{ color: 'var(--primary-yellow)', fontWeight: 700 }}>roadside assistance in Dubai</span></React.Fragment>
+                      : part
+                  )}
+                </p>
+                <p
+                  className="svc-body-text svc-reveal"
+                  data-delay="220"
+                  style={{ color: '#777', fontSize: '14.5px', lineHeight: 1.75 }}
+                >
+                  {t('service.whoWeAreP2')}
+                </p>
+
+                {/* Inline stat row (Annex style) */}
+                <div className="svc-stat-bar svc-reveal" data-delay="300">
+                  {[
+                    { n: '2019', l: t('about.statFounded') },
+                    { n: '50K+', l: t('about.statRescues') },
+                    { n: '4.9★', l: t('about.statRating') },
+                  ].map((s, i) => (
+                    <div key={i} className="svc-stat-item">
+                      <div className="svc-stat-num">{s.n}</div>
+                      <div className="svc-stat-label">{s.l}</div>
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Right column — feature checklist + mini CTA */}
+              <div style={{ paddingTop: '8px', order: isRTL ? 1 : 2 }}>
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: '12px',
+                    marginBottom: '28px',
+                  }}
+                >
+                  {FEATS.map((feat, i) => (
+                    <div
+                      key={i}
+                      className="svc-reveal svc-feat-item"
+                      data-delay={`${120 + i * 55}`}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '14px 16px',
+                        borderRadius: '10px',
+                        border: '1px solid rgba(0,0,0,0.06)',
+                        background: '#fafafa',
+                      }}
+                    >
+                      <span style={{ fontSize: '18px', flexShrink: 0 }}>{feat.icon}</span>
+                      <span
+                        className="svc-feat-label"
+                        style={{ fontSize: '13px', fontWeight: 600, color: '#222', lineHeight: 1.3 }}
+                      >
+                        {feat.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mini CTA card */}
+                <div
+                  className="svc-reveal svc-right"
+                  data-delay="480"
+                  style={{
+                    background: 'var(--primary-dark-bg)',
+                    borderRadius: '14px',
+                    padding: '22px 20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                  }}
+                >
+                  <div style={{ fontSize: '32px', flexShrink: 0 }}>🚗</div>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '14px', color: '#fff', marginBottom: '6px' }}>
+                      {t('service.needHelp')}
+                    </div>
+                    <button
+                      onClick={scrollToDownload}
+                      style={{
+                        background: 'var(--primary-yellow)',
+                        color: '#000',
+                        border: 'none',
+                        borderRadius: '6px',
+                        padding: '8px 18px',
+                        fontWeight: 700,
+                        fontSize: '13px',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {t('service.downloadApp')}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
+      )}
 
-        {/* ══ CTA ═════════════════════════════════════════════════════════ */}
-        <section style={{ padding: '0 24px 72px' }}>
-          <div style={{ maxWidth: '1140px', margin: '0 auto' }}>
-            <div
-              className="trq-reveal trq-reveal--scale"
-              data-delay="0"
+      {/* ══════════════════════════════════════════════════════════════════
+          SERVICE CARDS — Annex-style card grid with top-bar accent
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="svc-cards-section"
+        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
+      >
+        <div className="svc-inner" style={inner}>
+          {/* Section header */}
+          <div className="svc-reveal" style={{ marginBottom: '56px' }}>
+            <span style={eyebrow}>{t('service.whatWeOfferTag')}</span>
+            <h2
+              className="svc-h2"
               style={{
-                background: '#0a0a0a',
-                backgroundImage: `
-                  radial-gradient(ellipse at 20% 50%, rgba(251,191,36,0.08) 0%, transparent 55%),
-                  radial-gradient(ellipse at 80% 50%, rgba(251,191,36,0.04) 0%, transparent 50%)
-                `,
-                borderRadius: '20px', padding: '64px 36px',
-                textAlign: 'center', color: '#fff',
-                position: 'relative', overflow: 'hidden',
+                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                fontWeight: 800,
+                color: 'var(--primary-dark-bg)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.1,
+                maxWidth: '480px',
               }}
             >
-              <div style={{
-                position: 'absolute', inset: 0,
-                backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
-                backgroundSize: '56px 56px',
-              }} />
-              <div style={{
-                position: 'absolute', inset: 0, display: 'flex',
-                alignItems: 'center', justifyContent: 'center',
-                fontSize: 'clamp(70px, 13vw, 160px)', fontWeight: 900,
-                color: 'rgba(255,255,255,0.02)', userSelect: 'none',
-                letterSpacing: '-0.05em', zIndex: 0, fontFamily: "'Outfit', sans-serif",
-              }}>TAREEQK</div>
+              {t('service.whatWeOfferTitle')}{' '}
+              <span style={{ color: 'var(--primary-yellow)' }}>{t('service.whatWeOfferHighlight')}</span>
+            </h2>
+          </div>
 
-              <div style={{ position: 'relative', zIndex: 1 }}>
-                <span style={{ ...s.eyebrow, display: 'block', textAlign: 'center' }}>Always Ready</span>
-                <h2 style={{
-                  fontSize: 'clamp(1.5rem, 3.5vw, 2.4rem)', fontWeight: 800,
-                  marginBottom: '12px', letterSpacing: '-0.03em',
-                  fontFamily: "'Outfit', sans-serif",
-                }}>
-                  Stuck on the road?{' '}
-                  <span style={{ color: '#fbbf24' }}>We're already on the way.</span>
-                </h2>
-                <p style={{ color: '#9ca3af', fontSize: '14.5px', marginBottom: '36px', maxWidth: '440px', margin: '0 auto 36px', lineHeight: 1.7 }}>
-                  Call, WhatsApp, or use the app. One contact and our nearest team is dispatched — 24 hours a day, every single day.
-                </p>
-                <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <a href="tel:+97180082773375" className="trq-btn-yellow" style={s.btnPrimary}>📞 Call Now</a>
-                  <a
-                    href="https://wa.me/97180082773375"
-                    target="_blank"
-                    rel="noreferrer"
+          <div
+            className="svc-cards-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: '20px',
+            }}
+          >
+            {SERVICES.map((svc, i) => (
+              <a
+                key={i}
+                href={svc.href}
+                className="svc-reveal svc-card"
+                data-delay={i * 75}
+              >
+                {/* Annex-style top accent bar */}
+                <div className="svc-card-top-bar" />
+
+                <div style={{ padding: '24px 28px 28px' }}>
+                  {/* Tag badge */}
+                  {svc.tag && (
+                    <div style={{ marginBottom: '14px' }}>
+                      <span
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '5px',
+                          fontSize: '10px',
+                          fontWeight: 700,
+                          letterSpacing: '0.06em',
+                          textTransform: 'uppercase',
+                          padding: '4px 10px',
+                          borderRadius: '100px',
+                          background: svc.tagBg,
+                          color: svc.tagColor,
+                        }}
+                      >
+                        <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block' }} />
+                        {svc.tag}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Icon */}
+                  <div
+                    className="svc-card-icon"
                     style={{
-                      ...s.btnPrimary, background: '#25D366', color: '#fff',
-                      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                      width: '48px', height: '48px',
+                      borderRadius: '12px',
+                      background: '#fef9ec',
+                      display: 'flex', alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '22px',
+                      marginBottom: '16px',
+                      transition: 'background 0.25s ease',
                     }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(37,211,102,0.3)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
                   >
-                    💬 WhatsApp
-                  </a>
-                  <button
-                    onClick={scrollToDownload}
-                    style={{ ...s.btnGhost, cursor: 'pointer' }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = '#fbbf24'; e.currentTarget.style.color = '#fbbf24'; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = '#fff'; }}
+                    {svc.icon}
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="svc-card-title"
+                    style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '10px', letterSpacing: '-0.01em', lineHeight: 1.3 }}
                   >
-                    📱 Get the App
-                  </button>
+                    {svc.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p
+                    className="svc-card-body"
+                    style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px', marginBottom: '18px' }}
+                  >
+                    {svc.desc}
+                  </p>
+
+                  {/* Bullets */}
+                  <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '7px' }}>
+                    {svc.bullets.map((b, j) => (
+                      <li
+                        key={j}
+                        style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12.5px' }}
+                      >
+                        <span
+                          style={{
+                            width: '14px', height: '14px', borderRadius: '50%',
+                            background: 'rgba(247,178,5,0.12)',
+                            display: 'inline-flex', alignItems: 'center',
+                            justifyContent: 'center', fontSize: '8px',
+                            color: 'var(--primary-yellow)', flexShrink: 0, marginTop: '1px',
+                          }}
+                        >
+                          ✓
+                        </span>
+                        <span className="svc-bullet-text" style={{ color: '#888' }}>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Read more link */}
+                  <div
+                    style={{
+                      marginTop: '20px',
+                      paddingTop: '16px',
+                      borderTop: '1px solid rgba(0,0,0,0.05)',
+                      fontSize: '12.5px',
+                      fontWeight: 700,
+                      color: 'var(--primary-yellow)',
+                      letterSpacing: '0.02em',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    {t('service.learnMore')}
+                    <span>{isRTL ? ' ←' : ' →'}</span>
+                  </div>
                 </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          HOW IT WORKS — dark section with step rows
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="svc-steps-section"
+        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+      >
+        <div className="svc-inner" style={inner}>
+          {/* Header */}
+          <div
+            className="svc-reveal svc-steps-header"
+            style={{
+              marginBottom: '64px',
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-end',
+              flexWrap: 'wrap',
+              gap: '24px',
+            }}
+          >
+            <div>
+              <span style={eyebrow}>{t('service.stepsTag')}</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                  fontWeight: 800,
+                  color: '#fff',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.1,
+                  maxWidth: '420px',
+                }}
+              >
+                {t('service.stepsTitle')}{' '}
+                <span className="svc-gold-glow" style={{ color: 'var(--primary-yellow)' }}>
+                  {t('service.stepsHighlight')}
+                </span>
+              </h2>
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px', lineHeight: 1.7, maxWidth: '340px' }}>
+              {t('service.stepsSubtitle')}
+            </p>
+          </div>
+
+          {/* Step rows */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {HOW_STEPS.map((step, i) => (
+              <div
+                key={i}
+                className="svc-reveal svc-step-row"
+                data-delay={i * 90}
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '72px 1fr',
+                  gap: '28px',
+                  alignItems: 'start',
+                  padding: '28px 24px',
+                  borderBottom: i < HOW_STEPS.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                }}
+              >
+                {/* Number + icon */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                  <div
+                    style={{
+                      width: '48px', height: '48px',
+                      borderRadius: '12px',
+                      background: 'rgba(247,178,5,0.10)',
+                      border: '1px solid rgba(247,178,5,0.20)',
+                      display: 'flex', alignItems: 'center',
+                      justifyContent: 'center', fontSize: '20px',
+                    }}
+                  >
+                    {step.icon}
+                  </div>
+                  <span
+                    style={{
+                      fontSize: '11px', fontWeight: 700,
+                      letterSpacing: '0.10em', color: 'rgba(255,255,255,0.22)',
+                    }}
+                  >
+                    {step.num}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div style={{ paddingTop: '8px' }}>
+                  <h3
+                    className="svc-step-title"
+                    style={{ fontWeight: 700, fontSize: '16px', color: '#fff', letterSpacing: '-0.01em', marginBottom: '8px' }}
+                  >
+                    {step.title}
+                  </h3>
+                  <p className="svc-step-body" style={{ color: 'rgba(255,255,255,0.48)', fontSize: '14px', lineHeight: 1.72 }}>
+                    {step.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          WHY TAREEQK — light muted section, 3-col grid
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="svc-why-section"
+        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+      >
+        <div className="svc-inner" style={inner}>
+          <div className="svc-reveal" style={{ marginBottom: '56px' }}>
+            <span style={eyebrow}>{t('service.whyTag')}</span>
+            <h2
+              className="svc-h2"
+              style={{
+                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                fontWeight: 800,
+                color: 'var(--primary-dark-bg)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.1,
+                maxWidth: '460px',
+              }}
+            >
+              {t('service.whyTitle')}
+            </h2>
+          </div>
+
+          <div
+            className="svc-why-grid"
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}
+          >
+            {WHY_POINTS.map((point, i) => (
+              <div
+                key={i}
+                className="svc-reveal svc-why-card"
+                data-delay={i * 65}
+                style={{
+                  padding: '28px',
+                  borderRadius: '14px',
+                  background: 'var(--secondary-light-gray)',
+                  border: '1px solid rgba(0,0,0,0.05)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+                }}
+              >
+                <div
+                  className="svc-why-icon"
+                  style={{
+                    width: '42px', height: '42px',
+                    borderRadius: '10px',
+                    background: '#fef9ec',
+                    display: 'flex', alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '20px', marginBottom: '18px',
+                    transition: 'background 0.25s ease',
+                  }}
+                >
+                  {point.icon}
+                </div>
+                <h3 className="svc-why-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+                  {point.title}
+                </h3>
+                <p className="svc-why-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px' }}>
+                  {point.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
+          COVERAGE — dark section with location pills + CTA card
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+      >
+        <div className="svc-inner" style={inner}>
+          <div
+            className="svc-coverage-grid"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 0.72fr',
+              gap: '80px',
+              alignItems: 'start',
+            }}
+          >
+            {/* Left — heading + location pills */}
+            <div className="svc-reveal svc-left" style={{ order: isRTL ? 2 : 1 }}>
+              <span style={eyebrow}>{t('service.coverageTag')}</span>
+              <h2
+                style={{
+                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                  fontWeight: 800,
+                  color: '#fff',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.1,
+                  marginBottom: '18px',
+                }}
+              >
+                {t('service.coverageTitle')}{' '}
+                <span style={{ color: 'var(--primary-yellow)' }}>{t('service.coverageHighlight')}</span>
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,0.48)', lineHeight: 1.75, fontSize: '15px', marginBottom: '36px' }}>
+                {t('service.coverageSubtitle')}
+              </p>
+
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                {LOCATIONS.map((loc, i) => (
+                  <a
+                    key={i}
+                    href={loc.href}
+                    className="svc-loc-pill"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      color: 'rgba(255,255,255,0.65)',
+                      padding: '8px 16px',
+                      borderRadius: '100px',
+                      fontSize: '12.5px',
+                      fontWeight: 500,
+                      textDecoration: 'none',
+                      background: 'rgba(255,255,255,0.04)',
+                    }}
+                  >
+                    {loc.label}
+                  </a>
+                ))}
+                <a
+                  href="/contact"
+                  className="svc-loc-pill"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    border: '1px solid rgba(247,178,5,0.30)',
+                    color: 'var(--primary-yellow)',
+                    padding: '8px 16px',
+                    borderRadius: '100px',
+                    fontSize: '12.5px',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    background: 'rgba(247,178,5,0.06)',
+                  }}
+                >
+                  {t('service.coverageNotListed')} {isRTL ? '←' : '→'}
+                </a>
+              </div>
+            </div>
+
+            {/* Right — yellow CTA card */}
+            <div className="svc-reveal svc-right" style={{ order: isRTL ? 1 : 2 }}>
+              <div
+                style={{
+                  background: 'var(--primary-yellow)',
+                  borderRadius: '18px',
+                  padding: '36px 30px',
+                  color: '#000',
+                }}
+              >
+                <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.55, marginBottom: '10px' }}>
+                  {t('service.emergencyTag')}
+                </div>
+                <h3 style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em', marginBottom: '12px' }}>
+                  {t('service.emergencyTitle')}
+                </h3>
+                <p style={{ fontSize: '13.5px', lineHeight: 1.7, opacity: 0.75, marginBottom: '24px', fontWeight: 400 }}>
+                  {t('service.emergencySubtitle')}
+                </p>
+                <a
+                  href="tel:+97180082773375"
+                  style={{
+                    display: 'block', padding: '14px',
+                    background: '#000', color: '#fff',
+                    textAlign: 'center', borderRadius: '9px',
+                    fontWeight: 700, textDecoration: 'none',
+                    fontSize: '14px', marginBottom: '8px',
+                  }}
+                >
+                  {t('service.callBtn')}
+                </a>
+                <a
+                  href="https://wa.me/97180082773375"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: 'block', padding: '12px',
+                    background: 'rgba(0,0,0,0.10)', color: '#000',
+                    textAlign: 'center', borderRadius: '9px',
+                    fontWeight: 600, textDecoration: 'none',
+                    fontSize: '13.5px', border: '1px solid rgba(0,0,0,0.10)',
+                  }}
+                >
+                  💬 {t('service.whatsappBtn')}
+                </a>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ══ INTERNAL LINKS FOOTER ════════════════════════════════════════ */}
-        <section style={{
-          padding: '44px 0',
-          background: '#fafafa',
-          borderTop: '1px solid #f0f0f0',
-        }}>
-          <div style={s.inner}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '32px' }}>
-              <div className="trq-reveal" data-delay="0">
-                <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '14px' }}>
-                  Service Pages
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                  {SERVICES.map(svc => (
-                    <a
-                      key={svc.href}
-                      href={svc.href}
-                      className="trq-link-hover"
-                      style={{ color: '#374151', fontWeight: 600, fontSize: '13px', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '7px' }}
-                    >
-                      <span>{svc.icon}</span> {svc.title}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div className="trq-reveal" data-delay="80">
-                <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '14px' }}>
-                  Area Pages
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                  {LOCATIONS.map(loc => (
-                    <a key={loc.href} href={loc.href} className="trq-link-hover"
-                      style={{ color: '#374151', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}
-                    >
-                      📍 {loc.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div className="trq-reveal" data-delay="160">
-                <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '14px' }}>
-                  Quick Links
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                  {[
-                    { label: 'About Tareeqk', href: '/about' },
-                    { label: 'Contact Us', href: '/contact' },
-                    { label: 'Download the App', href: '#download-buttons' },
-                    { label: 'Privacy Policy', href: '/privacy' },
-                    { label: 'Terms of Service', href: '/terms' },
-                  ].map(link => (
-                    <a key={link.href} href={link.href} className="trq-link-hover"
-                      style={{ color: '#374151', fontWeight: 600, fontSize: '13px', textDecoration: 'none' }}
-                    >
-                      → {link.label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-              <div className="trq-reveal" data-delay="240">
-                <div style={{ fontWeight: 700, fontSize: '11px', letterSpacing: '3px', textTransform: 'uppercase', color: '#9ca3af', marginBottom: '14px' }}>
-                  Emergency
-                </div>
-                <div style={{ background: '#0a0a0a', borderRadius: '12px', padding: '16px' }}>
-                  <div style={{ fontWeight: 700, fontSize: '13px', color: '#fff', marginBottom: '5px' }}>
-                    🚨 Need help now?
-                  </div>
-                  <div style={{ fontSize: '12px', color: '#6b7280', marginBottom: '14px' }}>
-                    Available 24/7 — no exceptions
-                  </div>
-                  <a href="tel:+97180082773375" className="trq-btn-yellow" style={{ ...s.btnPrimary, fontSize: '12.5px', padding: '9px 16px' }}>
-                    📞 Call Now
-                  </a>
-                </div>
+      {/* ══════════════════════════════════════════════════════════════════
+          CTA — bottom banner (dark + gold glow)
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="svc-cta-section"
+        style={{ padding: '96px 0', backgroundColor: '#fff' }}
+      >
+        <div className="svc-inner" style={inner}>
+          <div
+            className="svc-reveal svc-scale"
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: '20px',
+              padding: '72px 48px',
+              textAlign: 'center',
+              background: 'var(--primary-dark-bg)',
+            }}
+          >
+            {/* Gold glow */}
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(ellipse 55% 60% at 50% 110%, rgba(247,178,5,0.2) 0%, transparent 70%)' }} />
+            {/* Grid texture */}
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
+            {/* Watermark */}
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(60px, 12vw, 150px)', fontWeight: 800, color: 'rgba(255,255,255,0.022)', letterSpacing: '-0.05em', userSelect: 'none' }}>
+              TAREEQK
+            </div>
+
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <span style={{ ...eyebrow, display: 'block', textAlign: 'center', marginBottom: '14px' }}>
+                {t('service.ctaTag')}
+              </span>
+              <h2
+                style={{
+                  fontSize: 'clamp(2rem, 4.2vw, 3rem)',
+                  fontWeight: 800,
+                  color: '#fff',
+                  letterSpacing: '-0.03em',
+                  lineHeight: 1.05,
+                  marginBottom: '14px',
+                }}
+              >
+                {t('service.ctaTitle')}{' '}
+                <span className="svc-gold-glow" style={{ color: 'var(--primary-yellow)' }}>
+                  {t('service.ctaHighlight')}
+                </span>
+              </h2>
+              <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '15px', maxWidth: '480px', margin: '0 auto 36px', lineHeight: 1.7 }}>
+                {t('service.ctaSubtitle')}
+              </p>
+              <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <a
+                  href="https://wa.me/97180082773375"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    background: 'rgba(37,211,102,0.12)',
+                    border: '1px solid rgba(37,211,102,0.3)',
+                    color: '#4ade80',
+                    padding: '15px 38px',
+                    borderRadius: '8px',
+                    fontWeight: 600,
+                    textDecoration: 'none',
+                    fontSize: '14px',
+                    display: 'inline-block',
+                    transition: 'background 0.2s ease, color 0.2s ease',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = '#25D366'; e.currentTarget.style.color = '#fff'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,211,102,0.12)'; e.currentTarget.style.color = '#4ade80'; }}
+                >
+                  💬 {t('service.whatsappCta')}
+                </a>
+                <button
+                  onClick={scrollToDownload}
+                  className="svc-btn-ghost"
+                  style={{
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.22)',
+                    color: '#fff',
+                    padding: '15px 38px',
+                    borderRadius: '8px',
+                    fontWeight: 500,
+                    fontSize: '14px',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  📱 {t('service.downloadCta')}
+                </button>
               </div>
             </div>
           </div>
-        </section>
-
-      </div>
-    </>
+        </div>
+      </section>
+    </div>
   );
 }

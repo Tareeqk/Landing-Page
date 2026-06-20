@@ -1,7 +1,4 @@
-/* ============================================================
-   TAREEQK — PREMIUM LANDING HERO
-   Dark cinematic charcoal + amber accent for high-end feel
-   ============================================================ */
+
 
 :root {
   --tk-ink:         #0b0d10;
@@ -172,6 +169,52 @@
   color: var(--tk-text-soft);
   max-width: 48ch;
   margin-bottom: 24px;
+}
+
+/* ============================================================
+   TYPING-ANIMATION TITLE
+   ============================================================ */
+.tk-hero__title--typing {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  min-height: 1.1em; /* keeps layout stable as phrases change width */
+}
+
+.tk-typing-text {
+  display: inline-block;
+}
+
+.tk-typing-cursor {
+  display: inline-block;
+  width: 3px;
+  margin-inline-start: 4px;
+  height: 0.85em;
+  background: var(--tk-amber);
+  animation: tk-caret-blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes tk-caret-blink {
+  0%, 50%  { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-typing-cursor { animation: none; opacity: 1; }
+}
+
+/* Visually hidden but still readable to screen readers / crawlers */
+.tk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ============================================================

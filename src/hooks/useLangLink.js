@@ -1,20 +1,25 @@
 // hooks/useLangLink.js
-import { useParams } from "react-router-dom"
-
-const LANG_PREFIXES = ["ar", "ur"] // English has no prefix
+import { useParams, useLocation } from "react-router-dom"
 
 export default function useLangLink() {
   const { lang } = useParams()
+  const location = useLocation()
 
   return (path) => {
-    const normalized = path.startsWith("/") ? path : `/${path}`
+    // 1. Get the "clean" path without the current language
+    const currentPath = location.pathname
+    const baseWithoutLang = lang 
+      ? currentPath.replace(`/${lang}`, "") 
+      : currentPath
 
-    // If we're on an English route, lang is undefined → no prefix
-    if (!lang || !LANG_PREFIXES.includes(lang)) {
-      return normalized
-    }
+    // 2. If the user provides a path, use it; 
+    // otherwise, we are just switching language on the current page
+    const targetPath = path || baseWithoutLang
 
-    // Arabic/Urdu → prepend the lang prefix
-    return `/${lang}${normalized}`
+    // 3. Ensure we don't have double slashes
+    const normalized = targetPath.startsWith("/") ? targetPath : `/${targetPath}`
+    
+    // 4. Return the new URL with the current language (or logic to inject new lang)
+    return `/${lang}${normalized === "/" ? "" : normalized}`
   }
 }

@@ -1,120 +1,111 @@
-import React, { useRef } from "react"
+
+import React from "react"
 import { useTranslation } from "react-i18next"
 
 export default function CJI() {
   const { t, i18n } = useTranslation()
   const isUrdu = i18n.language === "ur"
-  const videoRef = useRef(null)
 
   return (
-    <div className="mx-auto py-4 container w-full">
-      <div
-        data-aos="fade-right"
-        className={`mb-4 ${isUrdu ? "leading-loose" : ""}`}
-      >
-        <span className="text-[var(--secondary-dark-bg)] text-base sm:text-lg md:text-xl tracking-wide pb-1 border-b-2 border-[var(--primary-light-gray)] inline-block my-4 span-titles">
-          {t("nasir.nasir")}
-        </span>
-
-        <h2
-          className={`text-2xl sm:text-3xl md:text-4xl font-medium my-2 ${isUrdu ? "leading-loose" : ""}`}
+    <section className="py-8 lg:py-5 bg-gradient-to-b from-white to-gray-50">
+      <div className="container mx-auto px-4">
+        {/* Section Header */}
+        <div
+          data-aos="fade-up"
+          className={`text-center mb-12 ${
+            isUrdu ? "leading-loose" : ""
+          }`}
         >
-          {t("nasir.title")}
-        </h2>
+          <span className="inline-flex items-center gap-2 bg-yellow-100 text-yellow-900 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            ✨   Meet Nasir
+          </span>
 
-        <p className={`text-gray-400 mb-4 ${isUrdu ? "leading-loose" : ""}`}>
-          {t("nasir.subtitle")}
-        </p>
-      </div>
+        
+        </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 w-full">
-        {/* Text Content */}
-        <div className="w-full lg:w-1/2">
+        {/* Content */}
+        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
+          {/* Left Side */}
           <div
             data-aos="fade-right"
-            className={`dark-bg text-gray-400 rounded-2xl p-4 md:p-5 border border-[var(--secondary-dark-bg)] h-full w-full flex flex-col justify-between ${isUrdu ? "leading-loose" : ""}`}
+            className="bg-white rounded-3xl border border-gray-100  p-8 flex flex-col justify-center"
           >
-            <h3
-              className={`text-lg md:text-xl font-semibold text-black mb-2 ${isUrdu ? "leading-loose" : ""}`}
-            >
-              {t("nasir.title2")}
-            </h3>
-            <p className={`text-gray-400 ${isUrdu ? "leading-loose" : ""}`}>
-              {t("nasir.content")}
-            </p>
+            {/* Robot + Text */}
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+              <div className="relative shrink-0">
+                <div className="absolute inset-0 bg-yellow-300/20 blur-2xl rounded-full" />
 
-            {/* Add margin-top here to create space */}
-            <div className="mt-8">
-              <div
-                className="relative w-fit group overflow-visible"
-                onMouseEnter={() => {
-                  videoRef.current?.play()
-                }}
-                onMouseLeave={() => {
-                  const video = videoRef.current
-                  if (!video) return
-                  setTimeout(() => {
-                    video.pause()
-                    video.currentTime = 0
-                  }, 500)
-                }}
-              >
-                {/* Robot Video */}
                 <video
-                  ref={videoRef}
-                  src="/new/Sajin.webm"
+                  autoPlay
                   muted
+                  loop
                   playsInline
-                  preload="none"
-                  className="
-                  absolute left-1/2 -translate-x-1/2
-                  -top-16  /* Changed from bottom-full */
-                  w-40
-                  opacity-0
-                  -translate-y-4  /* Changed from translate-y-4 */
-                  transition-all duration-500 ease-out
-                  group-hover:opacity-100
-                  group-hover:-translate-y-6  /* Adjusted hover position */
-                  pointer-events-none
-                  z-0
-                "
+                  src="/new/Sajin.webm"
+                  className="relative w-24 md:w-28"
                 />
-
-                {/* Button */}
-                <button
-                  className="
-                    relative z-10
-                    bg-black text-white
-                    px-6 py-3 rounded-full
-                    font-medium
-                    hover:bg-gray-800
-                    transition
-                  "
-                >
-                  Meet Nasir
-                </button>
               </div>
+
+              <div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">
+                  Smarter Roads Start Here
+                </h3>
+
+                <p
+                  className={`text-gray-600 leading-relaxed ${
+                    isUrdu ? "leading-loose" : ""
+                  }`}
+                >
+                  Meet Nasir, your AI-powered roadside assistant. Get
+                  instant support, live vehicle tracking and rapid
+                  recovery dispatch whenever you need help.
+                </p>
+              </div>
+            </div>
+
+            {/* Feature Pills */}
+            <div className="flex flex-wrap gap-3 mt-8">
+              <span className="px-4 py-2 rounded-full bg-gray-100 text-sm font-medium">
+                ⚡ Instant Responses
+              </span>
+
+              <span className="px-4 py-2 rounded-full bg-gray-100 text-sm font-medium">
+                🌍 Arabic & English
+              </span>
+
+              <span className="px-4 py-2 rounded-full bg-gray-100 text-sm font-medium">
+                🚚 Dispatch Support
+              </span>
+
+              <span className="px-4 py-2 rounded-full bg-gray-100 text-sm font-medium">
+                📍 Live Tracking
+              </span>
+            </div>
+
+          </div>
+
+          {/* Video Side */}
+          <div
+            id="nasir-video"
+            data-aos="fade-left"
+            className="relative overflow-hidden rounded-3xl border border-gray-100 shadow-lg bg-white"
+          >
+            {/* Badge */}
+            <div className="absolute top-4 left-4 z-20 bg-white shadow-md px-4 py-2 rounded-full text-sm font-medium">
+              ▶ Watch Nasir in Action
+            </div>
+
+            <div className="aspect-video w-full h-full">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/dIX_NmPE2rs"
+                title="Meet Nasir"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
             </div>
           </div>
         </div>
-
-        {/* Video Player */}
-        <div className="w-full lg:w-1/2 overflow-x-hidden">
-          <div
-            data-aos="fade-left"
-            className="relative w-full h-0 overflow-hidden rounded-2xl border border-[var(--secondary-dark-bg)]"
-            style={{ paddingBottom: "56.25%" }}
-          >
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/dIX_NmPE2rs"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
       </div>
-    </div>
+    </section>
   )
 }
