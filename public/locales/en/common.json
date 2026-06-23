@@ -10,7 +10,7 @@
   },
 "landing": {
     "title": "CAR RECOVERY & TOWING SERVICES IN DUBAI",
-    "subtitle": "Tareeqk delivers Dubai's fastest car recovery & roadside assistance — premium response, real-time tracking, and transparent pricing, 24/7.",
+    "subtitle": "Tareeqk provides 24/7 care recovery, towing services,roadside assistance, battery jump start, flat tire repair and punture repair across Dubai.",
     "book": "Book Now",
     "download": "Download The App",
     "vehicle": "Towing Services for All Kinds of Vehicles",
@@ -20,15 +20,15 @@
       "battery": "Battery Service",
       "tire": "Tire Service"
     },
-      "eyebrow": "24 / 7 · Dubai · Licensed RTA Operator",
+      "eyebrow": "24 / 7 · Fast Response  · Dubai",
 "callNow": "Call Now",
 "trust": {
-  "dispatchValue": "5-min",
-  "dispatchLabel": "Avg. Dispatch",
+  "dispatchValue": "15-min",
+  "dispatchLabel": "Avg. Dispatch", 
   "availabilityValue": "24/7",
   "availabilityLabel": "Around The Clock",
-  "ratingValue": "4.9★",
-  "ratingLabel": "1,200+ Reviews"
+  "ratingValue": "📡 ",
+  "ratingLabel": "Live tracking"
 }
   },
 
@@ -101,6 +101,7 @@
     "statReviews": "1,200+ Reviews",
     "statLicensed": "Licensed"
   },
+ 
   "service": {
     "heroTag": "Premium Roadside Care",
     "heroTitle": "Dubai's Fastest",
@@ -171,16 +172,27 @@
 
     "stepsTag": "How It Works",
     "stepsTitle": "Help arrives in",
-    "stepsHighlight": "four simple steps.",
-    "stepsSubtitle": "Request, confirm, track, recover — an end-to-end roadside experience designed to feel effortless.",
-    "step1Title": "Request via App, Call, or WhatsApp",
-    "step1Body": "Share your live location in seconds. Our dispatch center picks up the moment you reach out.",
-    "step2Title": "Receive an Upfront Price",
-    "step2Body": "Get a transparent fixed quote before we move — no surprises, no hidden recovery fees.",
-    "step3Title": "Track Your Driver in Real-Time",
-    "step3Body": "Watch your certified technician approach on a live map. Most jobs reach you in under 20 minutes.",
+    "stepsHighlight": "4 simple steps.",
+    "stepsSubtitle": "From your first request to getting back on the road, we make the process fast, clear and stress-free.",
+    "stepsBadgeText": "Most jobs reach you in",
+    "stepsBadgeHighlight": "under 20 mins",
+    "step1Title": "Request Help",
+    "step1Body": "Share your location via app, call, or WhatsApp in seconds.",
+    "step2Title": "Receive Price",
+    "step2Body": "Get a clear, upfront quote before we move. No hidden fees.",
+    "step3Title": "Track Your Driver",
+    "step3Body": "See your technician's live location and ETA on the map.",
     "step4Title": "Recovery Complete",
-    "step4Body": "Your vehicle is safely recovered, repaired on-site, or transported to your chosen destination.",
+    "step4Body": "We recover, repair, or tow your vehicle safely to your chosen location.",
+
+    "trust1Title": "Certified & Trusted",
+    "trust1Body": "Experienced professionals",
+    "trust2Title": "24/7 Available",
+    "trust2Body": "We're always on standby",
+    "trust3Title": "All UAE Coverage",
+    "trust3Body": "City to desert, we reach you",
+    "trust4Title": "Safe & Secure",
+    "trust4Body": "Your vehicle is in safe hands",
 
     "whyTag": "Why Choose Tareeqk",
     "whyTitle": "Built for Dubai. Designed for trust.",
@@ -217,6 +229,7 @@
     "downloadCta": "Download the App",
     "learnMore": "Learn more"
   },
+
   "about2": {
     "about": "Our Services",
     "title": "Best Roadside assistance in Dubai",
@@ -235,7 +248,7 @@
     "description": "TAREEQK offers fast and professional car recovery and roadside assistance in Dubai through the application. Book instantly or schedule ahead with trained drivers ready to assist you anytime, anywhere.",
     "response": "Avg Response Time",
     "drivers": "Drivers Helped",
-    "rating": "Customer Rating",
+    "rating": "Live Tracking",
     "button": "Learn More About Us",
     "badgeTitle": "Trusted Since 2019",
     "badgeText": "Dubai's #1 recovery platform"

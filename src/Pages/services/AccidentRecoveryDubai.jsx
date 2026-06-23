@@ -6,7 +6,7 @@ const config = {
   slug: 'accident-recovery-dubai',
   metaTitle: 'Accident Recovery Dubai – 24/7 Emergency Towing | Tareeqk',
   metaDesc: 'Car accident in Dubai? Tareeqk provides 24/7 emergency accident recovery and towing. Fast response, RTA-licensed. Call or WhatsApp us immediately.',
-  title: 'Accident Recovery in Dubai – 24/7 Emergency Response',
+  title: 'Accident Recovery in Dubai ',
   heroImage: '/new/Recovery_Van.webp',
   heroAlt: 'Accident Recovery Service Dubai',
   intro: 'Been in an accident in Dubai? Stay safe — we handle the recovery. Our RTA-licensed team arrives fast and transports your vehicle safely.',

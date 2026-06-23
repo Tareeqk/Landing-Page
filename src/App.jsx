@@ -28,6 +28,7 @@ const BatteryServiceDubai    = lazy(() => import('./pages/services/BatteryServic
 const FlatTyreRepairDubai    = lazy(() => import('./pages/services/FlatTyreRepairDubai'));
 const FuelDeliveryDubai      = lazy(() => import('./pages/services/FuelDeliveryDubai'));
 const AccidentRecoveryDubai  = lazy(() => import('./pages/services/AccidentRecoveryDubai'));
+const TowingServiceDubai     = lazy(() => import('./pages/services/Towingservicedubai'));
 
 // ── NEW LOCATION PAGES (all 19 — keep in sync with pages/locations/index.jsx) ─
 import {
@@ -100,6 +101,7 @@ function App() {
           <Route path="flat-tyre-repair-dubai" element={<FlatTyreRepairDubai />} />
           <Route path="fuel-delivery-dubai" element={<FuelDeliveryDubai />} />
           <Route path="accident-recovery-dubai" element={<AccidentRecoveryDubai />} />
+          <Route path="towing-service-dubai" element={<TowingServiceDubai />} />
 
           <Route path="car-recovery-dubai-marina" element={<CarRecoveryDubaiMarina />} />
           <Route path="car-recovery-business-bay" element={<CarRecoveryBusinessBay />} />

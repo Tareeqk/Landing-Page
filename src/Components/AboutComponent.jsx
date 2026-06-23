@@ -5,6 +5,12 @@ export default function AboutPreview() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
 
+  const TAGS = [
+    t("aboutPreview.tags.flatbed", "Flatbed recovery"),
+    t("aboutPreview.tags.dispatch", "5-min dispatch"),
+    t("aboutPreview.tags.coverage", "All of Dubai"),
+  ];
+
   useEffect(() => {
     if (document.getElementById("about-preview-styles")) return;
 
@@ -12,7 +18,7 @@ export default function AboutPreview() {
     style.id = "about-preview-styles";
     style.textContent = `
       .abt-preview {
-        padding: 100px 0;
+        padding: clamp(56px, 9vw, 110px) 0;
         overflow: hidden;
         background: #fff;
       }
@@ -23,246 +29,352 @@ export default function AboutPreview() {
 
       .abt-preview-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 70px;
+        grid-template-columns: 1fr 1.05fr;
+        gap: clamp(40px, 6vw, 90px);
         align-items: center;
+        margin-bottom: clamp(36px, 5vw, 56px);
       }
 
+      /* ================= TOP EYEBROW ================= */
+      .abt-preview-eyebrow {
+        text-align: center;
+        margin-bottom: clamp(28px, 4vw, 44px);
+      }
+
+      .abt-preview-eyebrow-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        border-radius: var(--tk-radius-pill, 999px);
+        background: #f6f6f6;
+        border: 1px solid rgba(0,0,0,0.06);
+        font-size: 12.5px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #2a2a2a;
+      }
+
+      body.dark .abt-preview-eyebrow-pill {
+        background: var(--dark-bg-surface, #1c1f1f) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+        color: var(--dark-text-main, #eee) !important;
+      }
+
+      .abt-preview-eyebrow-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--primary-yellow, #f5a623);
+        flex-shrink: 0;
+      }
+
+      /* ================= IMAGE SIDE ================= */
+      .abt-preview-media {
+        position: relative;
+      }
+
+      .abt-preview-media-main {
+        border-radius: 20px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1.05;
+      }
+
+      .abt-preview-media-main img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* Floating overlap card — bottom-right on LTR, bottom-left on RTL */
+      .abt-preview-float {
+        position: absolute;
+        bottom: -10%;
+        right: -8%;
+        width: 48%;
+        background: #fff;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 24px 50px rgba(0,0,0,.16);
+        border: 1px solid rgba(0,0,0,0.04);
+      }
+      [dir="rtl"] .abt-preview-float { right: auto; left: -8%; }
+
+      body.dark .abt-preview-float {
+        background: var(--dark-bg-surface, #1e1e1e);
+        border-color: var(--dark-border, rgba(255,255,255,0.08));
+      }
+
+      .abt-preview-float-img {
+        position: relative;
+        aspect-ratio: 4 / 3;
+      }
+
+      .abt-preview-float-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .abt-preview-float-arrow {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+        color: #0a0a0a;
+        box-shadow: 0 6px 16px rgba(0,0,0,.18);
+      }
+      [dir="rtl"] .abt-preview-float-arrow { right: auto; left: 10px; }
+
+      .abt-preview-float-body {
+        padding: 16px 18px 18px;
+      }
+
+      .abt-preview-float-title {
+        font-weight: 800;
+        font-size: 15px;
+        color: #0a0a0a;
+        margin-bottom: 6px;
+      }
+
+      body.dark .abt-preview-float-title {
+        color: var(--dark-text-main, #f0f0f0) !important;
+      }
+
+      .abt-preview-float-text {
+        font-size: 12.5px;
+        line-height: 1.55;
+        color: #777;
+      }
+
+      body.dark .abt-preview-float-text {
+        color: var(--dark-text-muted, #aaa) !important;
+      }
+
+      /* ================= CONTENT SIDE ================= */
       .abt-preview-content {
         max-width: 600px;
       }
-        .abt-preview-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-.abt-preview-icon img {
-  width: 48px;
-  height: 48px;
-  object-fit: contain;
-}
-
-      /* ── Eyebrow (matches s3-eyebrow) ── */
-      .abt-preview-tag {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #d4a017;
-        margin-bottom: 18px;
-      }
-      [dir="ltr"] .abt-preview-tag::before {
-        content: "";
-        width: 32px;
-        height: 2px;
-        background: #d4a017;
-        display: block;
-        border-radius: 2px;
-      }
-      [dir="rtl"] .abt-preview-tag::after {
-        content: "";
-        width: 32px;
-        height: 2px;
-        background: #d4a017;
-        display: block;
-        border-radius: 2px;
-      }
-
-      /* ── Title (matches s3-title) ── */
+      /* ── Title — direct, no eyebrow tag, matches reference ── */
       .abt-preview-title {
-        font-size: 58px;
-        font-weight: 900;
-        line-height: 1.05;
+        font-size: 52px;
+        font-weight: 800;
+        line-height: 1.12;
         color: #0a0a0a;
         margin: 0 0 22px;
         letter-spacing: -1px;
+        font-family: Georgia, "Times New Roman", serif;
       }
-      @media (max-width: 960px) { .abt-preview-title { font-size: 40px; } }
-      @media (max-width: 640px) { .abt-preview-title { font-size: 34px; } }
+      @media (max-width: 960px) { .abt-preview-title { font-size: 38px; } }
+      @media (max-width: 640px) { .abt-preview-title { font-size: 30px; } }
 
       body.dark .abt-preview-title {
         color: var(--dark-text-main, #f2f2f2) !important;
       }
 
-      .abt-preview-title span {
-        color: #d4a017;
-      }
-
       .abt-preview-text {
         color: #5a5a5a;
-        font-size: 15px;
+        font-size: 16px;
         line-height: 1.8;
         margin-bottom: 38px;
+        max-width: 50ch;
       }
 
       body.dark .abt-preview-text {
         color: var(--dark-text-muted, #aaa) !important;
       }
 
-      /* ── Stat cards ── */
-      .abt-preview-stats {
+      /* ── Stat + photo cards row ──
+         A big number anchors the claim, two photo cards back it up —
+         mirrors the proof-point row from the reference design. */
+      .abt-preview-proof {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-        margin-bottom: 38px;
+        grid-template-columns: auto 1fr 1fr;
+        gap: 28px;
+        align-items: center;
       }
 
-      .abt-preview-card {
-        background: #fff;
-        border-radius: 18px;
-        padding: 24px 18px;
-        text-align: center;
-        border: 1.5px solid #e8e8e8;
-        transition: transform .28s ease, box-shadow .28s ease;
+      .abt-preview-stat {
+        display: flex;
+        flex-direction: column;
+        min-width: 90px;
       }
 
-      body.dark .abt-preview-card {
-        background: var(--dark-bg-surface, #1e1e1e) !important;
-        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+      .abt-preview-stat-value {
+        font-size: 56px;
+        font-weight: 800;
+        color: #0a0a0a;
+        letter-spacing: -1px;
+        line-height: 1;
+        font-family: Georgia, "Times New Roman", serif;
       }
 
-      .abt-preview-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 18px 40px rgba(0,0,0,.08);
+      body.dark .abt-preview-stat-value {
+        color: var(--dark-text-main, #f0f0f0) !important;
       }
 
-      body.dark .abt-preview-card:hover {
-        box-shadow: 0 18px 40px rgba(0,0,0,.4);
+      .abt-preview-stat-label {
+        font-size: 14px;
+        color: #6b6b6b;
+        margin-top: 10px;
+        line-height: 1.4;
+        max-width: 13ch;
       }
 
-      .abt-preview-icon {
-        width: 50px;
-        height: 50px;
+      body.dark .abt-preview-stat-label {
+        color: var(--dark-text-disabled, #aaa) !important;
+      }
+
+      .abt-preview-photocard {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        box-shadow: 0 12px 28px rgba(0,0,0,.10);
+        background: #111; /* fallback so a transparent/light icon still reads dark */
+      }
+
+      .abt-preview-photocard img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.8) saturate(0.95);
+      }
+
+      /* Scrim guarantees label contrast no matter what icon sits underneath */
+      .abt-preview-photocard::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0,0,0,0) 38%, rgba(0,0,0,0.78) 100%);
+        pointer-events: none;
+      }
+
+      .abt-preview-photocard-arrow {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 26px;
+        height: 26px;
         border-radius: 50%;
-        background: #fff9e0;
-        border: 1px solid #ffe97a;
-        margin: 0 auto 14px;
+        background: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-      }
-
-      body.dark .abt-preview-icon {
-        background: rgba(255,204,0,0.1) !important;
-        border-color: rgba(255,204,0,0.25) !important;
-      }
-
-      .abt-preview-value {
-        font-size: 21px;
-        font-weight: 900;
-        color: #0a0a0a;
-        letter-spacing: -.3px;
-      }
-
-      body.dark .abt-preview-value {
-        color: var(--dark-text-main, #f0f0f0) !important;
-      }
-
-      .abt-preview-label {
         font-size: 12px;
-        color: #888;
-        margin-top: 4px;
-      }
-
-      body.dark .abt-preview-label {
-        color: var(--dark-text-disabled, #888) !important;
-      }
-
-      /* ── Button ── */
-      .abt-preview-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #FFCC00;
         color: #0a0a0a;
-        text-decoration: none;
-        padding: 15px 30px;
-        border-radius: 12px;
-        font-weight: 800;
-        font-size: 15px;
-        transition: transform .28s ease, box-shadow .28s ease;
+        z-index: 1;
       }
+      [dir="rtl"] .abt-preview-photocard-arrow { right: auto; left: 10px; }
 
-      .abt-preview-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 32px rgba(255,204,0,.35);
-      }
-
-      .abt-preview-btn-arr {
-        font-size: 16px;
-        transition: transform .2s;
-      }
-      [dir="rtl"] .abt-preview-btn-arr { transform: scaleX(-1); }
-      .abt-preview-btn:hover .abt-preview-btn-arr { transform: translateX(3px); }
-      [dir="rtl"] .abt-preview-btn:hover .abt-preview-btn-arr { transform: scaleX(-1) translateX(3px); }
-
-      /* ── Image ── */
-      .abt-preview-image {
-        position: relative;
-      }
-
-      .abt-preview-image img {
-        width: 100%;
-        border-radius: 24px;
-        display: block;
-        box-shadow: 0 25px 60px rgba(0,0,0,.12);
-      }
-
-      .abt-preview-badge {
+      .abt-preview-photocard-label {
         position: absolute;
-        bottom: 25px;
-        background: #fff;
-        padding: 18px 22px;
-        border-radius: 16px;
-        box-shadow: 0 15px 40px rgba(0,0,0,.12);
-        border: 1.5px solid #f0f0f0;
-      }
-
-      body.dark .abt-preview-badge {
-        background: var(--dark-bg-surface, #1e1e1e) !important;
-        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
-      }
-
-      .abt-preview-badge-title {
-        font-weight: 800;
-        color: #0a0a0a;
-        font-size: 14px;
-      }
-
-      body.dark .abt-preview-badge-title {
-        color: var(--dark-text-main, #f0f0f0) !important;
-      }
-
-      .abt-preview-badge-text {
+        left: 14px;
+        right: 14px;
+        bottom: 12px;
+        z-index: 1;
+        color: #fff;
         font-size: 13px;
-        color: #777;
+        font-weight: 700;
+        line-height: 1.3;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
       }
 
-      body.dark .abt-preview-badge-text {
-        color: var(--dark-text-muted, #aaa) !important;
+      @media (max-width: 700px) {
+        .abt-preview-proof {
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+        .abt-preview-stat { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 14px; }
+        .abt-preview-stat-label { max-width: none; margin-top: 0; }
       }
 
-      @media(max-width: 900px) {
+      @media(max-width: 960px) {
         .abt-preview-grid {
           grid-template-columns: 1fr;
         }
-        .abt-preview-stats {
-          grid-template-columns: 1fr 1fr;
+        .abt-preview-float {
+          display: none; /* avoid overlap crowding on stacked mobile layout */
         }
-        .abt-preview-badge {
-          display: none;
+        .abt-preview-media-main {
+          aspect-ratio: 16 / 10;
         }
       }
 
-      @media(max-width: 480px) {
-        .abt-preview-stats {
-          grid-template-columns: 1fr;
-        }
+      /* ================= BOTTOM TAG BAR ================= */
+      .abt-preview-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 14px 14px 14px 22px;
+        border-radius: var(--tk-radius-pill, 999px);
+        background: #eef6f5;
+        flex-wrap: wrap;
+      }
+
+      body.dark .abt-preview-bar {
+        background: var(--dark-bg-surface, #1c1f1f) !important;
+      }
+
+      .abt-preview-bar-tags {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .abt-preview-bar-tag {
+        padding: 8px 16px;
+        border-radius: var(--tk-radius-pill, 999px);
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.08);
+        font-size: 13.5px;
+        font-weight: 600;
+        color: #2a2a2a;
+        white-space: nowrap;
+      }
+
+      body.dark .abt-preview-bar-tag {
+        background: var(--dark-bg-main, #141414) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+        color: var(--dark-text-main, #eee) !important;
+      }
+
+      .abt-preview-bar-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        background: #0a0a0a;
+        color: #fff;
+        font-size: 17px;
+        flex-shrink: 0;
+        transition: transform .25s ease;
+      }
+      [dir="rtl"] .abt-preview-bar-arrow { transform: scaleX(-1); }
+      .abt-preview-bar-arrow:hover { transform: translateX(3px); }
+      [dir="rtl"] .abt-preview-bar-arrow:hover { transform: scaleX(-1) translateX(3px); }
+
+      @media (max-width: 640px) {
+        .abt-preview-bar { padding: 10px; gap: 12px; }
+        .abt-preview-bar-tag { font-size: 12.5px; padding: 7px 12px; }
+        .abt-preview-bar-arrow { width: 40px; height: 40px; }
       }
     `;
 
@@ -283,75 +395,70 @@ export default function AboutPreview() {
           padding: "0 3rem",
         }}
       >
+        <div className="abt-preview-eyebrow">
+          <span className="abt-preview-eyebrow-pill">
+            <span className="abt-preview-eyebrow-dot" />
+            {t("aboutPreview.eyebrow", "About Us")}
+          </span>
+        </div>
+
         <div className="abt-preview-grid">
-          {/* Content */}
+          {/* Image side */}
+          <div className="abt-preview-media" style={{ order: isRTL ? 2 : 1 }}>
+            <div className="abt-preview-media-main">
+              <img src="/new/Recovery_Van.webp" alt="Tareeqk recovery truck on a Dubai highway" />
+            </div>
+
+            <div className="abt-preview-float">
+              <div className="abt-preview-float-img">
+                <img src="/icons/truck-recovery.png" alt="" />
+                <span className="abt-preview-float-arrow">↗</span>
+              </div>
+              <div className="abt-preview-float-body">
+                <div className="abt-preview-float-title">{t("aboutPreview.floatTitle", "Flatbed Recovery")}</div>
+                <div className="abt-preview-float-text">
+                  {t("aboutPreview.floatText", "Every vehicle is loaded and secured with care, on a flatbed built for the job.")}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Content side */}
           <div
             className="abt-preview-content"
             style={{
-              order: isRTL ? 2 : 1,
+              order: isRTL ? 1 : 2,
               textAlign: isRTL ? "right" : "left",
             }}
           >
-            <span className="abt-preview-tag">{t("aboutPreview.tag")}</span>
-
             <h2 className="abt-preview-title">
-              {t("aboutPreview.title")}
-              <span> {t("aboutPreview.highlight")}</span>
+              {t("aboutPreview.title")} <span>{t("aboutPreview.highlight")}</span>
             </h2>
 
             <p className="abt-preview-text">{t("aboutPreview.description")}</p>
 
-            <div className="abt-preview-stats">
-              <div className="abt-preview-card">
-                               <div className="abt-preview-icon">
-  <img src="/icons/clock.png" alt="Car" />
-</div>
-                <div className="abt-preview-value">20 min</div>
-                <div className="abt-preview-label">{t("aboutPreview.response")}</div>
+            <div className="abt-preview-proof">
+              <div className="abt-preview-stat">
+                <span className="abt-preview-stat-value">20 min</span>
+                <span className="abt-preview-stat-label">{t("aboutPreview.response")}</span>
               </div>
 
-              <div className="abt-preview-card">
-                <div className="abt-preview-icon">
-  <img src="/icons/truck-recovery.png" alt="Car" />
-</div>
-                <div className="abt-preview-value">50K+</div>
-                <div className="abt-preview-label">{t("aboutPreview.drivers")}</div>
+              <div className="abt-preview-photocard">
+                <img src="/icons/clock.png" alt="" />
+                <span className="abt-preview-photocard-arrow">↗</span>
+                <span className="abt-preview-photocard-label">{t("aboutPreview.badgeTitle")}</span>
               </div>
 
-              <div className="abt-preview-card">
-                                <div className="abt-preview-icon">
-  <img src="/icons/rating.png" alt="Car" />
-</div>
-                <div className="abt-preview-value">4.9★</div>
-                <div className="abt-preview-label">{t("aboutPreview.rating")}</div>
+              <div className="abt-preview-photocard">
+                <img src="/icons/rating.png" alt="" />
+                <span className="abt-preview-photocard-arrow">↗</span>
+                <span className="abt-preview-photocard-label">{t("aboutPreview.rating")}</span>
               </div>
-            </div>
-
-            <a href="/about" className="abt-preview-btn">
-              {t("aboutPreview.button")}
-              <span className="abt-preview-btn-arr">→</span>
-            </a>
-          </div>
-
-          {/* Image */}
-          <div
-            className="abt-preview-image"
-            style={{ order: isRTL ? 1 : 2 }}
-          >
-            <img src="/new/Recovery_Van.webp" alt="Tareeqk Recovery" />
-
-            <div
-              className="abt-preview-badge"
-              style={{
-                left: isRTL ? "auto" : "-20px",
-                right: isRTL ? "-20px" : "auto",
-              }}
-            >
-              <div className="abt-preview-badge-title">{t("aboutPreview.badgeTitle")}</div>
-              <div className="abt-preview-badge-text">{t("aboutPreview.badgeText")}</div>
             </div>
           </div>
         </div>
+
+   
       </div>
     </section>
   );

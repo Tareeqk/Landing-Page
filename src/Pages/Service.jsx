@@ -1,7 +1,15 @@
 // pages/Service.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
+import {
+  Smartphone, MapPin, Tag, ShieldCheck, Clock, Map, Lock, Zap,
+  ArrowRight, ArrowLeft, Phone, MessageCircle, Car, Truck,
+  Battery, Wrench, AlertTriangle, ChevronRight, ChevronLeft,
+  CheckCircle2, Trophy, DollarSign, HardHat, Download,
+} from 'lucide-react';
+
+import howItWorksIllustration from '/how-it-works-illustration.png';
 
 // ── Schemas ────────────────────────────────────────────────────────────────
 function ServicesPageSchema() {
@@ -18,7 +26,7 @@ function ServicesPageSchema() {
       { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://www.tareeqk.ae/flat-tyre-repair-dubai", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://www.tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://www.tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-    ]
+    ],
   };
   const howToSchema = {
     "@context": "https://schema.org",
@@ -29,7 +37,7 @@ function ServicesPageSchema() {
       { "@type": "HowToStep", "position": 2, "name": "Confirm Your Request", "text": "Confirm the service you need and get an upfront price before we dispatch." },
       { "@type": "HowToStep", "position": 3, "name": "We Dispatch Immediately", "text": "The nearest certified technician is dispatched to your location within minutes." },
       { "@type": "HowToStep", "position": 4, "name": "Problem Solved", "text": "Your vehicle is recovered, repaired, or transported — you're back on the road." },
-    ]
+    ],
   };
   return (
     <>
@@ -37,6 +45,23 @@ function ServicesPageSchema() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
     </>
   );
+}
+
+// ── Lucide icon map for step/trust icons ──────────────────────────────────
+function StepIcon({ name, size = 22 }) {
+  const props = { size, strokeWidth: 1.6 };
+  switch (name) {
+    case 'phone-pin':    return <Smartphone {...props} />;
+    case 'tag':          return <Tag {...props} />;
+    case 'map-pin':      return <MapPin {...props} />;
+    case 'shield-check': return <ShieldCheck {...props} />;
+    case 'clock':        return <Clock {...props} />;
+    case 'map':          return <Map {...props} />;
+    case 'lock':         return <Lock {...props} />;
+    case 'bolt':         return <Zap {...props} fill="currentColor" strokeWidth={0} />;
+    case 'arrow':        return <ArrowRight {...props} />;
+    default:             return null;
+  }
 }
 
 // ── Styles ─────────────────────────────────────────────────────────────────
@@ -59,11 +84,18 @@ function useServiceStyles() {
       .svc-reveal.svc-fade  { transform: none; }
       .svc-reveal.svc-visible { opacity: 1 !important; transform: none !important; }
 
-      /* RTL flip reveals */
       [dir="rtl"] .svc-reveal.svc-left  { transform: translateX(28px); }
       [dir="rtl"] .svc-reveal.svc-right { transform: translateX(-28px); }
 
-      /* ── "Who we are" label pill (Annex style) ── */
+      /* ── Hero image responsive ── */
+      .svc-hero-img-desktop { display: block; }
+      .svc-hero-img-mobile  { display: none; }
+      @media (max-width: 640px) {
+        .svc-hero-img-desktop { display: none; }
+        .svc-hero-img-mobile  { display: block; }
+      }
+
+      /* ── "Who we are" pill ── */
       .svc-pill-label {
         display: inline-flex;
         align-items: center;
@@ -79,8 +111,7 @@ function useServiceStyles() {
       }
       .svc-pill-label .svc-pill-dot {
         width: 8px; height: 8px; border-radius: 50%;
-        background: var(--primary-yellow);
-        flex-shrink: 0;
+        background: var(--primary-yellow); flex-shrink: 0;
       }
       body.dark .svc-pill-label {
         background: var(--dark-bg-surface, #1e1e1e) !important;
@@ -88,15 +119,14 @@ function useServiceStyles() {
         color: var(--dark-text-muted, #aaa) !important;
       }
 
-      /* ── Service cards (Annex-style: image top, clean white) ── */
+      /* ── Service cards ── */
       .svc-card {
         background: #fff;
         border-radius: 16px;
         border: 1px solid rgba(0,0,0,0.07);
         overflow: hidden;
         transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
-                    box-shadow 0.35s ease,
-                    border-color 0.25s ease;
+                    box-shadow 0.35s ease, border-color 0.25s ease;
         text-decoration: none;
         display: block;
         cursor: pointer;
@@ -115,14 +145,11 @@ function useServiceStyles() {
       }
       [dir="rtl"] .svc-card-top-bar { transform-origin: right; }
       .svc-card:hover .svc-card-top-bar { transform: scaleX(1); }
-
       body.dark .svc-card {
         background: var(--dark-bg-surface, #1e1e1e) !important;
         border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
       }
-      body.dark .svc-card:hover {
-        box-shadow: 0 28px 64px rgba(0,0,0,0.40) !important;
-      }
+      body.dark .svc-card:hover { box-shadow: 0 28px 64px rgba(0,0,0,0.40) !important; }
       body.dark .svc-card-title  { color: var(--dark-text-main, #f0f0f0) !important; }
       body.dark .svc-card-body   { color: var(--dark-text-muted, #aaa) !important; }
       body.dark .svc-card-icon   { background: var(--dark-bg-muted, #252525) !important; }
@@ -133,16 +160,103 @@ function useServiceStyles() {
       body.dark .svc-feat-label  { color: var(--dark-text-muted, #ccc) !important; }
       body.dark .svc-bullet-text { color: var(--dark-text-muted, #aaa) !important; }
 
-      /* ── Step rows ── */
-      .svc-step-row {
-        transition: background 0.22s ease, transform 0.28s ease;
-        border-radius: 12px;
+      /* ── Service swiper (mobile) ── */
+      .svc-swiper-wrap { position: relative; overflow: hidden; }
+      .svc-swiper-track {
+        display: flex; gap: 14px;
+        overflow-x: auto; scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 8px;
       }
-      .svc-step-row:hover {
-        background: rgba(247,178,5,0.05) !important;
-        transform: translateX(5px);
+      .svc-swiper-track::-webkit-scrollbar { display: none; }
+      .svc-swiper-slide { flex: 0 0 85vw; max-width: 340px; scroll-snap-align: start; }
+      .svc-swiper-dots { display: flex; justify-content: center; gap: 6px; margin-top: 16px; }
+      .svc-swiper-dot {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: rgba(0,0,0,0.15); border: none; padding: 0; cursor: pointer;
+        transition: background 0.2s ease, width 0.2s ease;
       }
-      [dir="rtl"] .svc-step-row:hover { transform: translateX(-5px); }
+      .svc-swiper-dot.active { width: 20px; border-radius: 3px; background: var(--primary-yellow); }
+      body.dark .svc-swiper-dot { background: rgba(255,255,255,0.15) !important; }
+
+      /* ── Why swiper (mobile) ── */
+      .svc-why-swiper-wrap { position: relative; overflow: hidden; }
+
+      /* ── How it works ── */
+      .svc-steps-illustration {
+        position: relative; border-radius: 14px; overflow: hidden;
+        aspect-ratio: 12 / 5; background: #0a0a0a;
+      }
+      .svc-steps-illustration img { width: 100%; height: 100%; object-fit: cover; object-position: center 78%; display: block; }
+      .svc-steps-badge {
+        position: absolute; top: 12px;
+        display: flex; align-items: center; gap: 8px;
+        background: rgba(10,10,10,0.62); border: 1px solid rgba(255,255,255,0.10);
+        border-radius: 11px; padding: 8px 12px; backdrop-filter: blur(6px); max-width: 185px;
+      }
+      .svc-steps-badge-icon {
+        width: 25px; height: 25px; border-radius: 50%;
+        background: rgba(247,178,5,0.12); border: 1px solid rgba(247,178,5,0.35);
+        color: var(--primary-yellow);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+      .svc-steps-badge-text { font-size: 11px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+      .svc-steps-badge-text strong { color: var(--primary-yellow); font-weight: 700; }
+
+      .svc-steps-track {
+        position: relative; display: grid; grid-template-columns: repeat(4, 1fr);
+        gap: 16px; margin-bottom: 8px;
+      }
+      .svc-steps-track-line {
+        position: absolute; left: 12.5%; right: 12.5%; top: 24px;
+        height: 0; border-top: 2px dotted rgba(247,178,5,0.45); z-index: 0;
+      }
+      .svc-step-node-wrap { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+      .svc-step-node {
+        width: 48px; height: 48px; border-radius: 50%;
+        background: rgba(247,178,5,0.08); border: 1.5px solid rgba(247,178,5,0.45);
+        box-shadow: 0 0 14px rgba(247,178,5,0.18); color: var(--primary-yellow);
+        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+      .svc-step-num { font-size: 11.5px; font-weight: 700; letter-spacing: 0.04em; color: var(--primary-yellow); }
+      .svc-steps-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 18px; }
+      .svc-step-card {
+        position: relative; background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08); border-radius: 13px;
+        padding: 14px 14px 40px;
+        transition: border-color 0.25s ease, transform 0.3s ease;
+      }
+      .svc-step-card:hover { border-color: rgba(247,178,5,0.40); transform: translateY(-3px); }
+      .svc-step-title { font-size: 14px; font-weight: 700; color: #fff; letter-spacing: -0.01em; margin-bottom: 4px; }
+      .svc-step-body  { font-size: 12px; line-height: 1.55; color: rgba(255,255,255,0.5); }
+      .svc-step-arrow {
+        position: absolute; bottom: 12px; left: 14px;
+        width: 26px; height: 26px; border-radius: 50%;
+        border: 1px solid rgba(247,178,5,0.40); color: var(--primary-yellow);
+        display: flex; align-items: center; justify-content: center;
+        transition: background 0.2s ease, color 0.2s ease;
+      }
+      [dir="rtl"] .svc-step-arrow { left: auto; right: 14px; }
+      [dir="rtl"] .svc-step-arrow svg { transform: scaleX(-1); }
+      .svc-step-card:hover .svc-step-arrow { background: var(--primary-yellow); color: #000; }
+
+      /* ── Trust strip ── */
+      .svc-trust-strip {
+        display: flex; flex-wrap: wrap;
+        border: 1px solid rgba(255,255,255,0.10); border-radius: 13px; padding: 10px 8px;
+      }
+      .svc-trust-item {
+        flex: 1 1 0; min-width: 170px;
+        display: flex; align-items: center; gap: 10px; padding: 4px 18px;
+        border-inline-end: 1px solid rgba(255,255,255,0.08);
+      }
+      .svc-trust-item:last-child { border-inline-end: none; }
+      .svc-trust-icon {
+        width: 30px; height: 30px; border-radius: 50%;
+        background: rgba(247,178,5,0.08); border: 1px solid rgba(247,178,5,0.30);
+        color: var(--primary-yellow); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      }
+      .svc-trust-title { font-size: 12.5px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+      .svc-trust-body  { font-size: 11px; color: rgba(255,255,255,0.45); }
 
       /* ── Why cards ── */
       .svc-why-card {
@@ -155,29 +269,17 @@ function useServiceStyles() {
         border-color: var(--primary-yellow) !important;
       }
       .svc-why-card:hover .svc-why-icon { background: var(--primary-yellow) !important; }
-      body.dark .svc-why-card {
-        background: var(--dark-bg-surface, #1e1e1e) !important;
-        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
-      }
+      .svc-why-card:hover .svc-why-icon svg { color: #000 !important; }
+      body.dark .svc-why-card { background: var(--dark-bg-surface, #1e1e1e) !important; border-color: var(--dark-border, rgba(255,255,255,0.08)) !important; }
       body.dark .svc-why-title { color: var(--dark-text-main, #f0f0f0) !important; }
       body.dark .svc-why-body  { color: var(--dark-text-muted, #aaa) !important; }
       body.dark .svc-why-icon  { background: var(--dark-bg-muted, #252525) !important; }
 
       /* ── CTA buttons ── */
-      .svc-btn-primary {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-      }
-      .svc-btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 10px 28px rgba(247,178,5,0.40);
-      }
-      .svc-btn-ghost {
-        transition: background 0.2s ease, border-color 0.2s ease;
-      }
-      .svc-btn-ghost:hover {
-        background: rgba(255,255,255,0.13) !important;
-        border-color: rgba(255,255,255,0.40) !important;
-      }
+      .svc-btn-primary { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+      .svc-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(247,178,5,0.40); }
+      .svc-btn-ghost { transition: background 0.2s ease, border-color 0.2s ease; }
+      .svc-btn-ghost:hover { background: rgba(255,255,255,0.13) !important; border-color: rgba(255,255,255,0.40) !important; }
 
       /* ── Location pills ── */
       .svc-loc-pill {
@@ -185,27 +287,17 @@ function useServiceStyles() {
                     border-color 0.18s ease, transform 0.18s ease;
       }
       .svc-loc-pill:hover {
-        background: var(--primary-yellow) !important;
-        color: #000 !important;
-        border-color: var(--primary-yellow) !important;
-        transform: translateY(-1px);
+        background: var(--primary-yellow) !important; color: #000 !important;
+        border-color: var(--primary-yellow) !important; transform: translateY(-1px);
       }
 
-      /* ── Stat bar (Annex-style horizontal stats) ── */
+      /* ── Stat bar ── */
       .svc-stat-bar {
-        display: flex;
-        gap: 0;
-        border-top: 1px solid rgba(0,0,0,0.06);
-        padding-top: 28px;
-        margin-top: 36px;
-        flex-wrap: wrap;
+        display: flex; gap: 0; border-top: 1px solid rgba(0,0,0,0.06);
+        padding-top: 28px; margin-top: 36px; flex-wrap: wrap;
       }
       body.dark .svc-stat-bar { border-color: var(--dark-divider, rgba(255,255,255,0.08)) !important; }
-      .svc-stat-item {
-        padding-inline-end: 28px;
-        margin-inline-end: 28px;
-        border-inline-end: 1px solid rgba(0,0,0,0.08);
-      }
+      .svc-stat-item { padding-inline-end: 28px; margin-inline-end: 28px; border-inline-end: 1px solid rgba(0,0,0,0.08); }
       .svc-stat-item:last-child { border-inline-end: none; }
       body.dark .svc-stat-item { border-color: var(--dark-divider, rgba(255,255,255,0.08)) !important; }
       .svc-stat-num { font-size: 22px; font-weight: 800; color: var(--primary-dark-bg); line-height: 1; }
@@ -220,6 +312,27 @@ function useServiceStyles() {
       }
       .svc-gold-glow { animation: svc-gold-pulse 4s ease-in-out infinite; }
 
+      /* ── Read more button ── */
+      .svc-read-more-btn {
+        background: none; border: none; padding: 0; cursor: pointer;
+        font-size: 13px; font-weight: 700; color: var(--primary-yellow);
+        display: inline-flex; align-items: center; gap: 4px;
+        margin-top: 10px; text-decoration: underline; text-underline-offset: 3px;
+      }
+
+      /* ── Mobile stats ── */
+      .svc-mobile-stats { display: none; }
+      @media (max-width: 768px) {
+        .svc-mobile-stats {
+          display: flex; justify-content: space-around;
+          background: var(--primary-yellow); border-radius: 14px;
+          padding: 18px 12px; margin: 24px 0 0;
+        }
+        .svc-mobile-stat-num   { font-size: 20px; font-weight: 800; color: #000; line-height: 1; text-align: center; }
+        .svc-mobile-stat-label { font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; text-align: center; }
+      }
+      @media (min-width: 769px) { .svc-mobile-stats { display: none !important; } }
+
       /* ── Dark mode section roots ── */
       body.dark .svc-page-root      { background-color: var(--dark-bg-main, #0f0f0f) !important; }
       body.dark .svc-intro-section  { background-color: var(--dark-bg-main, #0f0f0f) !important; }
@@ -231,6 +344,11 @@ function useServiceStyles() {
       body.dark .svc-body-text      { color: var(--dark-text-muted, #aaa) !important; }
       body.dark .svc-step-title     { color: var(--dark-text-main, #f0f0f0) !important; }
       body.dark .svc-step-body      { color: var(--dark-text-muted, #aaa) !important; }
+      body.dark .svc-mobile-stats   { background: var(--dark-bg-surface, #1e1e1e) !important; }
+      body.dark .svc-mobile-stat-num   { color: var(--primary-yellow) !important; }
+      body.dark .svc-mobile-stat-label { color: var(--dark-text-muted, #888) !important; }
+      body.dark .svc-read-more-btn  { color: var(--primary-yellow) !important; }
+      body.dark .svc-swiper-dot     { background: rgba(255,255,255,0.15) !important; }
 
       /* ── Responsive ── */
       @media (max-width: 1024px) {
@@ -240,16 +358,28 @@ function useServiceStyles() {
       @media (max-width: 900px) {
         .svc-intro-grid    { grid-template-columns: 1fr !important; }
         .svc-coverage-grid { grid-template-columns: 1fr !important; }
-        .svc-steps-header  { flex-direction: column !important; align-items: flex-start !important; }
+        .svc-steps-top     { grid-template-columns: 1fr !important; }
       }
       @media (max-width: 768px) {
-        .svc-cards-grid  { grid-template-columns: 1fr !important; }
-        .svc-why-grid    { grid-template-columns: 1fr 1fr !important; }
+        .svc-cards-grid  { display: none !important; }
+        .svc-cards-swiper { display: block !important; }
+        .svc-why-grid    { display: none !important; }
+        .svc-why-swiper  { display: block !important; }
         .svc-hero-stats  { display: none !important; }
         .svc-inner       { padding: 0 1.25rem !important; }
+        .svc-steps-track, .svc-steps-cards { grid-template-columns: 1fr 1fr !important; }
+        .svc-steps-track-line { display: none; }
+        .svc-trust-item { flex: 1 1 50%; border-inline-end: none !important; padding: 10px 16px; }
+      }
+      @media (min-width: 769px) {
+        .svc-cards-swiper { display: none !important; }
+        .svc-why-swiper   { display: none !important; }
+        .svc-mobile-stats { display: none !important; }
       }
       @media (max-width: 480px) {
         .svc-why-grid    { grid-template-columns: 1fr !important; }
+        .svc-steps-track, .svc-steps-cards { grid-template-columns: 1fr !important; }
+        .svc-trust-item { flex: 1 1 100%; }
       }
     `;
     document.head.appendChild(style);
@@ -290,12 +420,54 @@ const eyebrow = {
   display: 'block',
 };
 
+// ── Generic touch Swiper ───────────────────────────────────────────────────
+function TouchSwiper({ items, renderSlide, className = '' }) {
+  const [active, setActive] = useState(0);
+  const trackRef = useRef(null);
+
+  const onScroll = () => {
+    if (!trackRef.current) return;
+    const slideW = trackRef.current.offsetWidth * 0.85 + 14;
+    setActive(Math.round(trackRef.current.scrollLeft / slideW));
+  };
+
+  const goTo = (i) => {
+    if (!trackRef.current) return;
+    const slideW = trackRef.current.offsetWidth * 0.85 + 14;
+    trackRef.current.scrollTo({ left: i * slideW, behavior: 'smooth' });
+  };
+
+  return (
+    <div className={`svc-swiper-wrap ${className}`}>
+      <div className="svc-swiper-track" ref={trackRef} onScroll={onScroll}>
+        {items.map((item, i) => (
+          <div key={i} className="svc-swiper-slide">
+            {renderSlide(item, i)}
+          </div>
+        ))}
+      </div>
+      <div className="svc-swiper-dots">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            className={`svc-swiper-dot${active === i ? ' active' : ''}`}
+            onClick={() => goTo(i)}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── Component ──────────────────────────────────────────────────────────────
 export default function Service({ isSection = false }) {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === 'rtl';
   const HeadingTag = isSection ? 'h2' : 'h1';
   useServiceStyles();
+
+  const [introExpanded, setIntroExpanded] = useState(false);
 
   const inner = {
     maxWidth: '1280px',
@@ -316,8 +488,9 @@ export default function Service({ isSection = false }) {
   // ── Data (i18n-driven) ─────────────────────────────────────────────────
   const SERVICES = [
     {
-      icon: '🚗',
+      icon: <Car size={22} />,
       href: '/car-recovery-dubai',
+      img: 'new/car_recovery.webp',
       tag: t('service.svc1Tag'),
       tagBg: 'rgba(247,178,5,0.10)',
       tagColor: '#b07c00',
@@ -326,16 +499,18 @@ export default function Service({ isSection = false }) {
       bullets: [t('service.svc1b1'), t('service.svc1b2'), t('service.svc1b3'), t('service.svc1b4')],
     },
     {
-      icon: '🚛',
+      icon: <Truck size={22} />,
       href: '/towing-service-dubai',
+      img: 'new/towing_truck.webp',
       tag: null,
       title: t('service.svc2Title'),
       desc: t('service.svc2Desc'),
       bullets: [t('service.svc2b1'), t('service.svc2b2'), t('service.svc2b3'), t('service.svc2b4')],
     },
     {
-      icon: '🔋',
+      icon: <Battery size={22} />,
       href: '/battery-service-dubai',
+      img: 'new/battery_service.webp',
       tag: t('service.svc3Tag'),
       tagBg: 'rgba(239,68,68,0.07)',
       tagColor: '#c93030',
@@ -344,16 +519,18 @@ export default function Service({ isSection = false }) {
       bullets: [t('service.svc3b1'), t('service.svc3b2'), t('service.svc3b3'), t('service.svc3b4')],
     },
     {
-      icon: '🔧',
+      icon: <Wrench size={22} />,
       href: '/flat-tyre-repair-dubai',
+      img: 'new/tyre_repair.webp',
       tag: null,
       title: t('service.svc4Title'),
       desc: t('service.svc4Desc'),
       bullets: [t('service.svc4b1'), t('service.svc4b2'), t('service.svc4b3'), t('service.svc4b4')],
     },
     {
-      icon: '🚨',
+      icon: <AlertTriangle size={22} />,
       href: '/accident-recovery-dubai',
+      img: 'new/accident_recovery.webp',
       tag: t('service.svc5Tag'),
       tagBg: 'rgba(249,115,22,0.07)',
       tagColor: '#c04f00',
@@ -364,19 +541,26 @@ export default function Service({ isSection = false }) {
   ];
 
   const HOW_STEPS = [
-    { num: '01', icon: '📱', title: t('service.step1Title'), body: t('service.step1Body') },
-    { num: '02', icon: '💰', title: t('service.step2Title'), body: t('service.step2Body') },
-    { num: '03', icon: '🚛', title: t('service.step3Title'), body: t('service.step3Body') },
-    { num: '04', icon: '✅', title: t('service.step4Title'), body: t('service.step4Body') },
+    { num: '01', icon: 'phone-pin', title: t('service.step1Title'), body: t('service.step1Body') },
+    { num: '02', icon: 'tag',       title: t('service.step2Title'), body: t('service.step2Body') },
+    { num: '03', icon: 'map-pin',   title: t('service.step3Title'), body: t('service.step3Body') },
+    { num: '04', icon: 'shield-check', title: t('service.step4Title'), body: t('service.step4Body') },
+  ];
+
+  const TRUST_ITEMS = [
+    { icon: 'shield-check', title: t('service.trust1Title'), body: t('service.trust1Body') },
+    { icon: 'clock',        title: t('service.trust2Title'), body: t('service.trust2Body') },
+    { icon: 'map',          title: t('service.trust3Title'), body: t('service.trust3Body') },
+    { icon: 'lock',         title: t('service.trust4Title'), body: t('service.trust4Body') },
   ];
 
   const WHY_POINTS = [
-    { icon: '⚡', title: t('service.why1Title'), body: t('service.why1Body') },
-    { icon: '🏆', title: t('service.why2Title'), body: t('service.why2Body') },
-    { icon: '💰', title: t('service.why3Title'), body: t('service.why3Body') },
-    { icon: '🕐', title: t('service.why4Title'), body: t('service.why4Body') },
-    { icon: '👷', title: t('service.why5Title'), body: t('service.why5Body') },
-    { icon: '📱', title: t('service.why6Title'), body: t('service.why6Body') },
+    { icon: <Zap size={20} />,          title: t('service.why1Title'), body: t('service.why1Body') },
+    { icon: <Trophy size={20} />,        title: t('service.why2Title'), body: t('service.why2Body') },
+    { icon: <DollarSign size={20} />,    title: t('service.why3Title'), body: t('service.why3Body') },
+    { icon: <Clock size={20} />,         title: t('service.why4Title'), body: t('service.why4Body') },
+    { icon: <HardHat size={20} />,       title: t('service.why5Title'), body: t('service.why5Body') },
+    { icon: <Smartphone size={20} />,    title: t('service.why6Title'), body: t('service.why6Body') },
   ];
 
   const LOCATIONS = [
@@ -392,13 +576,129 @@ export default function Service({ isSection = false }) {
   ];
 
   const FEATS = [
-    { icon: '⚡', label: t('service.feat1') },
-    { icon: '👷', label: t('service.feat2') },
-    { icon: '📍', label: t('service.feat3') },
-    { icon: '💰', label: t('service.feat4') },
-    { icon: '🏆', label: t('service.feat5') },
-    { icon: '📱', label: t('service.feat6') },
+    { icon: <Zap size={18} />,         label: t('service.feat1') },
+    { icon: <HardHat size={18} />,     label: t('service.feat2') },
+    { icon: <MapPin size={18} />,      label: t('service.feat3') },
+    { icon: <DollarSign size={18} />,  label: t('service.feat4') },
+    { icon: <Trophy size={18} />,      label: t('service.feat5') },
+    { icon: <Smartphone size={18} />,  label: t('service.feat6') },
   ];
+
+  const HERO_STATS = [
+    { stat: '20 min', label: t('service.statAvgResponse') },
+    { stat: '5',      label: t('service.statServices') },
+    { stat: '4.9★',  label: t('service.statReviews') },
+    { stat: 'RTA',    label: t('service.statLicensed') },
+  ];
+
+  // ── Render helpers ─────────────────────────────────────────────────────
+  const renderServiceCard = (svc, i) => (
+    <a href={svc.href} className="svc-card" style={{ display: 'block' }}>
+      <div className="svc-card-top-bar" />
+
+      {/* Card image */}
+      <div style={{ position: 'relative', height: '160px', overflow: 'hidden', background: '#0a0a0a' }}>
+        <img
+          src={svc.img}
+          alt={svc.title}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.85 }}
+          loading="lazy"
+        />
+        {svc.tag && (
+          <div style={{ position: 'absolute', top: '10px', left: isRTL ? 'auto' : '12px', right: isRTL ? '12px' : 'auto' }}>
+            <span
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '5px',
+                fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
+                padding: '4px 10px', borderRadius: '100px',
+                background: svc.tagBg, color: svc.tagColor,
+                backdropFilter: 'blur(4px)',
+              }}
+            >
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block' }} />
+              {svc.tag}
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div style={{ padding: '22px 24px 26px' }}>
+        {/* Icon */}
+        <div
+          className="svc-card-icon"
+          style={{
+            width: '44px', height: '44px', borderRadius: '11px', background: '#fef9ec',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: '14px', transition: 'background 0.25s ease',
+            color: 'var(--primary-yellow)',
+          }}
+        >
+          {svc.icon}
+        </div>
+
+        <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '10px', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+          {svc.title}
+        </h3>
+        <p className="svc-card-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px', marginBottom: '16px' }}>
+          {svc.desc}
+        </p>
+
+        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '7px' }}>
+          {svc.bullets.map((b, j) => (
+            <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12.5px' }}>
+              <CheckCircle2
+                size={14}
+                style={{ color: 'var(--primary-yellow)', flexShrink: 0, marginTop: '1px' }}
+              />
+              <span className="svc-bullet-text" style={{ color: '#888' }}>{b}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div
+          style={{
+            marginTop: '18px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,0.05)',
+            fontSize: '12.5px', fontWeight: 700, color: 'var(--primary-yellow)',
+            display: 'flex', alignItems: 'center', gap: '4px',
+          }}
+        >
+          {t('service.learnMore')}
+          {isRTL ? <ArrowLeft size={14} /> : <ArrowRight size={14} />}
+        </div>
+      </div>
+    </a>
+  );
+
+  const renderWhyCard = (point, i) => (
+    <div
+      className="svc-why-card"
+      style={{
+        padding: '28px', borderRadius: '14px',
+        background: 'var(--secondary-light-gray)',
+        border: '1px solid rgba(0,0,0,0.05)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
+        height: '100%',
+      }}
+    >
+      <div
+        className="svc-why-icon"
+        style={{
+          width: '42px', height: '42px', borderRadius: '10px', background: '#fef9ec',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          marginBottom: '18px', transition: 'background 0.25s ease',
+          color: 'var(--primary-yellow)',
+        }}
+      >
+        {point.icon}
+      </div>
+      <h3 className="svc-why-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+        {point.title}
+      </h3>
+      <p className="svc-why-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px' }}>
+        {point.body}
+      </p>
+    </div>
+  );
 
   return (
     <div className="svc-page-root" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -414,31 +714,33 @@ export default function Service({ isSection = false }) {
       <ServicesPageSchema />
 
       {/* ══════════════════════════════════════════════════════════════════
-          HERO — cinematic, overlay-heavy (Annex pattern: right-aligned content)
+          HERO — landscape image desktop / portrait image mobile
       ══════════════════════════════════════════════════════════════════ */}
       {!isSection && (
         <section
           className="svc-hero-section"
-          style={{
-            position: 'relative',
-            overflow: 'hidden',
-            minHeight: '480px',
-            display: 'flex',
-            alignItems: 'center',
-          }}
+          style={{ position: 'relative', overflow: 'hidden', minHeight: '480px', display: 'flex', alignItems: 'center' }}
         >
-          {/* Background image */}
+          {/* Desktop background */}
           <div
+            className="svc-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
               backgroundImage: 'url("new/Recovery_Van.webp")',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center 40%',
-              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'cover', backgroundPosition: 'center 40%', backgroundRepeat: 'no-repeat',
+            }}
+          />
+          {/* Mobile background */}
+          <div
+            className="svc-hero-img-mobile"
+            style={{
+              position: 'absolute', inset: 0, zIndex: 0,
+              backgroundImage: 'url("new/service_hero_mobile.webp")',
+              backgroundSize: 'cover', backgroundPosition: 'center 30%', backgroundRepeat: 'no-repeat',
             }}
           />
 
-          {/* Dark overlay — directional based on direction */}
+          {/* Dark overlay */}
           <div
             style={{
               position: 'absolute', inset: 0, zIndex: 1,
@@ -450,12 +752,11 @@ export default function Service({ isSection = false }) {
             }}
           />
 
-          {/* Gold accent line — bottom-right (or bottom-left in RTL) */}
+          {/* Gold accent line */}
           <div
             style={{
               position: 'absolute', bottom: 0,
-              right: isRTL ? 'auto' : 0,
-              left: isRTL ? 0 : 'auto',
+              right: isRTL ? 'auto' : 0, left: isRTL ? 0 : 'auto',
               width: '32%', height: '3px', zIndex: 2,
               background: isRTL
                 ? 'linear-gradient(90deg, var(--primary-yellow), transparent)'
@@ -463,12 +764,11 @@ export default function Service({ isSection = false }) {
             }}
           />
 
-          {/* Content — aligned to the dark side */}
+          {/* Content */}
           <div
             className="svc-inner"
             style={{
-              ...inner,
-              position: 'relative', zIndex: 3,
+              ...inner, position: 'relative', zIndex: 3,
               paddingTop: '80px', paddingBottom: '80px',
               display: 'flex',
               justifyContent: isRTL ? 'flex-start' : 'flex-end',
@@ -484,23 +784,12 @@ export default function Service({ isSection = false }) {
                 data-delay="80"
                 style={{
                   fontSize: 'clamp(2rem, 4.5vw, 3.4rem)',
-                  fontWeight: 800,
-                  color: '#fff',
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.04,
-                  margin: '0 0 20px',
+                  fontWeight: 800, color: '#fff',
+                  letterSpacing: '-0.03em', lineHeight: 1.04, margin: '0 0 20px',
                 }}
               >
                 {t('service.heroTitle')}{' '}
-                <span
-                  style={{
-                    color: 'var(--primary-yellow)',
-                    display: 'block',
-                    fontWeight: 300,
-                    fontStyle: 'italic',
-                    fontSize: '1.06em',
-                  }}
-                >
+                <span style={{ color: 'var(--primary-yellow)', display: 'block', fontWeight: 300, fontStyle: 'italic', fontSize: '1.06em' }}>
                   {t('service.heroHighlight')}
                 </span>
               </HeadingTag>
@@ -508,14 +797,7 @@ export default function Service({ isSection = false }) {
               <p
                 className="svc-reveal"
                 data-delay="160"
-                style={{
-                  color: 'rgba(255,255,255,0.70)',
-                  fontSize: '15px',
-                  lineHeight: 1.75,
-                  maxWidth: '500px',
-                  margin: '0 0 32px',
-                  fontWeight: 400,
-                }}
+                style={{ color: 'rgba(255,255,255,0.70)', fontSize: '15px', lineHeight: 1.75, maxWidth: '500px', margin: '0 0 32px', fontWeight: 400 }}
               >
                 {t('service.heroSubtitle')}
               </p>
@@ -529,20 +811,13 @@ export default function Service({ isSection = false }) {
                   onClick={scrollToDownload}
                   className="svc-btn-primary getTow-btn"
                   style={{
-                    background: 'var(--primary-yellow)',
-                    color: '#000',
-                    padding: '13px 30px',
-                    borderRadius: '8px',
-                    fontWeight: 700,
-                    fontSize: '14px',
-                    letterSpacing: '0.01em',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
+                    background: 'var(--primary-yellow)', color: '#000',
+                    padding: '13px 30px', borderRadius: '8px', fontWeight: 700,
+                    fontSize: '14px', letterSpacing: '0.01em', border: 'none', cursor: 'pointer',
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
                   }}
                 >
+                  <Download size={16} />
                   {t('service.heroCta')}
                 </button>
                 <a
@@ -551,53 +826,40 @@ export default function Service({ isSection = false }) {
                   rel="noreferrer"
                   className="svc-btn-ghost"
                   style={{
-                    background: 'rgba(255,255,255,0.08)',
-                    border: '1px solid rgba(255,255,255,0.22)',
-                    color: '#fff',
-                    padding: '13px 30px',
-                    borderRadius: '8px',
-                    fontWeight: 500,
-                    textDecoration: 'none',
-                    fontSize: '14px',
-                    display: 'inline-block',
+                    background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.22)',
+                    color: '#fff', padding: '13px 30px', borderRadius: '8px', fontWeight: 500,
+                    textDecoration: 'none', fontSize: '14px',
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
                   }}
                 >
+                  <MessageCircle size={16} />
                   {t('service.heroWhatsapp')}
                 </a>
               </div>
 
-              {/* Hero stat strip */}
+              {/* Desktop stat strip */}
               <div
                 className="svc-reveal svc-hero-stats"
                 data-delay="320"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '0',
-                  borderTop: '1px solid rgba(255,255,255,0.12)',
-                  paddingTop: '22px',
-                }}
+                style={{ display: 'flex', flexWrap: 'wrap', gap: '0', borderTop: '1px solid rgba(255,255,255,0.12)', paddingTop: '22px' }}
               >
-                {[
-                  { stat: '20 min', label: t('service.statAvgResponse') },
-                  { stat: '5',      label: t('service.statServices') },
-                  { stat: '4.9★',  label: t('service.statReviews') },
-                  { stat: 'RTA',    label: t('service.statLicensed') },
-                ].map((m, i, arr) => (
+                {HERO_STATS.map((m, i, arr) => (
                   <div
                     key={i}
-                    style={{
-                      paddingInlineEnd: '26px',
-                      marginInlineEnd: '26px',
-                      borderInlineEnd: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.10)' : 'none',
-                    }}
+                    style={{ paddingInlineEnd: '26px', marginInlineEnd: '26px', borderInlineEnd: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.10)' : 'none' }}
                   >
-                    <div style={{ fontSize: '19px', fontWeight: 800, color: 'var(--primary-yellow)', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                      {m.stat}
-                    </div>
-                    <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', fontWeight: 500, marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                      {m.label}
-                    </div>
+                    <div style={{ fontSize: '19px', fontWeight: 800, color: 'var(--primary-yellow)', letterSpacing: '-0.02em', lineHeight: 1 }}>{m.stat}</div>
+                    <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', fontWeight: 500, marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{m.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile stats */}
+              <div className="svc-mobile-stats">
+                {HERO_STATS.map((m, i) => (
+                  <div key={i}>
+                    <div className="svc-mobile-stat-num">{m.stat}</div>
+                    <div className="svc-mobile-stat-label">{m.label}</div>
                   </div>
                 ))}
               </div>
@@ -607,26 +869,20 @@ export default function Service({ isSection = false }) {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════
-          INTRO — Annex "Who we are" two-column (pill label + stat row)
+          INTRO — two-column "Who we are"
       ══════════════════════════════════════════════════════════════════ */}
       {!isSection && (
         <section
           className="svc-intro-section"
-          style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+          style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: '#fff' }}
         >
           <div className="svc-inner" style={inner}>
             <div
               className="svc-intro-grid"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '80px',
-                alignItems: 'start',
-              }}
+              style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'start' }}
             >
               {/* Left column */}
               <div style={{ order: isRTL ? 2 : 1 }}>
-                {/* Annex-style "Who we are" pill */}
                 <div className="svc-reveal svc-fade" data-delay="0">
                   <span className="svc-pill-label">
                     <span className="svc-pill-dot" />
@@ -638,13 +894,9 @@ export default function Service({ isSection = false }) {
                   className="svc-h2 svc-reveal svc-left"
                   data-delay="70"
                   style={{
-                    fontSize: 'clamp(1.75rem, 3vw, 2.6rem)',
-                    fontWeight: 800,
-                    color: 'var(--primary-dark-bg)',
-                    letterSpacing: '-0.03em',
-                    lineHeight: 1.1,
-                    marginBottom: '20px',
-                    marginTop: '6px',
+                    fontSize: 'clamp(1.75rem, 3vw, 2.6rem)', fontWeight: 800,
+                    color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em',
+                    lineHeight: 1.1, marginBottom: '20px', marginTop: '6px',
                   }}
                 >
                   {t('service.whoWeAreTitle')}
@@ -660,15 +912,32 @@ export default function Service({ isSection = false }) {
                       : part
                   )}
                 </p>
-                <p
-                  className="svc-body-text svc-reveal"
-                  data-delay="220"
-                  style={{ color: '#777', fontSize: '14.5px', lineHeight: 1.75 }}
-                >
-                  {t('service.whoWeAreP2')}
-                </p>
 
-                {/* Inline stat row (Annex style) */}
+                {/* Read more/less on mobile */}
+                <div>
+                  <p
+                    className="svc-body-text svc-reveal"
+                    data-delay="220"
+                    style={{
+                      color: '#777', fontSize: '14.5px', lineHeight: 1.75,
+                      overflow: introExpanded ? 'visible' : 'hidden',
+                      maxHeight: introExpanded ? 'none' : '0',
+                      transition: 'max-height 0.4s ease',
+                    }}
+                  >
+                    {t('service.whoWeAreP2')}
+                  </p>
+                  <button
+                    className="svc-read-more-btn"
+                    onClick={() => setIntroExpanded(v => !v)}
+                    aria-expanded={introExpanded}
+                  >
+                    {introExpanded ? t('service.readLess') || 'Read less' : t('service.readMore') || 'Read more'}
+                    {introExpanded ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+                  </button>
+                </div>
+
+                {/* Stat row */}
                 <div className="svc-stat-bar svc-reveal" data-delay="300">
                   {[
                     { n: '2019', l: t('about.statFounded') },
@@ -685,34 +954,20 @@ export default function Service({ isSection = false }) {
 
               {/* Right column — feature checklist + mini CTA */}
               <div style={{ paddingTop: '8px', order: isRTL ? 1 : 2 }}>
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '12px',
-                    marginBottom: '28px',
-                  }}
-                >
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '28px' }}>
                   {FEATS.map((feat, i) => (
                     <div
                       key={i}
                       className="svc-reveal svc-feat-item"
                       data-delay={`${120 + i * 55}`}
                       style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px',
-                        padding: '14px 16px',
-                        borderRadius: '10px',
-                        border: '1px solid rgba(0,0,0,0.06)',
-                        background: '#fafafa',
+                        display: 'flex', alignItems: 'center', gap: '10px',
+                        padding: '14px 16px', borderRadius: '10px',
+                        border: '1px solid rgba(0,0,0,0.06)', background: '#fafafa',
                       }}
                     >
-                      <span style={{ fontSize: '18px', flexShrink: 0 }}>{feat.icon}</span>
-                      <span
-                        className="svc-feat-label"
-                        style={{ fontSize: '13px', fontWeight: 600, color: '#222', lineHeight: 1.3 }}
-                      >
+                      <span style={{ color: 'var(--primary-yellow)', flexShrink: 0 }}>{feat.icon}</span>
+                      <span className="svc-feat-label" style={{ fontSize: '13px', fontWeight: 600, color: '#222', lineHeight: 1.3 }}>
                         {feat.label}
                       </span>
                     </div>
@@ -724,15 +979,13 @@ export default function Service({ isSection = false }) {
                   className="svc-reveal svc-right"
                   data-delay="480"
                   style={{
-                    background: 'var(--primary-dark-bg)',
-                    borderRadius: '14px',
-                    padding: '22px 20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '16px',
+                    background: 'var(--primary-dark-bg)', borderRadius: '14px',
+                    padding: '22px 20px', display: 'flex', alignItems: 'center', gap: '16px',
                   }}
                 >
-                  <div style={{ fontSize: '32px', flexShrink: 0 }}>🚗</div>
+                  <div style={{ color: 'var(--primary-yellow)', flexShrink: 0 }}>
+                    <Car size={32} />
+                  </div>
                   <div>
                     <div style={{ fontWeight: 700, fontSize: '14px', color: '#fff', marginBottom: '6px' }}>
                       {t('service.needHelp')}
@@ -740,16 +993,12 @@ export default function Service({ isSection = false }) {
                     <button
                       onClick={scrollToDownload}
                       style={{
-                        background: 'var(--primary-yellow)',
-                        color: '#000',
-                        border: 'none',
-                        borderRadius: '6px',
-                        padding: '8px 18px',
-                        fontWeight: 700,
-                        fontSize: '13px',
-                        cursor: 'pointer',
+                        background: 'var(--primary-yellow)', color: '#000', border: 'none',
+                        borderRadius: '6px', padding: '8px 18px', fontWeight: 700,
+                        fontSize: '13px', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '6px',
                       }}
                     >
+                      <Download size={14} />
                       {t('service.downloadApp')}
                     </button>
                   </div>
@@ -761,25 +1010,20 @@ export default function Service({ isSection = false }) {
       )}
 
       {/* ══════════════════════════════════════════════════════════════════
-          SERVICE CARDS — Annex-style card grid with top-bar accent
+          SERVICE CARDS — desktop grid / mobile swiper
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-cards-section"
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
+        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
       >
         <div className="svc-inner" style={inner}>
-          {/* Section header */}
-          <div className="svc-reveal" style={{ marginBottom: '56px' }}>
+          <div className="svc-reveal" style={{ marginBottom: '48px' }}>
             <span style={eyebrow}>{t('service.whatWeOfferTag')}</span>
             <h2
               className="svc-h2"
               style={{
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
-                fontWeight: 800,
-                color: 'var(--primary-dark-bg)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.1,
-                maxWidth: '480px',
+                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 800,
+                color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '480px',
               }}
             >
               {t('service.whatWeOfferTitle')}{' '}
@@ -787,224 +1031,105 @@ export default function Service({ isSection = false }) {
             </h2>
           </div>
 
-          <div
-            className="svc-cards-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '20px',
-            }}
-          >
+          {/* Desktop grid */}
+          <div className="svc-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
             {SERVICES.map((svc, i) => (
-              <a
-                key={i}
-                href={svc.href}
-                className="svc-reveal svc-card"
-                data-delay={i * 75}
-              >
-                {/* Annex-style top accent bar */}
-                <div className="svc-card-top-bar" />
-
-                <div style={{ padding: '24px 28px 28px' }}>
-                  {/* Tag badge */}
-                  {svc.tag && (
-                    <div style={{ marginBottom: '14px' }}>
-                      <span
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '5px',
-                          fontSize: '10px',
-                          fontWeight: 700,
-                          letterSpacing: '0.06em',
-                          textTransform: 'uppercase',
-                          padding: '4px 10px',
-                          borderRadius: '100px',
-                          background: svc.tagBg,
-                          color: svc.tagColor,
-                        }}
-                      >
-                        <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block' }} />
-                        {svc.tag}
-                      </span>
-                    </div>
-                  )}
-
-                  {/* Icon */}
-                  <div
-                    className="svc-card-icon"
-                    style={{
-                      width: '48px', height: '48px',
-                      borderRadius: '12px',
-                      background: '#fef9ec',
-                      display: 'flex', alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '22px',
-                      marginBottom: '16px',
-                      transition: 'background 0.25s ease',
-                    }}
-                  >
-                    {svc.icon}
-                  </div>
-
-                  {/* Title */}
-                  <h3
-                    className="svc-card-title"
-                    style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '10px', letterSpacing: '-0.01em', lineHeight: 1.3 }}
-                  >
-                    {svc.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p
-                    className="svc-card-body"
-                    style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px', marginBottom: '18px' }}
-                  >
-                    {svc.desc}
-                  </p>
-
-                  {/* Bullets */}
-                  <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                    {svc.bullets.map((b, j) => (
-                      <li
-                        key={j}
-                        style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12.5px' }}
-                      >
-                        <span
-                          style={{
-                            width: '14px', height: '14px', borderRadius: '50%',
-                            background: 'rgba(247,178,5,0.12)',
-                            display: 'inline-flex', alignItems: 'center',
-                            justifyContent: 'center', fontSize: '8px',
-                            color: 'var(--primary-yellow)', flexShrink: 0, marginTop: '1px',
-                          }}
-                        >
-                          ✓
-                        </span>
-                        <span className="svc-bullet-text" style={{ color: '#888' }}>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Read more link */}
-                  <div
-                    style={{
-                      marginTop: '20px',
-                      paddingTop: '16px',
-                      borderTop: '1px solid rgba(0,0,0,0.05)',
-                      fontSize: '12.5px',
-                      fontWeight: 700,
-                      color: 'var(--primary-yellow)',
-                      letterSpacing: '0.02em',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                    }}
-                  >
-                    {t('service.learnMore')}
-                    <span>{isRTL ? ' ←' : ' →'}</span>
-                  </div>
-                </div>
-              </a>
+              <div key={i} className="svc-reveal" data-delay={i * 75}>
+                {renderServiceCard(svc, i)}
+              </div>
             ))}
+          </div>
+
+          {/* Mobile swiper */}
+          <div className="svc-cards-swiper">
+            <TouchSwiper items={SERVICES} renderSlide={renderServiceCard} />
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          HOW IT WORKS — dark section with step rows
+          HOW IT WORKS — illustration + step flow + trust strip
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-steps-section"
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+        style={{ padding: '44px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="svc-inner" style={inner}>
-          {/* Header */}
+          {/* Top: heading + illustration */}
           <div
-            className="svc-reveal svc-steps-header"
-            style={{
-              marginBottom: '64px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-end',
-              flexWrap: 'wrap',
-              gap: '24px',
-            }}
+            className="svc-steps-top"
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'center', marginBottom: '24px' }}
           >
-            <div>
+            <div className="svc-reveal svc-left" style={{ order: isRTL ? 2 : 1 }}>
               <span style={eyebrow}>{t('service.stepsTag')}</span>
               <h2
                 style={{
-                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
-                  fontWeight: 800,
-                  color: '#fff',
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.1,
-                  maxWidth: '420px',
+                  fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', fontWeight: 800, color: '#fff',
+                  letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '12px',
                 }}
               >
-                {t('service.stepsTitle')}{' '}
+                {t('service.stepsTitle')}
+                <br />
                 <span className="svc-gold-glow" style={{ color: 'var(--primary-yellow)' }}>
                   {t('service.stepsHighlight')}
                 </span>
               </h2>
+              <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13px', lineHeight: 1.6, maxWidth: '380px' }}>
+                {t('service.stepsSubtitle')}
+              </p>
             </div>
-            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px', lineHeight: 1.7, maxWidth: '340px' }}>
-              {t('service.stepsSubtitle')}
-            </p>
+
+            <div className="svc-reveal svc-right svc-steps-illustration" style={{ order: isRTL ? 1 : 2 }}>
+              <img src={howItWorksIllustration} alt="" loading="lazy" />
+              <div className="svc-steps-badge" style={isRTL ? { right: '12px' } : { left: '12px' }}>
+                <span className="svc-steps-badge-icon">
+                  <StepIcon name="bolt" size={13} />
+                </span>
+                <span className="svc-steps-badge-text">
+                  {t('service.stepsBadgeText')}
+                  <br />
+                  <strong>{t('service.stepsBadgeHighlight')}</strong>
+                </span>
+              </div>
+            </div>
           </div>
 
-          {/* Step rows */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          {/* Step track */}
+          <div className="svc-steps-track">
+            <div className="svc-steps-track-line" />
             {HOW_STEPS.map((step, i) => (
-              <div
-                key={i}
-                className="svc-reveal svc-step-row"
-                data-delay={i * 90}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '72px 1fr',
-                  gap: '28px',
-                  alignItems: 'start',
-                  padding: '28px 24px',
-                  borderBottom: i < HOW_STEPS.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                }}
-              >
-                {/* Number + icon */}
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                  <div
-                    style={{
-                      width: '48px', height: '48px',
-                      borderRadius: '12px',
-                      background: 'rgba(247,178,5,0.10)',
-                      border: '1px solid rgba(247,178,5,0.20)',
-                      display: 'flex', alignItems: 'center',
-                      justifyContent: 'center', fontSize: '20px',
-                    }}
-                  >
-                    {step.icon}
-                  </div>
-                  <span
-                    style={{
-                      fontSize: '11px', fontWeight: 700,
-                      letterSpacing: '0.10em', color: 'rgba(255,255,255,0.22)',
-                    }}
-                  >
-                    {step.num}
-                  </span>
+              <div key={i} className="svc-reveal svc-step-node-wrap" data-delay={i * 80}>
+                <div className="svc-step-node">
+                  <StepIcon name={step.icon} />
                 </div>
+                <span className="svc-step-num">{step.num}</span>
+              </div>
+            ))}
+          </div>
 
-                {/* Content */}
-                <div style={{ paddingTop: '8px' }}>
-                  <h3
-                    className="svc-step-title"
-                    style={{ fontWeight: 700, fontSize: '16px', color: '#fff', letterSpacing: '-0.01em', marginBottom: '8px' }}
-                  >
-                    {step.title}
-                  </h3>
-                  <p className="svc-step-body" style={{ color: 'rgba(255,255,255,0.48)', fontSize: '14px', lineHeight: 1.72 }}>
-                    {step.body}
-                  </p>
+          {/* Step cards */}
+          <div className="svc-steps-cards">
+            {HOW_STEPS.map((step, i) => (
+              <div key={i} className="svc-reveal svc-step-card" data-delay={i * 80 + 40}>
+                <h3 className="svc-step-title">{step.title}</h3>
+                <p className="svc-step-body">{step.body}</p>
+                <span className="svc-step-arrow">
+                  {isRTL ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Trust strip */}
+          <div className="svc-reveal svc-trust-strip">
+            {TRUST_ITEMS.map((item, i) => (
+              <div key={i} className="svc-trust-item">
+                <span className="svc-trust-icon">
+                  <StepIcon name={item.icon} size={18} />
+                </span>
+                <div>
+                  <div className="svc-trust-title">{item.title}</div>
+                  <div className="svc-trust-body">{item.body}</div>
                 </div>
               </div>
             ))}
@@ -1013,100 +1138,60 @@ export default function Service({ isSection = false }) {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          WHY TAREEQK — light muted section, 3-col grid
+          WHY TAREEQK — desktop 3-col grid / mobile swiper
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-why-section"
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: '#fff' }}
       >
         <div className="svc-inner" style={inner}>
-          <div className="svc-reveal" style={{ marginBottom: '56px' }}>
+          <div className="svc-reveal" style={{ marginBottom: '48px' }}>
             <span style={eyebrow}>{t('service.whyTag')}</span>
             <h2
               className="svc-h2"
               style={{
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
-                fontWeight: 800,
-                color: 'var(--primary-dark-bg)',
-                letterSpacing: '-0.03em',
-                lineHeight: 1.1,
-                maxWidth: '460px',
+                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 800,
+                color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '460px',
               }}
             >
               {t('service.whyTitle')}
             </h2>
           </div>
 
-          <div
-            className="svc-why-grid"
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}
-          >
+          {/* Desktop grid */}
+          <div className="svc-why-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
             {WHY_POINTS.map((point, i) => (
-              <div
-                key={i}
-                className="svc-reveal svc-why-card"
-                data-delay={i * 65}
-                style={{
-                  padding: '28px',
-                  borderRadius: '14px',
-                  background: 'var(--secondary-light-gray)',
-                  border: '1px solid rgba(0,0,0,0.05)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.02)',
-                }}
-              >
-                <div
-                  className="svc-why-icon"
-                  style={{
-                    width: '42px', height: '42px',
-                    borderRadius: '10px',
-                    background: '#fef9ec',
-                    display: 'flex', alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px', marginBottom: '18px',
-                    transition: 'background 0.25s ease',
-                  }}
-                >
-                  {point.icon}
-                </div>
-                <h3 className="svc-why-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
-                  {point.title}
-                </h3>
-                <p className="svc-why-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px' }}>
-                  {point.body}
-                </p>
+              <div key={i} className="svc-reveal" data-delay={i * 65}>
+                {renderWhyCard(point, i)}
               </div>
             ))}
+          </div>
+
+          {/* Mobile swiper */}
+          <div className="svc-why-swiper">
+            <TouchSwiper items={WHY_POINTS} renderSlide={renderWhyCard} />
           </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          COVERAGE — dark section with location pills + CTA card
+          COVERAGE — dark section
       ══════════════════════════════════════════════════════════════════ */}
       <section
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="svc-inner" style={inner}>
           <div
             className="svc-coverage-grid"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 0.72fr',
-              gap: '80px',
-              alignItems: 'start',
-            }}
+            style={{ display: 'grid', gridTemplateColumns: '1fr 0.72fr', gap: '80px', alignItems: 'start' }}
           >
             {/* Left — heading + location pills */}
             <div className="svc-reveal svc-left" style={{ order: isRTL ? 2 : 1 }}>
               <span style={eyebrow}>{t('service.coverageTag')}</span>
               <h2
                 style={{
-                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
-                  fontWeight: 800,
-                  color: '#fff',
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.1,
-                  marginBottom: '18px',
+                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 800,
+                  color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '18px',
                 }}
               >
                 {t('service.coverageTitle')}{' '}
@@ -1123,18 +1208,15 @@ export default function Service({ isSection = false }) {
                     href={loc.href}
                     className="svc-loc-pill"
                     style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
+                      display: 'inline-flex', alignItems: 'center', gap: '6px',
                       border: '1px solid rgba(255,255,255,0.12)',
                       color: 'rgba(255,255,255,0.65)',
-                      padding: '8px 16px',
-                      borderRadius: '100px',
-                      fontSize: '12.5px',
-                      fontWeight: 500,
-                      textDecoration: 'none',
+                      padding: '8px 16px', borderRadius: '100px', fontSize: '12.5px',
+                      fontWeight: 500, textDecoration: 'none',
                       background: 'rgba(255,255,255,0.04)',
                     }}
                   >
+                    <MapPin size={11} />
                     {loc.label}
                   </a>
                 ))}
@@ -1142,19 +1224,15 @@ export default function Service({ isSection = false }) {
                   href="/contact"
                   className="svc-loc-pill"
                   style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
+                    display: 'inline-flex', alignItems: 'center',
                     border: '1px solid rgba(247,178,5,0.30)',
                     color: 'var(--primary-yellow)',
-                    padding: '8px 16px',
-                    borderRadius: '100px',
-                    fontSize: '12.5px',
-                    fontWeight: 600,
-                    textDecoration: 'none',
+                    padding: '8px 16px', borderRadius: '100px', fontSize: '12.5px',
+                    fontWeight: 600, textDecoration: 'none',
                     background: 'rgba(247,178,5,0.06)',
                   }}
                 >
-                  {t('service.coverageNotListed')} {isRTL ? '←' : '→'}
+                  {t('service.coverageNotListed')} {isRTL ? <ArrowLeft size={12} /> : <ArrowRight size={12} />}
                 </a>
               </div>
             </div>
@@ -1162,12 +1240,7 @@ export default function Service({ isSection = false }) {
             {/* Right — yellow CTA card */}
             <div className="svc-reveal svc-right" style={{ order: isRTL ? 1 : 2 }}>
               <div
-                style={{
-                  background: 'var(--primary-yellow)',
-                  borderRadius: '18px',
-                  padding: '36px 30px',
-                  color: '#000',
-                }}
+                style={{ background: 'var(--primary-yellow)', borderRadius: '18px', padding: '36px 30px', color: '#000' }}
               >
                 <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.55, marginBottom: '10px' }}>
                   {t('service.emergencyTag')}
@@ -1181,13 +1254,13 @@ export default function Service({ isSection = false }) {
                 <a
                   href="tel:+97180082773375"
                   style={{
-                    display: 'block', padding: '14px',
-                    background: '#000', color: '#fff',
-                    textAlign: 'center', borderRadius: '9px',
-                    fontWeight: 700, textDecoration: 'none',
-                    fontSize: '14px', marginBottom: '8px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '14px', background: '#000', color: '#fff',
+                    textAlign: 'center', borderRadius: '9px', fontWeight: 700,
+                    textDecoration: 'none', fontSize: '14px', marginBottom: '8px',
                   }}
                 >
+                  <Phone size={16} />
                   {t('service.callBtn')}
                 </a>
                 <a
@@ -1195,14 +1268,14 @@ export default function Service({ isSection = false }) {
                   target="_blank"
                   rel="noreferrer"
                   style={{
-                    display: 'block', padding: '12px',
-                    background: 'rgba(0,0,0,0.10)', color: '#000',
-                    textAlign: 'center', borderRadius: '9px',
-                    fontWeight: 600, textDecoration: 'none',
-                    fontSize: '13.5px', border: '1px solid rgba(0,0,0,0.10)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '12px', background: 'rgba(0,0,0,0.10)', color: '#000',
+                    textAlign: 'center', borderRadius: '9px', fontWeight: 600,
+                    textDecoration: 'none', fontSize: '13.5px', border: '1px solid rgba(0,0,0,0.10)',
                   }}
                 >
-                  💬 {t('service.whatsappBtn')}
+                  <MessageCircle size={16} />
+                  {t('service.whatsappBtn')}
                 </a>
               </div>
             </div>
@@ -1211,7 +1284,7 @@ export default function Service({ isSection = false }) {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          CTA — bottom banner (dark + gold glow)
+          CTA — bottom banner
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-cta-section"
@@ -1221,19 +1294,13 @@ export default function Service({ isSection = false }) {
           <div
             className="svc-reveal svc-scale"
             style={{
-              position: 'relative',
-              overflow: 'hidden',
-              borderRadius: '20px',
-              padding: '72px 48px',
-              textAlign: 'center',
-              background: 'var(--primary-dark-bg)',
+              position: 'relative', overflow: 'hidden', borderRadius: '20px',
+              padding: 'clamp(40px, 8vw, 72px) clamp(24px, 6vw, 48px)',
+              textAlign: 'center', background: 'var(--primary-dark-bg)',
             }}
           >
-            {/* Gold glow */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(ellipse 55% 60% at 50% 110%, rgba(247,178,5,0.2) 0%, transparent 70%)' }} />
-            {/* Grid texture */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
-            {/* Watermark */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(60px, 12vw, 150px)', fontWeight: 800, color: 'rgba(255,255,255,0.022)', letterSpacing: '-0.05em', userSelect: 'none' }}>
               TAREEQK
             </div>
@@ -1244,12 +1311,8 @@ export default function Service({ isSection = false }) {
               </span>
               <h2
                 style={{
-                  fontSize: 'clamp(2rem, 4.2vw, 3rem)',
-                  fontWeight: 800,
-                  color: '#fff',
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.05,
-                  marginBottom: '14px',
+                  fontSize: 'clamp(2rem, 4.2vw, 3rem)', fontWeight: 800, color: '#fff',
+                  letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: '14px',
                 }}
               >
                 {t('service.ctaTitle')}{' '}
@@ -1266,40 +1329,30 @@ export default function Service({ isSection = false }) {
                   target="_blank"
                   rel="noreferrer"
                   style={{
-                    background: 'rgba(37,211,102,0.12)',
-                    border: '1px solid rgba(37,211,102,0.3)',
-                    color: '#4ade80',
-                    padding: '15px 38px',
-                    borderRadius: '8px',
-                    fontWeight: 600,
-                    textDecoration: 'none',
-                    fontSize: '14px',
-                    display: 'inline-block',
+                    background: 'rgba(37,211,102,0.12)', border: '1px solid rgba(37,211,102,0.3)',
+                    color: '#4ade80', padding: '15px 38px', borderRadius: '8px', fontWeight: 600,
+                    textDecoration: 'none', fontSize: '14px',
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
                     transition: 'background 0.2s ease, color 0.2s ease',
                   }}
                   onMouseEnter={e => { e.currentTarget.style.background = '#25D366'; e.currentTarget.style.color = '#fff'; }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,211,102,0.12)'; e.currentTarget.style.color = '#4ade80'; }}
                 >
-                  💬 {t('service.whatsappCta')}
+                  <MessageCircle size={16} />
+                  {t('service.whatsappCta')}
                 </a>
                 <button
                   onClick={scrollToDownload}
                   className="svc-btn-ghost"
                   style={{
-                    background: 'rgba(255,255,255,0.08)',
-                    border: '1px solid rgba(255,255,255,0.22)',
-                    color: '#fff',
-                    padding: '15px 38px',
-                    borderRadius: '8px',
-                    fontWeight: 500,
-                    fontSize: '14px',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
+                    background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.22)',
+                    color: '#fff', padding: '15px 38px', borderRadius: '8px', fontWeight: 500,
+                    fontSize: '14px', cursor: 'pointer',
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
                   }}
                 >
-                  📱 {t('service.downloadCta')}
+                  <Download size={16} />
+                  {t('service.downloadCta')}
                 </button>
               </div>
             </div>

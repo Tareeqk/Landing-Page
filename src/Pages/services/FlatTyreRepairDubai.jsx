@@ -6,7 +6,7 @@ const config = {
   slug: 'flat-tyre-repair-dubai',
   metaTitle: 'Flat Tyre Repair & Replacement Dubai – 24/7 | Tareeqk',
   metaDesc: 'Flat tyre in Dubai? Tareeqk\'s mobile tyre service comes to you 24/7. Puncture repair or full tyre replacement on-site. Call or WhatsApp now.',
-  title: 'Flat Tyre Repair in Dubai – On-Site 24/7 Tyre Service',
+  title: 'Flat Tyre Repair in Dubai ',
   heroImage: '/new/third_img.webp',
   heroAlt: 'Flat Tyre Repair Service Dubai',
   intro: 'Flat tyre anywhere in Dubai? We dispatch a tyre technician directly to your location — no need to drive on a rim or call a tow.',

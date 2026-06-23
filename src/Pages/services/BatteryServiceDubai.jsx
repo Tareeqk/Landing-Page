@@ -6,7 +6,7 @@ const config = {
   slug: 'battery-service-dubai',
   metaTitle: 'Car Battery Replacement & Boost Dubai – 24/7 | Tareeqk',
   metaDesc: 'Dead car battery in Dubai? Tareeqk offers on-site battery boost and replacement 24/7 across Dubai. Fast 20-minute dispatch. Call or WhatsApp now.',
-  title: 'Car Battery Service in Dubai – Jump Start & Replacement',
+  title: 'Car Battery Jump Start Service',
   heroImage: '/new/second_img.webp',
   heroAlt: 'Car Battery Boost and Replacement Service Dubai',
   intro: 'Dead battery in Dubai? We come to you, test your battery, and jump-start or replace it on the spot — 24 hours a day.',

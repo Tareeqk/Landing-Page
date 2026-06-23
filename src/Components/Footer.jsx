@@ -19,7 +19,7 @@ import { Link, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import useLangLink from "../hooks/useLangLink"
 
-const SERVICES = [
+export const SERVICES = [
   { title: "Car Recovery Dubai", href: "/car-recovery-dubai" },
   { title: "Towing Service Dubai", href: "/towing-service-dubai" },
   { title: "Battery Jump Start", href: "/battery-service-dubai" },

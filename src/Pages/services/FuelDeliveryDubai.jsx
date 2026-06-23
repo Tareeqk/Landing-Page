@@ -6,7 +6,7 @@ const config = {
   slug: 'fuel-delivery-dubai',
   metaTitle: 'Emergency Fuel Delivery Dubai – 24/7 | Tareeqk',
   metaDesc: 'Run out of fuel in Dubai? Tareeqk delivers petrol to your location 24/7. Fast, affordable emergency fuel delivery anywhere in Dubai. Call now.',
-  title: 'Emergency Fuel Delivery in Dubai – Petrol to Your Location',
+  title: 'Emergency Fuel Delivery in Dubai ',
   heroImage: '/new/Recovery_Van.webp',
   heroAlt: 'Emergency Fuel Delivery Service Dubai',
   intro: 'Ran out of petrol in Dubai? We deliver enough fuel to get you safely to the nearest station — dispatched within 20 minutes.',

@@ -1,8 +1,13 @@
 // pages/About.jsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import Counters from '../Components/Counters';
+import {
+  Zap, Trophy, Lightbulb, Handshake, Smartphone, Moon,
+  Car, Battery, Wrench, Fuel, ChevronRight, ChevronLeft,
+  Phone, MessageCircle, Star, Shield, Clock, MapPin,
+} from 'lucide-react';
+
 
 // ── Local Business Schema ──────────────────────────────────────────────────
 function LocalBusinessSchema() {
@@ -20,7 +25,7 @@ function LocalBusinessSchema() {
     "geo": { "@type": "GeoCoordinates", "latitude": "25.2048", "longitude": "55.2708" },
     "openingHours": "Mo-Sa 09:00-17:00",
     "areaServed": { "@type": "City", "name": "Dubai" },
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1200", "bestRating": "5" }
+    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1200", "bestRating": "5" },
   };
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
 }
@@ -44,9 +49,16 @@ function useAboutStyles() {
       .abt-reveal.abt-scale { transform: scale(0.96); }
       .abt-reveal.abt-visible { opacity: 1 !important; transform: none !important; }
 
-      /* ── RTL reveal directions flip ── */
       [dir="rtl"] .abt-reveal.abt-left  { transform: translateX(28px); }
       [dir="rtl"] .abt-reveal.abt-right { transform: translateX(-28px); }
+
+      /* ── Hero image responsive ── */
+      .abt-hero-img-desktop { display: block; }
+      .abt-hero-img-mobile  { display: none; }
+      @media (max-width: 640px) {
+        .abt-hero-img-desktop { display: none; }
+        .abt-hero-img-mobile  { display: block; }
+      }
 
       /* ── Value cards ── */
       .abt-value-card {
@@ -62,6 +74,7 @@ function useAboutStyles() {
       .abt-value-card:hover .abt-icon-box {
         background: var(--primary-yellow) !important;
       }
+      .abt-value-card:hover .abt-icon-box svg { color: #000 !important; }
 
       /* ── Buttons ── */
       .abt-btn-cta {
@@ -87,9 +100,7 @@ function useAboutStyles() {
         background: rgba(247,178,5,0.10) !important;
         transform: translateX(3px);
       }
-      [dir="rtl"] .abt-svc-link:hover {
-        transform: translateX(-3px);
-      }
+      [dir="rtl"] .abt-svc-link:hover { transform: translateX(-3px); }
 
       /* ── Float badge RTL ── */
       [dir="rtl"] .abt-float-badge {
@@ -110,19 +121,102 @@ function useAboutStyles() {
         background: linear-gradient(270deg, var(--primary-yellow), transparent) !important;
       }
 
+      /* ── Mobile values swiper ── */
+      .abt-swiper-wrap {
+        position: relative;
+        overflow: hidden;
+      }
+      .abt-swiper-track {
+        display: flex;
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 8px;
+      }
+      .abt-swiper-track::-webkit-scrollbar { display: none; }
+      .abt-swiper-slide {
+        flex: 0 0 82vw;
+        max-width: 320px;
+        scroll-snap-align: start;
+      }
+
+      /* ── Swiper dots ── */
+      .abt-swiper-dots {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 16px;
+      }
+      .abt-swiper-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
+        background: rgba(0,0,0,0.15);
+        transition: background 0.2s ease, width 0.2s ease;
+        cursor: pointer;
+        border: none;
+        padding: 0;
+      }
+      .abt-swiper-dot.active {
+        width: 20px;
+        border-radius: 3px;
+        background: var(--primary-yellow);
+      }
+
+      /* ── Mobile photo strip ── */
+      .abt-photo-strip {
+        display: none;
+      }
+      @media (max-width: 900px) {
+        .abt-photo-strip {
+          display: flex;
+          gap: 10px;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          scrollbar-width: none;
+          padding: 0 1.25rem 12px;
+          margin: 0 -1.25rem;
+        }
+        .abt-photo-strip::-webkit-scrollbar { display: none; }
+        .abt-photo-strip-img {
+          flex: 0 0 72vw;
+          max-width: 260px;
+          height: 190px;
+          object-fit: cover;
+          border-radius: 14px;
+          scroll-snap-align: start;
+        }
+      }
+
+      /* ── Mobile stats row ── */
+      .abt-mobile-stats {
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .abt-mobile-stats {
+          display: flex;
+          justify-content: space-around;
+          background: var(--primary-yellow);
+          border-radius: 14px;
+          padding: 18px 12px;
+          margin: 24px 0 0;
+        }
+        .abt-mobile-stat-num  { font-size: 20px; font-weight: 800; color: #000; line-height: 1; text-align: center; }
+        .abt-mobile-stat-label { font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; text-align: center; }
+      }
+
       /* ── DARK MODE ── */
       body.dark .abt-page-root       { background-color: var(--dark-bg-main, #0f0f0f) !important; }
       body.dark .abt-story-section   { background-color: var(--dark-bg-main, #0f0f0f) !important; }
       body.dark .abt-values-section  { background-color: var(--dark-bg-muted, #1a1a1a) !important; }
       body.dark .abt-cta-section     { background-color: var(--dark-bg-main, #0f0f0f) !important; }
-
       body.dark .abt-card {
         background-color: var(--dark-bg-surface, #1e1e1e) !important;
         border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
       }
-      body.dark .abt-value-card:hover {
-        background-color: var(--dark-bg-muted, #252525) !important;
-      }
+      body.dark .abt-value-card:hover { background-color: var(--dark-bg-muted, #252525) !important; }
       body.dark .abt-h2            { color: var(--dark-text-main, #f0f0f0) !important; }
       body.dark .abt-body-text     { color: var(--dark-text-muted, #aaa) !important; }
       body.dark .abt-card-title    { color: var(--dark-text-main, #f0f0f0) !important; }
@@ -138,6 +232,28 @@ function useAboutStyles() {
       body.dark .abt-float-badge-sub   { color: var(--dark-text-muted, #aaa) !important; }
       body.dark .abt-icon-box      { background-color: var(--dark-bg-muted, #252525) !important; }
       body.dark .abt-story-strong  { color: var(--dark-text-main, #f0f0f0) !important; }
+      body.dark .abt-swiper-dot    { background: rgba(255,255,255,0.15) !important; }
+      body.dark .abt-mobile-stats  { background: var(--dark-bg-surface, #1e1e1e) !important; }
+      body.dark .abt-mobile-stat-num   { color: var(--primary-yellow) !important; }
+      body.dark .abt-mobile-stat-label { color: var(--dark-text-muted, #888) !important; }
+      body.dark .abt-read-more-btn { color: var(--primary-yellow) !important; }
+
+      /* ── Read more button ── */
+      .abt-read-more-btn {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--primary-yellow);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-top: 10px;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
 
       /* ── Responsive ── */
       @media (max-width: 900px) {
@@ -146,10 +262,16 @@ function useAboutStyles() {
         .abt-coverage-grid .abt-cta-card { margin-top: 0 !important; }
       }
       @media (max-width: 768px) {
-        .abt-values-grid  { grid-template-columns: 1fr 1fr !important; }
+        .abt-values-grid  { display: none !important; }
+        .abt-values-swiper { display: block !important; }
         .abt-hero-stats   { display: none !important; }
         .abt-float-badge  { display: none !important; }
         .abt-inner        { padding: 0 1.25rem !important; }
+        .abt-story-section .abt-story-img-col { display: none !important; }
+      }
+      @media (min-width: 769px) {
+        .abt-values-swiper { display: none !important; }
+        .abt-mobile-stats  { display: none !important; }
       }
       @media (max-width: 480px) {
         .abt-values-grid  { grid-template-columns: 1fr !important; }
@@ -183,7 +305,7 @@ function useAboutStyles() {
   }, []);
 }
 
-// ── Shared style tokens ────────────────────────────────────────────────────
+// ── Shared style tokens ─────────────────────────────────────────────────────
 const eyebrow = {
   fontSize: '10px',
   fontWeight: 700,
@@ -194,12 +316,86 @@ const eyebrow = {
   display: 'block',
 };
 
+// ── Values Swiper (mobile) ─────────────────────────────────────────────────
+function ValuesSwiper({ items }) {
+  const [active, setActive] = useState(0);
+  const trackRef = useRef(null);
+
+  const onScroll = () => {
+    if (!trackRef.current) return;
+    const { scrollLeft, offsetWidth } = trackRef.current;
+    const slideW = offsetWidth * 0.82 + 14;
+    setActive(Math.round(scrollLeft / slideW));
+  };
+
+  const goTo = (i) => {
+    if (!trackRef.current) return;
+    const slideW = trackRef.current.offsetWidth * 0.82 + 14;
+    trackRef.current.scrollTo({ left: i * slideW, behavior: 'smooth' });
+  };
+
+  return (
+    <div className="abt-swiper-wrap">
+      <div className="abt-swiper-track" ref={trackRef} onScroll={onScroll}>
+        {items.map((v, i) => (
+          <div key={i} className="abt-swiper-slide">
+            <div
+              className="abt-value-card abt-card"
+              style={{
+                padding: '24px',
+                borderRadius: '14px',
+                background: '#fff',
+                border: '1px solid rgba(0,0,0,0.06)',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                height: '100%',
+              }}
+            >
+              <div
+                className="abt-icon-box"
+                style={{
+                  width: '42px', height: '42px',
+                  borderRadius: '10px',
+                  background: '#fef9ec',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '16px',
+                  transition: 'background 0.25s ease',
+                  color: 'var(--primary-yellow)',
+                }}
+              >
+                {v.icon}
+              </div>
+              <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+                {v.title}
+              </h3>
+              <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px' }}>
+                {v.body}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="abt-swiper-dots">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            className={`abt-swiper-dot${active === i ? ' active' : ''}`}
+            onClick={() => goTo(i)}
+            aria-label={`Slide ${i + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ── Component ──────────────────────────────────────────────────────────────
 export default function About({ isSection = false }) {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === 'rtl';
   useAboutStyles();
   const HeadingTag = isSection ? 'h2' : 'h1';
+
+  const [storyExpanded, setStoryExpanded] = useState(false);
 
   const inner = {
     maxWidth: '1280px',
@@ -210,19 +406,19 @@ export default function About({ isSection = false }) {
   };
 
   const VALUES = [
-    { icon: '⚡', title: t('about.value1Title'), body: t('about.value1Body') },
-    { icon: '🏆', title: t('about.value2Title'), body: t('about.value2Body') },
-    { icon: '💡', title: t('about.value3Title'), body: t('about.value3Body') },
-    { icon: '🤝', title: t('about.value4Title'), body: t('about.value4Body') },
-    { icon: '📱', title: t('about.value5Title'), body: t('about.value5Body') },
-    { icon: '🌙', title: t('about.value6Title'), body: t('about.value6Body') },
+    { icon: <Zap size={20} />,        title: t('about.value1Title'), body: t('about.value1Body') },
+    { icon: <Trophy size={20} />,      title: t('about.value2Title'), body: t('about.value2Body') },
+    { icon: <Lightbulb size={20} />,   title: t('about.value3Title'), body: t('about.value3Body') },
+    { icon: <Handshake size={20} />,   title: t('about.value4Title'), body: t('about.value4Body') },
+    { icon: <Smartphone size={20} />,  title: t('about.value5Title'), body: t('about.value5Body') },
+    { icon: <Moon size={20} />,        title: t('about.value6Title'), body: t('about.value6Body') },
   ];
 
   const SERVICES_LIST = [
-    { label: t('about.svc1'), href: '/car-recovery-dubai',     icon: '🚗' },
-    { label: t('about.svc2'), href: '/battery-service-dubai',  icon: '🔋' },
-    { label: t('about.svc3'), href: '/flat-tyre-repair-dubai', icon: '🔧' },
-    { label: t('about.svc4'), href: '/fuel-delivery-dubai',    icon: '⛽' },
+    { label: t('about.svc1'), href: '/car-recovery-dubai',     icon: <Car size={17} /> },
+    { label: t('about.svc2'), href: '/battery-service-dubai',  icon: <Battery size={17} /> },
+    { label: t('about.svc3'), href: '/flat-tyre-repair-dubai', icon: <Wrench size={17} /> },
+    { label: t('about.svc4'), href: '/fuel-delivery-dubai',    icon: <Fuel size={17} /> },
   ];
 
   const HERO_STATS = [
@@ -230,6 +426,14 @@ export default function About({ isSection = false }) {
     { stat: '50K+',   label: t('about.statDriversHelped') },
     { stat: '4.9★',   label: t('about.statReviews') },
     { stat: 'RTA',    label: t('about.statLicensed') },
+  ];
+
+  // Mobile photo strip images
+  const MOBILE_PHOTOS = [
+    { src: 'new/Recovery_Van.webp',   alt: 'Tareeqk recovery van Dubai' },
+    { src: 'new/battery_service.webp', alt: 'Battery boost service Dubai' },
+    { src: 'new/tyre_repair.webp',    alt: 'Flat tyre repair Dubai' },
+    { src: 'new/towing_truck.webp',   alt: 'Towing truck Dubai' },
   ];
 
   return (
@@ -243,7 +447,7 @@ export default function About({ isSection = false }) {
       <LocalBusinessSchema />
 
       {/* ══════════════════════════════════════════════════════════════════
-          HERO
+          HERO — landscape image desktop, portrait image mobile
       ══════════════════════════════════════════════════════════════════ */}
       {!isSection && (
         <section
@@ -255,8 +459,9 @@ export default function About({ isSection = false }) {
             alignItems: 'center',
           }}
         >
-          {/* Hero image */}
+          {/* Desktop hero image */}
           <div
+            className="abt-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
               backgroundImage: 'url("about_hero.png")',
@@ -265,8 +470,19 @@ export default function About({ isSection = false }) {
               backgroundRepeat: 'no-repeat',
             }}
           />
+          {/* Mobile hero image (portrait / square crop) */}
+          <div
+            className="abt-hero-img-mobile"
+            style={{
+              position: 'absolute', inset: 0, zIndex: 0,
+              backgroundImage: 'url("about_hero_mobile.png")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 30%',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
 
-          {/* Overlay — adapts direction for RTL */}
+          {/* Overlay */}
           <div
             style={{
               position: 'absolute', inset: 0, zIndex: 1,
@@ -282,7 +498,8 @@ export default function About({ isSection = false }) {
           <div
             className="abt-hero-accent"
             style={{
-              position: 'absolute', top: 0, left: isRTL ? 'auto' : 0, right: isRTL ? 0 : 'auto',
+              position: 'absolute', top: 0,
+              left: isRTL ? 'auto' : 0, right: isRTL ? 0 : 'auto',
               width: '32%', height: '3px', zIndex: 2,
               background: isRTL
                 ? 'linear-gradient(270deg, var(--primary-yellow), transparent)'
@@ -359,9 +576,12 @@ export default function About({ isSection = false }) {
                     textDecoration: 'none',
                     fontSize: '14px',
                     letterSpacing: '0.01em',
-                    display: 'inline-block',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
                   }}
                 >
+                  <Phone size={16} />
                   {t('about.heroCta')}
                 </a>
                 <a
@@ -376,14 +596,17 @@ export default function About({ isSection = false }) {
                     fontWeight: 500,
                     textDecoration: 'none',
                     fontSize: '14px',
-                    display: 'inline-block',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
                   }}
                 >
-                  {t('about.heroInquire')} {isRTL ? '←' : '→'}
+                  {t('about.heroInquire')}
+                  {isRTL ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
                 </a>
               </div>
 
-              {/* Stat strip */}
+              {/* Desktop stat strip */}
               <div
                 className="abt-reveal abt-hero-stats"
                 data-delay="320"
@@ -413,17 +636,27 @@ export default function About({ isSection = false }) {
                   </div>
                 ))}
               </div>
+
+              {/* Mobile stat strip (yellow card) */}
+              <div className="abt-mobile-stats">
+                {HERO_STATS.map((m, i) => (
+                  <div key={i}>
+                    <div className="abt-mobile-stat-num">{m.stat}</div>
+                    <div className="abt-mobile-stat-label">{m.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
       )}
 
       {/* ══════════════════════════════════════════════════════════════════
-          STORY — asymmetric two-column
+          STORY — asymmetric two-column + mobile photo strip
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="abt-story-section"
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+        style={{ padding: '80px 0 72px', overflow: 'hidden', backgroundColor: '#fff' }}
       >
         <div className="abt-inner" style={inner}>
           <div
@@ -435,7 +668,7 @@ export default function About({ isSection = false }) {
               alignItems: 'center',
             }}
           >
-            {/* Text column — swaps order in RTL */}
+            {/* Text column */}
             <div
               className="abt-reveal abt-left"
               style={{ order: isRTL ? 2 : 1 }}
@@ -467,9 +700,28 @@ export default function About({ isSection = false }) {
                     );
                   })}
                 </p>
-                <p className="abt-body-text" style={{ color: '#555', lineHeight: 1.8, fontSize: '15px' }}>
-                  {t('about.originsP2')}
-                </p>
+                {/* Read more / less on mobile */}
+                <div>
+                  <p
+                    className="abt-body-text"
+                    style={{
+                      color: '#555', lineHeight: 1.8, fontSize: '15px',
+                      overflow: storyExpanded ? 'visible' : 'hidden',
+                      maxHeight: storyExpanded ? 'none' : '0',
+                      transition: 'max-height 0.4s ease',
+                    }}
+                  >
+                    {t('about.originsP2')}
+                  </p>
+                  <button
+                    className="abt-read-more-btn"
+                    onClick={() => setStoryExpanded(v => !v)}
+                    aria-expanded={storyExpanded}
+                  >
+                    {storyExpanded ? t('about.readLess') || 'Read less' : t('about.readMore') || 'Read more'}
+                    {storyExpanded ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
+                  </button>
+                </div>
               </div>
 
               {/* Stat row */}
@@ -489,16 +741,10 @@ export default function About({ isSection = false }) {
                   { n: '4.9★', l: t('about.statRating') },
                 ].map((item, i) => (
                   <div key={i}>
-                    <div
-                      className="abt-stat-num"
-                      style={{ fontSize: '22px', fontWeight: 800, color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1 }}
-                    >
+                    <div className="abt-stat-num" style={{ fontSize: '22px', fontWeight: 800, color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1 }}>
                       {item.n}
                     </div>
-                    <div
-                      className="abt-stat-label"
-                      style={{ fontSize: '10px', color: '#9b9b9b', marginTop: '3px', letterSpacing: '0.08em', textTransform: 'uppercase' }}
-                    >
+                    <div className="abt-stat-label" style={{ fontSize: '10px', color: '#9b9b9b', marginTop: '3px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
                       {item.l}
                     </div>
                   </div>
@@ -506,12 +752,11 @@ export default function About({ isSection = false }) {
               </div>
             </div>
 
-            {/* Image column */}
+            {/* Image column — hidden on mobile; replaced by strip below */}
             <div
-              className="abt-reveal abt-right"
+              className="abt-reveal abt-right abt-story-img-col"
               style={{ position: 'relative', order: isRTL ? 1 : 2 }}
             >
-              {/* Decorative offset border frame */}
               <div
                 className="abt-frame-border"
                 style={{
@@ -568,10 +813,11 @@ export default function About({ isSection = false }) {
                     width: '38px', height: '38px', borderRadius: '10px',
                     background: '#fef9ec',
                     display: 'flex', alignItems: 'center',
-                    justifyContent: 'center', fontSize: '18px', flexShrink: 0,
+                    justifyContent: 'center', flexShrink: 0,
+                    color: 'var(--primary-yellow)',
                   }}
                 >
-                  🏆
+                  <Trophy size={20} />
                 </div>
                 <div>
                   <div className="abt-float-badge-title" style={{ fontWeight: 700, fontSize: '13px', color: '#111' }}>
@@ -584,18 +830,31 @@ export default function About({ isSection = false }) {
               </div>
             </div>
           </div>
+
+          {/* Mobile photo strip */}
+          <div className="abt-photo-strip" style={{ marginTop: '28px' }}>
+            {MOBILE_PHOTOS.map((p, i) => (
+              <img
+                key={i}
+                src={p.src}
+                alt={p.alt}
+                className="abt-photo-strip-img"
+                loading="lazy"
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
-          VALUES — 3-column card grid
+          VALUES — 3-column card grid (desktop) / swiper (mobile)
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="abt-values-section"
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
+        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
       >
         <div className="abt-inner" style={inner}>
-          <div className="abt-reveal" style={{ marginBottom: '56px' }}>
+          <div className="abt-reveal" style={{ marginBottom: '40px' }}>
             <span style={eyebrow}>{t('about.valuesTag')}</span>
             <h2
               className="abt-h2"
@@ -612,6 +871,7 @@ export default function About({ isSection = false }) {
             </h2>
           </div>
 
+          {/* Desktop grid */}
           <div
             className="abt-values-grid"
             style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}
@@ -635,10 +895,10 @@ export default function About({ isSection = false }) {
                     width: '42px', height: '42px',
                     borderRadius: '10px',
                     background: '#fef9ec',
-                    display: 'flex', alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '20px', marginBottom: '18px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '18px',
                     transition: 'background 0.25s ease',
+                    color: 'var(--primary-yellow)',
                   }}
                 >
                   {v.icon}
@@ -652,16 +912,20 @@ export default function About({ isSection = false }) {
               </div>
             ))}
           </div>
+
+          {/* Mobile swiper */}
+          <div className="abt-values-swiper">
+            <ValuesSwiper items={VALUES} />
+          </div>
         </div>
       </section>
 
-     
 
       {/* ══════════════════════════════════════════════════════════════════
           COVERAGE — dark section
       ══════════════════════════════════════════════════════════════════ */}
       <section
-        style={{ padding: '96px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="abt-inner" style={inner}>
           <div
@@ -716,7 +980,7 @@ export default function About({ isSection = false }) {
                       border: '1px solid rgba(255,255,255,0.07)',
                     }}
                   >
-                    <span style={{ fontSize: '18px' }}>{svc.icon}</span>
+                    <span style={{ color: 'var(--primary-yellow)', flexShrink: 0 }}>{svc.icon}</span>
                     <span style={{ fontWeight: 600, fontSize: '13px' }}>{svc.label}</span>
                   </a>
                 ))}
@@ -745,13 +1009,15 @@ export default function About({ isSection = false }) {
                 <a
                   href="tel:+971"
                   style={{
-                    display: 'block', padding: '14px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '14px',
                     background: '#000', color: '#fff',
                     textAlign: 'center', borderRadius: '9px',
                     fontWeight: 700, textDecoration: 'none',
                     fontSize: '14px', marginBottom: '8px',
                   }}
                 >
+                  <Phone size={16} />
                   {t('about.callBtn')}
                 </a>
                 <a
@@ -759,7 +1025,8 @@ export default function About({ isSection = false }) {
                   target="_blank"
                   rel="noreferrer"
                   style={{
-                    display: 'block', padding: '12px',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                    padding: '12px',
                     background: 'rgba(0,0,0,0.10)', color: '#000',
                     textAlign: 'center', borderRadius: '9px',
                     fontWeight: 600, textDecoration: 'none',
@@ -767,7 +1034,8 @@ export default function About({ isSection = false }) {
                     border: '1px solid rgba(0,0,0,0.10)',
                   }}
                 >
-                  💬 {t('about.whatsappBtn')}
+                  <MessageCircle size={16} />
+                  {t('about.whatsappBtn')}
                 </a>
               </div>
             </div>
@@ -789,36 +1057,17 @@ export default function About({ isSection = false }) {
               position: 'relative',
               overflow: 'hidden',
               borderRadius: '20px',
-              padding: '72px 48px',
+              padding: 'clamp(40px, 8vw, 72px) clamp(24px, 6vw, 48px)',
               textAlign: 'center',
               background: 'var(--primary-dark-bg)',
             }}
           >
             {/* Gold glow */}
-            <div
-              style={{
-                position: 'absolute', inset: 0, zIndex: 0,
-                background: 'radial-gradient(ellipse 55% 60% at 50% 110%, rgba(247,178,5,0.2) 0%, transparent 70%)',
-              }}
-            />
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(ellipse 55% 60% at 50% 110%, rgba(247,178,5,0.2) 0%, transparent 70%)' }} />
             {/* Grid texture */}
-            <div
-              style={{
-                position: 'absolute', inset: 0, zIndex: 0,
-                backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)',
-                backgroundSize: '52px 52px',
-              }}
-            />
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundImage: 'linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px)', backgroundSize: '52px 52px' }} />
             {/* Watermark */}
-            <div
-              style={{
-                position: 'absolute', inset: 0, zIndex: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 'clamp(60px, 12vw, 150px)', fontWeight: 800,
-                color: 'rgba(255,255,255,0.022)',
-                letterSpacing: '-0.05em', userSelect: 'none',
-              }}
-            >
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(60px, 12vw, 150px)', fontWeight: 800, color: 'rgba(255,255,255,0.022)', letterSpacing: '-0.05em', userSelect: 'none' }}>
               TAREEQK
             </div>
 
@@ -839,15 +1088,7 @@ export default function About({ isSection = false }) {
                 {t('about.ctaTitle')}{' '}
                 <span style={{ color: 'var(--primary-yellow)' }}>{t('about.ctaHighlight')}</span>
               </h2>
-              <p
-                style={{
-                  color: 'rgba(255,255,255,0.45)',
-                  fontSize: '15px',
-                  maxWidth: '480px',
-                  margin: '0 auto 36px',
-                  lineHeight: 1.7,
-                }}
-              >
+              <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '15px', maxWidth: '480px', margin: '0 auto 36px', lineHeight: 1.7 }}>
                 {t('about.ctaSubtitle')}
               </p>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -858,9 +1099,10 @@ export default function About({ isSection = false }) {
                     background: 'var(--primary-yellow)', color: '#000',
                     padding: '15px 38px', borderRadius: '8px',
                     fontWeight: 700, textDecoration: 'none', fontSize: '14px',
-                    letterSpacing: '0.01em', display: 'inline-block',
+                    letterSpacing: '0.01em', display: 'inline-flex', alignItems: 'center', gap: '8px',
                   }}
                 >
+                  <Phone size={16} />
                   {t('about.callNow')}
                 </a>
                 <a
@@ -876,12 +1118,15 @@ export default function About({ isSection = false }) {
                     fontWeight: 600,
                     textDecoration: 'none',
                     fontSize: '14px',
-                    display: 'inline-block',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
                     transition: 'background 0.2s ease, color 0.2s ease',
                   }}
                   onMouseEnter={e => { e.currentTarget.style.background = '#25D366'; e.currentTarget.style.color = '#fff'; }}
                   onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,211,102,0.12)'; e.currentTarget.style.color = '#4ade80'; }}
                 >
+                  <MessageCircle size={16} />
                   {t('about.whatsapp')}
                 </a>
               </div>
