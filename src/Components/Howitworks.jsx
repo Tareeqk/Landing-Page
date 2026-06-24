@@ -1,300 +1,493 @@
-import { useEffect } from "react";
+
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function HowItWorks() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
+  const stepsRef = useRef(null);
+  const [activeStep, setActiveStep] = useState(0);
+  const autoScrollRef = useRef(null);
+  const isPausedRef = useRef(false);
+  const [perkOffset, setPerkOffset] = useState(0);
+  const [perkFade, setPerkFade] = useState(true);
+
+  /* ── Auto-cycle perks 2 at a time (mobile only) ── */
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (window.innerWidth > 680) return;
+      // fade out
+      setPerkFade(false);
+      setTimeout(() => {
+        setPerkOffset((prev) => (prev + 2));
+        // fade in
+        setPerkFade(true);
+      }, 350);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  /* ── Auto-scroll steps carousel (mobile only) ── */
+  useEffect(() => {
+    const el = stepsRef.current;
+    if (!el) return;
+
+    const onScroll = () => {
+      const cards = el.querySelectorAll(".hiw-step");
+      let closest = 0, minDist = Infinity;
+      cards.forEach((c, i) => {
+        const dist = Math.abs(c.offsetLeft - el.scrollLeft);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      setActiveStep(closest);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+
+    const onTouchStart = () => { isPausedRef.current = true; };
+    const onTouchEnd = () => {
+      setTimeout(() => { isPausedRef.current = false; }, 2000);
+    };
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+
+    const startAutoScroll = () => {
+      if (window.innerWidth > 680) return;
+      clearInterval(autoScrollRef.current);
+      autoScrollRef.current = setInterval(() => {
+        if (isPausedRef.current) return;
+        const cards = el.querySelectorAll(".hiw-step");
+        if (!cards.length) return;
+        const cardWidth = cards[0].offsetWidth + 14;
+        const maxScroll = el.scrollWidth - el.clientWidth;
+        const nextScroll = el.scrollLeft + cardWidth;
+        if (el.scrollLeft >= maxScroll - 4) {
+          el.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          el.scrollTo({ left: nextScroll, behavior: "smooth" });
+        }
+      }, 2800);
+    };
+
+    startAutoScroll();
+    window.addEventListener("resize", startAutoScroll);
+
+    return () => {
+      el.removeEventListener("scroll", onScroll);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("resize", startAutoScroll);
+      clearInterval(autoScrollRef.current);
+    };
+  }, []);
 
   useEffect(() => {
-    if (document.getElementById("hiw-v1-styles")) return;
+    const existing = document.getElementById("hiw-v5-styles");
+    if (existing) existing.remove();
+
     const style = document.createElement("style");
-    style.id = "hiw-v1-styles";
+    style.id = "hiw-v5-styles";
     style.textContent = `
       .hiw-section {
         background: #0b0b0e;
-        padding: 90px 0 80px;
+        padding: 80px 0;
         overflow: hidden;
-        position: relative;
       }
-
       .hiw-container {
-        max-width: 1260px;
+        max-width: 1280px;
         margin: 0 auto;
-        padding: 0 32px;
+        padding: 0 40px;
+      }
+      .hiw-layout {
         display: grid;
-        grid-template-columns: 1.05fr 0.95fr;
-        gap: 40px;
-        align-items: center;
+        grid-template-columns: 300px 1fr;
+        gap: 48px;
+        align-items: start;
       }
-      @media (max-width: 980px) {
-        .hiw-container { grid-template-columns: 1fr; }
-      }
-
-      .hiw-left { min-width: 0; }
-
-      .hiw-eyebrow {
+      .hiw-sidebar {
+        position: sticky;
+        top: 100px;
         display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      .hiw-eyebrow {
+        display: inline-flex;
         align-items: center;
-        justify-content: flex-start;
-        gap: 12px;
-        font-size: 12px;
+        gap: 10px;
+        font-size: 11px;
         font-weight: 800;
-        letter-spacing: 3px;
+        letter-spacing: 3.5px;
         text-transform: uppercase;
         color: #d4a017;
-        margin-bottom: 18px;
+        margin-bottom: 16px;
       }
-      [dir="ltr"] .hiw-eyebrow::before {
+      .hiw-eyebrow::before,
+      .hiw-eyebrow::after {
         content: "";
-        width: 36px;
-        height: 1.5px;
-        background: linear-gradient(to right, transparent, #d4a017);
         display: block;
+        width: 26px;
+        height: 1px;
+        background: #d4a017;
+        opacity: 0.65;
+        flex-shrink: 0;
       }
-      [dir="ltr"] .hiw-eyebrow::after {
-        content: "";
-        width: 36px;
-        height: 1.5px;
-        background: linear-gradient(to left, transparent, #d4a017);
-        display: block;
-      }
-      [dir="rtl"] .hiw-eyebrow::before {
-        content: "";
-        width: 36px;
-        height: 1.5px;
-        background: linear-gradient(to left, transparent, #d4a017);
-        display: block;
-      }
-      [dir="rtl"] .hiw-eyebrow::after {
-        content: "";
-        width: 36px;
-        height: 1.5px;
-        background: linear-gradient(to right, transparent, #d4a017);
-        display: block;
-      }
-
       .hiw-title {
-        font-size: 48px;
+        font-size: 40px;
         font-weight: 900;
-        line-height: 1.1;
+        line-height: 1.08;
         color: #fff;
-        margin: 0 0 16px;
         letter-spacing: -0.5px;
+        margin: 0 0 12px;
       }
-      @media (max-width: 640px) { .hiw-title { font-size: 34px; } }
-
       .hiw-desc {
-        font-size: 15.5px;
+        font-size: 14.5px;
         line-height: 1.8;
-        color: #a3a3a8;
-        max-width: 480px;
-        margin: 0 0 44px;
-      }
-
-      .hiw-steps {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        margin-bottom: 32px;
-        position: relative;
-      }
-      @media (max-width: 860px) {
-        .hiw-steps { grid-template-columns: repeat(2, 1fr); }
-      }
-      @media (max-width: 480px) {
-        .hiw-steps { grid-template-columns: 1fr; }
-      }
-
-      .hiw-step {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 18px;
-        padding: 26px 18px 22px;
-        position: relative;
-        text-align: center;
-      }
-
-      .hiw-step-num {
-        position: absolute;
-        top: -14px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #15151a;
-        border: 1px solid rgba(212,160,23,0.5);
-        color: #d4a017;
-        font-size: 12px;
-        font-weight: 800;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .hiw-step-icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 50%;
-        background: rgba(212,160,23,0.08);
-        border: 1px solid rgba(212,160,23,0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 10px auto 18px;
-      }
-      .hiw-step-icon img {
-        width: 30px;
-        height: 30px;
-        object-fit: contain;
-      }
-
-      .hiw-step-title {
-        font-size: 16px;
-        font-weight: 800;
-        color: #fff;
-        margin: 0 0 8px;
-        line-height: 1.3;
-      }
-
-      .hiw-step-desc {
-        font-size: 12.5px;
-        line-height: 1.6;
-        color: #9b9ba2;
+        color: #7e7e88;
         margin: 0;
       }
 
+      /* ── PERKS: column on desktop ── */
       .hiw-perks {
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 16px;
-        padding: 20px 16px;
-        justify-content: space-between;
-      }
-
-      .hiw-perk {
-        display: flex;
         flex-direction: column;
-        align-items: center;
         gap: 8px;
-        flex: 1;
-        min-width: 88px;
       }
-
-      .hiw-perk-icon {
-        width: 38px;
-        height: 38px;
-        object-fit: contain;
+      .hiw-perk {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 999px;
+        padding: 10px 18px 10px 10px;
+        width: fit-content;
+        transition: border-color 0.2s, background 0.2s;
       }
-
-      .hiw-perk-label {
-        font-size: 12.5px;
-        color: #d6d6da;
-        text-align: center;
-        font-weight: 600;
-        line-height: 1.3;
+      .hiw-perk:hover {
+        border-color: rgba(212,160,23,0.35);
+        background: rgba(255,255,255,0.06);
       }
-
-      .hiw-right {
-        position: relative;
+      .hiw-perk-icon-wrap {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(212,160,23,0.08);
+        border: 1px solid rgba(212,160,23,0.2);
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 320px;
+        flex-shrink: 0;
+      }
+      .hiw-perk-icon { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; display: block; }
+      .hiw-perk-label { font-size: 13px; font-weight: 700; color: #d0d0d6; white-space: nowrap; }
+
+      /* mobile perk cycling container */
+      .hiw-perks-mobile {
+        display: none;
+      }
+      .hiw-perks-mobile-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        transition: opacity 0.35s ease, transform 0.35s ease;
+      }
+      .hiw-perks-mobile-inner.hiw-perks-hidden {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      .hiw-perks-mobile-inner.hiw-perks-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      /* mobile pill fills its cell */
+      .hiw-perks-mobile .hiw-perk {
+        width: 100%;
+        padding: 9px 12px 9px 9px;
+      }
+      .hiw-perks-mobile .hiw-perk-icon-wrap { width: 34px; height: 34px; }
+      .hiw-perks-mobile .hiw-perk-icon { width: 34px; height: 34px; }
+      .hiw-perks-mobile .hiw-perk-label { font-size: 12px; }
+
+      /* ── RIGHT ── */
+      .hiw-right {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 20px;
+        align-items: stretch;
+      }
+      .hiw-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 16px;
+      }
+      .hiw-step {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 28px 18px 22px;
+        position: relative;
+        transition: transform 0.25s ease, border-color 0.25s ease;
+        cursor: default;
+        display: flex;
+        flex-direction: column;
+      }
+      .hiw-step:hover {
+        transform: translateY(-4px);
+        border-color: rgba(212,160,23,0.3);
+      }
+      .hiw-step-num {
+        position: absolute;
+        top: -13px;
+        left: 18px;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: #111114;
+        border: 1px solid rgba(212,160,23,0.5);
+        color: #d4a017;
+        font-size: 11px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      [dir="rtl"] .hiw-step-num { left: auto; right: 18px; }
+      .hiw-step-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: rgba(212,160,23,0.07);
+        border: 1px solid rgba(212,160,23,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+        flex-shrink: 0;
+      }
+      .hiw-step-icon img { width: 24px; height: 24px; object-fit: contain; }
+      .hiw-step-title {
+        font-size: 14px;
+        font-weight: 800;
+        color: #fff;
+        line-height: 1.3;
+        margin: 0 0 7px;
+      }
+      .hiw-step-desc {
+        font-size: 12px;
+        line-height: 1.6;
+        color: #7e7e88;
+        margin: 0;
       }
 
-      .hiw-mockup {
-        max-width: 100%;
+      /* ── IMAGE COL ── */
+      .hiw-image-col { display: flex; align-items: stretch; }
+      .hiw-mockup-wrap {
         width: 100%;
-        height: auto;
-        object-fit: contain;
+        border-radius: 22px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      }
+      .hiw-mockup {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
       }
       [dir="rtl"] .hiw-mockup { transform: scaleX(-1); }
 
-      @media (max-width: 980px) {
-        .hiw-right { order: -1; max-width: 320px; margin: 0 auto 24px; }
+      .hiw-dots { display: none; }
+
+      /* ════════════════════
+         TABLET  ≤ 1080px
+      ════════════════════ */
+      @media (max-width: 1080px) {
+        .hiw-layout { grid-template-columns: 1fr; gap: 36px; }
+        .hiw-sidebar {
+          position: relative;
+          top: auto;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          align-items: start;
+        }
+        .hiw-perks { flex-direction: row; flex-wrap: wrap; }
+        .hiw-title { font-size: 36px; }
+        .hiw-right { grid-template-columns: 1fr 240px; }
+      }
+
+      /* ════════════════════
+         MOBILE  ≤ 680px
+      ════════════════════ */
+      @media (max-width: 680px) {
+        .hiw-section { padding: 56px 0 52px; }
+        .hiw-container { padding: 0 18px; }
+        .hiw-sidebar { grid-template-columns: 1fr; gap: 16px; }
+        .hiw-title { font-size: 30px; }
+        .hiw-desc { font-size: 14px; }
+
+        /* hide desktop perks, show mobile cycling perks */
+        .hiw-perks { display: none; }
+        .hiw-perks-mobile { display: block; }
+
+        .hiw-right { grid-template-columns: 1fr; gap: 20px; }
+        .hiw-image-col { order: -1; justify-content: center; }
+        .hiw-mockup-wrap {
+          width: 200px;
+          height: 380px;
+          border-radius: 20px;
+          margin: 0 auto;
+          flex-shrink: 0;
+        }
+
+        /* auto-scroll carousel */
+        .hiw-cards {
+          display: flex;
+          flex-direction: row;
+          overflow-x: auto;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+          gap: 14px;
+          padding: 16px 18px 10px;
+          margin: 0 -18px;
+          scrollbar-width: none;
+          grid-template-columns: unset;
+          grid-template-rows: unset;
+        }
+        .hiw-cards::-webkit-scrollbar { display: none; }
+        .hiw-step {
+          min-width: 72vw;
+          max-width: 72vw;
+          flex-shrink: 0;
+          scroll-snap-align: start;
+        }
+
+        .hiw-dots {
+          display: flex;
+          justify-content: center;
+          gap: 6px;
+          margin-top: 10px;
+        }
+        .hiw-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.18);
+          transition: background 0.25s, transform 0.25s;
+        }
+        .hiw-dot.hiw-dot--active {
+          background: #d4a017;
+          transform: scale(1.4);
+        }
       }
     `;
     document.head.appendChild(style);
+    return () => {
+      const el = document.getElementById("hiw-v5-styles");
+      if (el) el.remove();
+    };
   }, []);
 
   const steps = [
-    {
-      num: "01",
-      iconSrc: "/icons/icon_sample.png",
-      title: t("howItWorks.step1Title"),
-      desc: t("howItWorks.step1Desc"),
-    },
-    {
-      num: "02",
-      iconSrc: "/icons/icon_sample.png",
-      title: t("howItWorks.step2Title"),
-      desc: t("howItWorks.step2Desc"),
-    },
-    {
-      num: "03",
-      iconSrc: "/icons/icon_sample.png",
-      title: t("howItWorks.step3Title"),
-      desc: t("howItWorks.step3Desc"),
-    },
-    {
-      num: "04",
-      iconSrc: "/icons/icon_sample.png",
-      title: t("howItWorks.step4Title"),
-      desc: t("howItWorks.step4Desc"),
-    },
+    { num: "01", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step1Title"), desc: t("howItWorks.step1Desc") },
+    { num: "02", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step2Title"), desc: t("howItWorks.step2Desc") },
+    { num: "03", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step3Title"), desc: t("howItWorks.step3Desc") },
+    { num: "04", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step4Title"), desc: t("howItWorks.step4Desc") },
   ];
 
-  const perks = [
-    { iconSrc: "/icons/icon_sample.png", label: t("howItWorks.perkVerified") },
-    { iconSrc: "/icons/icon_sample.png", label: t("howItWorks.perkFast") },
-    { iconSrc: "/icons/icon_sample.png", label: t("howItWorks.perkSecure") },
-    { iconSrc: "/icons/icon_sample.png", label: t("howItWorks.perkSupport") },
-    { iconSrc: "/icons/icon_sample.png", label: t("howItWorks.perkRated") },
+   const perks = [
+    { iconSrc: "/icons/verified.png", label: t("howItWorks.perkVerified") },
+    { iconSrc: "/icons/fast_response.png", label: t("howItWorks.perkFast") },
+    { iconSrc: "/icons/secure_payments.png", label: t("howItWorks.perkSecure") },
+    { iconSrc: "/icons/all_service.png", label: t("howItWorks.perkSupport") },
+    { iconSrc: "/icons/TopRated.png", label: t("howItWorks.perkRated") },
+  ];
+
+  // Always show exactly 2 perks, cycling through with wrap-around
+  const visiblePerks = [
+    perks[perkOffset % perks.length],
+    perks[(perkOffset + 1) % perks.length],
   ];
 
   return (
     <section className="hiw-section" dir={isRTL ? "rtl" : "ltr"}>
       <div className="hiw-container">
-        <div className="hiw-left">
-          <div className="hiw-eyebrow">{t("howItWorks.subtitle")}</div>
-          <h2 className="hiw-title">{t("howItWorks.title")}</h2>
-          <p className="hiw-desc">{t("howItWorks.description")}</p>
+        <div className="hiw-layout">
 
-          <div className="hiw-steps">
-            {steps.map((step) => (
-              <div className="hiw-step" key={step.num}>
-                <span className="hiw-step-num">{step.num}</span>
-                <div className="hiw-step-icon">
-                  <img src={step.iconSrc} alt="" aria-hidden="true" />
+          {/* ── SIDEBAR ── */}
+          <div className="hiw-sidebar">
+            <div>
+              <div className="hiw-eyebrow">{t("howItWorks.subtitle")}</div>
+              <h2 className="hiw-title">{t("howItWorks.title")}</h2>
+              <p className="hiw-desc">{t("howItWorks.description")}</p>
+            </div>
+
+            {/* Desktop perks — all visible, stacked */}
+            <div className="hiw-perks">
+              {perks.map((p) => (
+                <div className="hiw-perk" key={p.label}>
+                  <div className="hiw-perk-icon-wrap">
+                    <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
+                  </div>
+                  <span className="hiw-perk-label">{p.label}</span>
                 </div>
-                <h3 className="hiw-step-title">{step.title}</h3>
-                <p className="hiw-step-desc">{step.desc}</p>
+              ))}
+            </div>
+
+            {/* Mobile perks — 2 at a time, cycling */}
+            <div className="hiw-perks-mobile">
+              <div className={`hiw-perks-mobile-inner ${perkFade ? "hiw-perks-visible" : "hiw-perks-hidden"}`}>
+                {visiblePerks.map((p, i) => (
+                  <div className="hiw-perk" key={`${p.label}-${i}`}>
+                    <div className="hiw-perk-icon-wrap">
+                      <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
+                    </div>
+                    <span className="hiw-perk-label">{p.label}</span>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
 
-          <div className="hiw-perks">
-            {perks.map((perk) => (
-              <div className="hiw-perk" key={perk.label}>
-                <img className="hiw-perk-icon" src={perk.iconSrc} alt="" aria-hidden="true" />
-                <span className="hiw-perk-label">{perk.label}</span>
+          {/* ── RIGHT: 2×2 cards + portrait image ── */}
+          <div className="hiw-right">
+
+            <div className="hiw-cards" ref={stepsRef}>
+              {steps.map((step) => (
+                <div className="hiw-step" key={step.num}>
+                  <span className="hiw-step-num">{step.num}</span>
+                  <div className="hiw-step-icon">
+                    <img src={step.iconSrc} alt="" aria-hidden="true" />
+                  </div>
+                  <h3 className="hiw-step-title">{step.title}</h3>
+                  <p className="hiw-step-desc">{step.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="hiw-image-col">
+              <div className="hiw-mockup-wrap">
+                <img
+                  className="hiw-mockup"
+                  src="/your-portrait-image.png"
+                  alt={t("howItWorks.mockupImageAlt")}
+                />
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
 
-        <div className="hiw-right">
-          <img
-            className="hiw-mockup"
-            src="/towing.jpg"
-            alt={t("howItWorks.mockupImageAlt")}
-          />
+        {/* Dot indicators — mobile only */}
+        <div className="hiw-dots" aria-hidden="true">
+          {steps.map((_, i) => (
+            <span key={i} className={`hiw-dot${i === activeStep ? " hiw-dot--active" : ""}`} />
+          ))}
         </div>
+
       </div>
     </section>
   );
 }
+

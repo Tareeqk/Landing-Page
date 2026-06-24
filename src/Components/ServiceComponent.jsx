@@ -431,23 +431,23 @@ body.dark .s3-card-title {
   const stats = [
     {
       iconSrc: "/icons/support.png",
-      value: "24/7",
-      label: t("offer.stat247Label"),
+      value: t("offer.appBookingTop"),
+      label: t("offer.appBooking"),
     },
     {
       iconSrc: "/icons/clock.png",
-      value: "20m",
-      label: t("offer.statResponseLabel"),
+      value: t("offer.appServiceTop"),
+      label: t("offer.appService"),
     },
     {
       iconSrc: "/icons/check.png",
-      value: "10K+",
-      label: t("offer.statJobsLabel"),
+      value: t("offer.appTrackingTop"),
+      label: t("offer.appTracking"),
     },
     {
       iconSrc: "/icons/location_icon.png",
-      value: t("offer.statCoverageValue"),
-      label: t("offer.statCoverageLabel"),
+      value: t("offer.appRecoveryTop"),
+      label: t("offer.appRecovery"),
     },
   ];
 
@@ -504,7 +504,7 @@ body.dark .s3-card-title {
         <div className="s3-top">
           <div className="s3-hero-text">
             <div className="s3-eyebrow">{t("offer.subtitle")}</div>
-            <h2 className="s3-title">{t("offer.title")}</h2>
+            <h2 className="s3-title">{t("offer.title")}</h2> 
             <p className="s3-desc">{t("offer.description")}</p>
           </div>
           <div className="s3-hero-img-wrap">
@@ -515,6 +515,7 @@ body.dark .s3-card-title {
             />
           </div>
         </div>
+        <br/>
 
         {/* ── Stats ── */}
         <div className="s3-stats">

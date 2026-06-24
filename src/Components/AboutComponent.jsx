@@ -168,8 +168,8 @@ export default function AboutPreview() {
 
       /* ── Title — direct, no eyebrow tag, matches reference ── */
       .abt-preview-title {
-        font-size: 52px;
-        font-weight: 800;
+        font-size: 32px;
+        font-weight: 600;
         line-height: 1.12;
         color: #0a0a0a;
         margin: 0 0 22px;
@@ -195,53 +195,22 @@ export default function AboutPreview() {
         color: var(--dark-text-muted, #aaa) !important;
       }
 
-      /* ── Stat + photo cards row ──
+      /* ── Stat + photo cards row (scaled down) ──
          A big number anchors the claim, two photo cards back it up —
          mirrors the proof-point row from the reference design. */
       .abt-preview-proof {
         display: grid;
-        grid-template-columns: auto 1fr 1fr;
-        gap: 28px;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 18px;
         align-items: center;
-      }
-
-      .abt-preview-stat {
-        display: flex;
-        flex-direction: column;
-        min-width: 90px;
-      }
-
-      .abt-preview-stat-value {
-        font-size: 56px;
-        font-weight: 800;
-        color: #0a0a0a;
-        letter-spacing: -1px;
-        line-height: 1;
-        font-family: Georgia, "Times New Roman", serif;
-      }
-
-      body.dark .abt-preview-stat-value {
-        color: var(--dark-text-main, #f0f0f0) !important;
-      }
-
-      .abt-preview-stat-label {
-        font-size: 14px;
-        color: #6b6b6b;
-        margin-top: 10px;
-        line-height: 1.4;
-        max-width: 13ch;
-      }
-
-      body.dark .abt-preview-stat-label {
-        color: var(--dark-text-disabled, #aaa) !important;
       }
 
       .abt-preview-photocard {
         position: relative;
-        border-radius: 16px;
+        border-radius: 8px;
         overflow: hidden;
-        aspect-ratio: 1 / 1;
-        box-shadow: 0 12px 28px rgba(0,0,0,.10);
+        aspect-ratio: 1 / 0.8;
+        box-shadow: 0 8px 18px rgba(0,0,0,.10);
         background: #111; /* fallback so a transparent/light icon still reads dark */
       }
 
@@ -265,42 +234,77 @@ export default function AboutPreview() {
 
       .abt-preview-photocard-arrow {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 26px;
-        height: 26px;
+        top: 8px;
+        right: 8px;
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
         background: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 12px;
+        font-size: 10px;
         color: #0a0a0a;
         z-index: 1;
       }
-      [dir="rtl"] .abt-preview-photocard-arrow { right: auto; left: 10px; }
+      [dir="rtl"] .abt-preview-photocard-arrow { right: auto; left: 8px; }
 
       .abt-preview-photocard-label {
         position: absolute;
-        left: 14px;
-        right: 14px;
-        bottom: 12px;
+        left: 10px;
+        right: 10px;
+        bottom: 9px;
         z-index: 1;
         color: #fff;
-        font-size: 13px;
+        font-size: 11.5px;
         font-weight: 700;
-        line-height: 1.3;
+        line-height: 1.25;
         text-shadow: 0 1px 4px rgba(0,0,0,0.5);
       }
 
       @media (max-width: 700px) {
         .abt-preview-proof {
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 12px;
         }
-        .abt-preview-stat { grid-column: 1 / -1; flex-direction: row; align-items: baseline; gap: 14px; }
-        .abt-preview-stat-label { max-width: none; margin-top: 0; }
       }
+
+      /* ── Learn more button ── */
+      .abt-preview-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 28px;
+        padding: 13px 26px;
+        border-radius: var(--tk-radius-pill, 999px);
+        background: #0a0a0a;
+        color: #fff;
+        font-size: 14.5px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: transform .2s ease, background .2s ease;
+      }
+
+      .abt-preview-cta:hover {
+        background: var(--primary-yellow, #f5a623);
+        transform: translateX(3px);
+      }
+      [dir="rtl"] .abt-preview-cta:hover { transform: translateX(-3px); }
+
+      body.dark .abt-preview-cta {
+        background: var(--primary-yellow, #f5a623);
+        color: #0a0a0a;
+      }
+
+      .abt-preview-cta-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        line-height: 1;
+      }
+      [dir="rtl"] .abt-preview-cta-arrow { transform: scaleX(-1); }
 
       @media(max-width: 960px) {
         .abt-preview-grid {
@@ -438,9 +442,10 @@ export default function AboutPreview() {
             <p className="abt-preview-text">{t("aboutPreview.description")}</p>
 
             <div className="abt-preview-proof">
-              <div className="abt-preview-stat">
-                <span className="abt-preview-stat-value">20 min</span>
-                <span className="abt-preview-stat-label">{t("aboutPreview.response")}</span>
+              <div className="abt-preview-photocard">
+                <img src="/icons/clock.png" alt="" />
+                <span className="abt-preview-photocard-arrow">↗</span>
+                <span className="abt-preview-photocard-label">{t("aboutPreview.response")}</span>
               </div>
 
               <div className="abt-preview-photocard">
@@ -455,10 +460,13 @@ export default function AboutPreview() {
                 <span className="abt-preview-photocard-label">{t("aboutPreview.rating")}</span>
               </div>
             </div>
+
+            <button type="button" className="abt-preview-cta">
+              {t("aboutPreview.learnMore")}
+              <span className="abt-preview-cta-arrow">{isRTL ? "←" : "→"}</span>
+            </button>
           </div>
         </div>
-
-   
       </div>
     </section>
   );

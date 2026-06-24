@@ -229,7 +229,7 @@
     "downloadCta": "Download the App",
     "learnMore": "Learn more"
   },
-
+ 
   "about2": {
     "about": "Our Services",
     "title": "Best Roadside assistance in Dubai",
@@ -245,29 +245,34 @@
     "tag": "About Us",
     "title": "Your Trusted",
     "highlight": "Roadside Partner",
-    "description": "TAREEQK offers fast and professional car recovery and roadside assistance in Dubai through the application. Book instantly or schedule ahead with trained drivers ready to assist you anytime, anywhere.",
+    "description": "TAREEQK provides fast and reliable Car Recovery and roadside assistance across Dubai. Book instantly through the app and get professional help whenever you need it. Our services include car recovery, vehicle towing, battery jump start, flat tire repair, tire replacement and 24/7 emergency roadside assistance by trained professionals.",
     "response": "Avg Response Time",
     "drivers": "Drivers Helped",
     "rating": "Live Tracking",
     "button": "Learn More About Us",
     "badgeTitle": "Trusted Since 2019",
-    "badgeText": "Dubai's #1 recovery platform"
+    "badgeText": "Dubai's #1 recovery platform",
+    "time": "15 min",
+    "learnMore": "Learn More"
   },
   "offer": {
     "subtitle": "What We Offer",
-    "title": "Complete Roadside Solutions",
-    "description": "From car recovery to battery replacement, we provide all the roadside assistance you need — fast, reliable, and available 24/7 across Dubai and the UAE.From car recovery to battery replacement, we provide all the roadside assistance you need — fast, reliable, and available 24/7 across Dubai and the UAE.From car recovery to battery replacement, we provide all the roadside assistance you need — fast, reliable, and available 24/7 across Dubai and the UAE.",
+    "title": "Complete Vehicle Assistance Solutions",
+    "description": "TAREEQK provides fast,reliable and professional roadside assistance across Dubai through our easy-to-use app. Whether you need car recovery, vehicle towing, battery jump start, flat tire repair or emergency roadside assistance, our trained recovery partners are available 24/7. Book instantly, track your service in real time and get back on the road",
     "recovery": "Vehicle Recovery",
     "recoveryDescription": "Fast, professional vehicle recovery for all sizes — from compact cars to heavy trucks. We respond in under 20 minutes, day or night.",
     "battery": "Battery Service",
     "batteryDescription": "Dead battery? We replace, test, or jump-start your vehicle on-site, getting you back on the road without the hassle of a garage visit.",
     "tyre": "Tyre Assistance",
     "tyreDescription": "Flat tyre in the middle of nowhere? Our technicians come to you with the right tools and replacements, wherever you are in Dubai.",
-    "stat247Label": "Support",
-    "statResponseLabel": "Response Time",
-    "statJobsLabel": "Completed Jobs",
-    "statCoverageValue": "UAE",
-    "statCoverageLabel": "Nationwide Coverage",
+    "appBooking": "App Booking",
+    "appBookingTop": "Easy",
+    "appService": "Service Dispatch",
+    "appServiceTop": "Fast",
+    "appTracking": "Driver Tracking",
+    "appTrackingTop": "Real Time",
+    "appRecoveryTop": "Professional",
+    "appRecovery": "Recovery Team",
     "recovery3ton": "3 Ton Recovery",
     "recovery5ton": "5 Ton Recovery",
     "recovery10ton": "10 Ton Recovery",
@@ -462,7 +467,22 @@
     "perkSecure": "Secure Payments",
     "perkSupport": "24/7 Support",
     "perkRated": "Top Rated Service"
+  },
+  
+  "cji": {
+    "badge": "Meet Nasir",
+    "heading": "Smarter Roads Start Here",
+    "description": "Meet Nasir, your AI assistant for fast and reliable roadside services. From booking a recovery to tracking your driver, Nasir helps you get back on the road faster with real-time assistance.",
+    "features": {
+      "instantResponses": "Instant Responses",
+      "instantBooking": "Instant Booking",
+      "fastDispatch": "Fast Dispatch Support",
+      "liveTracking": "Live Tracking"
+    },
+    "videoBadge": "Watch Nasir in Action",
+    "videoTitle": "Meet Nasir"
   }
+
 
 
 }
