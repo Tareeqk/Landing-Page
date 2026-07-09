@@ -5,7 +5,7 @@ import Footer from "./../Components/Footer";
 import LandingPage from "./LandingPage";
 import AboutPreview from "../Components/AboutComponent";
 import ServiceComponent from "../Components/ServiceComponent";
-import HowItWorks from "../Components/HowItWorks";
+import HowItWorks from "../Components/Howitworks";
  
 import AboutAccordion from "../Components/AboutAccordion";
 // import HowItWorks from "./Service";
