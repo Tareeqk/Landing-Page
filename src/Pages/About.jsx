@@ -6,6 +6,7 @@ import {
   Zap, Trophy, Lightbulb, Handshake, Smartphone, Moon,
   Car, Battery, Wrench, Fuel, ChevronRight, ChevronLeft,
   Phone, MessageCircle, Star, Shield, Clock, MapPin,
+  Target, Eye, Heart, CheckCircle2,
 } from 'lucide-react';
 
 
@@ -20,7 +21,7 @@ function LocalBusinessSchema() {
     "url": "https://www.tareeqk.ae",
     "logo": "https://www.tareeqk.ae/new/logo.png",
     "image": "https://www.tareeqk.ae/new/Recovery_Van.webp",
-    "telephone": "+97180082773375",
+    "telephone": "+97142232269",
     "address": { "@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE" },
     "geo": { "@type": "GeoCoordinates", "latitude": "25.2048", "longitude": "55.2708" },
     "openingHours": "Mo-Sa 09:00-17:00",
@@ -58,6 +59,15 @@ function useAboutStyles() {
       @media (max-width: 640px) {
         .abt-hero-img-desktop { display: none; }
         .abt-hero-img-mobile  { display: block; }
+      }
+
+      /* ── Mission/Vision + Core Values responsive ── */
+      @media (max-width: 900px) {
+        .abt-mv-grid { grid-template-columns: 1fr !important; }
+        .abt-corevalues-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      }
+      @media (max-width: 480px) {
+        .abt-corevalues-grid { grid-template-columns: 1fr !important; }
       }
 
       /* ── Value cards ── */
@@ -411,7 +421,15 @@ export default function About({ isSection = false }) {
     { icon: <Lightbulb size={20} />,   title: t('about.value3Title'), body: t('about.value3Body') },
     { icon: <Handshake size={20} />,   title: t('about.value4Title'), body: t('about.value4Body') },
     { icon: <Smartphone size={20} />,  title: t('about.value5Title'), body: t('about.value5Body') },
-    { icon: <Moon size={20} />,        title: t('about.value6Title'), body: t('about.value6Body') },
+  
+  ];
+
+  const CORE_VALUES = [
+    { icon: <CheckCircle2 size={20} />, title: 'Reliability',    body: 'We deliver dependable assistance whenever our customers need us.' },
+    { icon: <Heart size={20} />,        title: 'Customer First', body: 'Every decision we make is focused on providing the best possible experience.' },
+    { icon: <Shield size={20} />,       title: 'Safety',         body: 'The safety of our customers, their vehicles, and our team is always our highest priority.' },
+    { icon: <Handshake size={20} />,    title: 'Integrity',      body: 'We believe in honest communication, transparent pricing, and dependable service.' },
+    { icon: <Star size={20} />,         title: 'Excellence',     body: 'We continuously improve our services to deliver quality, efficiency, and professionalism.' },
   ];
 
   const SERVICES_LIST = [
@@ -565,7 +583,7 @@ export default function About({ isSection = false }) {
                 style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '44px' }}
               >
                 <a
-                  href="tel:+97180082773375"
+                  href="tel:+97142232269"
                   className="abt-btn-cta getTow-btn"
                   style={{
                     background: 'var(--primary-yellow)',
@@ -606,8 +624,7 @@ export default function About({ isSection = false }) {
                 </a>
               </div>
 
-              {/* Desktop stat strip */}
-              <div
+              {/* <div
                 className="abt-reveal abt-hero-stats"
                 data-delay="320"
                 style={{
@@ -637,7 +654,7 @@ export default function About({ isSection = false }) {
                 ))}
               </div>
 
-              {/* Mobile stat strip (yellow card) */}
+      
               <div className="abt-mobile-stats">
                 {HERO_STATS.map((m, i) => (
                   <div key={i}>
@@ -645,7 +662,7 @@ export default function About({ isSection = false }) {
                     <div className="abt-mobile-stat-label">{m.label}</div>
                   </div>
                 ))}
-              </div>
+              </div>   */}
             </div>
           </div>
         </section>
@@ -723,33 +740,7 @@ export default function About({ isSection = false }) {
                   </button>
                 </div>
               </div>
-
-              {/* Stat row */}
-              <div
-                className="abt-divider-line"
-                style={{
-                  display: 'flex',
-                  gap: '32px',
-                  marginTop: '36px',
-                  paddingTop: '28px',
-                  borderTop: '1px solid rgba(0,0,0,0.08)',
-                }}
-              >
-                {[
-                  { n: '2019', l: t('about.statFounded') },
-                  { n: '50K+', l: t('about.statRescues') },
-                  { n: '4.9★', l: t('about.statRating') },
-                ].map((item, i) => (
-                  <div key={i}>
-                    <div className="abt-stat-num" style={{ fontSize: '22px', fontWeight: 800, color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1 }}>
-                      {item.n}
-                    </div>
-                    <div className="abt-stat-label" style={{ fontSize: '10px', color: '#9b9b9b', marginTop: '3px', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                      {item.l}
-                    </div>
-                  </div>
-                ))}
-              </div>
+ 
             </div>
 
             {/* Image column — hidden on mobile; replaced by strip below */}
@@ -847,6 +838,143 @@ export default function About({ isSection = false }) {
       </section>
 
       {/* ══════════════════════════════════════════════════════════════════
+          MISSION & VISION — two-card spotlight + core values strip
+      ══════════════════════════════════════════════════════════════════ */}
+      <section
+        className="abt-mv-section"
+        style={{ padding: '80px 0', backgroundColor: '#fff' }}
+      >
+        <div className="abt-inner" style={inner}>
+          {/* Mission / Vision cards */}
+          <div
+            className="abt-mv-grid"
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '56px' }}
+          >
+            <div
+              className="abt-reveal abt-left"
+              style={{
+                position: 'relative',
+                overflow: 'hidden',
+                padding: '40px 36px',
+                borderRadius: '18px',
+                background: 'var(--primary-dark-bg)',
+              }}
+            >
+              <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(ellipse 60% 60% at 0% 0%, rgba(247,178,5,0.16) 0%, transparent 70%)' }} />
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div
+                  style={{
+                    width: '46px', height: '46px',
+                    borderRadius: '12px',
+                    background: 'var(--primary-yellow)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '22px',
+                    color: '#000',
+                  }}
+                >
+                  <Target size={22} />
+                </div>
+                <h3 style={{ fontWeight: 800, fontSize: '20px', color: '#fff', letterSpacing: '-0.02em', marginBottom: '14px' }}>
+                  Our Mission
+                </h3>
+                <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.8, fontSize: '14.5px' }}>
+                  Our mission is to provide fast, professional, and dependable roadside assistance that keeps drivers safe and minimizes disruption. We are committed to delivering exceptional customer service through quick response times, skilled professionals, and transparent communication.
+                </p>
+              </div>
+            </div>
+
+            <div
+              className="abt-reveal abt-right"
+              style={{
+                padding: '40px 36px',
+                borderRadius: '18px',
+                background: 'var(--secondary-light-gray)',
+                border: '1px solid rgba(0,0,0,0.06)',
+              }}
+            >
+              <div
+                style={{
+                  width: '46px', height: '46px',
+                  borderRadius: '12px',
+                  background: '#fef9ec',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginBottom: '22px',
+                  color: 'var(--primary-yellow)',
+                }}
+              >
+                <Eye size={22} />
+              </div>
+              <h3 style={{ fontWeight: 800, fontSize: '20px', color: 'var(--primary-dark-bg)', letterSpacing: '-0.02em', marginBottom: '14px' }}>
+                Our Vision
+              </h3>
+              <p style={{ color: '#6b6b6b', lineHeight: 1.8, fontSize: '14.5px' }}>
+                We aspire to become the first choice for roadside assistance by setting new standards in reliability, innovation, and customer satisfaction. Our vision is to create a safer driving experience where help is always just moments away.
+              </p>
+            </div>
+          </div>
+
+          {/* Core values strip */}
+          <div className="abt-reveal" style={{ marginBottom: '32px' }}>
+            <span style={eyebrow}>What Drives Us</span>
+            <h2
+              className="abt-h2"
+              style={{
+                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                fontWeight: 800,
+                color: 'var(--primary-dark-bg)',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.1,
+                maxWidth: '460px',
+              }}
+            >
+              Our Core Values
+            </h2>
+          </div>
+
+          <div
+            className="abt-corevalues-grid"
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }}
+          >
+            {CORE_VALUES.map((v, i) => (
+              <div
+                key={i}
+                className="abt-reveal abt-value-card abt-card"
+                data-delay={i * 60}
+                style={{
+                  padding: '24px 20px',
+                  borderRadius: '14px',
+                  background: '#fff',
+                  border: '1px solid rgba(0,0,0,0.06)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+                }}
+              >
+                <div
+                  className="abt-icon-box"
+                  style={{
+                    width: '40px', height: '40px',
+                    borderRadius: '10px',
+                    background: '#fef9ec',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    marginBottom: '16px',
+                    transition: 'background 0.25s ease',
+                    color: 'var(--primary-yellow)',
+                  }}
+                >
+                  {v.icon}
+                </div>
+                <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '14.5px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
+                  {v.title}
+                </h3>
+                <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.65, fontSize: '12.5px' }}>
+                  {v.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════════════════════════════
           VALUES — 3-column card grid (desktop) / swiper (mobile)
       ══════════════════════════════════════════════════════════════════ */}
       <section
@@ -878,38 +1006,70 @@ export default function About({ isSection = false }) {
           >
             {VALUES.map((v, i) => (
               <div
-                key={i}
-                className="abt-reveal abt-value-card abt-card"
-                data-delay={i * 60}
-                style={{
-                  padding: '28px',
-                  borderRadius: '14px',
-                  background: '#fff',
-                  border: '1px solid rgba(0,0,0,0.06)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                }}
-              >
-                <div
-                  className="abt-icon-box"
-                  style={{
-                    width: '42px', height: '42px',
-                    borderRadius: '10px',
-                    background: '#fef9ec',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: '18px',
-                    transition: 'background 0.25s ease',
-                    color: 'var(--primary-yellow)',
-                  }}
-                >
-                  {v.icon}
-                </div>
-                <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
-                  {v.title}
-                </h3>
-                <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px' }}>
-                  {v.body}
-                </p>
-              </div>
+  key={i}
+  className="abt-reveal abt-value-card abt-card"
+  data-delay={i * 60}
+  style={{
+    padding: '28px',
+    borderRadius: '14px',
+    background: '#fff',
+    border: '1px solid rgba(0,0,0,0.06)',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+  }}
+>
+  {/* Icon + Title */}
+  <div
+    style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '12px',
+      marginBottom: '16px',
+    }}
+  >
+    <div
+      className="abt-icon-box"
+      style={{
+        width: '42px',
+        height: '42px',
+        borderRadius: '10px',
+        background: '#fef9ec',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        transition: 'background 0.25s ease',
+        color: 'var(--primary-yellow)',
+        flexShrink: 0,
+      }}
+    >
+      {v.icon}
+    </div>
+
+    <h3
+      className="abt-card-title"
+      style={{
+        fontWeight: 700,
+        fontSize: '15px',
+        color: '#111',
+        margin: 0,
+        letterSpacing: '-0.01em',
+      }}
+    >
+      {v.title}
+    </h3>
+  </div>
+
+  <p
+    className="abt-card-body"
+    style={{
+      color: '#6b6b6b',
+      lineHeight: 1.7,
+      fontSize: '13.5px',
+      margin: 0,
+    }}
+  >
+    {v.body}
+  </p>
+</div>
             ))}
           </div>
 
@@ -988,7 +1148,7 @@ export default function About({ isSection = false }) {
             </div>
 
             {/* Right: CTA card (yellow) */}
-            <div className="abt-reveal abt-right abt-cta-card" style={{ order: isRTL ? 1 : 2 }}>
+            {/* <div className="abt-reveal abt-right abt-cta-card" style={{ order: isRTL ? 1 : 2 }}>
               <div
                 style={{
                   background: 'var(--primary-yellow)',
@@ -1038,7 +1198,7 @@ export default function About({ isSection = false }) {
                   {t('about.whatsappBtn')}
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>
@@ -1093,7 +1253,7 @@ export default function About({ isSection = false }) {
               </p>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <a
-                  href="tel:+97180082773375"
+                  href="tel:+97142232269"
                   className="abt-btn-cta getTow-btn"
                   style={{
                     background: 'var(--primary-yellow)', color: '#000',
@@ -1106,7 +1266,7 @@ export default function About({ isSection = false }) {
                   {t('about.callNow')}
                 </a>
                 <a
-                  href="https://wa.me/97180082773375"
+                  href="https://wa.me/97142232269"
                   target="_blank"
                   rel="noreferrer"
                   style={{

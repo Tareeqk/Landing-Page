@@ -490,7 +490,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Car size={22} />,
       href: '/car-recovery-dubai',
-      img: 'new/car_recovery.webp',
+      img: 'https://images.unsplash.com/photo-1673187139211-1e7ec3dd60ec?auto=format&fit=crop&w=1200&q=80',
       tag: t('service.svc1Tag'),
       tagBg: 'rgba(247,178,5,0.10)',
       tagColor: '#b07c00',
@@ -501,7 +501,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Truck size={22} />,
       href: '/towing-service-dubai',
-      img: 'new/towing_truck.webp',
+      img: 'https://images.unsplash.com/photo-1686966933735-305bd8fe0a77?auto=format&fit=crop&w=1200&q=80',
       tag: null,
       title: t('service.svc2Title'),
       desc: t('service.svc2Desc'),
@@ -510,7 +510,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Battery size={22} />,
       href: '/battery-service-dubai',
-      img: 'new/battery_service.webp',
+      img: 'https://images.unsplash.com/photo-1708745427274-d5de5122fd57?auto=format&fit=crop&w=1200&q=80',
       tag: t('service.svc3Tag'),
       tagBg: 'rgba(239,68,68,0.07)',
       tagColor: '#c93030',
@@ -521,7 +521,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Wrench size={22} />,
       href: '/flat-tyre-repair-dubai',
-      img: 'new/tyre_repair.webp',
+      img: 'https://images.unsplash.com/photo-1657718817965-9d0f67fd064e?auto=format&fit=crop&w=1200&q=80',
       tag: null,
       title: t('service.svc4Title'),
       desc: t('service.svc4Desc'),
@@ -530,7 +530,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <AlertTriangle size={22} />,
       href: '/accident-recovery-dubai',
-      img: 'new/accident_recovery.webp',
+      img: 'https://images.unsplash.com/photo-1548287233-af744a9ba268?auto=format&fit=crop&w=1200&q=80',
       tag: t('service.svc5Tag'),
       tagBg: 'rgba(249,115,22,0.07)',
       tagColor: '#c04f00',
@@ -596,14 +596,21 @@ export default function Service({ isSection = false }) {
     <a href={svc.href} className="svc-card" style={{ display: 'block' }}>
       <div className="svc-card-top-bar" />
 
-      {/* Card image */}
-      <div style={{ position: 'relative', height: '160px', overflow: 'hidden', background: '#0a0a0a' }}>
-        <img
-          src={svc.img}
-          alt={svc.title}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0.85 }}
-          loading="lazy"
-        />
+      {/* Card image — rendered as a CSS background so it always fills the card */}
+      <div
+        role="img"
+        aria-label={svc.title}
+        style={{
+          position: 'relative',
+          height: '160px',
+          overflow: 'hidden',
+          backgroundColor: '#0a0a0a',
+          backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%), url(${svc.img})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
         {svc.tag && (
           <div style={{ position: 'absolute', top: '10px', left: isRTL ? 'auto' : '12px', right: isRTL ? '12px' : 'auto' }}>
             <span
@@ -821,7 +828,7 @@ export default function Service({ isSection = false }) {
                   {t('service.heroCta')}
                 </button>
                 <a
-                  href="https://wa.me/97180082773375"
+                  href="https://wa.me/97142232269"
                   target="_blank"
                   rel="noreferrer"
                   className="svc-btn-ghost"
@@ -837,32 +844,7 @@ export default function Service({ isSection = false }) {
                 </a>
               </div>
 
-              {/* Desktop stat strip */}
-              <div
-                className="svc-reveal svc-hero-stats"
-                data-delay="320"
-                style={{ display: 'flex', flexWrap: 'wrap', gap: '0', borderTop: '1px solid rgba(255,255,255,0.12)', paddingTop: '22px' }}
-              >
-                {HERO_STATS.map((m, i, arr) => (
-                  <div
-                    key={i}
-                    style={{ paddingInlineEnd: '26px', marginInlineEnd: '26px', borderInlineEnd: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.10)' : 'none' }}
-                  >
-                    <div style={{ fontSize: '19px', fontWeight: 800, color: 'var(--primary-yellow)', letterSpacing: '-0.02em', lineHeight: 1 }}>{m.stat}</div>
-                    <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', fontWeight: 500, marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{m.label}</div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Mobile stats */}
-              <div className="svc-mobile-stats">
-                {HERO_STATS.map((m, i) => (
-                  <div key={i}>
-                    <div className="svc-mobile-stat-num">{m.stat}</div>
-                    <div className="svc-mobile-stat-label">{m.label}</div>
-                  </div>
-                ))}
-              </div>
+           
             </div>
           </div>
         </section>
@@ -937,19 +919,7 @@ export default function Service({ isSection = false }) {
                   </button>
                 </div>
 
-                {/* Stat row */}
-                <div className="svc-stat-bar svc-reveal" data-delay="300">
-                  {[
-                    { n: '2019', l: t('about.statFounded') },
-                    { n: '50K+', l: t('about.statRescues') },
-                    { n: '4.9★', l: t('about.statRating') },
-                  ].map((s, i) => (
-                    <div key={i} className="svc-stat-item">
-                      <div className="svc-stat-num">{s.n}</div>
-                      <div className="svc-stat-label">{s.l}</div>
-                    </div>
-                  ))}
-                </div>
+            
               </div>
 
               {/* Right column — feature checklist + mini CTA */}
@@ -1047,95 +1017,7 @@ export default function Service({ isSection = false }) {
         </div>
       </section>
 
-      {/* ══════════════════════════════════════════════════════════════════
-          HOW IT WORKS — illustration + step flow + trust strip
-      ══════════════════════════════════════════════════════════════════ */}
-      <section
-        className="svc-steps-section"
-        style={{ padding: '44px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
-      >
-        <div className="svc-inner" style={inner}>
-          {/* Top: heading + illustration */}
-          <div
-            className="svc-steps-top"
-            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', alignItems: 'center', marginBottom: '24px' }}
-          >
-            <div className="svc-reveal svc-left" style={{ order: isRTL ? 2 : 1 }}>
-              <span style={eyebrow}>{t('service.stepsTag')}</span>
-              <h2
-                style={{
-                  fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', fontWeight: 800, color: '#fff',
-                  letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '12px',
-                }}
-              >
-                {t('service.stepsTitle')}
-                <br />
-                <span className="svc-gold-glow" style={{ color: 'var(--primary-yellow)' }}>
-                  {t('service.stepsHighlight')}
-                </span>
-              </h2>
-              <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '13px', lineHeight: 1.6, maxWidth: '380px' }}>
-                {t('service.stepsSubtitle')}
-              </p>
-            </div>
-
-            <div className="svc-reveal svc-right svc-steps-illustration" style={{ order: isRTL ? 1 : 2 }}>
-              <img src={howItWorksIllustration} alt="" loading="lazy" />
-              <div className="svc-steps-badge" style={isRTL ? { right: '12px' } : { left: '12px' }}>
-                <span className="svc-steps-badge-icon">
-                  <StepIcon name="bolt" size={13} />
-                </span>
-                <span className="svc-steps-badge-text">
-                  {t('service.stepsBadgeText')}
-                  <br />
-                  <strong>{t('service.stepsBadgeHighlight')}</strong>
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Step track */}
-          <div className="svc-steps-track">
-            <div className="svc-steps-track-line" />
-            {HOW_STEPS.map((step, i) => (
-              <div key={i} className="svc-reveal svc-step-node-wrap" data-delay={i * 80}>
-                <div className="svc-step-node">
-                  <StepIcon name={step.icon} />
-                </div>
-                <span className="svc-step-num">{step.num}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Step cards */}
-          <div className="svc-steps-cards">
-            {HOW_STEPS.map((step, i) => (
-              <div key={i} className="svc-reveal svc-step-card" data-delay={i * 80 + 40}>
-                <h3 className="svc-step-title">{step.title}</h3>
-                <p className="svc-step-body">{step.body}</p>
-                <span className="svc-step-arrow">
-                  {isRTL ? <ArrowLeft size={16} /> : <ArrowRight size={16} />}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Trust strip */}
-          <div className="svc-reveal svc-trust-strip">
-            {TRUST_ITEMS.map((item, i) => (
-              <div key={i} className="svc-trust-item">
-                <span className="svc-trust-icon">
-                  <StepIcon name={item.icon} size={18} />
-                </span>
-                <div>
-                  <div className="svc-trust-title">{item.title}</div>
-                  <div className="svc-trust-body">{item.body}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+ 
 
       {/* ══════════════════════════════════════════════════════════════════
           WHY TAREEQK — desktop 3-col grid / mobile swiper
@@ -1252,7 +1134,7 @@ export default function Service({ isSection = false }) {
                   {t('service.emergencySubtitle')}
                 </p>
                 <a
-                  href="tel:+97180082773375"
+                  href="tel:+97142232269"
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                     padding: '14px', background: '#000', color: '#fff',
@@ -1264,7 +1146,7 @@ export default function Service({ isSection = false }) {
                   {t('service.callBtn')}
                 </a>
                 <a
-                  href="https://wa.me/97180082773375"
+                  href="https://wa.me/97142232269"
                   target="_blank"
                   rel="noreferrer"
                   style={{
@@ -1325,7 +1207,7 @@ export default function Service({ isSection = false }) {
               </p>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <a
-                  href="https://wa.me/97180082773375"
+                  href="https://wa.me/97142232269"
                   target="_blank"
                   rel="noreferrer"
                   style={{

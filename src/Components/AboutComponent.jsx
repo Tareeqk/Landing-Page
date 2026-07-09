@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import useLangLink from "../hooks/useLangLink";
 
 export default function AboutPreview() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
+  const langLink = useLangLink();
 
   const TAGS = [
     t("aboutPreview.tags.flatbed", "Flatbed recovery"),
@@ -179,6 +182,16 @@ export default function AboutPreview() {
       @media (max-width: 960px) { .abt-preview-title { font-size: 38px; } }
       @media (max-width: 640px) { .abt-preview-title { font-size: 30px; } }
 
+      .abt-preview-title-underline {
+        display: block;
+        width: 72px;
+        height: 4px;
+        border-radius: 999px;
+        background: var(--primary-yellow, #f5a623);
+        margin: 10px 0 0;
+      }
+      [dir="rtl"] .abt-preview-title-underline { margin-left: auto; margin-right: 0; }
+
       body.dark .abt-preview-title {
         color: var(--dark-text-main, #f2f2f2) !important;
       }
@@ -195,77 +208,72 @@ export default function AboutPreview() {
         color: var(--dark-text-muted, #aaa) !important;
       }
 
-      /* ── Stat + photo cards row (scaled down) ──
-         A big number anchors the claim, two photo cards back it up —
-         mirrors the proof-point row from the reference design. */
+      /* ── Icon stat chips ──
+         The media column already carries two truck photos (main + floating
+         card); this row stays photo-free so the section doesn't turn into
+         a wall of mismatched imagery. */
       .abt-preview-proof {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 18px;
+        gap: 12px;
+        align-items: stretch;
+      }
+
+      .abt-preview-stat {
+        display: flex;
+        flex-direction: column;
         align-items: center;
+        text-align: center;
+        gap: 6px;
+        padding: 16px 10px;
+        border-radius: 12px;
+        background: #f6f6f6;
       }
 
-      .abt-preview-photocard {
-        position: relative;
-        border-radius: 8px;
-        overflow: hidden;
-        aspect-ratio: 1 / 0.8;
-        box-shadow: 0 8px 18px rgba(0,0,0,.10);
-        background: #111; /* fallback so a transparent/light icon still reads dark */
+      body.dark .abt-preview-stat {
+        background: var(--dark-bg-surface, #1c1f1f) !important;
       }
 
-      .abt-preview-photocard img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        filter: brightness(0.8) saturate(0.95);
-      }
-
-      /* Scrim guarantees label contrast no matter what icon sits underneath */
-      .abt-preview-photocard::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(0,0,0,0) 38%, rgba(0,0,0,0.78) 100%);
-        pointer-events: none;
-      }
-
-      .abt-preview-photocard-arrow {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-        width: 20px;
-        height: 20px;
+      .abt-preview-stat-icon {
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
-        background: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 10px;
-        color: #0a0a0a;
-        z-index: 1;
+        background: rgba(245, 166, 35, 0.14);
+        color: var(--primary-yellow, #c9860f);
       }
-      [dir="rtl"] .abt-preview-photocard-arrow { right: auto; left: 8px; }
 
-      .abt-preview-photocard-label {
-        position: absolute;
-        left: 10px;
-        right: 10px;
-        bottom: 9px;
-        z-index: 1;
-        color: #fff;
-        font-size: 11.5px;
-        font-weight: 700;
+      body.dark .abt-preview-stat-icon {
+        color: var(--primary-yellow, #f5a623);
+      }
+
+      .abt-preview-stat-value {
+        font-weight: 800;
+        font-size: 13.5px;
         line-height: 1.25;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+        color: #0a0a0a;
+      }
+
+      body.dark .abt-preview-stat-value {
+        color: var(--dark-text-main, #f0f0f0) !important;
+      }
+
+      .abt-preview-stat-label {
+        font-size: 11px;
+        line-height: 1.3;
+        color: #808080;
+      }
+
+      body.dark .abt-preview-stat-label {
+        color: var(--dark-text-muted, #999) !important;
       }
 
       @media (max-width: 700px) {
         .abt-preview-proof {
           grid-template-columns: 1fr 1fr 1fr;
-          gap: 12px;
+          gap: 8px;
         }
       }
 
@@ -410,7 +418,7 @@ export default function AboutPreview() {
           {/* Image side */}
           <div className="abt-preview-media" style={{ order: isRTL ? 2 : 1 }}>
             <div className="abt-preview-media-main">
-              <img src="/new/Recovery_Van.webp" alt="Tareeqk recovery truck on a Dubai highway" />
+              <img src="/new/aboutimg.png" alt="Tareeqk recovery truck on a Dubai highway" />
             </div>
 
             <div className="abt-preview-float">
@@ -437,34 +445,55 @@ export default function AboutPreview() {
           >
             <h2 className="abt-preview-title">
               {t("aboutPreview.title")} <span>{t("aboutPreview.highlight")}</span>
+              <span className="abt-preview-title-underline" aria-hidden="true" />
             </h2>
 
             <p className="abt-preview-text">{t("aboutPreview.description")}</p>
 
+            {/* Icon stat chips, not photos — the media column already carries
+                two truck photos (main + floating card); stacking three more
+                differently-styled photos here read as visual clutter. */}
             <div className="abt-preview-proof">
-              <div className="abt-preview-photocard">
-                <img src="/icons/clock.png" alt="" />
-                <span className="abt-preview-photocard-arrow">↗</span>
-                <span className="abt-preview-photocard-label">{t("aboutPreview.response")}</span>
+              <div className="abt-preview-stat">
+                <span className="abt-preview-stat-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
+                    <path d="M12 7v5l3.5 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                <span className="abt-preview-stat-value">{t("aboutPreview.time")}</span>
+                <span className="abt-preview-stat-label">{t("aboutPreview.response")}</span>
               </div>
 
-              <div className="abt-preview-photocard">
-                <img src="/icons/clock.png" alt="" />
-                <span className="abt-preview-photocard-arrow">↗</span>
-                <span className="abt-preview-photocard-label">{t("aboutPreview.badgeTitle")}</span>
+              <div className="abt-preview-stat">
+                <span className="abt-preview-stat-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3l7 3v6c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6l7-3z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                    <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                <span className="abt-preview-stat-value">{t("aboutPreview.badgeTitle")}</span>
+                <span className="abt-preview-stat-label">{t("aboutPreview.badgeText")}</span>
               </div>
 
-              <div className="abt-preview-photocard">
-                <img src="/icons/rating.png" alt="" />
-                <span className="abt-preview-photocard-arrow">↗</span>
-                <span className="abt-preview-photocard-label">{t("aboutPreview.rating")}</span>
+              <div className="abt-preview-stat">
+                <span className="abt-preview-stat-icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 21s-7-6.5-7-11.5A7 7 0 0112 2a7 7 0 017 7.5C19 14.5 12 21 12 21z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+                    <circle cx="12" cy="9.5" r="2.4" stroke="currentColor" strokeWidth="1.8" />
+                  </svg>
+                </span>
+                <span className="abt-preview-stat-value">{t("aboutPreview.rating")}</span>
+                <span className="abt-preview-stat-label">{t("landing.trust.availabilityValue")}</span>
               </div>
             </div>
 
-            <button type="button" className="abt-preview-cta">
-              {t("aboutPreview.learnMore")}
-              <span className="abt-preview-cta-arrow">{isRTL ? "←" : "→"}</span>
-            </button>
+<Link to={langLink("/about")} className="abt-preview-cta">
+  {t("aboutPreview.learnMore")}
+  <span className="abt-preview-cta-arrow">
+    {isRTL ? "←" : "→"}
+  </span>
+</Link>
           </div>
         </div>
       </div>

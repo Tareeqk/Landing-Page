@@ -25,7 +25,7 @@ export default function ServiceSchema({ service }) {
       "@type": "LocalBusiness",
       "@id": "https://www.tareeqk.ae/#business",
       "name": "Tareeqk",
-      "telephone": "+97180082773375",
+      "telephone": "+97142232269",
       "url": "https://www.tareeqk.ae"
     },
     "areaServed": (service.areas || ["Dubai"]).map(area => ({
@@ -35,7 +35,7 @@ export default function ServiceSchema({ service }) {
     "availableChannel": {
       "@type": "ServiceChannel",
       "serviceUrl": service.url,
-      "servicePhone": "+97180082773375",
+      "servicePhone": "+97142232269",
       "availableLanguage": ["English", "Arabic", "Urdu"]
     },
     "hoursAvailable": {

@@ -23,7 +23,7 @@ const schema = {
     "https://www.tareeqk.ae/new/Recovery_Van.webp",
     "https://www.tareeqk.ae/new/NewBGG.webp"
   ],
-  "telephone": "+97180082773375",
+  "telephone": "+97142232269",
   "email": "support@tareeqk.ae",
   "address": {
     "@type": "PostalAddress",

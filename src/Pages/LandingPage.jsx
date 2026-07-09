@@ -4,22 +4,22 @@ import { Helmet } from "react-helmet-async";
 import './landing.css';
 
 // Keys map to `landing.services.<key>` in each locale file.
-// Each key also maps 1:1 to a background slide in HERO_SLIDES below —
-// swap in real per-service photography when available; duplicates here
-// are safe placeholders so the slider/typing sync still works out of the box.
 const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 
-const HERO_SLIDES = [
-  { key: 'carRecovery', mobile: 'new/NewBG2.webp', desktop: 'new/NewBGG.webp' },
-  { key: 'towing',      mobile: 'new/NewBGG.webp', desktop: 'new/NewBG2.webp' },
-  { key: 'battery',     mobile: 'new/NewBG2.webp', desktop: 'new/NewBGG.webp' },
-  { key: 'tire',        mobile: 'new/NewBGG.webp', desktop: 'new/NewBG2.webp' },
-];
+// Single real photo, rendered once and never swapped/re-animated — a moody
+// skyline render was here before (mostly empty sky, read as flat dark grey
+// once darkened for legibility); this on-location shot reads as "alive"
+// without needing four distinct service photos we don't have yet.
+// Source: public/towing.jpg, 1024×640 — soft on large desktop viewports,
+// swap for a higher-resolution shoot when available.
+const HERO_PHOTO = '/new/whatweoffer.png';
 
-/* ── Shared typing + slide cycle ──
-   Drives the hero title's type/delete loop AND the background slider
-   from a single index, so the photo always matches the word being typed.
-   Respects prefers-reduced-motion (falls back to a static first phrase/slide). */
+/* ── Typing cycle ──
+   Drives the hero title's type/delete loop only — the background photo
+   is static and does not change with it (previously four <picture>
+   elements crossfaded/zoomed independently even though they shared the
+   same image, which read as the photo visibly shifting).
+   Respects prefers-reduced-motion (falls back to a static first phrase). */
 function useTypingSlideCycle(phrases) {
   const reduceMotion =
     typeof window !== 'undefined' &&
@@ -39,6 +39,15 @@ function useTypingSlideCycle(phrases) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phrasesKey]);
 
+  // Manual pill/dot click — jump straight to that phrase, fully typed.
+  // The main effect below picks up from there (hold → delete → resume
+  // the cycle), since it reacts to text/index the same way either way.
+  const selectIndex = (i) => {
+    setIndex(i);
+    setIsDeleting(false);
+    setText(phrases[i]);
+  };
+
   useEffect(() => {
     if (reduceMotion) return;
 
@@ -47,7 +56,7 @@ function useTypingSlideCycle(phrases) {
     let timeout;
 
     if (!isDeleting && text === currentPhrase) {
-      // Hold the fully-typed word — the slide crossfades shortly after
+      // Hold the fully-typed word before deleting and moving to the next
       timeout = setTimeout(() => setIsDeleting(true), 1800);
     } else if (isDeleting && text === '') {
       timeout = setTimeout(() => {
@@ -68,33 +77,57 @@ function useTypingSlideCycle(phrases) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, isDeleting, index, phrasesKey, reduceMotion]);
 
-  return { text, index, reduceMotion };
+  return { text, index, reduceMotion, selectIndex };
 }
 
-function HeroSlides({ slides, activeIndex, reduceMotion }) {
+function HeroBackground() {
   return (
     <div className="tk-hero__bg" aria-hidden="true">
-      {slides.map((slide, i) => (
-        <picture
-          key={slide.key}
-          className={`tk-hero__slide ${i === activeIndex ? 'tk-hero__slide--active' : ''} ${reduceMotion ? 'tk-hero__slide--static' : ''}`}
-        >
-          <source media="(min-width: 768px)" srcSet={slide.desktop} />
-          <img
-            src={slide.mobile}
-            alt=""
-            className="tk-hero__bg-img"
-            loading={i === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-            fetchpriority={i === 0 ? 'high' : 'low'}
-          />
-        </picture>
-      ))}
+      <img
+        src={HERO_PHOTO}
+        alt=""
+        className="tk-hero__bg-img"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
       <div className="tk-hero__veil" />
       <div className="tk-hero__grain" />
     </div>
   );
 }
+
+const SERVICE_ICONS = {
+  carRecovery: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M3 13l1.5-5A2 2 0 016.4 6.5h11.2A2 2 0 0119.5 8l1.5 5M3 13v5a1 1 0 001 1h1.5M3 13h18M20 18h.5a1 1 0 001-1v-4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="7.5" cy="18" r="1.8" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="16.5" cy="18" r="1.8" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  ),
+  towing: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M2 17V9a2 2 0 012-2h6l4 4h4a2 2 0 012 2v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="7" cy="17" r="2" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="18" cy="17" r="2" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M9 17h5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+  battery: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="4" y="7" width="16" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M8 7V5.5a1 1 0 011-1h6a1 1 0 011 1V7" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M13 10l-3 3.5h2.5L11 17l4-4.2h-2.5L13 10z" fill="currentColor" />
+    </svg>
+  ),
+  tire: (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.8" />
+      <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M12 4v3.5M12 16.5V20M20 12h-3.5M7.5 12H4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ),
+};
 
 function TypingTitle({ text, reduceMotion, phrases }) {
   return (
@@ -111,7 +144,13 @@ export default function LandingPage() {
   const { t } = useTranslation();
 
   const phrases = SERVICE_KEYS.map((key) => t(`landing.services.${key}`));
-  const { text, index, reduceMotion } = useTypingSlideCycle(phrases);
+  const { text, index, reduceMotion, selectIndex } = useTypingSlideCycle(phrases);
+
+  const trustStats = [
+    { value: t('landing.trust.dispatchValue'), label: t('landing.trust.dispatchLabel') },
+    { value: t('landing.trust.availabilityValue'), label: t('landing.trust.availabilityLabel') },
+    { value: t('landing.trust.ratingValue'), label: t('landing.trust.ratingLabel') },
+  ];
 
   const handleDownloadRedirect = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -152,7 +191,19 @@ export default function LandingPage() {
         data-testid="landing-hero"
         aria-label="Car recovery hero"
       >
-        <HeroSlides slides={HERO_SLIDES} activeIndex={index} reduceMotion={reduceMotion} />
+        <HeroBackground />
+
+        {/* Floating trust stats — real numbers we already translate but
+            weren't rendering anywhere; fills the empty top-right corner
+            of the photo and backs up the headline with proof. */}
+        <div className="tk-hero__trust" data-testid="landing-trust-cards">
+          {trustStats.map((stat) => (
+            <div key={stat.label} className="tk-hero__trust-card">
+              <span className="tk-hero__trust-value">{stat.value}</span>
+              <span className="tk-hero__trust-label">{stat.label}</span>
+            </div>
+          ))}
+        </div>
 
         <div className="tk-hero__inner">
           <div
@@ -190,7 +241,7 @@ export default function LandingPage() {
               </button>
 
               <a
-                href="tel:+97180082773375"
+                href="tel:+97142232269"
                 className="tk-btn tk-btn--ghost"
                 data-testid="landing-call-btn"
               >
@@ -228,7 +279,7 @@ export default function LandingPage() {
                 aria-label="Get it on Google Play"
               >
                 <img
-                  src="playstore.png"
+                  src="/playstore.png"
                   alt="Get it on Google Play"
                   className="tk-store-badge__img"
                   loading="lazy"
@@ -236,15 +287,37 @@ export default function LandingPage() {
                 />
               </a>
             </div>
+
+            {/* Service picker — click a service to jump the typing title
+                and dots straight to it instead of waiting for the cycle. */}
+            <div className="tk-service-pills" data-testid="landing-service-pills" role="group">
+              {SERVICE_KEYS.map((key, i) => (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => selectIndex(i)}
+                  className={`tk-service-pill ${i === index ? 'tk-service-pill--active' : ''}`}
+                  aria-pressed={i === index}
+                >
+                  <span className="tk-service-pill__icon">{SERVICE_ICONS[key]}</span>
+                  <span>{phrases[i]}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Slide position dots — mirror the typing/slide index */}
-        <div className="tk-hero__dots" role="presentation" aria-hidden="true">
-          {HERO_SLIDES.map((slide, i) => (
-            <span
-              key={slide.key}
+        {/* Typing-phrase position dots — background photo no longer moves
+            with these, only the headline text does */}
+        <div className="tk-hero__dots" role="group" aria-label="Select a service">
+          {SERVICE_KEYS.map((key, i) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => selectIndex(i)}
               className={`tk-hero__dot ${i === index ? 'tk-hero__dot--active' : ''}`}
+              aria-label={phrases[i]}
+              aria-pressed={i === index}
             />
           ))}
         </div>

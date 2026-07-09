@@ -1,9 +1,13 @@
 // pages/locations/LocationPageTemplate.jsx
-// v3: richer visuals (inline SVG illustrations + decorative shapes), refined icons,
-//     "Read more / less" for long text, full mobile responsiveness
+// v4: i18n-ready (react-i18next, namespace "locationPage"), CTA redesigned to
+//     read as its own moment instead of a hero repeat, and every section/card
+//     now reveals on scroll with its own stagger via a dependency-free
+//     IntersectionObserver Reveal component (previous v3: richer visuals,
+//     inline SVG illustrations, "Read more/less", full responsiveness).
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
@@ -195,12 +199,12 @@ function ExpandableText({ text, limit = 220, style = {} }) {
 // ─────────────────────── DATA ───────────────────────────────────
 
 const ALL_SERVICES = [
-  { name: 'Car Recovery', href: '/car-recovery-dubai' },
-  { name: 'Towing Service', href: '/towing-service-dubai' },
-  { name: 'Battery Boost', href: '/battery-service-dubai' },
-  { name: 'Flat Tyre Repair', href: '/flat-tyre-repair-dubai' },
-  { name: 'Fuel Delivery', href: '/fuel-delivery-dubai' },
-  { name: 'Accident Recovery', href: '/accident-recovery-dubai' },
+  { name: 'Car Recovery', nameKey: 'carRecovery', href: '/car-recovery-dubai' },
+  { name: 'Towing Service', nameKey: 'towingService', href: '/towing-service-dubai' },
+  { name: 'Battery Boost', nameKey: 'batteryBoost', href: '/battery-service-dubai' },
+  { name: 'Flat Tyre Repair', nameKey: 'flatTyreRepair', href: '/flat-tyre-repair-dubai' },
+  { name: 'Fuel Delivery', nameKey: 'fuelDelivery', href: '/fuel-delivery-dubai' },
+  { name: 'Accident Recovery', nameKey: 'accidentRecovery', href: '/accident-recovery-dubai' },
 ];
 
 const ALL_LOCATIONS = [
@@ -451,11 +455,93 @@ const S = {
   },
 };
 
+// ─────────────────── SCROLL-TRIGGERED ENTRANCE ───────────────────
+// Lightweight, dependency-free replacement for the old inert
+// data-aos markers — every section/card gets its own observer and
+// its own delay, so groups of items stagger in individually instead
+// of the whole page popping in at once.
+
+const REVEAL_OFFSETS = {
+  up: 'translateY(26px)',
+  down: 'translateY(-26px)',
+  left: 'translateX(-26px)',
+  right: 'translateX(26px)',
+  scale: 'scale(0.95)',
+  fade: 'none',
+};
+
+function useInView(rootMargin = '0px 0px -64px 0px') {
+  const ref = React.useRef(null);
+  const [inView, setInView] = React.useState(false);
+
+  React.useEffect(() => {
+    const prefersReduced = typeof window !== 'undefined'
+      && window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReduced || typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return;
+    }
+
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.18, rootMargin }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rootMargin]);
+
+  return [ref, inView];
+}
+
+// Wrap any block with its own scroll-triggered entrance + delay.
+// `delay` is in ms — every caller picks its own, so sibling
+// components never animate in lockstep.
+function Reveal({
+  children, as = 'div', direction = 'up', delay = 0,
+  duration = 640, style = {}, className, ...rest
+}) {
+  const [ref, inView] = useInView();
+  const Tag = as;
+  return (
+    <Tag
+      ref={ref}
+      className={className}
+      {...rest}
+      style={{
+        ...style,
+        opacity: inView ? 1 : 0,
+        transform: inView ? 'none' : REVEAL_OFFSETS[direction],
+        transition: `opacity ${duration}ms cubic-bezier(0.16,1,0.3,1) ${delay}ms, `
+          + `transform ${duration}ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+        willChange: 'opacity, transform',
+      }}
+    >
+      {children}
+    </Tag>
+  );
+}
+
+// Even spacing for staggered groups (cards, FAQ rows, steps…),
+// capped so a long list doesn't end with an awkward final delay.
+const stagger = (index, step = 80, base = 0, max = 480) =>
+  base + Math.min(index * step, max);
+
 // ─────────────────────── COMPONENT ──────────────────────────────
 
 export default function LocationPageTemplate({ config }) {
   const { lang } = useParams();
   const langLink = useLangLink();
+  const { t } = useTranslation();
   const schemaFaqs = config.faqs.map(f => ({ question: f.q, answer: f.a }));
   const [openFaq, setOpenFaq] = React.useState(null);
 
@@ -468,9 +554,24 @@ export default function LocationPageTemplate({ config }) {
   const galleryImages = (config.gallery && config.gallery.length === 3)
     ? config.gallery
     : [
-      { src: config.heroImage, alt: `${config.heroAlt} — recovery truck dispatched`, caption: `Recovery dispatched in ${config.area}`, pos: 'center' },
-      { src: config.heroImage, alt: `${config.heroAlt} — technician arriving on site`, caption: 'Technician arriving on-site', pos: 'top' },
-      { src: config.heroImage, alt: `${config.heroAlt} — unit on standby`, caption: 'Standing by, 24/7', pos: 'bottom' },
+      {
+        src: config.heroImage,
+        alt: t('locationPageTemplate.gallery.altDispatched', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — recovery truck dispatched' }),
+        caption: t('locationPageTemplate.gallery.captionDispatched', { area: config.area, defaultValue: 'Recovery dispatched in {{area}}' }),
+        pos: 'center',
+      },
+      {
+        src: config.heroImage,
+        alt: t('locationPageTemplate.gallery.altArriving', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — technician arriving on site' }),
+        caption: t('locationPageTemplate.gallery.captionArriving', { defaultValue: 'Technician arriving on-site' }),
+        pos: 'top',
+      },
+      {
+        src: config.heroImage,
+        alt: t('locationPageTemplate.gallery.altStandby', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — unit on standby' }),
+        caption: t('locationPageTemplate.gallery.captionStandby', { defaultValue: 'Standing by, 24/7' }),
+        pos: 'bottom',
+      },
     ];
 
   return (
@@ -503,6 +604,7 @@ export default function LocationPageTemplate({ config }) {
           transform: translateY(-3px) !important;
         }
         .tk-cta-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        .tk-cta2-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
         @media (max-width: 860px) {
           .tk-hero-floating { display: none !important; }
         }
@@ -515,11 +617,11 @@ export default function LocationPageTemplate({ config }) {
           .tk-gallery-grid { grid-template-columns: 1fr !important; }
           .tk-process-grid { grid-template-columns: 1fr !important; }
           .tk-footer-grid { grid-template-columns: 1fr !important; }
-          .tk-cta-btns { flex-direction: column !important; align-items: stretch !important; }
-          .tk-cta-btns button { width: 100% !important; justify-content: center !important; }
+          .tk-cta2-btn-row { flex-direction: column !important; align-items: stretch !important; }
+          .tk-cta2-btn-row button { width: 100% !important; justify-content: center !important; }
         }
         @media (prefers-reduced-motion: reduce) {
-          .tk-svc-card, .tk-cta-btn { transition: none !important; }
+          .tk-svc-card, .tk-cta-btn, .tk-cta2-btn { transition: none !important; }
         }
       `}</style>
 
@@ -547,24 +649,29 @@ export default function LocationPageTemplate({ config }) {
         </div>
 
         <div style={S.heroInner}>
-          <div style={S.heroRow} data-aos="fade-up">
-            <div style={S.heroContent}>
+          <div style={S.heroRow}>
+            <Reveal as="div" direction="up" delay={0} style={S.heroContent}>
               <div style={S.heroBadgeRow}>
                 <span style={S.badge247}>
                   <span style={S.badge247Dot} />
-                  24/7 Service
+                  {t('locationPageTemplate.hero.badge247', { defaultValue: '24/7 Service' })}
                 </span>
-                <span style={S.badgeArea}>{config.area} • Dubai</span>
+                <span style={S.badgeArea}>
+                  {t('locationPageTemplate.hero.badgeArea', { area: config.area, defaultValue: '{{area}} • Dubai' })}
+                </span>
               </div>
 
               <h1 style={S.heroH1}>
-                Car Recovery in
+                {t('locationPageTemplate.hero.titleLine1', { defaultValue: 'Car Recovery in' })}
                 <span style={S.heroH1Accent}>{config.area}</span>
               </h1>
               <div style={S.heroUnderline} />
 
               <p style={S.heroSub}>
-                Stuck in {config.area}? We reach you in {config.responseTime} — day or night, every day.
+                {t('locationPageTemplate.hero.subtitle', {
+                  area: config.area, responseTime: config.responseTime,
+                  defaultValue: 'Stuck in {{area}}? We reach you in {{responseTime}} — day or night, every day.',
+                })}
               </p>
 
               <div style={S.heroCtaRow} className="tk-hero-cta-row">
@@ -572,42 +679,52 @@ export default function LocationPageTemplate({ config }) {
                   style={{ ...S.heroBtn, background: '#fbbf24', color: '#000' }}>
                   <IconPhone size={18} color="#000" />
                   <span>
-                    <div style={S.heroBtnTitle}>Call Now</div>
-                    <div style={{ ...S.heroBtnSub, color: 'rgba(0,0,0,0.6)' }}>Instant Response</div>
+                    <div style={S.heroBtnTitle}>{t('locationPageTemplate.hero.callNow', { defaultValue: 'Call Now' })}</div>
+                    <div style={{ ...S.heroBtnSub, color: 'rgba(0,0,0,0.6)' }}>
+                      {t('locationPageTemplate.hero.callNowSub', { defaultValue: 'Instant Response' })}
+                    </div>
                   </span>
                 </button>
                 <button onClick={handleWhatsApp} className="tk-cta-btn"
                   style={{ ...S.heroBtn, background: '#25D366', color: '#fff' }}>
                   <IconWhatsApp size={18} color="#fff" />
                   <span>
-                    <div style={S.heroBtnTitle}>WhatsApp</div>
-                    <div style={{ ...S.heroBtnSub, color: 'rgba(255,255,255,0.82)' }}>Chat Now</div>
+                    <div style={S.heroBtnTitle}>{t('locationPageTemplate.hero.whatsapp', { defaultValue: 'WhatsApp' })}</div>
+                    <div style={{ ...S.heroBtnSub, color: 'rgba(255,255,255,0.82)' }}>
+                      {t('locationPageTemplate.hero.whatsappSub', { defaultValue: 'Chat Now' })}
+                    </div>
                   </span>
                 </button>
               </div>
-            </div>
+            </Reveal>
 
             {/* Floating info card — hidden on mobile */}
-            <div style={S.floatingCard} className="tk-hero-floating">
+            <Reveal as="div" direction="up" delay={220} style={S.floatingCard} className="tk-hero-floating">
               <div style={S.floatingCardTop}>
                 <div style={S.floatingCardIconWrap}>
                   <IconShield size={20} color="#000" />
                 </div>
                 <div>
-                  <div style={S.floatingCardTitle}>Reliable. Fast. Professional.</div>
-                  <div style={S.floatingCardSub}>RTA Licensed · Fully Insured · Modern Fleet</div>
+                  <div style={S.floatingCardTitle}>
+                    {t('locationPageTemplate.hero.floatingCard.title', { defaultValue: 'Reliable. Fast. Professional.' })}
+                  </div>
+                  <div style={S.floatingCardSub}>
+                    {t('locationPageTemplate.hero.floatingCard.subtitle', { defaultValue: 'RTA Licensed · Fully Insured · Modern Fleet' })}
+                  </div>
                 </div>
               </div>
               <div style={S.floatingCardDivider} />
               <div style={S.floatingCardStats}>
                 <span style={S.floatingCardStat}>
-                  <IconTruck size={14} color="#fbbf24" filled /> Live Tracking
+                  <IconTruck size={14} color="#fbbf24" filled />
+                  {t('locationPageTemplate.hero.floatingCard.liveTracking', { defaultValue: 'Live Tracking' })}
                 </span>
                 <span style={S.floatingCardStat}>
-                  <IconUsers size={14} color="#fbbf24" /> 5,000+ Customers
+                  <IconUsers size={14} color="#fbbf24" />
+                  {t('locationPageTemplate.hero.floatingCard.customers', { defaultValue: '5,000+ Customers' })}
                 </span>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -623,22 +740,26 @@ export default function LocationPageTemplate({ config }) {
             gap: 'clamp(32px,5vw,56px)', alignItems: 'center',
           }}>
             {/* Text */}
-            <div data-aos="fade-right">
-              <span style={S.eyebrow}>Serving {config.area}</span>
-              <h2 style={S.h2}>Roadside Assistance in {config.area}, Dubai</h2>
+            <Reveal direction="left" delay={0}>
+              <span style={S.eyebrow}>
+                {t('locationPageTemplate.about.eyebrow', { area: config.area, defaultValue: 'Serving {{area}}' })}
+              </span>
+              <h2 style={S.h2}>
+                {t('locationPageTemplate.about.title', { area: config.area, defaultValue: 'Roadside Assistance in {{area}}, Dubai' })}
+              </h2>
               <ExpandableText text={config.areaDesc} limit={220} />
               <div style={{ marginTop: '24px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                 <a href={langLink('/car-recovery-dubai')} className="tk-link-pill" style={S.linkPill}>
-                  All Dubai Services <IconArrowRight size={13} color="#111" />
+                  {t('locationPageTemplate.about.allDubaiServicesLink', { defaultValue: 'All Dubai Services' })} <IconArrowRight size={13} color="#111" />
                 </a>
                 <a href={langLink('/about')} className="tk-link-pill" style={S.linkPill}>
-                  About Tareeqk <IconArrowRight size={13} color="#111" />
+                  {t('locationPageTemplate.about.aboutTareeqkLink', { defaultValue: 'About Tareeqk' })} <IconArrowRight size={13} color="#111" />
                 </a>
               </div>
-            </div>
+            </Reveal>
 
             {/* Right column: real photo + stat cards */}
-            <div data-aos="fade-left">
+            <Reveal direction="right" delay={120}>
               {/* Real photo */}
               <div style={{
                 borderRadius: '20px', overflow: 'hidden',
@@ -674,26 +795,26 @@ export default function LocationPageTemplate({ config }) {
                     boxShadow: '0 0 6px #4ade80',
                   }} />
                   <span style={{ fontSize: '12px', fontWeight: 700, color: '#fff' }}>
-                    Units active in {config.area}
+                    {t('locationPageTemplate.about.unitsActiveBadge', { area: config.area, defaultValue: 'Units active in {{area}}' })}
                   </span>
                 </div>
               </div>
 
-              {/* Stat cards */}
+              {/* Stat cards — each one reveals on its own beat */}
               <div style={S.statGrid} className="tk-stat-grid">
                 {[
-                  { num: config.responseTime, label: 'Avg. Response', dark: true },
-                  { num: '24/7', label: 'Available', dark: false },
-                  { num: '', label: 'Live Tracking', dark: false },
-                  { num: 'RTA', label: 'Licensed', dark: false },
+                  { num: config.responseTime, label: t('locationPageTemplate.about.stats.avgResponseLabel', { defaultValue: 'Avg. Response' }), dark: true },
+                  { num: t('locationPageTemplate.about.stats.availableValue', { defaultValue: '24/7' }), label: t('locationPageTemplate.about.stats.availableLabel', { defaultValue: 'Available' }), dark: false },
+                  { num: '', label: t('locationPageTemplate.about.stats.liveTrackingLabel', { defaultValue: 'Live Tracking' }), dark: false },
+                  { num: t('locationPageTemplate.about.stats.licensedValue', { defaultValue: 'RTA' }), label: t('locationPageTemplate.about.stats.licensedLabel', { defaultValue: 'Licensed' }), dark: false },
                 ].map((s, i) => (
-                  <div key={i} style={S.statCard(s.dark)}>
+                  <Reveal key={i} as="div" direction="up" delay={stagger(i, 90, 160)} style={S.statCard(s.dark)}>
                     <div style={S.statNum(s.dark)}>{s.num}</div>
                     <div style={S.statLabel(s.dark)}>{s.label}</div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -703,16 +824,16 @@ export default function LocationPageTemplate({ config }) {
       ══════════════════════════════════ */}
       <section style={{ ...S.section, background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
         <div style={S.inner}>
-          <div style={{ textAlign: 'center', maxWidth: '580px', margin: '0 auto 36px' }} data-aos="fade-up">
-            <span style={S.eyebrow}>On The Ground</span>
-            <h2 style={S.h2}>Tareeqk Working in {config.area}</h2>
-            <p style={S.p}>Real units, real equipment, real coverage — every time you call.</p>
-          </div>
+          <Reveal direction="up" delay={0} style={{ textAlign: 'center', maxWidth: '580px', margin: '0 auto 36px' }}>
+            <span style={S.eyebrow}>{t('locationPageTemplate.gallery.eyebrow', { defaultValue: 'On The Ground' })}</span>
+            <h2 style={S.h2}>{t('locationPageTemplate.gallery.title', { area: config.area, defaultValue: 'Tareeqk Working in {{area}}' })}</h2>
+            <p style={S.p}>{t('locationPageTemplate.gallery.subtitle', { defaultValue: 'Real units, real equipment, real coverage — every time you call.' })}</p>
+          </Reveal>
 
           {/* If no real images yet, show illustrated placeholder tiles */}
-          <div style={S.galleryGrid} className="tk-gallery-grid" data-aos="fade-up">
+          <div style={S.galleryGrid} className="tk-gallery-grid">
             {galleryImages.map((img, i) => (
-              <div key={i} style={S.galleryItem}>
+              <Reveal key={i} as="div" direction="up" delay={stagger(i, 110)} style={S.galleryItem}>
                 <img
                   src={img.src}
                   alt={img.alt}
@@ -726,7 +847,7 @@ export default function LocationPageTemplate({ config }) {
                     {img.caption}
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -737,18 +858,21 @@ export default function LocationPageTemplate({ config }) {
       ══════════════════════════════════ */}
       <section style={{ ...S.section, background: '#fff' }}>
         <div style={S.inner}>
-          <div style={{ marginBottom: '36px' }} data-aos="fade-up">
-            <span style={S.eyebrow}>What We Offer</span>
-            <h2 style={S.h2}>Services Available in {config.area}</h2>
-          </div>
+          <Reveal direction="up" delay={0} style={{ marginBottom: '36px' }}>
+            <span style={S.eyebrow}>{t('locationPageTemplate.services.eyebrow', { defaultValue: 'What We Offer' })}</span>
+            <h2 style={S.h2}>{t('locationPageTemplate.services.title', { area: config.area, defaultValue: 'Services Available in {{area}}' })}</h2>
+          </Reveal>
           <div style={S.svcGrid} className="tk-svc-grid">
-            {ALL_SERVICES.map(svc => (
-              <a key={svc.name} href={langLink(svc.href)} className="tk-svc-card" style={S.svcCard}>
+            {ALL_SERVICES.map((svc, i) => (
+              <Reveal key={svc.name} as="a" href={langLink(svc.href)} direction="up" delay={stagger(i, 70)}
+                className="tk-svc-card" style={S.svcCard}>
                 <div style={S.svcIconWrap}>
                   {SERVICE_ICONS[svc.name] || <IconWrench size={26} color="#92400e" />}
                 </div>
-                <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', margin: 0 }}>{svc.name}</p>
-              </a>
+                <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', margin: 0 }}>
+                  {t(`locationPageTemplate.services.names.${svc.nameKey}`, { defaultValue: svc.name })}
+                </p>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -765,9 +889,9 @@ export default function LocationPageTemplate({ config }) {
             gap: 'clamp(32px,5vw,52px)', alignItems: 'start',
           }} className="tk-process-grid">
             {/* Left */}
-            <div data-aos="fade-right">
-              <span style={S.eyebrow}>Response Time</span>
-              <h2 style={S.h2}>How fast do we reach {config.area}?</h2>
+            <Reveal direction="left" delay={0}>
+              <span style={S.eyebrow}>{t('locationPageTemplate.process.eyebrow', { defaultValue: 'Response Time' })}</span>
+              <h2 style={S.h2}>{t('locationPageTemplate.process.title', { area: config.area, defaultValue: 'How fast do we reach {{area}}?' })}</h2>
               <ExpandableText text={config.responseDesc} limit={200} />
               <div style={{ marginTop: '20px' }}>
                 <span style={{
@@ -777,20 +901,20 @@ export default function LocationPageTemplate({ config }) {
                   display: 'inline-flex', alignItems: 'center', gap: '6px',
                 }}>
                   <IconClock size={14} color="#92400e" />
-                  Avg. {config.responseTime} dispatch
+                  {t('locationPageTemplate.process.dispatchBadge', { responseTime: config.responseTime, defaultValue: 'Avg. {{responseTime}} dispatch' })}
                 </span>
               </div>
-            </div>
+            </Reveal>
 
-            {/* Steps */}
-            <div data-aos="fade-left">
+            {/* Steps — each one steps in right after the last */}
+            <div>
               {[
-                { label: 'App or call request placed' },
-                { label: 'Nearest unit dispatched immediately' },
-                { label: `Technician on-site in ~${config.responseTime}` },
-                { label: 'Vehicle recovered or issue resolved' },
+                { label: t('locationPageTemplate.process.steps.step1', { defaultValue: 'App or call request placed' }) },
+                { label: t('locationPageTemplate.process.steps.step2', { defaultValue: 'Nearest unit dispatched immediately' }) },
+                { label: t('locationPageTemplate.process.steps.step3', { responseTime: config.responseTime, defaultValue: 'Technician on-site in ~{{responseTime}}' }) },
+                { label: t('locationPageTemplate.process.steps.step4', { defaultValue: 'Vehicle recovered or issue resolved' }) },
               ].map((step, i) => (
-                <div key={i} style={S.stepRow}>
+                <Reveal key={i} as="div" direction="right" delay={stagger(i, 110, 80)} style={S.stepRow}>
                   <div style={S.stepNum}>
                     <ProcessStepIcon step={i} />
                   </div>
@@ -799,7 +923,7 @@ export default function LocationPageTemplate({ config }) {
                       {step.label}
                     </div>
                   </div>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -807,187 +931,145 @@ export default function LocationPageTemplate({ config }) {
       </section>
 
       {/* ══════════════════════════════════
-              CTA BLOCK — photo + split layout
+              CTA BLOCK — solid panel, route-line signature
+              (intentionally NOT the hero's photo + dark-gradient
+              treatment — same brand palette, different anatomy:
+              no image, centered layout, pill buttons, dashed
+              dispatch-route motif instead of a badge stack)
       ══════════════════════════════════ */}
       <div style={{ maxWidth: '1140px', margin: '0 auto', padding: '0 20px clamp(48px,7vw,80px)' }}>
-        <div style={{
+        <Reveal direction="scale" delay={0} duration={560} style={{
           position: 'relative', overflow: 'hidden',
-          borderRadius: '24px', minHeight: '360px',
-          display: 'flex', alignItems: 'stretch',
-        }} data-aos="fade-up">
-          {/* Background photo */}
-          <img
-            src={config.heroImage}
-            alt={config.heroAlt}
+          borderRadius: '24px',
+          background: 'linear-gradient(165deg, #161616 0%, #0a0a0a 100%)',
+          padding: 'clamp(44px,6vw,68px) clamp(24px,5vw,56px)',
+          textAlign: 'center',
+        }}>
+          {/* Signature: dashed dispatch-route line with waypoint stops */}
+          <svg
+            viewBox="0 0 1200 420" preserveAspectRatio="none"
             style={{
-              position: 'absolute', inset: 0,
-              width: '100%', height: '100%',
-              objectFit: 'cover', objectPosition: '60% center',
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              opacity: 0.55, pointerEvents: 'none',
             }}
-          />
-          {/* Dark overlay — heavier on the left where text is */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(100deg, rgba(5,5,5,0.95) 0%, rgba(5,5,5,0.88) 38%, rgba(5,5,5,0.55) 65%, rgba(5,5,5,0.22) 100%)',
-          }} />
-          {/* Yellow accent glow top-right */}
-          <div style={{
-            position: 'absolute', top: -80, right: -80,
-            width: '320px', height: '320px', borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(251,191,36,0.14) 0%, transparent 70%)',
-            pointerEvents: 'none',
-          }} />
+          >
+            <path
+              d="M -20 360 C 220 360, 300 180, 560 200 S 860 60 1220 90"
+              fill="none" stroke="rgba(251,191,36,0.4)" strokeWidth="2"
+              strokeDasharray="3 11" strokeLinecap="round"
+            />
+            <circle cx="220" cy="328" r="4" fill="rgba(251,191,36,0.5)" />
+            <circle cx="560" cy="200" r="4" fill="rgba(251,191,36,0.5)" />
+            <circle cx="900" cy="78" r="5" fill="#fbbf24" />
+            <circle cx="900" cy="78" r="10" fill="none" stroke="#fbbf24" strokeWidth="1.5" opacity="0.5" />
+          </svg>
 
           {/* Content */}
-          <div style={{
-            position: 'relative', zIndex: 2,
-            width: '100%', maxWidth: '1100px', margin: '0 auto',
-            padding: 'clamp(40px,5vw,64px) clamp(24px,4vw,56px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '32px',
-            flexWrap: 'wrap',
-          }}>
-            {/* Left: copy + trust signals */}
-            <div style={{ flex: '1 1 320px', maxWidth: '520px' }}>
-              {/* Live badge */}
-              <div style={{
-                display: 'inline-flex', alignItems: 'center', gap: '8px',
-                background: 'rgba(74,222,128,0.12)', border: '1px solid rgba(74,222,128,0.35)',
-                borderRadius: '100px', padding: '5px 14px',
-                marginBottom: '20px',
+          <div style={{ position: 'relative', zIndex: 2, maxWidth: '600px', margin: '0 auto' }}>
+            {/* Status row — plain text + dot, not a boxed badge like the hero/about pills */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+              marginBottom: '18px',
+            }}>
+              <span style={{
+                width: '7px', height: '7px', borderRadius: '50%',
+                background: '#fbbf24', boxShadow: '0 0 8px #fbbf24',
+                flexShrink: 0,
+              }} />
+              <span style={{
+                fontSize: '11.5px', fontWeight: 700, letterSpacing: '1.5px',
+                textTransform: 'uppercase', color: '#fbbf24',
               }}>
-                <span style={{
-                  width: '7px', height: '7px', borderRadius: '50%',
-                  background: '#4ade80', boxShadow: '0 0 8px #4ade80',
-                  flexShrink: 0,
-                }} />
-                <span style={{ fontSize: '11.5px', fontWeight: 700, color: '#4ade80', letterSpacing: '0.5px' }}>
-                  Units on standby now
-                </span>
-              </div>
-
-              <h2 style={{
-                fontSize: 'clamp(1.7rem,3.2vw,2.6rem)', fontWeight: 800,
-                color: '#fff', letterSpacing: '-0.025em', lineHeight: 1.1,
-                marginBottom: '14px',
-              }}>
-                Need Help in<br />
-                <span style={{ color: '#fbbf24' }}>{config.area}</span> Right Now?
-              </h2>
-
-              <p style={{
-                color: '#d1d5db', fontSize: '16px', lineHeight: 1.65,
-                marginBottom: '28px', maxWidth: '400px',
-              }}>
-                One call and we're already moving. Our nearest unit reaches you in {config.responseTime} — day or night.
-              </p>
-
-              {/* Trust row */}
-              <div style={{
-                display: 'flex', flexWrap: 'wrap', gap: '20px',
-              }}>
-                {[
-                  { icon: <IconShield size={15} color="#fbbf24" />, text: 'RTA Licensed' },
-                  { icon: <IconTruck size={14} color="#fbbf24" filled />, text: 'Live Tracking ' },
-                  { icon: <IconUsers size={15} color="#fbbf24" />, text: 'Rescued' },
-                ].map((t, i) => (
-                  <span key={i} style={{
-                    display: 'flex', alignItems: 'center', gap: '6px',
-                    fontSize: '13px', fontWeight: 600, color: '#e5e7eb',
-                  }}>
-                    {t.icon} {t.text}
-                  </span>
-                ))}
-              </div>
+                {t('locationPageTemplate.cta.liveBadge', { defaultValue: 'Units on standby now' })}
+              </span>
             </div>
 
-            {/* Right: action buttons */}
+            <h2 style={{
+              fontSize: 'clamp(1.7rem,3.6vw,2.6rem)', fontWeight: 800,
+              color: '#fff', letterSpacing: '-0.025em', lineHeight: 1.12,
+              marginBottom: '14px',
+            }}>
+              {t('locationPageTemplate.cta.titleLine1', { defaultValue: 'Need Help in' })}{' '}
+              <span style={{ color: '#fbbf24' }}>{config.area}</span><br />
+              {t('locationPageTemplate.cta.titleLine2', { defaultValue: 'Right Now?' })}
+            </h2>
+
+            <p style={{
+              color: '#9ca3af', fontSize: '16px', lineHeight: 1.65,
+              marginBottom: '32px', maxWidth: '440px', margin: '0 auto 32px',
+            }}>
+              {t('locationPageTemplate.cta.body', {
+                responseTime: config.responseTime,
+                defaultValue: "One call and we're already moving. Our nearest unit reaches you in {{responseTime}} — day or night.",
+              })}
+            </p>
+
+            {/* Two equal pill buttons, side by side — a different shape language than the hero's icon-tile buttons */}
             <div style={{
-              flex: '0 1 auto',
-              display: 'flex', flexDirection: 'column', gap: '12px',
-              minWidth: '220px',
-            }} className="tk-cta-action-col">
-              <button onClick={handleCall} className="tk-cta-btn" style={{
-                display: 'flex', alignItems: 'center', gap: '14px',
+              display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap',
+              marginBottom: '28px',
+            }} className="tk-cta2-btn-row">
+              <button onClick={handleCall} className="tk-cta2-btn" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
                 background: '#fbbf24', color: '#000', border: 'none',
-                padding: '18px 28px', borderRadius: '14px',
-                cursor: 'pointer', fontFamily: 'inherit', width: '100%',
-                transition: 'filter 0.2s, transform 0.2s',
-                textAlign: 'left',
+                padding: '15px 30px', borderRadius: '100px',
+                fontSize: '15px', fontWeight: 800, cursor: 'pointer',
+                fontFamily: 'inherit', transition: 'filter 0.2s, transform 0.2s',
               }}>
-                <div style={{
-                  width: '42px', height: '42px', borderRadius: '10px',
-                  background: 'rgba(0,0,0,0.12)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  <IconPhone size={20} color="#000" />
-                </div>
-                <div>
-                  <div style={{ fontSize: '16px', fontWeight: 800, lineHeight: 1.2 }}>Call Now</div>
-                  <div style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(0,0,0,0.6)', marginTop: '2px' }}>
-                    Instant dispatch
-                  </div>
-                </div>
+                <IconPhone size={17} color="#000" />
+                {t('locationPageTemplate.cta.callTitle', { defaultValue: 'Call Now' })}
               </button>
 
-              <button onClick={handleWhatsApp} className="tk-cta-btn" style={{
-                display: 'flex', alignItems: 'center', gap: '14px',
-                background: 'rgba(255,255,255,0.06)',
-                color: '#fff',
-                border: '1.5px solid rgba(255,255,255,0.2)',
-                padding: '18px 28px', borderRadius: '14px',
-                cursor: 'pointer', fontFamily: 'inherit', width: '100%',
-                transition: 'filter 0.2s, transform 0.2s, background 0.2s',
-                textAlign: 'left',
-                backdropFilter: 'blur(8px)',
+              <button onClick={handleWhatsApp} className="tk-cta2-btn" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px',
+                background: 'transparent', color: '#fff',
+                border: '1.5px solid rgba(255,255,255,0.25)',
+                padding: '15px 30px', borderRadius: '100px',
+                fontSize: '15px', fontWeight: 700, cursor: 'pointer',
+                fontFamily: 'inherit', transition: 'filter 0.2s, transform 0.2s, border-color 0.2s',
               }}>
-                <div style={{
-                  width: '42px', height: '42px', borderRadius: '10px',
-                  background: '#25D366',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                }}>
-                  <IconWhatsApp size={22} color="#fff" />
-                </div>
-                <div>
-                  <div style={{ fontSize: '16px', fontWeight: 800, lineHeight: 1.2 }}>WhatsApp</div>
-                  <div style={{ fontSize: '12px', fontWeight: 500, color: 'rgba(255,255,255,0.55)', marginTop: '2px' }}>
-                    Chat with us
-                  </div>
-                </div>
+                <IconWhatsApp size={17} color="#25D366" />
+                {t('locationPageTemplate.cta.whatsappTitle', { defaultValue: 'WhatsApp' })}
               </button>
+            </div>
 
-              <p style={{
-                fontSize: '11.5px', color: 'rgba(255,255,255,0.35)',
-                textAlign: 'center', margin: 0, lineHeight: 1.5,
-              }}>
-                Average response · {config.responseTime}
-              </p>
+            {/* Trust row — plain inline text with dot separators, not pill badges */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexWrap: 'wrap', gap: '10px',
+              fontSize: '12.5px', fontWeight: 600, color: '#6b7280',
+            }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <IconShield size={13} color="#9ca3af" />
+                {t('locationPageTemplate.cta.trust.rtaLicensed', { defaultValue: 'RTA Licensed' })}
+              </span>
+              <span aria-hidden="true">·</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <IconTruck size={13} color="#9ca3af" />
+                {t('locationPageTemplate.cta.trust.liveTracking', { defaultValue: 'Live Tracking' })}
+              </span>
+              <span aria-hidden="true">·</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <IconClock size={13} color="#9ca3af" />
+                {t('locationPageTemplate.cta.responseFooter', { responseTime: config.responseTime, defaultValue: 'Average response · {{responseTime}}' })}
+              </span>
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
-
-      <style>{`
-        @media (max-width: 600px) {
-          .tk-cta-action-col { width: 100% !important; min-width: unset !important; }
-        }
-        .tk-cta-btn:hover { filter: brightness(1.07); transform: translateY(-2px); }
-      `}</style>
 
       {/* ══════════════════════════════════
               FAQ
       ══════════════════════════════════ */}
       <section style={{ ...S.section, background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
         <div style={{ ...S.inner, maxWidth: '780px' }}>
-          <span style={S.eyebrow}>FAQ</span>
-          <h2 style={S.h2}>FAQs — Car Recovery in {config.area}</h2>
+          <Reveal direction="up" delay={0}>
+            <span style={S.eyebrow}>{t('locationPageTemplate.faq.eyebrow', { defaultValue: 'FAQ' })}</span>
+            <h2 style={S.h2}>{t('locationPageTemplate.faq.title', { area: config.area, defaultValue: 'FAQs — Car Recovery in {{area}}' })}</h2>
+          </Reveal>
           <div style={{ marginTop: '28px', borderTop: '1px solid #f0f0f0' }}>
             {config.faqs.map((faq, i) => (
-              <div key={i}>
+              <Reveal key={i} as="div" direction="up" delay={stagger(i, 70, 60)}>
                 <button
                   style={S.faqQ}
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
@@ -1010,7 +1092,7 @@ export default function LocationPageTemplate({ config }) {
                     ) : faq.a}
                   </div>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -1026,9 +1108,9 @@ export default function LocationPageTemplate({ config }) {
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '40px',
           }} className="tk-footer-grid">
-            <div>
-              <span style={S.eyebrow}>Other Areas</span>
-              <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>We Also Cover</h2>
+            <Reveal direction="left" delay={0}>
+              <span style={S.eyebrow}>{t('locationPageTemplate.footer.otherAreasEyebrow', { defaultValue: 'Other Areas' })}</span>
+              <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>{t('locationPageTemplate.footer.otherAreasTitle', { defaultValue: 'We Also Cover' })}</h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {otherLocations.map(loc => (
                   <a key={loc.href} href={langLink(loc.href)} className="tk-link-pill" style={S.linkPill}>
@@ -1036,25 +1118,29 @@ export default function LocationPageTemplate({ config }) {
                   </a>
                 ))}
               </div>
-            </div>
-            <div>
-              <span style={S.eyebrow}>All Services</span>
-              <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>Roadside Services</h2>
+            </Reveal>
+            <Reveal direction="right" delay={100}>
+              <span style={S.eyebrow}>{t('locationPageTemplate.footer.allServicesEyebrow', { defaultValue: 'All Services' })}</span>
+              <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>{t('locationPageTemplate.footer.allServicesTitle', { defaultValue: 'Roadside Services' })}</h2>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {ALL_SERVICES.map(svc => (
                   <a key={svc.href} href={langLink(svc.href)} className="tk-link-pill" style={S.linkPill}>
-                    {svc.name}
+                    {t(`locationPageTemplate.services.names.${svc.nameKey}`, { defaultValue: svc.name })}
                   </a>
                 ))}
               </div>
-            </div>
+            </Reveal>
           </div>
 
-          <div style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
+          <Reveal direction="up" delay={160} style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
             <a href={langLink('/about')} className="tk-link-pill"
-              style={{ ...S.linkPill, marginRight: '10px' }}>About Tareeqk</a>
-            <a href={langLink('/contact')} className="tk-link-pill" style={S.linkPill}>Contact Us</a>
-          </div>
+              style={{ ...S.linkPill, marginRight: '10px' }}>
+              {t('locationPageTemplate.footer.aboutTareeqkLink', { defaultValue: 'About Tareeqk' })}
+            </a>
+            <a href={langLink('/contact')} className="tk-link-pill" style={S.linkPill}>
+              {t('locationPageTemplate.footer.contactUsLink', { defaultValue: 'Contact Us' })}
+            </a>
+          </Reveal>
         </div>
       </section>
     </>

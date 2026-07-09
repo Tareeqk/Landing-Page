@@ -26,7 +26,7 @@ const config = {
   ],
   faqs: [
     {
-      q: 'Can you replace my car battery on the spot in Dubai?',
+      q: 'What should I do if my car battery dies in Dubai?',
       a: 'Yes. Our technicians carry a range of compatible batteries for most popular car brands in the UAE. If we have the right battery, we\'ll replace it on-site. If not, we\'ll jump-start you and arrange a follow-up.',
     },
     {

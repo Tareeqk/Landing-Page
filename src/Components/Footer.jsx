@@ -537,7 +537,7 @@ const Footer = () => {
                 </a>
               </div>
 
-              <a href="tel:+97180082773375" className="tk-cta-btn">
+              <a href="tel:+97142232269" className="tk-cta-btn">
                 <FaPhone />
                 Emergency Call
               </a>

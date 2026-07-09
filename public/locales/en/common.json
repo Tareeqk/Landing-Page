@@ -50,36 +50,35 @@
     "item3": "Wide Coverage Area",
     "item4": "Fair & Transparent Pricing",
     "heroTag": "Our Story",
-    "heroTitle": "Dubai's Most Trusted",
-    "heroHighlight": "Roadside Rescue.",
-    "heroSubtitle": "Redefining Dubai's vehicle recovery with an unwavering 20-minute response, complete transparency, and premium roadside assistance.",
-    "heroCta": "Request Immediate Aid",
-    "heroInquire": "Inquire",
+    "heroTitle": "Fast Recovery. Reliable Support",
+    "heroHighlight": " Anytime, anywhere.",
+    "heroSubtitle": "No matter where your journey stops, Tareeqk is ready to help. From emergency vehicle recovery to tyre repairs and battery jump starts, our roadside experts deliver dependable assistance across Dubai.",
+    "heroCta": "Get Roadside Assistance",
+    "heroInquire": " Book a Service",
     "originsTag": "Origins",
-    "originsTitle": "Born from a need for absolute reliability.",
-    "originsP1": "In 2019, Tareeqk set out to solve a single problem: the uncertainty of roadside assistance. We replaced vague ETAs with <strong>live GPS tracking</strong> and hidden costs with <strong>upfront digital quotes.</strong>",
-    "originsP2": "Today, as an RTA-licensed operator, we manage a sophisticated fleet across Dubai, ensuring no driver is ever more than 20 minutes from a solution.",
+    "originsTitle": "Your Trusted Roadside Partner.",
+"originsP1": "Tareeqk is a smart, app-based <strong>roadside assistance</strong> platform designed to connect drivers across <strong>Dubai</strong> with <strong>fast, reliable support</strong> whenever they need it. Whether you're dealing with a <strong>vehicle breakdown</strong>, require <strong>car recovery</strong> or <strong>towing</strong>, need a <strong>battery jump start</strong>, <strong>tyre repair</strong>, or <strong>puncture assistance</strong>, help is just a few taps away.",
+"originsP2": "With an estimated arrival time of 15 minutes, our network of experienced roadside professionals is committed to delivering prompt, safe, and efficient assistance. Every request is managed with transparency, professionalism, and a customer-first approach, ensuring a smooth experience from the moment you book a service until you're back on the road. At Tareeqk, we're more than a roadside assistance provider—we're a trusted mobility partner dedicated to keeping Dubai's drivers safe, connected, and moving with confidence, 24 hours a day.",
     "statFounded": "Founded",
     "statRescues": "Rescues",
     "statRating": "Rating",
     "rtaLicensed": "RTA Licensed",
     "rtaSubtitle": "Dubai certified operator",
     "valuesTag": "The Value Proposition",
-    "valuesTitle": "Why elite drivers choose Tareeqk.",
-    "value1Title": "20-Min Arrival",
-    "value1Body": "Real-time fleet positioning across Dubai ensures the fastest possible response.",
-    "value2Title": "RTA Certified",
-    "value2Body": "Fully licensed by Dubai's Roads & Transport Authority — the city's gold standard.",
-    "value3Title": "Fair Pricing",
-    "value3Body": "Fixed rates provided upfront. No hidden recovery fees, ever.",
-    "value4Title": "Expert Team",
-    "value4Body": "Background-checked, certified roadside technicians on every single job.",
-    "value5Title": "Live Tracking",
-    "value5Body": "Watch your recovery driver approach in real-time on the Tareeqk app.",
-    "value6Title": "24/7/365",
-    "value6Body": "We never sleep — even on public holidays and through Ramadan nights.",
+    "valuesTitle": "Why Drivers Trust Tareeqk ",
+    "value1Title": "15-Min Estimated Arrival",
+    "value1Body": "Our team responds quickly with an estimated arrival time of 15 minutes, helping you get back on the road without unnecessary delays.",
+    "value2Title": "Transparent Pricing",
+    "value2Body": "We provide clear and upfront pricing before every service, so you know exactly what to expect with no hidden charges.",
+    "value3Title": "Experienced Professionals",
+    "value3Body": "Our trained roadside specialists are committed to delivering safe, efficient, and dependable assistance whenever you need it.",
+    "value4Title": "Easy App Booking",
+    "value4Body": "Request roadside assistance through the Tareeqk app and connect with professional support quickly and conveniently.",
+    "value5Title": "24/7 Roadside Support",
+    "value5Body": "Our services are available 24 hours a day, 7 days a week, providing reliable assistance whenever and wherever you need it.",
+  
     "coverageTag": "Infrastructure",
-    "coverageTitle": "Total Dubai coverage.",
+    "coverageTitle": "Reliable Roadside Support ",
     "coverageSubtitle": "Localized hubs in Marina, Downtown, JVC, and Deira keep our 20-minute arrival promise unbroken, day or night.",
     "svc1": "Car Recovery",
     "svc2": "Battery Boost",
@@ -91,22 +90,24 @@
     "callBtn": "Call TAREEQK",
     "whatsappBtn": "WhatsApp Support",
     "ctaTag": "Always Ready",
-    "ctaTitle": "Never stranded.",
-    "ctaHighlight": "Never alone.",
-    "ctaSubtitle": "Join over 50,000 drivers who trust Tareeqk as their first call on Dubai's roads.",
+    "ctaTitle": "Roadside Help,",
+    "ctaHighlight": "Right When You Need It.",
+    "ctaSubtitle": "Fast, professional roadside assistance for battery jump starts, tyre repairs, towing, and vehicle recovery across Dubai—available 24/7.",
     "callNow": "Call Now",
     "whatsapp": "WhatsApp",
     "statAvgResponse": "Avg Response",
     "statDriversHelped": "Drivers Helped",
     "statReviews": "1,200+ Reviews",
-    "statLicensed": "Licensed"
+    "statLicensed": "Licensed",
+    "readMore": "Read More"
   },
  
+  
   "service": {
     "heroTag": "Premium Roadside Care",
-    "heroTitle": "Dubai's Fastest",
-    "heroHighlight": "Recovery & Assistance.",
-    "heroSubtitle": "Five expert services. One trusted operator. Twenty-minute response — across every district of Dubai, every hour of every day.",
+    "heroTitle": "Fast Response. ",
+    "heroHighlight": "Professional Service.",
+    "heroSubtitle": "Wherever you are in Dubai, Tareeqk delivers dependable roadside assistance with experienced technicians, transparent pricing, and service you can rely on—day or night.",
     "heroCta": "Get Towing Now",
     "heroWhatsapp": "Chat on WhatsApp",
     "statAvgResponse": "Avg Response",
@@ -115,22 +116,21 @@
     "statLicensed": "RTA Licensed",
 
     "whoWeAreTag": "Who We Are",
-    "whoWeAreTitle": "Premium recovery, engineered around you.",
-    "whoWeAreP1": "Tareeqk is Dubai's most trusted name in roadside assistance in Dubai — an RTA-licensed operator running a modern fleet of flatbeds, recovery trucks, and mobile service units, dispatched intelligently across the city.",
+    "whoWeAreTitle": "Roadside support made simple. ",
+    "whoWeAreP1": "From emergency towing and vehicle recovery to battery assistance, flat tire support, and fuel delivery, Tareeqk provides dependable roadside services through one intelligent platform. Request help in seconds, follow your provider in real time, and get back on the road with confidence.",
     "whoWeAreP2": "From a tyre puncture in Marina to a heavy-duty recovery on E11, our certified technicians arrive prepared, transparent, and ready to move — backed by a digital experience that keeps you informed every minute.",
     "needHelp": "Need help right now?",
     "downloadApp": "Download App",
-
-    "feat1": "Under 20-min arrival",
-    "feat2": "Certified technicians",
-    "feat3": "Total Dubai coverage",
-    "feat4": "Upfront pricing",
-    "feat5": "RTA-licensed operator",
-    "feat6": "Live in-app tracking",
+    "feat1": "One-Tap Requests",
+    "feat2": "Live GPS Tracking",
+    "feat3": "Fast Response Times",
+    "feat4": "Verified Professionals",
+    "feat5": "Transparent Pricing",
+    "feat6": "24/7 Service",
 
     "whatWeOfferTag": "What We Offer",
-    "whatWeOfferTitle": "A complete suite of",
-    "whatWeOfferHighlight": "roadside solutions.",
+    "whatWeOfferTitle": "Complete Roadside Assistance Services ",
+    "whatWeOfferHighlight": "Across Dubai",
 
     "svc1Tag": "Most Requested",
     "svc1Title": "Car Recovery Dubai",
@@ -259,12 +259,12 @@
     "subtitle": "What We Offer",
     "title": "Complete Vehicle Assistance Solutions",
     "description": "TAREEQK provides fast,reliable and professional roadside assistance across Dubai through our easy-to-use app. Whether you need car recovery, vehicle towing, battery jump start, flat tire repair or emergency roadside assistance, our trained recovery partners are available 24/7. Book instantly, track your service in real time and get back on the road",
-    "recovery": "Vehicle Recovery",
-    "recoveryDescription": "Fast, professional vehicle recovery for all sizes — from compact cars to heavy trucks. We respond in under 20 minutes, day or night.",
+    "recovery": "Vehicle Recocvery",
+    "recoveryDescription": "Wherever your vehicle breaks down, our professional recovery team is ready 24/7 to provide safe, fast, and reliable transportation.",
     "battery": "Battery Service",
-    "batteryDescription": "Dead battery? We replace, test, or jump-start your vehicle on-site, getting you back on the road without the hassle of a garage visit.",
-    "tyre": "Tyre Assistance",
-    "tyreDescription": "Flat tyre in the middle of nowhere? Our technicians come to you with the right tools and replacements, wherever you are in Dubai.",
+    "batteryDescription": "Don't let a dead battery ruin your day. We provide quick jump-start services at your location so you can continue your journey without hassle.",
+    "tyre": "Puncture Service",
+    "tyreDescription": " Tyre puncture? Our experts repair punctures on-site or replace the tyre when needed, getting you back on the road as quickly as possible.",
     "appBooking": "App Booking",
     "appBookingTop": "Easy",
     "appService": "Service Dispatch",
@@ -276,12 +276,12 @@
     "recovery3ton": "3 Ton Recovery",
     "recovery5ton": "5 Ton Recovery",
     "recovery10ton": "10 Ton Recovery",
-    "batteryReplacement": "Battery Replacement",
+    "batteryReplacement": "Emergency Jump Start",
     "batteryJump": "Jump Start",
-    "batteryTesting": "Battery Testing",
+    "batteryTesting": "Reliable Technicians",
     "tyreFlatAssist": "Flat Tyre Assistance",
-    "tyreReplacement": "Tyre Replacement",
-    "tyreEmergency": "Emergency Support",
+    "tyreReplacement": "Puncture Repair",
+    "tyreEmergency": "Emergency Assistance",
     "mostRequested": "Most Requested",
     "learnMore": "Learn More",
     "heroImageAlt": "Roadside assistance truck in Dubai"
@@ -415,8 +415,8 @@
   },
   "contact": {
     "eyebrow": "Get in Touch",
-    "heading": "Let's Start a Conversation",
-    "description": "Whether you need support, have a business inquiry, or want to learn more about our services, our team is ready to assist you.",
+    "heading": "Reliable Assistance, Whenever You Need It",
+    "description": "Fast, reliable roadside assistance and vehicle recovery whenever you need us. Available 24/7 across Dubai",
     "headquartersLabel": "Headquarters",
     "headquartersValue": "Dubai, UAE",
     "phoneLabel": "Phone",
@@ -425,7 +425,7 @@
     "addressValue": "Office #126, Bel Rasheed Building, Dubai, UAE",
     "mapTitle": "Google Map",
     "formEyebrow": "Send a Message",
-    "formHeading": "We'd love to hear from you",
+    "formHeading": "Need Assistance? Contact Us ",
     "formDescription": "Fill out the form below and our team will get back to you shortly.",
     "nameLabel": "Name",
     "namePlaceholder": "John Doe",
@@ -446,8 +446,8 @@
 
   "howItWorks": {
     "subtitle": "HOW IT WORKS",
-    "title": "Car recovery made simple.",
-    "description": "Tareeqk connects you with reliable towing services in just a few easy steps.",
+    "title": "Roadside help in just four simple steps.",
+    "description": "Whether you need vehicle recovery, a battery jump start, tire repair, or puncture assistance, Tareeqk makes getting help quick, easy, and stress-free. ",
     "mockupImageAlt": "Tareeqk app showing live tow truck tracking",
 
     "step1Title": "Request a Tow",
@@ -481,8 +481,747 @@
     },
     "videoBadge": "Watch Nasir in Action",
     "videoTitle": "Meet Nasir"
+  },
+  "locationPageTemplate": {
+    "hero": {
+      "badge247": "24/7 Service",
+      "badgeArea": "{{area}} • Dubai",
+      "titleLine1": "Car Recovery in",
+      "subtitle": "Stuck in {{area}}? We reach you in {{responseTime}} — day or night, every day.",
+      "callNow": "Call Now",
+      "callNowSub": "Instant Response",
+      "whatsapp": "WhatsApp",
+      "whatsappSub": "Chat Now",
+      "floatingCard": {
+        "title": "Reliable. Fast. Professional.",
+        "subtitle": "RTA Licensed · Fully Insured · Modern Fleet",
+        "liveTracking": "Live Tracking",
+        "customers": "5,000+ Customers"
+      }
+    },
+    "about": {
+      "eyebrow": "Serving {{area}}",
+      "title": "Roadside Assistance in {{area}}, Dubai",
+      "allDubaiServicesLink": "All Dubai Services",
+      "aboutTareeqkLink": "About Tareeqk",
+      "unitsActiveBadge": "Units active in {{area}}",
+      "stats": {
+        "avgResponseLabel": "Avg. Response",
+        "availableValue": "24/7",
+        "availableLabel": "Available",
+        "liveTrackingLabel": "Live Tracking",
+        "licensedValue": "RTA",
+        "licensedLabel": "Licensed"
+      }
+    },
+    "gallery": {
+      "eyebrow": "On The Ground",
+      "title": "Tareeqk Working in {{area}}",
+      "subtitle": "Real units, real equipment, real coverage — every time you call.",
+      "captionDispatched": "Recovery dispatched in {{area}}",
+      "captionArriving": "Technician arriving on-site",
+      "captionStandby": "Standing by, 24/7",
+      "altDispatched": "{{heroAlt}} — recovery truck dispatched",
+      "altArriving": "{{heroAlt}} — technician arriving on site",
+      "altStandby": "{{heroAlt}} — unit on standby"
+    },
+    "services": {
+      "eyebrow": "What We Offer",
+      "title": "Services Available in {{area}}",
+      "names": {
+        "carRecovery": "Car Recovery",
+        "towingService": "Towing Service",
+        "batteryBoost": "Battery Boost",
+        "flatTyreRepair": "Flat Tyre Repair",
+        "fuelDelivery": "Fuel Delivery",
+        "accidentRecovery": "Accident Recovery"
+      }
+    },
+    "process": {
+      "eyebrow": "Response Time",
+      "title": "How fast do we reach {{area}}?",
+      "dispatchBadge": "Avg. {{responseTime}} dispatch",
+      "steps": {
+        "step1": "App or call request placed",
+        "step2": "Nearest unit dispatched immediately",
+        "step3": "Technician on-site in ~{{responseTime}}",
+        "step4": "Vehicle recovered or issue resolved"
+      }
+    },
+    "cta": {
+      "liveBadge": "Units on standby now",
+      "titleLine1": "Need Help in",
+      "titleLine2": "Right Now?",
+      "body": "One call and we're already moving. Our nearest unit reaches you in {{responseTime}} — day or night.",
+      "callTitle": "Call Now",
+      "callSub": "Instant dispatch",
+      "whatsappTitle": "WhatsApp",
+      "whatsappSub": "Chat with us",
+      "responseFooter": "Average response · {{responseTime}}",
+      "trust": {
+        "rtaLicensed": "RTA Licensed",
+        "liveTracking": "Live Tracking",
+        "rescued": "Rescued"
+      }
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "FAQs — Car Recovery in {{area}}"
+    },
+    "footer": {
+      "otherAreasEyebrow": "Other Areas",
+      "otherAreasTitle": "We Also Cover",
+      "allServicesEyebrow": "All Services",
+      "allServicesTitle": "Roadside Services",
+      "aboutTareeqkLink": "About Tareeqk",
+      "contactUsLink": "Contact Us"
+    }
+  },
+  "car-recovery-dubai-marina": {
+    "area": "Dubai Marina",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Dubai Marina",
+    "responseTime": "20 minutes",
+    "meta": {
+      "title": "Car Recovery Dubai Marina – 24/7 Fast Response | Tareeqk",
+      "description": "Car recovery and roadside assistance in Dubai Marina. Tareeqk dispatches within 15 minutes, 24/7. Call or WhatsApp for instant help."
+    },
+    "areaDescription": "Dubai Marina is one of Dubai's busiest residential and tourism hubs, home to thousands of residents, hotels, and visitors. With heavy traffic on Marina Walk, Sheikh Zayed Road access roads, and the surrounding JBR area, vehicle breakdowns happen frequently. Tareeqk provides fast, reliable car recovery and roadside assistance throughout Dubai Marina and the surrounding waterfront district.",
+    "responseDescription": "Our team has units positioned across the Marina and JBR area. Once you request help, the nearest available truck is dispatched immediately — reaching most Dubai Marina locations within 20 minutes.",
+    "faqs": [
+      {
+        "question": "How fast can you reach Dubai Marina?",
+        "answer": "Our average response time to Dubai Marina is 15 minutes. We have units positioned in the surrounding area for rapid dispatch."
+      },
+      {
+        "question": "Do you cover JBR and The Walk as well?",
+        "answer": "Yes. Our Dubai Marina coverage includes JBR, The Walk, Marina Promenade, and all surrounding streets and car parks."
+      },
+      {
+        "question": "What roadside assistance services are available in Dubai Marina?",
+        "answer": "All services are available: car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery."
+      },
+      {
+        "question": "Can you recover a car from a Dubai Marina underground car park?",
+        "answer": "Yes. Our team is experienced with underground car park recoveries and has the appropriate equipment."
+      },
+      {
+        "question": "Is roadside assistance in Dubai Marina available 24/7?",
+        "answer": "Yes. Tareeqk operates 24 hours a day, 7 days a week, 365 days a year in Dubai Marina."
+      }
+    ]
+  },
+  "car-recovery-business-bay": {
+    "area": "Business Bay",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Business Bay Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Business Bay Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Business Bay Dubai. 15-minute response, 24/7 availability. Call or WhatsApp Tareeqk now."
+    },
+    "areaDescription": "Business Bay is Dubai's central business district, home to major corporate towers, hotels, and residential complexes along the Dubai Canal. With its dense traffic and underground car parks, vehicle issues are common. Tareeqk provides fast, professional car recovery and roadside assistance throughout Business Bay — minimising downtime for residents and professionals.",
+    "responseDescription": "Business Bay is centrally located, which means our nearest unit is usually only minutes away. We navigate the area's busy roads and underground facilities efficiently, targeting a 15-minute response time.",
+    "faqs": [
+      {
+        "question": "Can you recover a car from a Business Bay office tower car park?",
+        "answer": "Yes. We handle multi-level and underground car park recoveries in Business Bay with appropriate equipment."
+      },
+      {
+        "question": "How fast is car recovery in Business Bay?",
+        "answer": "Average response time is 15 minutes. Business Bay's central location means we often reach you faster."
+      },
+      {
+        "question": "Do you cover the Downtown Dubai area nearby?",
+        "answer": "Yes. Our coverage extends to Downtown Dubai, DIFC, and the Dubai Canal waterfront area."
+      },
+      {
+        "question": "Is battery boost service available in Business Bay?",
+        "answer": "Yes. All our roadside services — battery boost, flat tyre, fuel delivery, and full recovery — are available in Business Bay."
+      },
+      {
+        "question": "Are you available on weekdays during business hours in Business Bay?",
+        "answer": "Yes — 24/7, which naturally includes all weekday business hours as well as evenings and weekends."
+      }
+    ]
+  },
+  "car-recovery-downtown-dubai": {
+    "area": "Downtown Dubai",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Downtown Dubai Burj Khalifa",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Downtown Dubai – 24/7 Fast Response | Tareeqk",
+      "description": "Car recovery and roadside assistance in Downtown Dubai. Tareeqk reaches Burj Khalifa, Dubai Mall and DIFC areas in 15 minutes, 24/7."
+    },
+    "areaDescription": "Downtown Dubai is the city's most iconic district, home to the Burj Khalifa, Dubai Mall, and Sheikh Mohammed Bin Rashid Boulevard. Dense traffic, valet zones, and multi-level car parks make breakdowns particularly stressful here. Tareeqk provides fast, discreet car recovery and roadside assistance throughout Downtown Dubai, from the Opera District to Business Bay Crossing.",
+    "responseDescription": "With units stationed close to Downtown's major towers, we navigate the Boulevard and surrounding service roads quickly — reaching most Downtown Dubai locations within 20 minutes, even during peak mall traffic.",
+    "faqs": [
+      {
+        "question": "Can you recover a car from a Dubai Mall or Burj Khalifa car park?",
+        "answer": "Yes. We regularly handle recoveries from the Dubai Mall, Burj Khalifa Residence, and Boulevard car parks, including valet areas."
+      },
+      {
+        "question": "How fast can Tareeqk reach Downtown Dubai?",
+        "answer": "Our average response time in Downtown Dubai is 15 minutes, even with the area's heavy traffic and one-way systems."
+      },
+      {
+        "question": "Do you cover DIFC and the Opera District too?",
+        "answer": "Yes. Our Downtown coverage extends to DIFC, the Opera District, and Business Bay Crossing."
+      },
+      {
+        "question": "Is roadside assistance available during Downtown Dubai events or fireworks nights?",
+        "answer": "Yes, though response times may vary slightly during major road closures for events like New Year's Eve."
+      },
+      {
+        "question": "Can you tow my car from Downtown Dubai to another emirate?",
+        "answer": "Yes. We can tow within Dubai or to neighbouring emirates — just let us know your destination when booking."
+      }
+    ]
+  },
+  "car-recovery-deira": {
+    "area": "Deira",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Deira Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Deira Dubai – 24/7 Fast Response | Tareeqk",
+      "description": "Car recovery and roadside assistance in Deira, Dubai. 24/7 service with 20-minute response. Covering all Deira streets and surrounding areas."
+    },
+    "areaDescription": "Deira is one of Dubai's oldest and most densely populated districts, with a complex network of streets, souks, and high-traffic corridors. From Deira City Centre to Al Rigga, Al Muteena, and the Port Saeed area, Tareeqk covers every corner of Deira with fast, reliable car recovery and roadside assistance.",
+    "responseDescription": "Deira's dense street network requires local knowledge. Our team is familiar with all major routes and shortcuts in Deira, ensuring efficient navigation to your location with an average 20-minute response.",
+    "faqs": [
+      {
+        "question": "Do you cover all areas of Deira including Al Rigga and Port Saeed?",
+        "answer": "Yes. Our Deira coverage includes Al Rigga, Port Saeed, Al Muteena, Al Hamriya, Deira City Centre area, and all surrounding streets."
+      },
+      {
+        "question": "How quickly can you reach me in Deira?",
+        "answer": "Our average response time in Deira is 15 minutes. Traffic permitting, we often arrive faster."
+      },
+      {
+        "question": "Do you cover Sharjah border areas near Deira?",
+        "answer": "We primarily serve Dubai. For locations very close to the Sharjah border, contact us to confirm coverage for your specific location."
+      },
+      {
+        "question": "Is car battery replacement available in Deira?",
+        "answer": "Yes. Battery boost and replacement are available throughout Deira, 24/7."
+      },
+      {
+        "question": "Can you tow my car to a garage in Deira or another area?",
+        "answer": "Yes. We tow to any garage, dealership, or location of your choice within Dubai."
+      }
+    ]
+  },
+  "car-recovery-bur-dubai": {
+    "area": "Bur Dubai",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Bur Dubai Al Fahidi Dubai Creek",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Bur Dubai – 24/7 Fast Response | Tareeqk",
+      "description": "Car recovery and roadside assistance in Bur Dubai. Covering Al Fahidi, Al Mankhool and Dubai Creek. 20-minute response, 24/7."
+    },
+    "areaDescription": "Bur Dubai is one of the city's oldest and most culturally rich districts, with narrow streets around Al Fahidi, Meena Bazaar, and the Dubai Creek waterfront. The mix of historic lanes and busy commercial roads means breakdowns need a team that knows the area well. Tareeqk covers all of Bur Dubai with fast, experienced recovery and roadside support.",
+    "responseDescription": "Our drivers know Bur Dubai's older street layout, from Al Mankhool to Oud Metha, and can navigate narrow lanes and souk traffic to reach you in around 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover the Al Fahidi and Meena Bazaar areas?",
+        "answer": "Yes. Our Bur Dubai coverage includes Al Fahidi, Meena Bazaar, Al Mankhool, and the Dubai Creek waterfront."
+      },
+      {
+        "question": "How quickly can you reach Bur Dubai?",
+        "answer": "Average response time is 15 minutes, accounting for Bur Dubai's narrower streets and souk-area traffic."
+      },
+      {
+        "question": "Do you also cover Oud Metha nearby?",
+        "answer": "Yes, Oud Metha and the surrounding Healthcare City area are part of our Bur Dubai coverage zone."
+      },
+      {
+        "question": "Can you help if my car breaks down near Dubai Creek?",
+        "answer": "Yes. We cover the full Creek-side stretch including Al Seef and the abra station areas."
+      },
+      {
+        "question": "Is night-time recovery available in Bur Dubai?",
+        "answer": "Yes, we operate 24/7 across Bur Dubai including late nights and early mornings."
+      }
+    ]
+  },
+  "car-recovery-al-barsha": {
+    "area": "Al Barsha",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Al Barsha Dubai Mall of the Emirates",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Al Barsha Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Al Barsha, Dubai. Covering Al Barsha 1, 2, 3 and Mall of the Emirates area. 15-minute response."
+    },
+    "areaDescription": "Al Barsha is a major residential and commercial district stretching along Sheikh Zayed Road near the Mall of the Emirates. With Al Barsha 1, 2, and 3 covering a wide stretch of villas, apartments, and labour accommodation zones, the area sees a steady stream of recovery requests. Tareeqk covers every part of Al Barsha with rapid, round-the-clock response.",
+    "responseDescription": "Positioned close to Sheikh Zayed Road, our units can reach most Al Barsha addresses — including the areas around Mall of the Emirates — within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover Al Barsha 1, 2, and 3?",
+        "answer": "Yes. We cover all of Al Barsha 1, 2, 3, and South, plus the areas around Mall of the Emirates."
+      },
+      {
+        "question": "How fast can you reach Al Barsha?",
+        "answer": "Our average response time in Al Barsha is 15 minutes thanks to our Sheikh Zayed Road positioning."
+      },
+      {
+        "question": "Can you recover a car from a Mall of the Emirates car park?",
+        "answer": "Yes. We handle multi-level mall car park recoveries regularly in this area."
+      },
+      {
+        "question": "Do you cover Al Barsha South and the labour accommodation areas?",
+        "answer": "Yes, our coverage extends to Al Barsha South and the surrounding industrial and accommodation zones."
+      },
+      {
+        "question": "Is roadside assistance available in Al Barsha at night?",
+        "answer": "Yes — 24/7, including nights, weekends, and public holidays."
+      }
+    ]
+  },
+  "car-recovery-jumeirah": {
+    "area": "Jumeirah",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Jumeirah Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Jumeirah Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Jumeirah, Dubai. 24/7 service, 15-minute response. Covering Jumeirah 1, 2, 3, and surrounding areas."
+    },
+    "areaDescription": "Jumeirah is one of Dubai's most prestigious coastal residential districts, spanning Jumeirah 1, 2, and 3 along the Arabian Gulf. With wide beachfront roads, Villa communities, and proximity to major landmarks, it's a key area for both residents and visitors. Tareeqk covers all of Jumeirah with fast, discreet, professional car recovery and roadside assistance.",
+    "responseDescription": "Jumeirah's straight coastal roads and well-mapped streets allow our team to navigate quickly. We dispatch the nearest available unit to your location in Jumeirah and typically arrive within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover Jumeirah 1, 2, and 3?",
+        "answer": "Yes. Our coverage spans all three Jumeirah districts — Jumeirah 1, Jumeirah 2, and Jumeirah 3 — as well as the coastal roads and beach areas."
+      },
+      {
+        "question": "How fast can you reach Jumeirah?",
+        "answer": "Our average response time in Jumeirah is 15 minutes. Jumeirah's clear road layout helps our team reach you efficiently."
+      },
+      {
+        "question": "Do you also cover Jumeirah Beach Road and Umm Suqeim?",
+        "answer": "Yes. We cover Jumeirah Beach Road, Umm Suqeim 1, 2, and 3, and areas up to the Madinat Jumeirah vicinity."
+      },
+      {
+        "question": "What if I break down near Kite Beach in Jumeirah?",
+        "answer": "We cover the entire Jumeirah coastal strip including Kite Beach, Black Palace Beach, and Jumeirah Open Beach."
+      },
+      {
+        "question": "Is car recovery available in Jumeirah on weekends?",
+        "answer": "Yes — we operate 24/7, seven days a week including all weekends and public holidays."
+      }
+    ]
+  },
+  "car-recovery-jvc": {
+    "area": "JVC",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery JVC Jumeirah Village Circle Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery JVC (Jumeirah Village Circle) – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in JVC Dubai. Fast 15-minute response, 24/7 service. Call or WhatsApp Tareeqk for immediate help."
+    },
+    "areaDescription": "Jumeirah Village Circle (JVC) is a large, fast-growing residential community in Dubai with an extensive internal road network. Its circular layout and multiple entry/exit points can make navigation challenging — especially during a breakdown. Tareeqk's team knows JVC's road structure well and can locate and reach you quickly anywhere within the community.",
+    "responseDescription": "JVC's circular internal roads can be confusing. Share your GPS pin via the Tareeqk app or WhatsApp and our team will navigate directly to you — typically arriving within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Can you find me inside JVC if I'm not sure of my exact location?",
+        "answer": "Yes. Share your GPS location via WhatsApp or the app and we'll navigate directly to you using your coordinates."
+      },
+      {
+        "question": "How quickly can Tareeqk reach JVC?",
+        "answer": "Our average response time in JVC is 15 minutes. We have units in the Al Barsha and surrounding areas ready to dispatch."
+      },
+      {
+        "question": "Do you cover JVT (Jumeirah Village Triangle) as well?",
+        "answer": "Yes. We cover both JVC and the adjacent JVT, as well as Dubai Sports City and Motor City nearby."
+      },
+      {
+        "question": "What if my car breaks down in a JVC basement car park?",
+        "answer": "We handle underground recoveries. Our technicians have the right equipment and experience for car park extractions."
+      },
+      {
+        "question": "Is car recovery available at night in JVC?",
+        "answer": "Yes — 24/7, including nights, weekends, and UAE public holidays."
+      }
+    ]
+  },
+  "car-recovery-jlt": {
+    "area": "JLT",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery JLT Jumeirah Lake Towers Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery JLT (Jumeirah Lake Towers) – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in JLT Dubai. Covering all clusters around the lakes. 15-minute response, 24/7 service."
+    },
+    "areaDescription": "Jumeirah Lake Towers (JLT) is a dense cluster of high-rise towers built around a series of man-made lakes, just off Sheikh Zayed Road near Dubai Marina. With dozens of numbered clusters and shared basement car parks, finding a specific tower during a breakdown can be tricky. Tareeqk's team knows the cluster layout well and dispatches quickly to any JLT address.",
+    "responseDescription": "We know JLT's cluster numbering system and basement parking layouts, so our team can locate your tower quickly — typically arriving within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Can you find my tower if I only know the cluster number?",
+        "answer": "Yes. Just share your cluster number and tower name and we'll navigate directly to you."
+      },
+      {
+        "question": "How fast can Tareeqk reach JLT?",
+        "answer": "Our average response time in JLT is 15 minutes, with units positioned nearby in Dubai Marina and JVC."
+      },
+      {
+        "question": "Do you cover the JLT basement and podium car parks?",
+        "answer": "Yes. We regularly recover vehicles from basement and podium-level parking across JLT towers."
+      },
+      {
+        "question": "Is JLT covered alongside Dubai Marina and JVC?",
+        "answer": "Yes — JLT sits between our Marina and JVC coverage zones, so response is fast either way."
+      },
+      {
+        "question": "Can you tow my car out of JLT to a garage elsewhere?",
+        "answer": "Yes. We can tow to any garage or dealership across Dubai."
+      }
+    ]
+  },
+  "car-recovery-dubai-silicon-oasis": {
+    "area": "Dubai Silicon Oasis",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Dubai Silicon Oasis DSO",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Dubai Silicon Oasis – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Dubai Silicon Oasis. Covering DSO residential and tech park zones. 15-minute response, 24/7."
+    },
+    "areaDescription": "Dubai Silicon Oasis (DSO) is a free zone and residential community built around a technology park, located along Sheikh Mohammed Bin Zayed Road. It combines villa communities, apartment clusters, and commercial tech offices spread across a wide area. Tareeqk covers all of DSO with reliable recovery and roadside assistance, from the residential zones to the business park.",
+    "responseDescription": "DSO's wide layout means slightly longer travel distances, but our units cover the area regularly — reaching most locations within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover both the residential and tech park areas of DSO?",
+        "answer": "Yes. We cover all of Dubai Silicon Oasis, including the villa clusters and the business park."
+      },
+      {
+        "question": "How long does it take to reach Dubai Silicon Oasis?",
+        "answer": "Our average response time is 15 minutes due to DSO's wider road network."
+      },
+      {
+        "question": "Do you also serve the areas near DSO like Al Ain Road?",
+        "answer": "Yes, we cover the surrounding stretches of Sheikh Mohammed Bin Zayed Road near DSO."
+      },
+      {
+        "question": "Can you help with a flat tyre at a DSO office building?",
+        "answer": "Yes, flat tyre repair is available throughout DSO at any office or residential location."
+      },
+      {
+        "question": "Is recovery available in DSO on weekends?",
+        "answer": "Yes, we operate 24/7, seven days a week, in Dubai Silicon Oasis."
+      }
+    ]
+  },
+  "car-recovery-international-city": {
+    "area": "International City",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery International City Dubai Dragon Mart",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery International City Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in International City, Dubai. Covering all country clusters and Dragon Mart. 15-minute response."
+    },
+    "areaDescription": "International City is a large residential community made up of country-themed clusters — China, Russia, Morocco, Spain and more — surrounding the Dragon Mart shopping complex. Its repeating block layout and similar street names can make a breakdown location hard to describe. Tareeqk's drivers are familiar with the cluster naming system and reach any block quickly.",
+    "responseDescription": "Share your cluster name and building number, or drop a GPS pin, and our team will navigate directly to you — usually within 15 minutes.",
+    "faqs": [
+      {
+        "question": "How do I describe my location if I don't know my exact cluster?",
+        "answer": "Share a GPS pin via WhatsApp or the app and we'll find you without needing the cluster name."
+      },
+      {
+        "question": "How fast can you reach International City?",
+        "answer": "Our average response time is 15 minutes given the area's size and distance from central Dubai."
+      },
+      {
+        "question": "Do you cover the area around Dragon Mart?",
+        "answer": "Yes, Dragon Mart 1 and 2 and the surrounding clusters are fully covered."
+      },
+      {
+        "question": "Can you recover a car from inside a cluster's internal parking?",
+        "answer": "Yes, our team is experienced with the internal block parking layout across International City."
+      },
+      {
+        "question": "Is roadside assistance available at night in International City?",
+        "answer": "Yes — 24/7, including nights and weekends."
+      }
+    ]
+  },
+  "car-recovery-dubai-investment-park": {
+    "area": "Dubai Investment Park (DIP)",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Dubai Investment Park DIP",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Dubai Investment Park (DIP) – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Dubai Investment Park (DIP). Covering DIP 1 and 2, residential and industrial zones. 15-minute response."
+    },
+    "areaDescription": "Dubai Investment Park (DIP) is a sprawling mixed-use zone combining residential communities, warehouses, and light industrial units near Expo City and Al Maktoum Airport. Its scale and the mix of residential DIP 2 villas with industrial DIP 1 facilities mean recovery jobs here often involve longer distances. Tareeqk covers all of DIP with dependable, scheduled or emergency dispatch.",
+    "responseDescription": "Given DIP's distance from central Dubai, we aim for a 15-minute response, with units that regularly service the surrounding Jebel Ali and Expo corridor.",
+    "faqs": [
+      {
+        "question": "Do you cover both DIP 1 and DIP 2?",
+        "answer": "Yes. We cover the full Dubai Investment Park area, including residential DIP 2 and industrial DIP 1."
+      },
+      {
+        "question": "How long does recovery take in DIP?",
+        "answer": "Our average response time is 15 minutes due to the area's distance from central Dubai."
+      },
+      {
+        "question": "Can you recover a commercial vehicle or van from a DIP warehouse?",
+        "answer": "Yes, we handle light commercial vehicles and vans in addition to standard cars."
+      },
+      {
+        "question": "Do you also cover areas near Expo City close to DIP?",
+        "answer": "Yes, our DIP coverage extends to the surrounding Expo City and Al Maktoum Airport corridor."
+      },
+      {
+        "question": "Is 24/7 service available in DIP?",
+        "answer": "Yes, including nights and weekends, though we recommend calling ahead for very remote warehouse locations."
+      }
+    ]
+  },
+  "car-recovery-dubai-sports-city": {
+    "area": "Dubai Sports City",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Dubai Sports City Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Dubai Sports City – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Dubai Sports City. Covering all residential towers and stadium areas. 15-minute response, 24/7."
+    },
+    "areaDescription": "Dubai Sports City is a residential and sporting hub built around several stadiums and academies, located off Sheikh Mohammed Bin Zayed Road near Motor City. With a mix of apartment towers, villa clusters, and event-day traffic around the cricket stadium and golf courses, vehicle issues here need a team that can adapt quickly. Tareeqk covers the full Sports City area.",
+    "responseDescription": "We track event schedules around the stadiums to plan routes accordingly, generally reaching Dubai Sports City addresses within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover the residential towers in Dubai Sports City?",
+        "answer": "Yes, we cover all residential clusters as well as the area around the stadiums and academies."
+      },
+      {
+        "question": "How fast can you reach Dubai Sports City?",
+        "answer": "Average response time is 15 minutes, slightly longer on event days due to stadium traffic."
+      },
+      {
+        "question": "Is recovery available during cricket or golf events nearby?",
+        "answer": "Yes, though response may take a little longer during major events due to road closures."
+      },
+      {
+        "question": "Do you also cover Motor City next door?",
+        "answer": "Yes, Motor City is part of our adjacent coverage area as well."
+      },
+      {
+        "question": "Is roadside assistance available at night in Dubai Sports City?",
+        "answer": "Yes — 24/7, including nights and weekends."
+      }
+    ]
+  },
+  "car-recovery-motor-city": {
+    "area": "Motor City",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Motor City Dubai Autodrome",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Motor City Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Motor City, Dubai. Covering Green Community and Dubai Autodrome areas. 15-minute response."
+    },
+    "areaDescription": "Motor City is a residential community centred around the Dubai Autodrome, home to the Green Community villas and several apartment clusters. Located close to Dubai Sports City and Al Qudra Road, it's popular with families and motorsport enthusiasts alike. Tareeqk covers all of Motor City, from the Green Community to the Autodrome service roads.",
+    "responseDescription": "Our units regularly service the Motor City and Sports City corridor, reaching most addresses within 15 minutes, including evenings around track-day events.",
+    "faqs": [
+      {
+        "question": "Do you cover the Green Community in Motor City?",
+        "answer": "Yes, the Green Community villas and apartments are fully within our Motor City coverage."
+      },
+      {
+        "question": "How fast can you reach Motor City?",
+        "answer": "Our average response time is 15 minutes for Motor City addresses."
+      },
+      {
+        "question": "Can you help near the Dubai Autodrome on event days?",
+        "answer": "Yes, though response may be slightly delayed during major race or track events due to road closures."
+      },
+      {
+        "question": "Do you also cover Sports City and Al Qudra Road nearby?",
+        "answer": "Yes, both areas are part of our extended coverage zone alongside Motor City."
+      },
+      {
+        "question": "Is recovery available in Motor City at night?",
+        "answer": "Yes — 24/7, including nights, weekends, and holidays."
+      }
+    ]
+  },
+  "car-recovery-mirdif": {
+    "area": "Mirdif",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Mirdif Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Mirdif Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Mirdif, Dubai. Covering all Mirdif villa communities and Mirdif City Centre. 15-minute response."
+    },
+    "areaDescription": "Mirdif is a quiet, established villa community in eastern Dubai, close to Dubai International Airport and Mirdif City Centre. Its grid of residential streets and proximity to Emirates Road make it a popular family neighbourhood, though its distance from central Dubai means breakdowns can leave drivers waiting longer with other providers. Tareeqk covers Mirdif with the same 24/7 dispatch as the rest of the city.",
+    "responseDescription": "We keep units positioned to serve eastern Dubai communities like Mirdif, typically reaching villa addresses or the City Centre area within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover all Mirdif villa communities?",
+        "answer": "Yes, we cover all of Mirdif's residential streets and villa clusters."
+      },
+      {
+        "question": "How fast can you reach Mirdif?",
+        "answer": "Our average response time in Mirdif is 15 minutes, given its distance from central Dubai."
+      },
+      {
+        "question": "Can you recover a car from near Mirdif City Centre?",
+        "answer": "Yes, the City Centre area and surrounding streets are part of our standard Mirdif coverage."
+      },
+      {
+        "question": "Do you cover areas near Dubai Airport close to Mirdif?",
+        "answer": "Yes, our coverage extends to the areas bordering Dubai International Airport."
+      },
+      {
+        "question": "Is car recovery available in Mirdif on public holidays?",
+        "answer": "Yes, we operate 24/7, including all UAE public holidays."
+      }
+    ]
+  },
+  "car-recovery-al-qusais": {
+    "area": "Al Qusais",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Al Qusais Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Al Qusais Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Al Qusais, Dubai. Covering residential and industrial zones near Sharjah border. 15-minute response."
+    },
+    "areaDescription": "Al Qusais is a busy residential and industrial district in northern Dubai, close to the Sharjah border and Dubai International Airport. It combines older apartment buildings, labour accommodation, and a sizable industrial zone, all served by busy roads like Damascus Street and the Al Ittihad corridor. Tareeqk covers all of Al Qusais with fast, reliable recovery and roadside support.",
+    "responseDescription": "Our team knows Al Qusais' mix of residential streets and industrial roads well, and typically reaches you within 15 minutes regardless of which side of the district you're on.",
+    "faqs": [
+      {
+        "question": "Do you cover both Al Qusais residential and industrial areas?",
+        "answer": "Yes, we cover all of Al Qusais, including the industrial zone and residential clusters."
+      },
+      {
+        "question": "How fast can you reach Al Qusais?",
+        "answer": "Our average response time in Al Qusais is 15 minutes."
+      },
+      {
+        "question": "Do you cover areas near the Sharjah border close to Al Qusais?",
+        "answer": "We primarily serve Dubai; for locations right at the border, contact us to confirm coverage."
+      },
+      {
+        "question": "Can you help with a flat tyre in the Al Qusais industrial area?",
+        "answer": "Yes, flat tyre repair and all roadside services are available throughout the industrial zone."
+      },
+      {
+        "question": "Is recovery available in Al Qusais at night?",
+        "answer": "Yes — 24/7, including nights and weekends."
+      }
+    ]
+  },
+  "car-recovery-al-quoz": {
+    "area": "Al Quoz",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Al Quoz Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Al Quoz Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Al Quoz, Dubai. 15-minute response, 24/7. Covering Al Quoz Industrial, Al Quoz 1, 2, 3, 4."
+    },
+    "areaDescription": "Al Quoz is a large mixed-use district in Dubai that includes industrial zones, warehouses, art spaces, and residential areas. It sits centrally between Sheikh Zayed Road and Al Khail Road, making it a key area for businesses and commuters alike. Tareeqk covers all of Al Quoz — including the Industrial areas 1, 2, 3, and 4 — with fast car recovery and roadside assistance.",
+    "responseDescription": "Al Quoz's central location means our units are never far away. We cover all Al Quoz Industrial and residential sub-areas and aim for a 20-minute response time to any location within the district.",
+    "faqs": [
+      {
+        "question": "Do you cover Al Quoz Industrial areas?",
+        "answer": "Yes. We cover Al Quoz Industrial 1, 2, 3, and 4, as well as all residential and mixed-use parts of Al Quoz."
+      },
+      {
+        "question": "How fast can you reach Al Quoz?",
+        "answer": "Our average response time to Al Quoz is 15 minutes. The area's central location often means faster arrival."
+      },
+      {
+        "question": "Can you tow a heavy vehicle or van in Al Quoz?",
+        "answer": "Yes. We handle light commercial vehicles and vans in addition to standard cars. Contact us for heavy vehicle enquiries."
+      },
+      {
+        "question": "Is roadside assistance available in Al Quoz at night?",
+        "answer": "Yes — 24/7, including nights, weekends, and all UAE public holidays."
+      },
+      {
+        "question": "What areas near Al Quoz do you also cover?",
+        "answer": "We also cover Al Barsha, Motor City, Umm Al Sheif, Nad Al Sheba, and Downtown Dubai which are all adjacent to Al Quoz."
+      }
+    ]
+  },
+  "car-recovery-jebel-ali": {
+    "area": "Jebel Ali",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Jebel Ali Dubai Free Zone",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Jebel Ali Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Jebel Ali, Dubai. Covering the free zone, port area and residential village. 30-minute response."
+    },
+    "areaDescription": "Jebel Ali is home to one of the world's largest man-made ports and a major free zone, alongside the residential Jebel Ali Village and Discovery Gardens nearby. The area's industrial scale, heavy truck traffic, and long internal roads mean recovery here often covers more ground than in central Dubai. Tareeqk services all of Jebel Ali, from the port and free zone to the residential pockets.",
+    "responseDescription": "Given Jebel Ali's size and distance from the city centre, we aim for a 15-minute response, with units that regularly cover the wider Jebel Ali–DIP corridor.",
+    "faqs": [
+      {
+        "question": "Do you cover the Jebel Ali Free Zone and port area?",
+        "answer": "Yes, we cover the Free Zone, port area, and surrounding industrial roads."
+      },
+      {
+        "question": "How long does recovery take in Jebel Ali?",
+        "answer": "Our average response time is 15 minutes due to the area's scale and distance from central Dubai."
+      },
+      {
+        "question": "Can you recover a truck or commercial vehicle in Jebel Ali?",
+        "answer": "Yes, we handle light commercial vehicles and vans; contact us for heavy vehicle enquiries."
+      },
+      {
+        "question": "Do you cover Jebel Ali Village and Discovery Gardens nearby?",
+        "answer": "Yes, both residential areas are part of our Jebel Ali coverage zone."
+      },
+      {
+        "question": "Is recovery available in Jebel Ali at night?",
+        "answer": "Yes — 24/7, including nights and weekends, though we recommend confirming exact gate or access details in advance for free zone locations."
+      }
+    ]
+  },
+  "car-recovery-palm-jumeirah": {
+    "area": "Palm Jumeirah",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Palm Jumeirah Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Palm Jumeirah – 24/7 Fast Response | Tareeqk",
+      "description": "Car recovery and roadside assistance on Palm Jumeirah, Dubai. Covering the Trunk, Fronds and Crescent. 25-minute response, 24/7."
+    },
+    "areaDescription": "Palm Jumeirah is Dubai's iconic man-made island, with villas along the Fronds, apartments on the Trunk, and resorts on the outer Crescent. Because the island connects to the mainland by a single access road, breakdowns here can mean a longer wait with the wrong provider. Tareeqk keeps units ready to cross onto the Palm quickly and reach any Frond, the Trunk, or the Crescent.",
+    "responseDescription": "We monitor traffic on the Palm's access bridge and plan routes accordingly, generally reaching Trunk and Frond addresses within 15 minutes.",
+    "faqs": [
+      {
+        "question": "Do you cover all the Fronds on Palm Jumeirah?",
+        "answer": "Yes, we cover every Frond, the Trunk, and the outer Crescent resorts."
+      },
+      {
+        "question": "How fast can you reach Palm Jumeirah?",
+        "answer": "Our average response time is 15 minutes, accounting for the single access road onto the island."
+      },
+      {
+        "question": "Can you recover a car from a Palm Jumeirah villa driveway?",
+        "answer": "Yes, our team is experienced with Frond villa access and gated community entry."
+      },
+      {
+        "question": "Do you cover the hotels and resorts on the Crescent?",
+        "answer": "Yes, the Crescent resorts and surrounding access roads are part of our Palm Jumeirah coverage."
+      },
+      {
+        "question": "Is roadside assistance available on Palm Jumeirah at night?",
+        "answer": "Yes — 24/7, including nights, weekends, and public holidays."
+      }
+    ]
   }
-
-
 
 }

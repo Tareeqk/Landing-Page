@@ -41,14 +41,14 @@ export default function CJI() {
             {/* Robot + Text */}
             <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
               <div className="relative shrink-0">
-                <div className="absolute inset-0 bg-yellow-300/20 blur-2xl rounded-full" />
+                <div className="absolute inset-0 blur-2xl rounded-full" />
 
                 <video
                   autoPlay
                   muted
                   loop
                   playsInline
-                  src="/new/Sajin.webm"
+                  src="/new/Sajin.webm" 
                   className="relative w-24 md:w-28"
                 />
               </div>

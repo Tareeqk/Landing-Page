@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -88,9 +87,40 @@ export default function HowItWorks() {
     style.id = "hiw-v5-styles";
     style.textContent = `
       .hiw-section {
-        background: #0b0b0e;
-        padding: 80px 0;
+        position: relative;
+        padding: 100px 0;
         overflow: hidden;
+        background-color: #0b0b0e;
+      }
+      /* bg: the mockup image, anchored to the right, fading out toward the left */
+      .hiw-section::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        left: 35%;
+        background-image: url("/new/howitworks_dark.png");
+        background-size: cover;
+        background-position: right center;
+        background-repeat: no-repeat;
+        opacity: 0.35;
+        z-index: 0;
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
+        mask-image: linear-gradient(to right, transparent 0%, black 40%);
+      }
+      /* warm gold glow on the right to tie it together */
+      .hiw-section::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(ellipse at 85% 50%, rgba(212,160,23,0.07) 0%, transparent 55%),
+          linear-gradient(to left, rgba(11,11,14,0.15) 0%, rgba(11,11,14,0.85) 55%, #0b0b0e 75%);
+        z-index: 1;
+        pointer-events: none;
+      }
+      .hiw-container {
+        position: relative;
+        z-index: 2;
       }
       .hiw-container {
         max-width: 1280px;
@@ -146,21 +176,22 @@ export default function HowItWorks() {
         margin: 0;
       }
 
-      /* ── PERKS: column on desktop ── */
-      .hiw-perks {
+      /* ── PERKS ROW: horizontal, below the cards ── */
+      .hiw-perks-row {
         display: flex;
-        flex-direction: column;
-        gap: 8px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 4px;
       }
       .hiw-perk {
         display: inline-flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         background: rgba(255,255,255,0.04);
         border: 1px solid rgba(255,255,255,0.08);
         border-radius: 999px;
-        padding: 10px 18px 10px 10px;
-        width: fit-content;
+        padding: 8px 16px 8px 8px;
         transition: border-color 0.2s, background 0.2s;
       }
       .hiw-perk:hover {
@@ -168,8 +199,8 @@ export default function HowItWorks() {
         background: rgba(255,255,255,0.06);
       }
       .hiw-perk-icon-wrap {
-        width: 40px;
-        height: 40px;
+        width: 34px;
+        height: 34px;
         border-radius: 50%;
         background: rgba(212,160,23,0.08);
         border: 1px solid rgba(212,160,23,0.2);
@@ -178,42 +209,16 @@ export default function HowItWorks() {
         justify-content: center;
         flex-shrink: 0;
       }
-      .hiw-perk-icon { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; display: block; }
-      .hiw-perk-label { font-size: 13px; font-weight: 700; color: #d0d0d6; white-space: nowrap; }
-
-      /* mobile perk cycling container */
-      .hiw-perks-mobile {
-        display: none;
-      }
-      .hiw-perks-mobile-inner {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-        transition: opacity 0.35s ease, transform 0.35s ease;
-      }
-      .hiw-perks-mobile-inner.hiw-perks-hidden {
-        opacity: 0;
-        transform: translateY(6px);
-      }
-      .hiw-perks-mobile-inner.hiw-perks-visible {
-        opacity: 1;
-        transform: translateY(0);
-      }
-      /* mobile pill fills its cell */
-      .hiw-perks-mobile .hiw-perk {
-        width: 100%;
-        padding: 9px 12px 9px 9px;
-      }
-      .hiw-perks-mobile .hiw-perk-icon-wrap { width: 34px; height: 34px; }
-      .hiw-perks-mobile .hiw-perk-icon { width: 34px; height: 34px; }
-      .hiw-perks-mobile .hiw-perk-label { font-size: 12px; }
+      .hiw-perk-icon { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; display: block; }
+      .hiw-perk-label { font-size: 12px; font-weight: 700; color: #d0d0d6; white-space: nowrap; }
 
       /* ── RIGHT ── */
       .hiw-right {
         display: grid;
-        grid-template-columns: 1fr 280px;
+        grid-template-columns: 1fr;
         gap: 20px;
         align-items: stretch;
+        overflow: visible;
       }
       .hiw-cards {
         display: grid;
@@ -265,7 +270,7 @@ export default function HowItWorks() {
         margin-bottom: 14px;
         flex-shrink: 0;
       }
-      .hiw-step-icon img { width: 24px; height: 24px; object-fit: contain; }
+      .hiw-step-icon img { width: 38px; height: 36px; object-fit: contain; }
       .hiw-step-title {
         font-size: 14px;
         font-weight: 800;
@@ -279,24 +284,6 @@ export default function HowItWorks() {
         color: #7e7e88;
         margin: 0;
       }
-
-      /* ── IMAGE COL ── */
-      .hiw-image-col { display: flex; align-items: stretch; }
-      .hiw-mockup-wrap {
-        width: 100%;
-        border-radius: 22px;
-        overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.08);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      }
-      .hiw-mockup {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center top;
-      }
-      [dir="rtl"] .hiw-mockup { transform: scaleX(-1); }
 
       .hiw-dots { display: none; }
 
@@ -313,9 +300,8 @@ export default function HowItWorks() {
           gap: 24px;
           align-items: start;
         }
-        .hiw-perks { flex-direction: row; flex-wrap: wrap; }
         .hiw-title { font-size: 36px; }
-        .hiw-right { grid-template-columns: 1fr 240px; }
+        .hiw-right { grid-template-columns: 1fr; }
       }
 
       /* ════════════════════
@@ -329,20 +315,10 @@ export default function HowItWorks() {
         .hiw-desc { font-size: 14px; }
 
         /* hide desktop perks, show mobile cycling perks */
-        .hiw-perks { display: none; }
-        .hiw-perks-mobile { display: block; }
+        .hiw-perks-row { gap: 8px; }
+        .hiw-perk-label { font-size: 11px; }
 
         .hiw-right { grid-template-columns: 1fr; gap: 20px; }
-        .hiw-image-col { order: -1; justify-content: center; }
-        .hiw-mockup-wrap {
-          width: 200px;
-          height: 380px;
-          border-radius: 20px;
-          margin: 0 auto;
-          flex-shrink: 0;
-        }
-
-        /* auto-scroll carousel */
         .hiw-cards {
           display: flex;
           flex-direction: row;
@@ -390,10 +366,10 @@ export default function HowItWorks() {
   }, []);
 
   const steps = [
-    { num: "01", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step1Title"), desc: t("howItWorks.step1Desc") },
-    { num: "02", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step2Title"), desc: t("howItWorks.step2Desc") },
-    { num: "03", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step3Title"), desc: t("howItWorks.step3Desc") },
-    { num: "04", iconSrc: "/icons/icon_sample.png", title: t("howItWorks.step4Title"), desc: t("howItWorks.step4Desc") },
+    { num: "01", iconSrc: "/icons/request_tow.png", title: t("howItWorks.step1Title"), desc: t("howItWorks.step1Desc") },
+    { num: "02", iconSrc: "/icons/best_fit.png", title: t("howItWorks.step2Title"), desc: t("howItWorks.step2Desc") },
+    { num: "03", iconSrc: "/icons/track_time.png", title: t("howItWorks.step3Title"), desc: t("howItWorks.step3Desc") },
+    { num: "04", iconSrc: "/icons/safe_hassle.png", title: t("howItWorks.step4Title"), desc: t("howItWorks.step4Desc") },
   ];
 
    const perks = [
@@ -422,37 +398,10 @@ export default function HowItWorks() {
               <h2 className="hiw-title">{t("howItWorks.title")}</h2>
               <p className="hiw-desc">{t("howItWorks.description")}</p>
             </div>
-
-            {/* Desktop perks — all visible, stacked */}
-            <div className="hiw-perks">
-              {perks.map((p) => (
-                <div className="hiw-perk" key={p.label}>
-                  <div className="hiw-perk-icon-wrap">
-                    <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
-                  </div>
-                  <span className="hiw-perk-label">{p.label}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Mobile perks — 2 at a time, cycling */}
-            <div className="hiw-perks-mobile">
-              <div className={`hiw-perks-mobile-inner ${perkFade ? "hiw-perks-visible" : "hiw-perks-hidden"}`}>
-                {visiblePerks.map((p, i) => (
-                  <div className="hiw-perk" key={`${p.label}-${i}`}>
-                    <div className="hiw-perk-icon-wrap">
-                      <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
-                    </div>
-                    <span className="hiw-perk-label">{p.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* ── RIGHT: 2×2 cards + portrait image ── */}
+          {/* ── RIGHT: 2×2 cards + perks row ── */}
           <div className="hiw-right">
-
             <div className="hiw-cards" ref={stepsRef}>
               {steps.map((step) => (
                 <div className="hiw-step" key={step.num}>
@@ -466,16 +415,17 @@ export default function HowItWorks() {
               ))}
             </div>
 
-            <div className="hiw-image-col">
-              <div className="hiw-mockup-wrap">
-                <img
-                  className="hiw-mockup"
-                  src="/your-portrait-image.png"
-                  alt={t("howItWorks.mockupImageAlt")}
-                />
-              </div>
+            {/* Perks row — below the cards */}
+            <div className="hiw-perks-row">
+              {perks.map((p) => (
+                <div className="hiw-perk" key={p.label}>
+                  <div className="hiw-perk-icon-wrap">
+                    <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
+                  </div>
+                  <span className="hiw-perk-label">{p.label}</span>
+                </div>
+              ))}
             </div>
-
           </div>
         </div>
 
@@ -490,4 +440,3 @@ export default function HowItWorks() {
     </section>
   );
 }
-
