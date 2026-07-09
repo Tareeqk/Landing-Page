@@ -23,18 +23,18 @@ import BlogPage from './Pages/BlogPage';
 import NotFound from './Pages/NotFound';
 
 // ── SEO SERVICE PAGES (Lazy Loaded) ──────────────────────────────
-const CarRecoveryDubai      = lazy(() => import('./pages/services/CarRecoveryDubai'));
-const BatteryServiceDubai   = lazy(() => import('./pages/services/BatteryServiceDubai'));
-const FlatTyreRepairDubai   = lazy(() => import('./pages/services/FlatTyreRepairDubai'));
-const FuelDeliveryDubai     = lazy(() => import('./pages/services/FuelDeliveryDubai'));
-const AccidentRecoveryDubai = lazy(() => import('./pages/services/AccidentRecoveryDubai'));
-const TowingServiceDubai    = lazy(() => import('./pages/services/TowingServiceDubai'));
+const CarRecoveryDubai      = lazy(() => import('./Pages/services/CarRecoveryDubai'));
+const BatteryServiceDubai   = lazy(() => import('./Pages/services/BatteryServiceDubai'));
+const FlatTyreRepairDubai   = lazy(() => import('./Pages/services/FlatTyreRepairDubai'));
+const FuelDeliveryDubai     = lazy(() => import('./Pages/services/FuelDeliveryDubai'));
+const AccidentRecoveryDubai = lazy(() => import('./Pages/services/AccidentRecoveryDubai'));
+const TowingServiceDubai    = lazy(() => import('./Pages/services/Towingservicedubai'));
 
 // ── LOCATION PAGES ────────────────────────────────────────────────
 // locationComponents is a { ComponentName: Component } map built from
 // the slugs in index.jsx, which reads all data from common.json via
 // useTranslation — no separate data file needed.
-import locationComponents from './pages/locations';
+import locationComponents from './Pages/locations';
 
 // Slugs must match the top-level keys in common.json and the route
 // paths already in use. Order doesn't matter.
