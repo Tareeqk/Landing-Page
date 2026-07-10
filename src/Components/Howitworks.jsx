@@ -10,7 +10,9 @@ import { useTranslation } from "react-i18next";
 const CUSTOMER_APP_BG = "/new/howitworks_dark.png";
 const DRIVER_APP_BG = "/new/howitworks_dark.png"; // TODO: replace with a real driver-app screenshot
 
-const BANNER_CYCLE_MS = 6000;
+// Each banner shows 4 cards with a real title + sentence to read — 6s gave
+// people almost no time to get through them before it auto-advanced.
+const BANNER_CYCLE_MS = 12000;
 
 export default function HowItWorks() {
   const { t, i18n } = useTranslation();
@@ -179,7 +181,7 @@ export default function HowItWorks() {
         opacity: 0;
         transition: opacity 1.1s ease;
       }
-      .hiw-bg-layer--active { opacity: 0.35; }
+      .hiw-bg-layer--active { opacity: 0.22; }
       @media (prefers-reduced-motion: reduce) {
         .hiw-bg-layer { transition: none; }
       }
@@ -239,6 +241,12 @@ export default function HowItWorks() {
       .hiw-track {
         display: flex;
         width: 200%;
+        /* The step-number badges sit at top:-13px, intentionally poking
+           above their card's top edge. Row-1 cards (01/02) have nothing
+           above them to absorb that overflow, so overflow:hidden on the
+           viewport above was clipping their tops off. This padding
+           reserves the headroom instead. */
+        padding-top: 18px;
         transition: transform 0.65s cubic-bezier(0.65,0,0.35,1);
       }
       @media (prefers-reduced-motion: reduce) {
@@ -350,8 +358,15 @@ export default function HowItWorks() {
         gap: 16px;
       }
       .hiw-step {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
+        /* Frosted glass, not a near-transparent tint — cards need to read
+           cleanly on their own regardless of what the background photo is
+           doing underneath them, since the section-level scrim is
+           deliberately weaker toward the right edge (where cards 02/04
+           sit) to let the photo show through there. */
+        background: rgba(20,18,10,0.55);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,0.09);
         border-radius: 20px;
         padding: 28px 18px 22px;
         position: relative;
