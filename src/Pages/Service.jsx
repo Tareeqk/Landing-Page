@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 
 import howItWorksIllustration from '/how-it-works-illustration.png';
+import useLangLink from '../hooks/useLangLink';
 
 // ── Schemas ────────────────────────────────────────────────────────────────
 function ServicesPageSchema() {
@@ -464,6 +465,7 @@ function TouchSwiper({ items, renderSlide, className = '' }) {
 export default function Service({ isSection = false }) {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === 'rtl';
+  const langLink = useLangLink();
   const HeadingTag = isSection ? 'h2' : 'h1';
   useServiceStyles();
 
@@ -593,7 +595,7 @@ export default function Service({ isSection = false }) {
 
   // ── Render helpers ─────────────────────────────────────────────────────
   const renderServiceCard = (svc, i) => (
-    <a href={svc.href} className="svc-card" style={{ display: 'block' }}>
+    <a href={langLink(svc.href)} className="svc-card" style={{ display: 'block' }}>
       <div className="svc-card-top-bar" />
 
       {/* Card image — rendered as a CSS background so it always fills the card */}
@@ -733,16 +735,19 @@ export default function Service({ isSection = false }) {
             className="svc-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("new/Recovery_Van.webp")',
+              backgroundImage: 'url("/new/Recovery_Van.webp")',
               backgroundSize: 'cover', backgroundPosition: 'center 40%', backgroundRepeat: 'no-repeat',
             }}
           />
-          {/* Mobile background */}
+          {/* Mobile background — same real photo, tighter crop. The
+              dedicated portrait asset (service_hero_mobile.webp) this
+              pointed to didn't exist, so the mobile hero had no image at
+              all (both paths were also missing their leading "/"). */}
           <div
             className="svc-hero-img-mobile"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("new/service_hero_mobile.webp")',
+              backgroundImage: 'url("/new/Recovery_Van.webp")',
               backgroundSize: 'cover', backgroundPosition: 'center 30%', backgroundRepeat: 'no-repeat',
             }}
           />
@@ -1087,7 +1092,7 @@ export default function Service({ isSection = false }) {
                 {LOCATIONS.map((loc, i) => (
                   <a
                     key={i}
-                    href={loc.href}
+                    href={langLink(loc.href)}
                     className="svc-loc-pill"
                     style={{
                       display: 'inline-flex', alignItems: 'center', gap: '6px',
@@ -1103,7 +1108,7 @@ export default function Service({ isSection = false }) {
                   </a>
                 ))}
                 <a
-                  href="/contact"
+                  href={langLink("/#contact")}
                   className="svc-loc-pill"
                   style={{
                     display: 'inline-flex', alignItems: 'center',
