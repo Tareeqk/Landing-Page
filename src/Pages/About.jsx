@@ -446,12 +446,14 @@ export default function About({ isSection = false }) {
     { stat: 'RTA',    label: t('about.statLicensed') },
   ];
 
-  // Mobile photo strip images
+  // Mobile photo strip images — real Tareeqk photography only (no mixing in
+  // the CG service renders used elsewhere; that mix read as visual clutter
+  // when tried on the homepage About section earlier).
   const MOBILE_PHOTOS = [
-    { src: 'new/Recovery_Van.webp',   alt: 'Tareeqk recovery van Dubai' },
-    { src: 'new/battery_service.webp', alt: 'Battery boost service Dubai' },
-    { src: 'new/tyre_repair.webp',    alt: 'Flat tyre repair Dubai' },
-    { src: 'new/towing_truck.webp',   alt: 'Towing truck Dubai' },
+    { src: '/new/Recovery_Van.webp', alt: 'Tareeqk recovery van, Dubai' },
+    { src: '/towing.jpg',            alt: 'Tareeqk tow truck on a Dubai street' },
+    { src: '/tareeqktow.jpg',        alt: 'Tareeqk truck loading a vehicle' },
+    { src: '/newTruck.jpg',          alt: 'Tareeqk flatbed recovery truck' },
   ];
 
   return (
@@ -482,18 +484,20 @@ export default function About({ isSection = false }) {
             className="abt-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("about_hero.png")',
+              backgroundImage: 'url("/about_hero.png")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 38%',
               backgroundRepeat: 'no-repeat',
             }}
           />
-          {/* Mobile hero image (portrait / square crop) */}
+          {/* Mobile hero image — same photo, tighter crop. The dedicated
+              portrait asset (about_hero_mobile.png) this pointed to didn't
+              exist, so the mobile hero rendered with no image at all. */}
           <div
             className="abt-hero-img-mobile"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("about_hero_mobile.png")',
+              backgroundImage: 'url("/about_hero.png")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 30%',
               backgroundRepeat: 'no-repeat',
@@ -624,7 +628,7 @@ export default function About({ isSection = false }) {
                 </a>
               </div>
 
-              {/* <div
+              <div
                 className="abt-reveal abt-hero-stats"
                 data-delay="320"
                 style={{
@@ -654,7 +658,8 @@ export default function About({ isSection = false }) {
                 ))}
               </div>
 
-      
+              {/* Mobile-only pill version of the same stats — hero had
+                  nothing after the CTA buttons on phones without this */}
               <div className="abt-mobile-stats">
                 {HERO_STATS.map((m, i) => (
                   <div key={i}>
@@ -662,7 +667,7 @@ export default function About({ isSection = false }) {
                     <div className="abt-mobile-stat-label">{m.label}</div>
                   </div>
                 ))}
-              </div>   */}
+              </div>
             </div>
           </div>
         </section>
@@ -773,7 +778,7 @@ export default function About({ isSection = false }) {
                 }}
               >
                 <img
-                  src="new/Recovery_Van.webp"
+                  src="/new/Recovery_Van.webp"
                   alt="Tareeqk roadside recovery Dubai"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                   loading="lazy"
@@ -1181,7 +1186,7 @@ export default function About({ isSection = false }) {
                   {t('about.callBtn')}
                 </a>
                 <a
-                  href="https://wa.me/971"
+                  href="https://wa.me/97142232269"
                   target="_blank"
                   rel="noreferrer"
                   style={{

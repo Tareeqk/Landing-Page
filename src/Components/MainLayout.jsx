@@ -7,7 +7,7 @@ import HreflangTags from "../Hreflangtags"
 
 const MainLayout = ({ isDark, setIsDark }) => {
   return (
-    <div className="pt-[65px]">
+    <div className="pt-16 sm:pt-20">
       <HreflangTags />
       <Navbar isDark={isDark} setIsDark={setIsDark} />
       <Nasir />

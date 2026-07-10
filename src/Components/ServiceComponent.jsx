@@ -70,23 +70,29 @@ export default function WhatWeOffer() {
   ];
 
   // ── Scroll to card by index
+  // Delta computed via getBoundingClientRect (always real physical
+  // coordinates, sidesteps Chrome/Firefox disagreeing on the sign/origin
+  // of `scrollLeft` inside an RTL container) and applied with `scrollBy`
+  // on the grid element specifically. Deliberately NOT `scrollIntoView` —
+  // that walks up every ancestor scroll container including the page
+  // itself, so it was yanking the whole page back to this section on
+  // every auto-scroll tick if the user had scrolled past it.
   const scrollToCard = useCallback((idx) => {
     const grid = gridRef.current;
     if (!grid) return;
     const card = grid.children[idx];
     if (!card) return;
     isScrollingRef.current = true;
-    grid.scrollTo({
-  left: card.offsetLeft,
-  behavior: "smooth",
-});
+    const delta = card.getBoundingClientRect().left - grid.getBoundingClientRect().left;
+    grid.scrollBy({ left: delta, behavior: "smooth" });
     setActiveIdx(idx);
     setTimeout(() => { isScrollingRef.current = false; }, 500);
   }, []);
 
-  // ── Auto-scroll timer
+  // ── Auto-scroll timer — skipped entirely under prefers-reduced-motion
   const startAutoScroll = useCallback(() => {
     clearInterval(autoScrollRef.current);
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     autoScrollRef.current = setInterval(() => {
       if (isPaused) return;
       setActiveIdx((prev) => {
@@ -103,18 +109,55 @@ export default function WhatWeOffer() {
   }, [startAutoScroll]);
 
   // ── Track user scroll to update dots
+  // Uses `getBoundingClientRect()` rather than `scrollLeft` math for the
+  // same RTL cross-browser reason as scrollToCard above — bounding rects
+  // are always real physical viewport positions regardless of direction.
   useEffect(() => {
     const grid = gridRef.current;
     if (!grid) return;
     const onScroll = () => {
       if (isScrollingRef.current) return;
-      const cardWidth = grid.children[0]?.offsetWidth ?? 0;
-      const idx = Math.round(grid.scrollLeft / (cardWidth + 16));
-      setActiveIdx(Math.max(0, Math.min(idx, services.length - 1)));
+      const gridRect = grid.getBoundingClientRect();
+      let closest = 0, minDist = Infinity;
+      Array.from(grid.children).forEach((card, i) => {
+        const dist = Math.abs(card.getBoundingClientRect().left - gridRect.left);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      setActiveIdx(closest);
     };
     grid.addEventListener("scroll", onScroll, { passive: true });
     return () => grid.removeEventListener("scroll", onScroll);
   }, [services.length]);
+
+  // ── Scroll-reveal entrance (fade + rise), staggered via transitionDelay.
+  // Tracked as React state, not imperative classList.add — an element
+  // whose className also depends on frequently-changing state (like
+  // HowItWorks' step cards keyed to its auto-cycling activeStep) would
+  // have that imperative class silently wiped on the next re-render, since
+  // React recomputes className from scratch and has no idea "s4-visible"
+  // was ever added outside its own render. None of these elements happen
+  // to hit that today, but keeping it in state removes the trap entirely.
+  const sectionRef = useRef(null);
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      setRevealed(true);
+      return;
+    }
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // ── Pause on touch
   const handleTouchStart = () => setIsPaused(true);
@@ -133,6 +176,18 @@ export default function WhatWeOffer() {
         overflow: hidden;
       }
       body.dark .s4-section { background: #141414; }
+
+      /* ── Scroll-reveal entrance ── */
+      .s4-reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+                    transform 0.7s cubic-bezier(0.16,1,0.3,1);
+      }
+      .s4-reveal.s4-visible { opacity: 1 !important; transform: none !important; }
+      @media (prefers-reduced-motion: reduce) {
+        .s4-reveal { opacity: 1; transform: none; transition: none; }
+      }
 
       .s4-container {
         max-width: 1260px;
@@ -326,6 +381,9 @@ export default function WhatWeOffer() {
         width: max-content;
       }
       .s4-stats-ticker:hover .s4-ticker-track { animation-play-state: paused; }
+      @media (prefers-reduced-motion: reduce) {
+        .s4-ticker-track { animation: none; }
+      }
 
       @keyframes s4-ticker-scroll {
         0%   { transform: translateX(0); }
@@ -440,6 +498,11 @@ export default function WhatWeOffer() {
       body.dark .s4-card:hover {
         box-shadow: 0 18px 48px rgba(0,0,0,0.4);
       }
+      .s4-card:hover .s4-icon-circle {
+        transform: scale(1.08) rotate(-4deg);
+        background: #fff3c4;
+      }
+      body.dark .s4-card:hover .s4-icon-circle { background: #3a3106; }
 
       .s4-card.featured {
         background: #fffef0;
@@ -450,7 +513,7 @@ export default function WhatWeOffer() {
         border-color: #FFCC00;
       }
 
-      /* ── Badge ── */
+      /* ── Badge — subtle shimmer sweep to draw the eye to "Most Requested" ── */
       .s4-badge {
         position: absolute;
         top: 20px;
@@ -465,8 +528,25 @@ export default function WhatWeOffer() {
         gap: 5px;
         white-space: nowrap;
         z-index: 3;
+        overflow: hidden;
       }
-      .s4-badge img { width: 13px; height: 13px; object-fit: contain; }
+      .s4-badge::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.65) 48%, transparent 66%);
+        transform: translateX(-120%);
+        animation: s4-badge-shimmer 3.2s ease-in-out infinite;
+      }
+      @keyframes s4-badge-shimmer {
+        0%, 55%  { transform: translateX(-120%); }
+        100%     { transform: translateX(120%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .s4-badge::after { animation: none; display: none; }
+      }
+      .s4-badge img { width: 13px; height: 13px; object-fit: contain; position: relative; z-index: 1; }
+      .s4-badge > span { position: relative; z-index: 1; }
       [dir="ltr"] .s4-badge { right: 20px; }
       [dir="rtl"] .s4-badge { left: 20px; right: auto; }
 
@@ -707,11 +787,11 @@ export default function WhatWeOffer() {
 
   return (
     <section className="s4-section" dir={isRTL ? "rtl" : "ltr"}>
-      <div className="s4-container">
+      <div className="s4-container" ref={sectionRef}>
 
         {/* ── Hero ── */}
         <div className="s4-top">
-          <div className="s4-hero-text">
+          <div className={`s4-hero-text s4-reveal${revealed ? " s4-visible" : ""}`}>
             <div className="s4-eyebrow">{t("offer.subtitle")}</div>
             <h2 className="s4-title">{t("offer.title")}</h2>
             <p className="s4-desc">{t("offer.description")}</p>
@@ -727,8 +807,12 @@ export default function WhatWeOffer() {
 
         {/* ── Stats — desktop grid ── */}
         <div className="s4-stats-desktop">
-          {stats.map((s) => (
-            <div className="s4-stat" key={s.value}>
+          {stats.map((s, i) => (
+            <div
+              className={`s4-stat s4-reveal${revealed ? " s4-visible" : ""}`}
+              style={{ transitionDelay: revealed ? `${i * 80}ms` : "0ms" }}
+              key={s.value}
+            >
               <div className="s4-stat-icon">
                 <img src={s.iconSrc} alt="" aria-hidden="true" />
               </div>
@@ -767,16 +851,17 @@ export default function WhatWeOffer() {
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          {services.map((service) => (
+          {services.map((service, i) => (
             <a
               key={service.key}
               href={getLangLink(service.link)}
-              className={`s4-card${service.featured ? " featured" : ""}`}
+              style={{ transitionDelay: revealed ? `${i * 100}ms` : "0ms" }}
+              className={`s4-card s4-reveal${revealed ? " s4-visible" : ""}${service.featured ? " featured" : ""}`}
             >
               {service.featured && (
                 <span className="s4-badge">
                   <img src="/icons/star_icon.png" alt="" aria-hidden="true" />
-                  {t("offer.mostRequested")}
+                  <span>{t("offer.mostRequested")}</span>
                 </span>
               )}
 

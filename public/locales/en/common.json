@@ -450,6 +450,9 @@
     "description": "Whether you need vehicle recovery, a battery jump start, tire repair, or puncture assistance, Tareeqk makes getting help quick, easy, and stress-free. ",
     "mockupImageAlt": "Tareeqk app showing live tow truck tracking",
 
+    "customerTab": " Customer App",
+    "driverTab": "Driver App",
+
     "step1Title": "Request a Tow",
     "step1Desc": "Enter your location, choose your vehicle type and select the service you need.",
 
@@ -461,6 +464,22 @@
 
     "step4Title": "Safe & Hassle-Free",
     "step4Desc": "Your vehicle is in safe hands. Pay securely and rate your experience.",
+
+    "driverSubtitle": "FOR DRIVERS",
+    "driverTitle": "Start earning in four simple steps.",
+    "driverDescription": "From sign-up to your first ride, Tareeqk makes joining our driver network fast, transparent, and hassle-free.",
+
+    "driverStep1Title": "Sign Up & Submit Docs",
+    "driverStep1Desc": "Register in minutes and upload your license, Mulkiya, and vehicle documents for review.",
+
+    "driverStep2Title": "Get Verified",
+    "driverStep2Desc": "Our team reviews your documents and approves your account — you're notified the moment you're cleared.",
+
+    "driverStep3Title": "Receive Ride Requests",
+    "driverStep3Desc": "Once approved, nearby job alerts land on your phone. Accept the ones that work for you.",
+
+    "driverStep4Title": "Navigate & Deliver",
+    "driverStep4Desc": "Follow in-app navigation to the customer and complete the job step-by-step until it's done.",
 
     "perkVerified": "Verified Professionals",
     "perkFast": "Fast Response",
