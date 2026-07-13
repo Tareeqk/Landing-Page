@@ -367,7 +367,7 @@ function useServiceStyles() {
         .svc-why-grid    { display: none !important; }
         .svc-why-swiper  { display: block !important; }
         .svc-hero-stats  { display: none !important; }
-        .svc-inner       { padding: 0 1.25rem !important; }
+        .svc-inner       { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         .svc-steps-track, .svc-steps-cards { grid-template-columns: 1fr 1fr !important; }
         .svc-steps-track-line { display: none; }
         .svc-trust-item { flex: 1 1 50%; border-inline-end: none !important; padding: 10px 16px; }
@@ -381,6 +381,17 @@ function useServiceStyles() {
         .svc-why-grid    { grid-template-columns: 1fr !important; }
         .svc-steps-track, .svc-steps-cards { grid-template-columns: 1fr !important; }
         .svc-trust-item { flex: 1 1 100%; }
+      }
+
+      /* ── App-like density on mobile ── */
+      @media (max-width: 768px) {
+        .svc-hero-section    { min-height: auto !important; }
+        .svc-hero-section .svc-inner { padding-top: 112px !important; padding-bottom: 44px !important; }
+        .svc-intro-section   { padding: 44px 0 !important; }
+        .svc-cards-section   { padding: 44px 0 !important; }
+        .svc-why-section     { padding: 44px 0 !important; }
+        .svc-coverage-section { padding: 44px 0 !important; }
+        .svc-cta-section     { padding: 56px 0 !important; }
       }
     `;
     document.head.appendChild(style);
@@ -1065,6 +1076,7 @@ export default function Service({ isSection = false }) {
           COVERAGE — dark section
       ══════════════════════════════════════════════════════════════════ */}
       <section
+        className="svc-coverage-section"
         style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="svc-inner" style={inner}>

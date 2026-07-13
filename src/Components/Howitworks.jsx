@@ -69,11 +69,24 @@ export default function HowItWorks() {
   const isPausedRef = useRef(false);
   const cycleRef = useRef(null);
 
-  /* ── Auto-cycle between the two banners ── */
+  /* ── Auto-cycle between the two banners — desktop only. On mobile the
+     banner should only change when a tab is pressed; auto-advancing while
+     someone is mid-read of 4 stacked cards was disorienting on a phone. ── */
+  const isMobileRef = useRef(
+    typeof window !== "undefined" && window.matchMedia("(max-width: 680px)").matches
+  );
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 680px)");
+    const onChange = () => { isMobileRef.current = mq.matches; };
+    onChange();
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
   useEffect(() => {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
     cycleRef.current = setInterval(() => {
-      if (isPausedRef.current) return;
+      if (isPausedRef.current || isMobileRef.current) return;
       setActiveBanner((prev) => (prev + 1) % banners.length);
     }, BANNER_CYCLE_MS);
     return () => clearInterval(cycleRef.current);
@@ -85,39 +98,6 @@ export default function HowItWorks() {
     setActiveBanner(i);
     setTimeout(() => { isPausedRef.current = false; }, 4000);
   };
-
-  /* ── Mobile step carousel — one horizontal scroll-snap track per banner
-     (only the active banner's track is reachable by touch since the
-     inactive one is off-screen), tracked independently so each banner
-     remembers its own dot position. getBoundingClientRect, not
-     scrollLeft/offsetLeft — scrollLeft's sign/origin differs between
-     Chrome and Firefox inside an RTL container. ── */
-  const stepsRefs = useRef([]);
-  const [mobileStepIdx, setMobileStepIdx] = useState([0, 0]);
-  useEffect(() => {
-    const cleanups = banners.map((banner, bannerIdx) => {
-      const el = stepsRefs.current[bannerIdx];
-      if (!el) return () => {};
-      const onScroll = () => {
-        const containerRect = el.getBoundingClientRect();
-        const cards = el.querySelectorAll(".hiw-step");
-        let closest = 0, minDist = Infinity;
-        cards.forEach((c, i) => {
-          const dist = Math.abs(c.getBoundingClientRect().left - containerRect.left);
-          if (dist < minDist) { minDist = dist; closest = i; }
-        });
-        setMobileStepIdx((prev) => {
-          const next = [...prev];
-          next[bannerIdx] = closest;
-          return next;
-        });
-      };
-      el.addEventListener("scroll", onScroll, { passive: true });
-      return () => el.removeEventListener("scroll", onScroll);
-    });
-    return () => cleanups.forEach((fn) => fn());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   /* ── Scroll-reveal entrance (fade + rise) — React state, not imperative
      classList.add. An imperative class survives fine on elements whose
@@ -429,8 +409,6 @@ export default function HowItWorks() {
         margin: 0;
       }
 
-      .hiw-dots { display: none; }
-
       /* ── Scroll-reveal entrance ── */
       .hiw-reveal {
         opacity: 0;
@@ -490,46 +468,28 @@ export default function HowItWorks() {
         .hiw-perk-label { font-size: 11px; }
 
         .hiw-right { grid-template-columns: 1fr; gap: 20px; }
+        /* All 4 steps visible at once as a 2×2 grid — no horizontal
+           scrolling, no auto-advancing carousel to sit through. */
         .hiw-cards {
-          display: flex;
-          flex-direction: row;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-          gap: 14px;
-          padding: 16px 18px 10px;
-          margin: 0 -18px;
-          scrollbar-width: none;
-          grid-template-columns: unset;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
           grid-template-rows: unset;
+          gap: 12px;
+          padding-top: 14px;
         }
-        .hiw-cards::-webkit-scrollbar { display: none; }
         .hiw-step {
-          min-width: 72vw;
-          max-width: 72vw;
-          flex-shrink: 0;
-          scroll-snap-align: start;
+          padding: 18px 14px 16px;
+          min-width: 0;
         }
-
-        .hiw-dots {
-          display: flex;
-          justify-content: center;
-          gap: 6px;
-          margin-top: 10px;
+        .hiw-step-icon {
+          width: 40px;
+          height: 40px;
+          margin-bottom: 10px;
         }
-        .hiw-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.18);
-          border: 0;
-          padding: 0;
-          cursor: pointer;
-          transition: background 0.25s, transform 0.25s;
-        }
-        .hiw-dot.hiw-dot--active {
-          background: #d4a017;
-          transform: scale(1.4);
-        }
+        .hiw-step-icon img { width: 26px; height: 26px; }
+        .hiw-step-title { font-size: 12.5px; margin-bottom: 5px; }
+        .hiw-step-desc { font-size: 10.5px; line-height: 1.5; }
+        .hiw-step-num { width: 24px; height: 24px; font-size: 10px; }
       }
     `;
     document.head.appendChild(style);
@@ -596,10 +556,7 @@ export default function HowItWorks() {
 
                   {/* ── RIGHT: 2×2 cards ── */}
                   <div className="hiw-right">
-                    <div
-                      className="hiw-cards"
-                      ref={(el) => { stepsRefs.current[bannerIdx] = el; }}
-                    >
+                    <div className="hiw-cards">
                       {banner.steps.map((step, i) => (
                         <div
                           className={`hiw-step hiw-reveal${revealed ? " hiw-visible" : ""}`}
@@ -613,16 +570,6 @@ export default function HowItWorks() {
                           <h3 className="hiw-step-title">{step.title}</h3>
                           <p className="hiw-step-desc">{step.desc}</p>
                         </div>
-                      ))}
-                    </div>
-
-                    {/* Dot indicators — mobile only, per-banner scroll position */}
-                    <div className="hiw-dots" role="group" aria-label="Select a step">
-                      {banner.steps.map((_, i) => (
-                        <span
-                          key={i}
-                          className={`hiw-dot${i === mobileStepIdx[bannerIdx] ? " hiw-dot--active" : ""}`}
-                        />
                       ))}
                     </div>
                   </div>

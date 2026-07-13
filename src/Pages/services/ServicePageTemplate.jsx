@@ -395,6 +395,45 @@ const styles = {
   },
 };
 
+// App-like mobile treatment. Inline `style` objects above win over plain CSS
+// specificity, so these overrides use `!important` — the pragmatic way to
+// retrofit responsiveness onto a template built entirely with style props.
+const MOBILE_CSS = `
+@media (max-width: 768px) {
+  .svc-hero { min-height: auto !important; }
+  .svc-hero-content { padding: 108px 20px 40px !important; }
+  .svc-hero-tag { font-size: 9px !important; padding: 6px 14px !important; margin-bottom: 16px !important; }
+  .svc-hero-h1 { font-size: 28px !important; line-height: 1.22 !important; margin-bottom: 14px !important; }
+  .svc-hero-subtitle { font-size: 14px !important; margin: 0 auto 26px !important; }
+  .svc-hero-ctas { flex-direction: column !important; align-items: stretch !important; gap: 10px !important; margin-bottom: 30px !important; }
+  .svc-hero-ctas button { width: 100% !important; justify-content: center !important; padding: 14px 22px !important; }
+  .svc-hero-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; max-width: 320px !important; gap: 10px !important; }
+
+  .svc-section { padding: 52px 0 !important; }
+  .svc-section-inner { padding: 0 18px !important; }
+  .svc-section-h2 { font-size: 22px !important; margin-bottom: 12px !important; }
+  .svc-areas-h2 { font-size: 30px !important; }
+
+  .svc-grid2 { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .svc-grid4 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
+  .svc-all-areas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .svc-all-areas-grid .svc-all-area-card { padding: 14px !important; }
+
+  .svc-trust-card { padding: 28px 22px !important; }
+  .svc-process-card { padding: 22px 18px !important; }
+
+  .svc-cta-wrap { margin: 48px auto !important; }
+  .svc-cta-section { margin: 0 16px !important; padding: 32px 24px !important; border-radius: 22px !important; }
+  .svc-cta-actions { flex-direction: column !important; align-items: stretch !important; width: 100% !important; }
+  .svc-cta-actions button { width: 100% !important; justify-content: center !important; }
+}
+
+@media (max-width: 420px) {
+  .svc-grid4 { grid-template-columns: 1fr !important; }
+  .svc-hero-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+`;
+
 export default function ServicePageTemplate({ config }) {
   const { lang } = useParams();
   const langLink = useLangLink();
@@ -477,20 +516,21 @@ export default function ServicePageTemplate({ config }) {
       />
       <FAQSchema faqs={schemaFaqs} />
 
-      <div style={styles.page}>
+      <div style={styles.page} className="svc-tpl">
+        <style>{MOBILE_CSS}</style>
 
         {/* ── HERO ── */}
-        <section style={styles.hero} aria-label="Service hero">
+        <section style={styles.hero} className="svc-hero" aria-label="Service hero">
           <img src={config.heroImage} alt={config.heroAlt} style={styles.heroBg} loading="eager" />
           <div style={styles.heroOverlay} />
           <div style={styles.heroGlow} />
-          <div style={styles.heroContent} data-aos="fade-up">
-            <span style={styles.heroTag}>
+          <div style={styles.heroContent} className="svc-hero-content" data-aos="fade-up">
+            <span style={styles.heroTag} className="svc-hero-tag">
               <FaShieldAlt size={11} /> 24/7 · Fast Response · Dubai
             </span>
-            <h1 style={styles.heroH1}>{config.title}</h1>
-            <p style={styles.heroSubtitle}>{config.intro}</p>
-            <div style={styles.heroCtas}>
+            <h1 style={styles.heroH1} className="svc-hero-h1">{config.title}</h1>
+            <p style={styles.heroSubtitle} className="svc-hero-subtitle">{config.intro}</p>
+            <div style={styles.heroCtas} className="svc-hero-ctas">
               <button onClick={handleCall} style={styles.btnPrimary} aria-label="Call Tareeqk">
                 <FaPhoneAlt size={13} /> Call Now
               </button>
@@ -501,7 +541,7 @@ export default function ServicePageTemplate({ config }) {
                 <FaMobileAlt size={13} /> App
               </button>
             </div>
-            <div style={styles.heroMetrics}>
+            <div style={styles.heroMetrics} className="svc-hero-metrics">
               {heroMetrics.map((m, i) => (
                 <div key={i} style={styles.metricCardGlass}>
                   <m.Icon size={16} style={{ color: COLORS.gold }} />
@@ -514,12 +554,12 @@ export default function ServicePageTemplate({ config }) {
         </section>
 
         {/* ── WHY DRIVERS TRUST TAREEQK ── */}
-        <section style={{ ...styles.section, background: '#fff' }}>
-          <div style={styles.sectionInner}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '56px', alignItems: 'center' }}>
+        <section style={{ ...styles.section, background: '#fff' }} className="svc-section">
+          <div style={styles.sectionInner} className="svc-section-inner">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '56px', alignItems: 'center' }} className="svc-grid2">
               <div data-aos="fade-right">
                 <span style={styles.eyebrow}>Our Service</span>
-                <h2 style={styles.sectionH2}>Why Drivers Trust Tareeqk</h2>
+                <h2 style={styles.sectionH2} className="svc-section-h2">Why Drivers Trust Tareeqk</h2>
                 <p style={styles.sectionP}>{config.whatIsService}</p>
                 <div style={styles.checklist}>
                   {TRUST_CHECKLIST.map((item, i) => (
@@ -535,7 +575,7 @@ export default function ServicePageTemplate({ config }) {
                 </div>
               </div>
               <div data-aos="fade-left">
-                <div style={{
+                <div className="svc-trust-card" style={{
                   ...styles.trustCard,
                   backgroundImage: `linear-gradient(135deg, rgba(11,12,15,0.90), rgba(11,12,15,0.95)), url(${config.heroImage})`,
                   backgroundSize: 'cover', backgroundPosition: 'center',
@@ -568,17 +608,18 @@ export default function ServicePageTemplate({ config }) {
         </section>
 
         {/* ── PROCESS / HOW IT WORKS ── */}
-        <section style={{ ...styles.section, background: COLORS.bgAlt, borderTop: `1px solid ${COLORS.line}` }}>
-          <div style={styles.sectionInner}>
+        <section style={{ ...styles.section, background: COLORS.bgAlt, borderTop: `1px solid ${COLORS.line}` }} className="svc-section">
+          <div style={styles.sectionInner} className="svc-section-inner">
             <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 52px' }} data-aos="fade-up">
               <span style={styles.eyebrow}>How It Works</span>
-              <h2 style={styles.sectionH2}>From Call to Resolution in {config.responseTime}</h2>
+              <h2 style={styles.sectionH2} className="svc-section-h2">From Call to Resolution in {config.responseTime}</h2>
               <p style={{ ...styles.sectionP, margin: '0 auto' }}>{config.responseDesc}</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px' }} className="svc-grid4">
               {processSteps.map((step, i) => (
                 <div
                   key={i}
+                  className="svc-process-card"
                   style={styles.processCard}
                   data-aos="fade-up"
                   data-aos-delay={i * 80}
@@ -597,13 +638,13 @@ export default function ServicePageTemplate({ config }) {
         </section>
 
         {/* ── WHY CHOOSE US ── */}
-        <section style={{ ...styles.section, background: '#fff' }}>
-          <div style={styles.sectionInner}>
+        <section style={{ ...styles.section, background: '#fff' }} className="svc-section">
+          <div style={styles.sectionInner} className="svc-section-inner">
             <div style={{ marginBottom: '40px' }} data-aos="fade-up">
               <span style={styles.eyebrow}>Why Us</span>
-              <h2 style={styles.sectionH2}>Why Choose Tareeqk?</h2>
+              <h2 style={styles.sectionH2} className="svc-section-h2">Why Choose Tareeqk?</h2>
             </div>
-            <div style={styles.grid4}>
+            <div style={styles.grid4} className="svc-grid4">
               {config.whyUs.map((reason, i) => {
                 const Icon = WHY_ICONS[i % WHY_ICONS.length];
                 return (
@@ -627,14 +668,14 @@ export default function ServicePageTemplate({ config }) {
         </section>
 
         {/* ── AREAS COVERED ── */}
-        <section style={{ ...styles.section, background: '#fff' }}>
-          <div style={styles.sectionInner}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '56px', alignItems: 'start' }}>
+        <section style={{ ...styles.section, background: '#fff' }} className="svc-section">
+          <div style={styles.sectionInner} className="svc-section-inner">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '56px', alignItems: 'start' }} className="svc-grid2">
 
               {/* Left: heading, contact pill, quick access, image */}
               <div data-aos="fade-right">
                 <span style={styles.eyebrow}>Coverage</span>
-                <h2 style={styles.areasH2}>Areas We Serve</h2>
+                <h2 style={styles.areasH2} className="svc-areas-h2">Areas We Serve</h2>
                 <p style={styles.sectionP}>
                   Tareeqk covers all major Dubai districts. Need service in a specific area?
                 </p>
@@ -675,11 +716,12 @@ export default function ServicePageTemplate({ config }) {
                   <span style={styles.allAreasTitle}>All Areas</span>
                 </div>
                 <div style={styles.allAreasDivider} />
-                <div style={styles.allAreasGrid}>
+                <div style={styles.allAreasGrid} className="svc-all-areas-grid">
                   {visibleAreas.map(area => (
                     <a
                       key={area}
                       href={langLink(getAreaHref(area, config.slug))}
+                      className="svc-all-area-card"
                       style={styles.allAreaCard}
                       onMouseEnter={e => lift(e, true)}
                       onMouseLeave={e => lift(e, false)}
@@ -710,8 +752,8 @@ export default function ServicePageTemplate({ config }) {
 
 
         {/* ── CTA BLOCK ── */}
-        <div style={{ maxWidth: '1140px', margin: '72px auto' }}>
-          <div style={styles.ctaSection} data-aos="fade-up">
+        <div style={{ maxWidth: '1140px', margin: '72px auto' }} className="svc-cta-wrap">
+          <div style={styles.ctaSection} className="svc-cta-section" data-aos="fade-up">
             <div>
               <div style={styles.ctaEyebrow}><FaHeadset size={13} /> 24/7 Emergency Line</div>
               <h2 style={styles.ctaH2}>Need {config.schemaName} Right Now?</h2>
@@ -719,7 +761,7 @@ export default function ServicePageTemplate({ config }) {
                 Our team is on standby across Dubai. One tap or call is all it takes — we're already on our way.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }} className="svc-cta-actions">
               <button onClick={handleCall} style={styles.btnPrimary}><FaPhoneAlt size={13} /> Call Now</button>
               <button onClick={handleWhatsApp} style={styles.btnGreen}><FaWhatsapp size={16} /> WhatsApp</button>
             </div>
@@ -727,10 +769,10 @@ export default function ServicePageTemplate({ config }) {
         </div>
 
         {/* ── FAQ ── */}
-        <section style={{ ...styles.section, background: '#fff', paddingTop: '32px' }}>
-          <div style={{ ...styles.sectionInner, maxWidth: '780px' }}>
+        <section style={{ ...styles.section, background: '#fff', paddingTop: '32px' }} className="svc-section">
+          <div style={{ ...styles.sectionInner, maxWidth: '780px' }} className="svc-section-inner">
             <span style={styles.eyebrow}>FAQ</span>
-            <h2 style={styles.sectionH2}>Frequently Asked Questions</h2>
+            <h2 style={styles.sectionH2} className="svc-section-h2">Frequently Asked Questions</h2>
             <div style={{ marginTop: '32px' }}>
               {config.faqs.map((faq, i) => (
                 <div key={i} style={styles.faqItem}>
@@ -762,11 +804,11 @@ export default function ServicePageTemplate({ config }) {
         </section>
 
         {/* ── RELATED SERVICES ── */}
-        <section style={{ ...styles.section, background: COLORS.bgAlt, borderTop: `1px solid ${COLORS.line}` }}>
-          <div style={styles.sectionInner}>
+        <section style={{ ...styles.section, background: COLORS.bgAlt, borderTop: `1px solid ${COLORS.line}` }} className="svc-section">
+          <div style={styles.sectionInner} className="svc-section-inner">
             <span style={styles.eyebrow}>Explore More</span>
-            <h2 style={{ ...styles.sectionH2, marginBottom: '32px' }}>Our Other Services in Dubai</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }}>
+            <h2 style={{ ...styles.sectionH2, marginBottom: '32px' }} className="svc-section-h2">Our Other Services in Dubai</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }} className="svc-grid4">
               {relatedServices.map(svc => (
                 <a
                   key={svc.href}

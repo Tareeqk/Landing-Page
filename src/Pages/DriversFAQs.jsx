@@ -55,14 +55,15 @@ export default function DriversFAQs() {
         style={{
           position: "relative",
           width: "100%",
-          height: "400px",
+          minHeight: "clamp(280px, 38vw, 380px)",
           overflow: "hidden",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           color: "#fff",
           textAlign: "center",
-          padding: "0 20px",
+          padding: "128px 20px 44px",
+          boxSizing: "border-box",
         }}
       >
         <img
@@ -78,16 +79,29 @@ export default function DriversFAQs() {
             filter: "brightness(0.35)",
           }}
         />
-        <div className="d-flex">
+        <div style={{ position: "relative", zIndex: 1, maxWidth: "640px" }}>
+          <span
+            data-aos="fade-up"
+            style={{
+              display: "inline-block", fontSize: "10px", fontWeight: 700,
+              letterSpacing: "0.28em", textTransform: "uppercase",
+              color: "var(--primary-yellow)", marginBottom: "14px",
+            }}
+          >
+            Driver Support
+          </span>
           <h1
             data-aos="fade-up"
-            className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2"
+            style={{
+              fontSize: "clamp(1.7rem, 5vw, 2.6rem)", fontWeight: 800,
+              letterSpacing: "-0.02em", lineHeight: 1.15, margin: "0 0 12px",
+            }}
           >
             {t("drivers-faqs.title")}
           </h1>
           <p
             data-aos="fade-up"
-            style={{ fontSize: "18px", maxWidth: "600px" }}
+            style={{ fontSize: "clamp(13.5px, 2vw, 16px)", lineHeight: 1.6 }}
             className="text-gray-300"
           >
             {t("drivers-faqs.subtitle")}
@@ -95,7 +109,7 @@ export default function DriversFAQs() {
         </div>
       </section>
 
-      <div className="space-y-4 max-w-3xl mx-auto my-4 " id="faqAccordion">
+      <div className="space-y-3 max-w-3xl mx-auto my-4 px-4 sm:px-0" id="faqAccordion">
         {loading ? (
           <p>Loading...</p>
         ) : (
@@ -103,14 +117,14 @@ export default function DriversFAQs() {
             <div
               data-aos="fade-up"
               key={idx}
-              className="border border-gray-400 rounded-md"
+              className="border border-gray-400 rounded-md overflow-hidden"
             >
               <button
                 onClick={() => toggleAccordion(idx)}
-                className="w-full text-left px-4 py-3 bg-gray-100 hover:bg-gray-200 flex justify-between items-center cursor-pointer"
+                className="w-full text-left px-4 py-3.5 bg-gray-100 hover:bg-gray-200 flex justify-between items-center gap-3 cursor-pointer"
               >
-                <span>{faq.question}</span>
-                <span>{openIndexs.includes(idx) ? "-" : "+"}</span>
+                <span className="text-[14.5px] sm:text-base font-medium">{faq.question}</span>
+                <span className="flex-shrink-0">{openIndexs.includes(idx) ? "-" : "+"}</span>
               </button>
               <div
                 className={`transition-max-h duration-400 overflow-hidden ${
@@ -118,7 +132,7 @@ export default function DriversFAQs() {
                 }`}
               >
                 <div
-                  className="px-4 py-3"
+                  className="px-4 py-3 text-[13.5px] sm:text-base"
                   dangerouslySetInnerHTML={{ __html: faq.answer }}
                 />
               </div>

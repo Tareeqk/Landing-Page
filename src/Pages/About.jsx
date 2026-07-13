@@ -276,7 +276,7 @@ function useAboutStyles() {
         .abt-values-swiper { display: block !important; }
         .abt-hero-stats   { display: none !important; }
         .abt-float-badge  { display: none !important; }
-        .abt-inner        { padding: 0 1.25rem !important; }
+        .abt-inner        { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         .abt-story-section .abt-story-img-col { display: none !important; }
       }
       @media (min-width: 769px) {
@@ -285,6 +285,20 @@ function useAboutStyles() {
       }
       @media (max-width: 480px) {
         .abt-values-grid  { grid-template-columns: 1fr !important; }
+      }
+
+      /* ── App-like density on mobile: desktop's 80-96px section padding
+         reads as dead whitespace on a phone; tighten the rhythm. ── */
+      @media (max-width: 768px) {
+        .abt-story-section  { padding: 44px 0 40px !important; }
+        .abt-mv-section     { padding: 44px 0 !important; }
+        .abt-values-section { padding: 44px 0 !important; }
+        .abt-coverage-section { padding: 44px 0 !important; }
+        .abt-cta-section    { padding: 56px 0 !important; }
+        .abt-mv-grid        { gap: 14px !important; margin-bottom: 40px !important; }
+        .abt-corevalues-grid,
+        .abt-values-grid    { gap: 12px !important; }
+        .abt-coverage-grid  { gap: 32px !important; }
       }
     `;
     document.head.appendChild(style);
@@ -1090,6 +1104,7 @@ export default function About({ isSection = false }) {
           COVERAGE — dark section
       ══════════════════════════════════════════════════════════════════ */}
       <section
+        className="abt-coverage-section"
         style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="abt-inner" style={inner}>

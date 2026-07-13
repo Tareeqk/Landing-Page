@@ -563,14 +563,21 @@ export default function WhatWeOffer() {
         width: 60px; height: 60px;
         min-width: 60px;
         border-radius: 50%;
-        background: #f3f3f3;
+        background: #fff;
+        border: 1.5px solid #ececec;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.07);
         display: flex;
         align-items: center;
         justify-content: center;
         flex-shrink: 0;
       }
-      body.dark .s4-icon-circle { background: #2a2a2a; }
-      .s4-icon-circle img { width: 36px; height: 36px; object-fit: contain; }
+      .s4-card.featured .s4-icon-circle { border-color: #ffe97a; }
+      body.dark .s4-icon-circle {
+        background: #2a2a2a;
+        border-color: rgba(255,255,255,0.12);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      }
+      .s4-icon-circle img { width: 40px; height: 40px; object-fit: contain; }
 
       .s4-card-title {
         font-size: 22px;
@@ -679,6 +686,16 @@ export default function WhatWeOffer() {
         }
         .s4-card-desc { max-width: 55%; }
         .s4-features { max-width: 55%; }
+
+        /* The badge was absolutely positioned over the title, colliding
+           with it once the title wrapped to two lines on narrow cards.
+           On mobile it flows as its own row above the header instead. */
+        .s4-badge {
+          position: static;
+          align-self: flex-start;
+          margin-bottom: 14px;
+        }
+        .s4-card-title { font-size: 19px; }
       }
 
       /* ── Learn More ── */

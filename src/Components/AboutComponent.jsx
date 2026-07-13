@@ -277,6 +277,29 @@ export default function AboutPreview() {
         }
       }
 
+      @media (max-width: 480px) {
+        .abt-preview-stat {
+          padding: 12px 6px;
+          gap: 4px;
+          border-radius: 10px;
+        }
+        .abt-preview-stat-icon {
+          width: 28px;
+          height: 28px;
+        }
+        .abt-preview-stat-icon svg {
+          width: 14px;
+          height: 14px;
+        }
+        .abt-preview-stat-value {
+          font-size: 11.5px;
+          line-height: 1.2;
+        }
+        .abt-preview-stat-label {
+          font-size: 9.5px;
+        }
+      }
+
       /* ── Learn more button ── */
       .abt-preview-cta {
         display: inline-flex;
@@ -388,6 +411,17 @@ export default function AboutPreview() {
         .abt-preview-bar-tag { font-size: 12.5px; padding: 7px 12px; }
         .abt-preview-bar-arrow { width: 40px; height: 40px; }
       }
+
+      /* The 3rem (48px) side padding below was fixed regardless of
+         viewport, eating ~96px off a 390px-wide phone and crushing the
+         3-column stat row into a too-narrow space. */
+      .abt-preview-container { padding: 0 3rem; }
+      @media (max-width: 640px) {
+        .abt-preview-container { padding: 0 20px; }
+      }
+      @media (max-width: 960px) {
+        .abt-preview { padding: clamp(40px, 8vw, 72px) 0; }
+      }
     `;
 
     document.head.appendChild(style);
@@ -401,10 +435,10 @@ export default function AboutPreview() {
   return (
     <section className="abt-preview" dir={isRTL ? "rtl" : "ltr"}>
       <div
+        className="abt-preview-container"
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 3rem",
         }}
       >
         <div className="abt-preview-eyebrow">

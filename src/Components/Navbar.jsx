@@ -156,12 +156,31 @@ export default function Navbar({ isDark, setIsDark }) {
                         Dispatching now" badge on the hero so the brand's
                         urgency signal follows you as you scroll */}
                     <Link to={langLink("/")} className="flex items-center gap-2.5">
-                      <img
-                        src={isDark ? "/new/LogoW.webp" : "/new/Logo.webp"}
-                        alt="Towing service in Dubai"
-                        className="h-8 sm:h-10 w-auto transition-transform duration-300 hover:scale-105"
-                        loading="lazy"
-                      />
+                      {/* This mark is dark-on-transparent with no white
+                          variant, so on the dark navbar it disappears into
+                          the near-black background without a light backing
+                          chip behind it. */}
+                      <span
+                        className={classNames(
+                          "flex items-center justify-center rounded-xl transition-transform duration-300 hover:scale-105",
+                          isDark ? "bg-white/95 p-1.5" : "",
+                        )}
+                      >
+                        <img
+                          src="/TAREEQK LOGO.png"
+                          alt="Tareeqk"
+                          className="h-8 sm:h-9 w-auto"
+                          loading="lazy"
+                        />
+                      </span>
+                      <span
+                        className={classNames(
+                          "text-lg sm:text-xl font-black tracking-tight",
+                          isDark ? "text-white" : "text-[#0a0a0a]",
+                        )}
+                      >
+                        TAREEQK
+                      </span>
                       <span
                         className={classNames(
                           "hidden md:inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",
@@ -306,14 +325,20 @@ export default function Navbar({ isDark, setIsDark }) {
                       <div className="relative z-50">
                         <LanguageSwitcher />
                       </div>
+                      {/* Dark/light toggle lives inside the mobile drawer
+                          below `lg` instead — it was competing for space
+                          in the already-tight compact bar next to the
+                          language switcher and hamburger icon. */}
                       <span
                         className={classNames(
-                          "h-4 w-px",
+                          "hidden lg:block h-4 w-px",
                           isDark ? "bg-white/15" : "bg-black/10",
                         )}
                         aria-hidden="true"
                       />
-                      <DarkMode isDark={isDark} setIsDark={setIsDark} />
+                      <span className="hidden lg:block">
+                        <DarkMode isDark={isDark} setIsDark={setIsDark} />
+                      </span>
                     </div>
                     <Link
                       to={langLink("/login")}
@@ -504,8 +529,26 @@ export default function Navbar({ isDark, setIsDark }) {
                   className={classNames(
                     "transition-all duration-400 ease-out",
                     open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
-                    "mt-2 pt-3 border-t",
-                    isDark ? "border-white/[0.08]" : "border-black/5",
+                    "mt-2 pt-3 border-t flex items-center justify-between px-4 py-3 rounded-xl",
+                    isDark ? "border-white/[0.08] bg-white/5" : "border-black/5 bg-black/5",
+                  )}
+                >
+                  <span
+                    className={classNames(
+                      "text-sm font-medium",
+                      isDark ? "text-white/80" : "text-gray-700",
+                    )}
+                  >
+                    {t("navbar.darkMode", "Dark Mode")}
+                  </span>
+                  <DarkMode isDark={isDark} setIsDark={setIsDark} />
+                </div>
+
+                <div
+                  style={{ transitionDelay: open ? `${180 + (navigation.length + 1) * 70}ms` : "0ms" }}
+                  className={classNames(
+                    "transition-all duration-400 ease-out",
+                    open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
                   )}
                 >
                   <Link

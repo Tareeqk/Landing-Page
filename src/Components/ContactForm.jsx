@@ -80,7 +80,7 @@ export default function ContactSection() {
         relative overflow-hidden
         bg-[#f7f7f3]
         w-full
-        py-10 lg:py-10
+        py-8 sm:py-10 lg:py-10
       "
     >
       {/* Ambient Background */}
@@ -132,23 +132,27 @@ export default function ContactSection() {
               </p>
             </div>
 
-            {/* MAP */}
+            {/* MAP — shorter on mobile; the floating contact cards move
+                out from over the map into their own compact row below,
+                since two stacked cards left little map visible in the
+                old 220px-tall mobile crop. */}
             <div
               className="
                 relative
                 overflow-hidden
-                rounded-[21px]
-                min-h-[338px]
+                rounded-2xl sm:rounded-[21px]
+                h-[180px] sm:h-auto sm:min-h-[338px]
                 border border-white/40
-                shadow-[0_30px_80px_rgba(0,0,0,0.08)]
+                shadow-[0_16px_40px_rgba(0,0,0,0.08)] sm:shadow-[0_30px_80px_rgba(0,0,0,0.08)]
                 bg-white
               "
             >
-              {/* Floating Contact Cards */}
+              {/* Floating Contact Cards — desktop/tablet only */}
               <div
                 className="
+                  hidden sm:grid
                   absolute bottom-3 start-3 end-3 z-20
-                  grid grid-cols-1 sm:grid-cols-2 gap-2
+                  grid-cols-2 gap-2
                 "
               >
                 {/* Phone */}
@@ -252,6 +256,61 @@ export default function ContactSection() {
                 className="absolute inset-0 w-full h-full"
                 style={{ border: 0 }}
               />
+            </div>
+
+            {/* Compact contact chips — mobile/tablet only, replaces the
+                map overlay so the map itself stays fully visible at the
+                shorter mobile height. Side by side, sized tight enough
+                that the full phone number and email each fit on one
+                line without truncating. */}
+            <div className="grid grid-cols-2 gap-2 sm:hidden">
+              <a
+                href="tel:+97142232269"
+                className="
+                  flex items-center gap-2
+                  rounded-lg bg-white
+                  border border-black/5
+                  px-2.5 py-2.5
+                  shadow-[0_4px_16px_rgba(0,0,0,0.05)]
+                  min-w-0
+                "
+              >
+                <div className="w-8 h-8 shrink-0 rounded-lg bg-amber-100 flex items-center justify-center">
+                  <FiPhone className="text-amber-600 text-xs" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
+                    {t("contact.phoneLabel")}
+                  </p>
+                  <p className="text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
+                    +971 4 223 2269
+                  </p>
+                </div>
+              </a>
+
+              <a
+                href="mailto:info@tareeqk.ae"
+                className="
+                  flex items-center gap-2
+                  rounded-lg bg-white
+                  border border-black/5
+                  px-2.5 py-2.5
+                  shadow-[0_4px_16px_rgba(0,0,0,0.05)]
+                  min-w-0
+                "
+              >
+                <div className="w-8 h-8 shrink-0 rounded-lg bg-amber-100 flex items-center justify-center">
+                  <FiMail className="text-amber-600 text-xs" />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
+                    {t("contact.emailLabel")}
+                  </p>
+                  <p className="text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
+                    info@tareeqk.ae
+                  </p>
+                </div>
+              </a>
             </div>
           </div>
 

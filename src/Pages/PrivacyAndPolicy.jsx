@@ -75,7 +75,13 @@ const PrivacyAndPolicy = () => {
         fetchPolicy();
     }, [i18n.language, baseUrl]);
 
-    if (loading) return <p className="policy-content">Loading privacy policy...</p>;
+    if (loading) {
+        return (
+            <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '128px 20px 44px', textAlign: 'center' }}>
+                <p className="policy-content" style={{ color: '#6b7280', fontSize: '15px' }}>Loading privacy policy…</p>
+            </div>
+        );
+    }
 
     const isRTL = i18n.language === 'ar' || i18n.language === 'ur';
     const fontFamily =
@@ -95,14 +101,15 @@ const PrivacyAndPolicy = () => {
                 style={{
                     position: "relative",
                     width: "100%",
-                    height: "400px",
+                    minHeight: "clamp(280px, 38vw, 380px)",
                     overflow: "hidden",
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
                     color: "#fff",
                     textAlign: "center",
-                    padding: "0 20px",
+                    padding: "128px 20px 44px",
+                    boxSizing: "border-box",
                 }}
             >
                 <img
@@ -118,22 +125,37 @@ const PrivacyAndPolicy = () => {
                         filter: "brightness(0.35)",
                     }}
                 />
-                <div className='d-flex'>
-                    
-                <h1 data-aos="fade-up" className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2">
-                    {t('policy.title')}
-                </h1>
-                <p data-aos="fade-up"
-                    style={{ fontSize: '18px', maxWidth: '600px', fontFamily }}
-                    className="text-gray-300"
+                <div style={{ position: "relative", zIndex: 1, maxWidth: "640px" }}>
+                    <span
+                        data-aos="fade-up"
+                        style={{
+                            display: "inline-block", fontSize: "10px", fontWeight: 700,
+                            letterSpacing: "0.28em", textTransform: "uppercase",
+                            color: "var(--primary-yellow)", marginBottom: "14px",
+                        }}
                     >
-                    {t('policy.subtitle')}
-                </p>
-                    </div>
+                        Legal
+                    </span>
+                    <h1
+                        data-aos="fade-up"
+                        style={{
+                            fontSize: "clamp(1.7rem, 5vw, 2.6rem)", fontWeight: 800,
+                            letterSpacing: "-0.02em", lineHeight: 1.15, margin: "0 0 12px", fontFamily,
+                        }}
+                    >
+                        {t('policy.title')}
+                    </h1>
+                    <p data-aos="fade-up"
+                        style={{ fontSize: 'clamp(13.5px, 2vw, 16px)', lineHeight: 1.6, fontFamily }}
+                        className="text-gray-300"
+                        >
+                        {t('policy.subtitle')}
+                    </p>
+                </div>
             </section>
 
-            <div 
-                className="container mx-auto px-4 py-10 policy-content"
+            <div
+                className="container mx-auto px-4 py-8 sm:py-10 policy-content"
                 style={{
                     direction: isRTL ? 'rtl' : 'ltr',
                     fontFamily,
@@ -143,17 +165,6 @@ const PrivacyAndPolicy = () => {
                     wordBreak: 'break-word',
                 }}
             >
-                <h1 data-aos="fade-up"
-                    style={{
-                        fontSize: '32px',
-                        fontWeight: 'bold',
-                        maxWidth: '600px',
-                        fontFamily,
-                    }}
-                    className="policy-content"
-                >
-                    {t('policy.title')}
-                </h1>
                 <div data-aos="fade-up"
                     className="policy-content"
                     dangerouslySetInnerHTML={{ __html: policy }}

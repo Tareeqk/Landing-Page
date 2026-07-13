@@ -36,16 +36,14 @@ const TermsAndConditions = () => {
 
   const isRTL = i18n.language === "ar" || i18n.language === "ur"
 
-  if (isLoading) {
-    return <p>Loading terms...</p>
-  }
-
-  if (error) {
-    return <p className="text-red-500">{error}</p>
-  }
-
-  if (!terms.length) {
-    return <p>No terms and conditions available.</p>
+  if (isLoading || error || !terms.length) {
+    return (
+      <div style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '128px 20px 44px', textAlign: 'center' }}>
+        <p style={{ color: error ? '#dc2626' : '#6b7280', fontSize: '15px' }}>
+          {isLoading ? 'Loading terms…' : error || 'No terms and conditions available.'}
+        </p>
+      </div>
+    )
   }
 
   return (
@@ -58,14 +56,15 @@ const TermsAndConditions = () => {
         style={{
           position: "relative",
           width: "100%",
-          height: "400px",
+          minHeight: "clamp(280px, 38vw, 380px)",
           overflow: "hidden",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           color: "#fff",
           textAlign: "center",
-          padding: "0 20px",
+          padding: "128px 20px 44px",
+          boxSizing: "border-box",
         }}
       >
         <img
@@ -81,16 +80,29 @@ const TermsAndConditions = () => {
             filter: "brightness(0.35)",
           }}
         />
-        <div className="d-flex flex-column align-items-center">
+        <div style={{ position: "relative", zIndex: 1, maxWidth: "640px" }}>
+          <span
+            data-aos="fade-up"
+            style={{
+              display: "inline-block", fontSize: "10px", fontWeight: 700,
+              letterSpacing: "0.28em", textTransform: "uppercase",
+              color: "var(--primary-yellow)", marginBottom: "14px",
+            }}
+          >
+            Legal
+          </span>
           <h1
             data-aos="fade-up"
-            className="text-2xl sm:text-3xl md:text-4xl font-medium mb-2"
+            style={{
+              fontSize: "clamp(1.7rem, 5vw, 2.6rem)", fontWeight: 800,
+              letterSpacing: "-0.02em", lineHeight: 1.15, margin: "0 0 12px",
+            }}
           >
             {t("terms.title")}
           </h1>
           <p
             data-aos="fade-up"
-            style={{ fontSize: "18px", maxWidth: "600px" }}
+            style={{ fontSize: "clamp(13.5px, 2vw, 16px)", lineHeight: 1.6 }}
             className="text-gray-300"
           >
             {t("terms.subtitle")}
@@ -98,7 +110,7 @@ const TermsAndConditions = () => {
         </div>
       </section>
       <div
-        className="container mx-auto px-4 my-20"
+        className="container mx-auto px-4 my-10 sm:my-20"
         style={{
           lineHeight: "1.6",
           fontSize: "16px",
