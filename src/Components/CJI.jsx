@@ -75,15 +75,7 @@ export default function CJI() {
             data-aos="fade-left"
             className="relative overflow-hidden rounded-3xl border border-gray-100 shadow-lg bg-white"
           >
-            {/* Badge */}
-            <div
-              className={`absolute top-4 z-20 bg-white shadow-md px-4 py-2 rounded-full text-sm font-medium inline-flex items-center gap-2 ${
-                isRTL ? "right-4" : "left-4"
-              }`}
-            >
-              <Play className="w-3.5 h-3.5 fill-current" />
-              {t("cji.videoBadge")}
-            </div>
+           
 
             <div className="aspect-video w-full h-full">
               <iframe

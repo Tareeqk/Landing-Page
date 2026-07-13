@@ -684,7 +684,11 @@ export default function WhatWeOffer() {
           height: 60%;
           max-width: none;
         }
-        .s4-card-desc { max-width: 55%; }
+        /* The photo is bottom-anchored and doesn't reach up this far, so
+           the description doesn't need to make room for it the way the
+           checklist below does — letting it use nearly the full card
+           width fixes the narrow, over-wrapped text from the 55% cap. */
+        .s4-card-desc { max-width: 94%; }
         .s4-features { max-width: 55%; }
 
         /* The badge was absolutely positioned over the title, colliding
