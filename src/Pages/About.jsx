@@ -66,8 +66,31 @@ function useAboutStyles() {
         .abt-mv-grid { grid-template-columns: 1fr !important; }
         .abt-corevalues-grid { grid-template-columns: repeat(2, 1fr) !important; }
       }
+      /* Stays 2-up (2x2, with the 5th card on its own row) on phones too,
+         instead of falling back to a single stacked column — scaled down
+         so two cards comfortably share the width. */
       @media (max-width: 480px) {
-        .abt-corevalues-grid { grid-template-columns: 1fr !important; }
+        .abt-corevalues-grid { gap: 10px !important; }
+        .abt-corevalues-grid .abt-value-card {
+          padding: 16px 12px !important;
+        }
+        .abt-corevalues-grid .abt-icon-box {
+          width: 32px !important;
+          height: 32px !important;
+          margin-bottom: 10px !important;
+        }
+        .abt-corevalues-grid .abt-icon-box svg {
+          width: 16px !important;
+          height: 16px !important;
+        }
+        .abt-corevalues-grid .abt-card-title {
+          font-size: 13px !important;
+          margin-bottom: 5px !important;
+        }
+        .abt-corevalues-grid .abt-card-body {
+          font-size: 11.5px !important;
+          line-height: 1.55 !important;
+        }
       }
 
       /* ── Value cards ── */
@@ -200,23 +223,6 @@ function useAboutStyles() {
         }
       }
 
-      /* ── Mobile stats row ── */
-      .abt-mobile-stats {
-        display: none;
-      }
-      @media (max-width: 768px) {
-        .abt-mobile-stats {
-          display: flex;
-          justify-content: space-around;
-          background: var(--primary-yellow);
-          border-radius: 14px;
-          padding: 18px 12px;
-          margin: 24px 0 0;
-        }
-        .abt-mobile-stat-num  { font-size: 20px; font-weight: 800; color: #000; line-height: 1; text-align: center; }
-        .abt-mobile-stat-label { font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.6); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; text-align: center; }
-      }
-
       /* ── DARK MODE ── */
       body.dark .abt-page-root       { background-color: var(--dark-bg-main, #0f0f0f) !important; }
       body.dark .abt-story-section   { background-color: var(--dark-bg-main, #0f0f0f) !important; }
@@ -243,9 +249,6 @@ function useAboutStyles() {
       body.dark .abt-icon-box      { background-color: var(--dark-bg-muted, #252525) !important; }
       body.dark .abt-story-strong  { color: var(--dark-text-main, #f0f0f0) !important; }
       body.dark .abt-swiper-dot    { background: rgba(255,255,255,0.15) !important; }
-      body.dark .abt-mobile-stats  { background: var(--dark-bg-surface, #1e1e1e) !important; }
-      body.dark .abt-mobile-stat-num   { color: var(--primary-yellow) !important; }
-      body.dark .abt-mobile-stat-label { color: var(--dark-text-muted, #888) !important; }
       body.dark .abt-read-more-btn { color: var(--primary-yellow) !important; }
 
       /* ── Read more button ── */
@@ -274,14 +277,12 @@ function useAboutStyles() {
       @media (max-width: 768px) {
         .abt-values-grid  { display: none !important; }
         .abt-values-swiper { display: block !important; }
-        .abt-hero-stats   { display: none !important; }
         .abt-float-badge  { display: none !important; }
         .abt-inner        { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         .abt-story-section .abt-story-img-col { display: none !important; }
       }
       @media (min-width: 769px) {
         .abt-values-swiper { display: none !important; }
-        .abt-mobile-stats  { display: none !important; }
       }
       @media (max-width: 480px) {
         .abt-values-grid  { grid-template-columns: 1fr !important; }
@@ -451,13 +452,6 @@ export default function About({ isSection = false }) {
     { label: t('about.svc2'), href: '/battery-service-dubai',  icon: <Battery size={17} /> },
     { label: t('about.svc3'), href: '/flat-tyre-repair-dubai', icon: <Wrench size={17} /> },
     { label: t('about.svc4'), href: '/fuel-delivery-dubai',    icon: <Fuel size={17} /> },
-  ];
-
-  const HERO_STATS = [
-    { stat: '20 min', label: t('about.statAvgResponse') },
-    { stat: '50K+',   label: t('about.statDriversHelped') },
-    { stat: '4.9★',   label: t('about.statReviews') },
-    { stat: 'RTA',    label: t('about.statLicensed') },
   ];
 
   // Mobile photo strip images — real Tareeqk photography only (no mixing in
@@ -642,46 +636,6 @@ export default function About({ isSection = false }) {
                 </a>
               </div>
 
-              <div
-                className="abt-reveal abt-hero-stats"
-                data-delay="320"
-                style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '0',
-                  borderTop: '1px solid rgba(255,255,255,0.12)',
-                  paddingTop: '22px',
-                }}
-              >
-                {HERO_STATS.map((m, i, arr) => (
-                  <div
-                    key={i}
-                    style={{
-                      paddingInlineEnd: '26px',
-                      marginInlineEnd: '26px',
-                      borderInlineEnd: i < arr.length - 1 ? '1px solid rgba(255,255,255,0.1)' : 'none',
-                    }}
-                  >
-                    <div style={{ fontSize: '19px', fontWeight: 800, color: 'var(--primary-yellow)', letterSpacing: '-0.02em', lineHeight: 1 }}>
-                      {m.stat}
-                    </div>
-                    <div style={{ fontSize: '10px', color: 'rgba(255,255,255,0.42)', fontWeight: 500, marginTop: '3px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-                      {m.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Mobile-only pill version of the same stats — hero had
-                  nothing after the CTA buttons on phones without this */}
-              <div className="abt-mobile-stats">
-                {HERO_STATS.map((m, i) => (
-                  <div key={i}>
-                    <div className="abt-mobile-stat-num">{m.stat}</div>
-                    <div className="abt-mobile-stat-label">{m.label}</div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </section>
