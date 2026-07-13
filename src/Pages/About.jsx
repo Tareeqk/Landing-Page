@@ -197,29 +197,22 @@ function useAboutStyles() {
         background: var(--primary-yellow);
       }
 
-      /* ── Mobile photo strip ── */
+      /* ── Mobile story photo — single image, matching the one desktop
+         shows, instead of a 4-photo scroll strip ── */
       .abt-photo-strip {
         display: none;
       }
       @media (max-width: 900px) {
         .abt-photo-strip {
-          display: flex;
-          gap: 10px;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          padding: 0 1.25rem 12px;
-          margin: 0 -1.25rem;
+          display: block;
+          border-radius: 16px;
+          overflow: hidden;
         }
-        .abt-photo-strip::-webkit-scrollbar { display: none; }
         .abt-photo-strip-img {
-          flex: 0 0 72vw;
-          max-width: 260px;
-          height: 190px;
+          width: 100%;
+          height: 220px;
           object-fit: cover;
-          border-radius: 14px;
-          scroll-snap-align: start;
+          display: block;
         }
       }
 
@@ -300,6 +293,35 @@ function useAboutStyles() {
         .abt-corevalues-grid,
         .abt-values-grid    { gap: 12px !important; }
         .abt-coverage-grid  { gap: 32px !important; }
+      }
+
+      /* ── Mission/Vision card head: icon-above-heading on desktop (a
+         column, matching how it always looked), icon-beside-heading on
+         mobile — that single change removes the ~60px of vertical space
+         the icon's own row was costing, without touching the copy. ── */
+      .abt-mv-head {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 22px;
+        margin-bottom: 14px;
+      }
+      @media (max-width: 768px) {
+        .abt-mv-card { padding: 22px 20px !important; }
+        .abt-mv-head {
+          flex-direction: row;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 10px;
+        }
+        .abt-mv-icon {
+          width: 34px !important;
+          height: 34px !important;
+          border-radius: 9px !important;
+        }
+        .abt-mv-icon svg { width: 16px !important; height: 16px !important; }
+        .abt-mv-title { font-size: 16.5px !important; }
+        .abt-mv-body { font-size: 13px !important; line-height: 1.6 !important; }
       }
     `;
     document.head.appendChild(style);
@@ -440,11 +462,11 @@ export default function About({ isSection = false }) {
   ];
 
   const CORE_VALUES = [
-    { icon: <CheckCircle2 size={20} />, title: 'Reliability',    body: 'We deliver dependable assistance whenever our customers need us.' },
-    { icon: <Heart size={20} />,        title: 'Customer First', body: 'Every decision we make is focused on providing the best possible experience.' },
-    { icon: <Shield size={20} />,       title: 'Safety',         body: 'The safety of our customers, their vehicles, and our team is always our highest priority.' },
-    { icon: <Handshake size={20} />,    title: 'Integrity',      body: 'We believe in honest communication, transparent pricing, and dependable service.' },
-    { icon: <Star size={20} />,         title: 'Excellence',     body: 'We continuously improve our services to deliver quality, efficiency, and professionalism.' },
+    { icon: <CheckCircle2 size={20} />, title: t('about.coreValue1Title'), body: t('about.coreValue1Body') },
+    { icon: <Heart size={20} />,        title: t('about.coreValue2Title'), body: t('about.coreValue2Body') },
+    { icon: <Shield size={20} />,       title: t('about.coreValue3Title'), body: t('about.coreValue3Body') },
+    { icon: <Handshake size={20} />,    title: t('about.coreValue4Title'), body: t('about.coreValue4Body') },
+    { icon: <Star size={20} />,         title: t('about.coreValue5Title'), body: t('about.coreValue5Body') },
   ];
 
   const SERVICES_LIST = [
@@ -454,15 +476,9 @@ export default function About({ isSection = false }) {
     { label: t('about.svc4'), href: '/fuel-delivery-dubai',    icon: <Fuel size={17} /> },
   ];
 
-  // Mobile photo strip images — real Tareeqk photography only (no mixing in
-  // the CG service renders used elsewhere; that mix read as visual clutter
-  // when tried on the homepage About section earlier).
-  const MOBILE_PHOTOS = [
-    { src: '/new/Recovery_Van.webp', alt: 'Tareeqk recovery van, Dubai' },
-    { src: '/towing.jpg',            alt: 'Tareeqk tow truck on a Dubai street' },
-    { src: '/tareeqktow.jpg',        alt: 'Tareeqk truck loading a vehicle' },
-    { src: '/newTruck.jpg',          alt: 'Tareeqk flatbed recovery truck' },
-  ];
+  // Mobile story photo — a single real Tareeqk photo, matching what
+  // desktop shows in the image column next to this same text.
+  const MOBILE_STORY_PHOTO = { src: '/new/Recovery_Van.webp', alt: 'Tareeqk recovery van, Dubai' };
 
   return (
     <div className="abt-page-root" dir={isRTL ? 'rtl' : 'ltr'}>
@@ -795,17 +811,14 @@ export default function About({ isSection = false }) {
             </div>
           </div>
 
-          {/* Mobile photo strip */}
+          {/* Mobile story photo — one image, same as desktop */}
           <div className="abt-photo-strip" style={{ marginTop: '28px' }}>
-            {MOBILE_PHOTOS.map((p, i) => (
-              <img
-                key={i}
-                src={p.src}
-                alt={p.alt}
-                className="abt-photo-strip-img"
-                loading="lazy"
-              />
-            ))}
+            <img
+              src={MOBILE_STORY_PHOTO.src}
+              alt={MOBILE_STORY_PHOTO.alt}
+              className="abt-photo-strip-img"
+              loading="lazy"
+            />
           </div>
         </div>
       </section>
@@ -824,7 +837,7 @@ export default function About({ isSection = false }) {
             style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '56px' }}
           >
             <div
-              className="abt-reveal abt-left"
+              className="abt-reveal abt-left abt-mv-card"
               style={{
                 position: 'relative',
                 overflow: 'hidden',
@@ -835,29 +848,31 @@ export default function About({ isSection = false }) {
             >
               <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(ellipse 60% 60% at 0% 0%, rgba(247,178,5,0.16) 0%, transparent 70%)' }} />
               <div style={{ position: 'relative', zIndex: 1 }}>
-                <div
-                  style={{
-                    width: '46px', height: '46px',
-                    borderRadius: '12px',
-                    background: 'var(--primary-yellow)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: '22px',
-                    color: '#000',
-                  }}
-                >
-                  <Target size={22} />
+                <div className="abt-mv-head">
+                  <div
+                    className="abt-mv-icon"
+                    style={{
+                      width: '46px', height: '46px',
+                      borderRadius: '12px',
+                      background: 'var(--primary-yellow)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#000', flexShrink: 0,
+                    }}
+                  >
+                    <Target size={22} />
+                  </div>
+                  <h3 className="abt-mv-title" style={{ fontWeight: 800, fontSize: '20px', color: '#fff', letterSpacing: '-0.02em', margin: 0 }}>
+                    {t('about.missionTitle')}
+                  </h3>
                 </div>
-                <h3 style={{ fontWeight: 800, fontSize: '20px', color: '#fff', letterSpacing: '-0.02em', marginBottom: '14px' }}>
-                  Our Mission
-                </h3>
-                <p style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.8, fontSize: '14.5px' }}>
-                  Our mission is to provide fast, professional, and dependable roadside assistance that keeps drivers safe and minimizes disruption. We are committed to delivering exceptional customer service through quick response times, skilled professionals, and transparent communication.
+                <p className="abt-mv-body" style={{ color: 'rgba(255,255,255,0.65)', lineHeight: 1.8, fontSize: '14.5px' }}>
+                  {t('about.missionBody')}
                 </p>
               </div>
             </div>
 
             <div
-              className="abt-reveal abt-right"
+              className="abt-reveal abt-right abt-mv-card"
               style={{
                 padding: '40px 36px',
                 borderRadius: '18px',
@@ -865,30 +880,32 @@ export default function About({ isSection = false }) {
                 border: '1px solid rgba(0,0,0,0.06)',
               }}
             >
-              <div
-                style={{
-                  width: '46px', height: '46px',
-                  borderRadius: '12px',
-                  background: '#fef9ec',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginBottom: '22px',
-                  color: 'var(--primary-yellow)',
-                }}
-              >
-                <Eye size={22} />
+              <div className="abt-mv-head">
+                <div
+                  className="abt-mv-icon"
+                  style={{
+                    width: '46px', height: '46px',
+                    borderRadius: '12px',
+                    background: '#fef9ec',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: 'var(--primary-yellow)', flexShrink: 0,
+                  }}
+                >
+                  <Eye size={22} />
+                </div>
+                <h3 className="abt-mv-title" style={{ fontWeight: 800, fontSize: '20px', color: 'var(--primary-dark-bg)', letterSpacing: '-0.02em', margin: 0 }}>
+                  {t('about.visionTitle')}
+                </h3>
               </div>
-              <h3 style={{ fontWeight: 800, fontSize: '20px', color: 'var(--primary-dark-bg)', letterSpacing: '-0.02em', marginBottom: '14px' }}>
-                Our Vision
-              </h3>
-              <p style={{ color: '#6b6b6b', lineHeight: 1.8, fontSize: '14.5px' }}>
-                We aspire to become the first choice for roadside assistance by setting new standards in reliability, innovation, and customer satisfaction. Our vision is to create a safer driving experience where help is always just moments away.
+              <p className="abt-mv-body" style={{ color: '#6b6b6b', lineHeight: 1.8, fontSize: '14.5px' }}>
+                {t('about.visionBody')}
               </p>
             </div>
           </div>
 
           {/* Core values strip */}
           <div className="abt-reveal" style={{ marginBottom: '32px' }}>
-            <span style={eyebrow}>What Drives Us</span>
+            <span style={eyebrow}>{t('about.coreValuesTag')}</span>
             <h2
               className="abt-h2"
               style={{
@@ -900,7 +917,7 @@ export default function About({ isSection = false }) {
                 maxWidth: '460px',
               }}
             >
-              Our Core Values
+              {t('about.coreValuesTitle')}
             </h2>
           </div>
 

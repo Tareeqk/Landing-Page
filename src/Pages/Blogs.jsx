@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
 import { useNavigate } from "react-router-dom"
-import { BLOGS } from "../data/blogs"
+import { getLocalizedBlogs } from "../data/blogs"
 import useLangLink from "../hooks/useLangLink"
 
 function useBlogsStyles() {
@@ -308,7 +308,7 @@ function useBlogsStyles() {
 export default function Blogs() {
   const { t, i18n } = useTranslation()
   const isRTL = i18n.dir() === "rtl"
-  const blogs = BLOGS
+  const blogs = getLocalizedBlogs(i18n.language)
   const navigate = useNavigate()
   const langLink = useLangLink()
   useBlogsStyles()

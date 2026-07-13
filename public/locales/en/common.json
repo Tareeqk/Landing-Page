@@ -76,7 +76,25 @@
     "value4Body": "Request roadside assistance through the Tareeqk app and connect with professional support quickly and conveniently.",
     "value5Title": "24/7 Roadside Support",
     "value5Body": "Our services are available 24 hours a day, 7 days a week, providing reliable assistance whenever and wherever you need it.",
-  
+
+    "coreValuesTag": "What Drives Us",
+    "coreValuesTitle": "Our Core Values",
+    "coreValue1Title": "Reliability",
+    "coreValue1Body": "We deliver dependable assistance whenever our customers need us.",
+    "coreValue2Title": "Customer First",
+    "coreValue2Body": "Every decision we make is focused on providing the best possible experience.",
+    "coreValue3Title": "Safety",
+    "coreValue3Body": "The safety of our customers, their vehicles, and our team is always our highest priority.",
+    "coreValue4Title": "Integrity",
+    "coreValue4Body": "We believe in honest communication, transparent pricing, and dependable service.",
+    "coreValue5Title": "Excellence",
+    "coreValue5Body": "We continuously improve our services to deliver quality, efficiency, and professionalism.",
+
+    "missionTitle": "Our Mission",
+    "missionBody": "Our mission is to provide fast, professional, and dependable roadside assistance that keeps drivers safe and minimizes disruption. We are committed to delivering exceptional customer service through quick response times, skilled professionals, and transparent communication.",
+    "visionTitle": "Our Vision",
+    "visionBody": "We aspire to become the first choice for roadside assistance by setting new standards in reliability, innovation, and customer satisfaction. Our vision is to create a safer driving experience where help is always just moments away.",
+
     "coverageTag": "Infrastructure",
     "coverageTitle": "Reliable Roadside Support ",
     "coverageSubtitle": "Localized hubs in Marina, Downtown, JVC, and Deira keep our 20-minute arrival promise unbroken, day or night.",
@@ -99,7 +117,8 @@
     "statDriversHelped": "Drivers Helped",
     "statReviews": "1,200+ Reviews",
     "statLicensed": "Licensed",
-    "readMore": "Read More"
+    "readMore": "Read More",
+    "readLess": "Read Less"
   },
  
   

@@ -236,7 +236,7 @@ export default function BlogPage() {
   const langLink = useLangLink();
   useBlogPageStyles();
 
-  const blog = getBlogBySlugOrId(blogSlug);
+  const blog = getBlogBySlugOrId(blogSlug, i18n.language);
   const sections = blog?.html ? parseHtmlSections(blog.html, i18n.language) : [];
 
   // ── Reading progress bar ──
