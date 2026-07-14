@@ -81,7 +81,10 @@ export default function AboutPreview() {
       .abt-preview-media-main {
         border-radius: 20px;
         overflow: hidden;
-        aspect-ratio: 1 / 1.05;
+        /* Matches the source photo's natural ratio (717x538 ≈ 4:3) — it
+           was forced into a near-square 1:1.05 crop before, which cut off
+           both sides of this landscape shot under object-fit:cover. */
+        aspect-ratio: 4 / 3;
       }
 
       .abt-preview-media-main img {
@@ -452,7 +455,7 @@ export default function AboutPreview() {
           {/* Image side */}
           <div className="abt-preview-media" style={{ order: isRTL ? 2 : 1 }}>
             <div className="abt-preview-media-main">
-              <img src="/new/aboutimg.png" alt="Tareeqk recovery truck on a Dubai highway" />
+              <img src="/new/car_breakdown.jpg" alt="Tareeqk recovery truck on a Dubai highway" />
             </div>
 
             <div className="abt-preview-float">

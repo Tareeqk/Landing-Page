@@ -10,6 +10,7 @@ import HowItWorks from "../Components/Howitworks";
 import AboutAccordion from "../Components/AboutAccordion";
 // import HowItWorks from "./Service";
 import CJI from "../Components/CJI";
+import HomeFAQ from "../Components/HomeFAQ";
 import ContactForm from "../Components/ContactForm";
 import PriceGroup from "../Components/PriceGroup";
 import Registration from "./Registration";
@@ -53,6 +54,7 @@ export default function Home() {
         {/* <HowItWorks isSection /> */}
         {/* <Registration />
         <PriceGroup /> */}
+        <HomeFAQ />
         <ContactForm />
       </div>
     </>

@@ -158,15 +158,18 @@ function useServiceStyles() {
       .svc-card-bg {
         position: absolute; inset: 0; z-index: 0;
         background-size: cover; background-position: center;
-        filter: grayscale(35%) brightness(1.08) contrast(0.96);
+        filter: saturate(1.08);
       }
       .svc-card-bg-tint {
         position: absolute; inset: 0; z-index: 0;
-        background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.78) 38%, rgba(255,255,255,0.97) 68%, #fff 100%);
+        /* Photo stays clear only behind the icon/tag row; everything from
+           the title down needs a solid backing so text contrast never
+           depends on how bright a given photo happens to be. */
+        background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.94) 34%, #fff 46%, #fff 100%);
       }
-      body.dark .svc-card-bg { filter: grayscale(45%) brightness(0.6) contrast(1.05); }
+      body.dark .svc-card-bg { filter: saturate(1.05) brightness(0.85); }
       body.dark .svc-card-bg-tint {
-        background: linear-gradient(180deg, rgba(30,30,30,0.35) 0%, rgba(30,30,30,0.78) 38%, rgba(30,30,30,0.97) 68%, #1e1e1e 100%);
+        background: linear-gradient(180deg, rgba(30,30,30,0.04) 0%, rgba(30,30,30,0.4) 20%, rgba(30,30,30,0.94) 34%, #1e1e1e 46%, #1e1e1e 100%);
       }
 
       body.dark .svc-card {
@@ -527,7 +530,7 @@ export default function Service({ isSection = false }) {
       href: '/car-recovery-dubai',
       img: 'https://images.unsplash.com/photo-1673187139211-1e7ec3dd60ec?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc1Tag'),
-      tagBg: 'rgba(247,178,5,0.10)',
+      tagBg: 'rgba(255,244,214,0.95)',
       tagColor: '#b07c00',
       title: t('service.svc1Title'),
       desc: t('service.svc1Desc'),
@@ -547,7 +550,7 @@ export default function Service({ isSection = false }) {
       href: '/battery-service-dubai',
       img: 'https://images.unsplash.com/photo-1708745427274-d5de5122fd57?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc3Tag'),
-      tagBg: 'rgba(239,68,68,0.07)',
+      tagBg: 'rgba(254,226,226,0.95)',
       tagColor: '#c93030',
       title: t('service.svc3Title'),
       desc: t('service.svc3Desc'),
@@ -567,7 +570,7 @@ export default function Service({ isSection = false }) {
       href: '/accident-recovery-dubai',
       img: 'https://images.unsplash.com/photo-1548287233-af744a9ba268?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc5Tag'),
-      tagBg: 'rgba(249,115,22,0.07)',
+      tagBg: 'rgba(255,231,213,0.95)',
       tagColor: '#c04f00',
       title: t('service.svc5Title'),
       desc: t('service.svc5Desc'),

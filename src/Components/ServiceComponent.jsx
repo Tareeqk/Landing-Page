@@ -27,7 +27,7 @@ export default function WhatWeOffer() {
         t("offer.recovery10ton"),
       ],
       iconSrc: "/icons/TRUCK_ICON.png",
-      photoSrc: "/icons/car_recovery.jpg",
+      photoSrc: "/icons/car_recovery.png",
       photoPosition: "center 30%",
     },
     {
@@ -42,7 +42,7 @@ export default function WhatWeOffer() {
         t("offer.batteryTesting"),
       ],
       iconSrc: "/icons/BATTERY_ICON.png",
-      photoSrc: "/icons/battery_jumpstart.jpg",
+      photoSrc: "/icons/battery_jumpstart.png",
       photoPosition: "center center",
     },
     {
@@ -284,8 +284,13 @@ export default function WhatWeOffer() {
         mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
       }
       body.dark .s4-hero-img {
-        mix-blend-mode: luminosity;
-  
+        /* "multiply" (the light-mode blend, tuned to melt into a white
+           page) crushes to near-black against a dark backdrop, and
+           "luminosity" was tried as a fix but strips all color out of the
+           photo instead. Neither blend mode is needed on a solid dark
+           background — the mask/shadow alone already give it a clean
+           edge, so the image just renders in its natural color here. */
+        mix-blend-mode: normal;
         -webkit-mask-image: radial-gradient(ellipse 80% 90% at 60% 50%, #000 30%, transparent 85%);
         mask-image: radial-gradient(ellipse 80% 90% at 60% 50%, #000 30%, transparent 85%);
       }
@@ -684,6 +689,17 @@ export default function WhatWeOffer() {
           height: 60%;
           max-width: none;
         }
+        /* Desktop's mask fades the photo in from the left because it sits
+           behind text there — on mobile the photo is just a bottom-corner
+           image with nothing overlapping it, and with the hero image
+           hidden at this width it's the only photo left on the card, so
+           the heavy left-side fade just made it look washed out for no
+           reason. Keep only a soft top edge for blending. */
+        .s4-card-photo {
+          -webkit-mask-image: linear-gradient(to top, #000 80%, transparent 100%) !important;
+          mask-image: linear-gradient(to top, #000 80%, transparent 100%) !important;
+        }
+        [dir="rtl"] .s4-card-photo { transform: none; }
         /* The photo is bottom-anchored and doesn't reach up this far, so
            the description doesn't need to make room for it the way the
            checklist below does — letting it use nearly the full card
@@ -820,7 +836,7 @@ export default function WhatWeOffer() {
           <div className="s4-hero-img-wrap">
             <img
               className="s4-hero-img"
-              src="/new/whatweoffer.png"
+              src="/new/offer.jpg"
               alt={t("offer.heroImageAlt")}
             />
           </div>

@@ -1,5 +1,3 @@
-
-
 :root {
   --tk-ink:         #0b0d10;
   --tk-ink-2:       #141820;
@@ -55,27 +53,26 @@
   height: 100%;
   object-fit: cover;
   object-position: center 45%;
-  filter: saturate(1.02) brightness(0.68) contrast(1.1);
+  filter: saturate(1.05) contrast(1.05); /* brightness dimming removed — photo shows at full brightness */
 }
 
-/* Veil: a flat dark wash everywhere (so text stays legible against bright
-   patches of the photo — white truck cab, building facades) plus extra
-   shading stacked toward the bottom-left where .tk-hero__inner anchors
-   the text block. Photo is static — only this overlay's numbers change.
-   Mirrored for RTL below since gradients don't support logical directions. */
+/* Veil: flat dark wash removed entirely — photo now shows clear at full
+   brightness across the whole hero. Only a light gradient remains at the
+   bottom and left edge, just enough to keep CTA/subtitle text readable
+   where it sits directly over the image. Mirrored for RTL below since
+   gradients don't support logical directions. */
 .tk-hero__veil {
   position: absolute; inset: 0;
   background:
-    linear-gradient(rgba(11,13,16,0.55), rgba(11,13,16,0.55)),
     linear-gradient(180deg,
       rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0.18) 40%,
-      rgba(11,13,16,0.55) 75%,
-      rgba(11,13,16,0.88) 100%),
+      rgba(11,13,16,0) 50%,
+      rgba(11,13,16,0.25) 78%,
+      rgba(11,13,16,0.55) 100%),
     linear-gradient(90deg,
-      rgba(11,13,16,0.55) 0%,
-      rgba(11,13,16,0.3) 40%,
-      rgba(11,13,16,0.05) 64%);
+      rgba(11,13,16,0.25) 0%,
+      rgba(11,13,16,0.1) 40%,
+      rgba(11,13,16,0) 64%);
 }
 
 /* Warm accent glow behind the CTA block, ties the photo back to brand amber */
@@ -249,20 +246,20 @@
   padding: clamp(28px, 6vw, 80px) clamp(20px, 4vw, 56px) clamp(48px, 8vw, 88px);
   display: flex;
   align-items: flex-end;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .tk-hero__content {
   position: relative;
   z-index: 1; /* paints above .tk-hero__inner::before's accent glow */
   max-width: 620px;
-  text-align: center;
+  text-align: left;
 }
 
 .tk-cta-row,
 .tk-store-badges,
 .tk-service-pills {
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .tk-eyebrow {
@@ -513,19 +510,18 @@
 [dir="rtl"] .tk-hero__subtitle { text-align: right; margin-left: auto; }
 
 /* Content flips to the right edge in RTL (flex row respects dir), so the
-   veil's horizontal shading — and the accent glow behind it — must mirror.
-   Gradients don't support logical directions, so this is a manual flip;
-   inset-inline-start on the glow already handles itself automatically. */
+   veil's horizontal shading must mirror. Flat dark wash removed to match
+   the LTR version above — gradients don't support logical directions,
+   so this is a manual flip. */
 [dir="rtl"] .tk-hero__veil {
   background:
-    linear-gradient(rgba(11,13,16,0.55), rgba(11,13,16,0.55)),
     linear-gradient(180deg,
       rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0.18) 40%,
-      rgba(11,13,16,0.55) 75%,
-      rgba(11,13,16,0.88) 100%),
+      rgba(11,13,16,0) 50%,
+      rgba(11,13,16,0.25) 78%,
+      rgba(11,13,16,0.55) 100%),
     linear-gradient(270deg,
-      rgba(11,13,16,0.55) 0%,
-      rgba(11,13,16,0.3) 40%,
-      rgba(11,13,16,0.05) 64%);
+      rgba(11,13,16,0.25) 0%,
+      rgba(11,13,16,0.1) 40%,
+      rgba(11,13,16,0) 64%);
 }

@@ -27,29 +27,37 @@ export default function Nasir() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={t("nasir.cta", "Chat with us on WhatsApp")}
-        className={`nasir-float relative block rounded-full transition-transform hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 ${
+        className={`nasir-group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 rounded-full ${
           mounted ? "nasir-pop-in" : "opacity-0"
         }`}
       >
-        <img
-          src="/new/Nasir_Head.webp"
-          alt={t(
-            "nasir.avatarAlt",
-            "Tareeqk car recovery Dubai support assistant"
-          )}
-          className="h-12 w-12 object-contain sm:h-16 sm:w-16 md:h-20 md:w-20"
-          style={{ transform: isRtl ? "scaleX(-1)" : "none" }}
-          loading="lazy"
-        />
+        <span className="nasir-glow absolute inset-0 rounded-full" aria-hidden="true" />
 
-        {/* WhatsApp icon badge */}
-        <span
-          className={`absolute bottom-0 flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-white shadow-md sm:h-7 sm:w-7 ${
-            isRtl ? "left-0" : "right-0"
-          }`}
-        >
-          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
-          <FaWhatsapp className="relative text-xs sm:text-sm" />
+        <span className="nasir-float nasir-badge relative flex items-center justify-center rounded-full">
+          <img
+            src="/new/Nasir_Head.webp"
+            alt={t(
+              "nasir.avatarAlt",
+              "Tareeqk car recovery Dubai support assistant"
+            )}
+            className="h-11 w-11 object-contain sm:h-14 sm:w-14 md:h-16 md:w-16"
+            style={{ transform: isRtl ? "scaleX(-1)" : "none" }}
+            loading="lazy"
+          />
+
+          {/* WhatsApp icon badge */}
+          <span
+            className={`absolute bottom-0 flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-white shadow-md sm:h-7 sm:w-7 ${
+              isRtl ? "left-0" : "right-0"
+            }`}
+          >
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
+            <FaWhatsapp className="relative text-xs sm:text-sm" />
+          </span>
+        </span>
+
+        <span className="nasir-tooltip">
+          {t("nasir.cta", "Chat with us on WhatsApp")}
         </span>
       </a>
     </div>

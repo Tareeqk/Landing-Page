@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FiMail,
   FiMapPin,
@@ -8,9 +8,72 @@ import {
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
+// Built entirely with Tailwind utility classes (bg-white, text-black, etc.)
+// with no dark-mode handling, so it stayed a bright card regardless of the
+// site-wide dark toggle. Tailwind's `dark:` variant isn't configured in
+// this project — every other section instead injects a <style> block with
+// `body.dark .foo { ... !important }` overrides keyed off `body.dark` (set
+// by App.jsx). This follows that same convention.
+function useContactFormStyles() {
+  useEffect(() => {
+    if (document.getElementById("contact-form-styles")) return;
+    const style = document.createElement("style");
+    style.id = "contact-form-styles";
+    style.textContent = `
+      body.dark .cf-section { background-color: var(--dark-bg-main, #141414) !important; }
+      body.dark .cf-eyebrow {
+        background-color: rgba(245,166,35,0.14) !important;
+        border-color: rgba(245,166,35,0.3) !important;
+        color: var(--primary-yellow, #f5a623) !important;
+      }
+      body.dark .cf-heading { color: var(--dark-text-main, #f0f0f0) !important; }
+      body.dark .cf-desc { color: var(--dark-text-muted, #aaa) !important; }
+      body.dark .cf-label { color: var(--dark-text-disabled, #888) !important; }
+
+      body.dark .cf-map-wrap { background-color: var(--dark-bg-surface, #1e1e1e) !important; border-color: var(--dark-border, rgba(255,255,255,0.08)) !important; }
+      body.dark .cf-float-card, body.dark .cf-chip {
+        background-color: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+      }
+      body.dark .cf-icon-chip { background-color: rgba(245,166,35,0.14) !important; }
+      body.dark .cf-icon-chip svg { color: var(--primary-yellow, #f5a623) !important; }
+      body.dark .cf-value { color: var(--dark-text-main, #f0f0f0) !important; }
+
+      body.dark .cf-form-card {
+        background-color: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+      }
+      body.dark .cf-form-glow { background-image: linear-gradient(to bottom right, var(--dark-bg-surface, #1e1e1e), rgba(245,166,35,0.06)) !important; }
+
+      body.dark .cf-input {
+        background-color: var(--dark-bg-main, #141414) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.1)) !important;
+        color: var(--dark-text-main, #f0f0f0) !important;
+      }
+      body.dark .cf-input::placeholder { color: var(--dark-text-disabled, #777) !important; }
+
+      body.dark .cf-submit-btn {
+        background-color: var(--dark-bg-muted, #2a2a2a) !important;
+        color: var(--dark-text-main, #f0f0f0) !important;
+        border: 1px solid var(--dark-border, rgba(255,255,255,0.12));
+      }
+      body.dark .cf-submit-btn:hover {
+        background-color: var(--primary-yellow, #f5a623) !important;
+        color: #0a0a0a !important;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      const el = document.getElementById("contact-form-styles");
+      if (el) el.remove();
+    };
+  }, []);
+}
+
 export default function ContactSection() {
   const { t } = useTranslation();
   const baseUrl = import.meta.env.VITE_BASE_URL;
+  useContactFormStyles();
 
   const [loading, setLoading] = useState(false);
 
@@ -77,6 +140,7 @@ export default function ContactSection() {
     <section
       id="contact"
       className="
+        cf-section
         relative overflow-hidden
         bg-[#f7f7f3]
         w-full
@@ -99,6 +163,7 @@ export default function ContactSection() {
             <div className="max-w-md">
               <span
                 className="
+                  cf-eyebrow
                   inline-flex items-center
                   rounded-full
                   border border-amber-300/60
@@ -117,6 +182,7 @@ export default function ContactSection() {
 
               <h2
                 className="
+                  cf-heading
                   text-xl md:text-2xl
                   font-black
                   tracking-tight
@@ -127,7 +193,7 @@ export default function ContactSection() {
                 {t("contact.heading")}
               </h2>
 
-              <p className="mt-3 text-sm leading-6 text-gray-600">
+              <p className="cf-desc mt-3 text-sm leading-6 text-gray-600">
                 {t("contact.description")}
               </p>
             </div>
@@ -138,6 +204,7 @@ export default function ContactSection() {
                 old 220px-tall mobile crop. */}
             <div
               className="
+                cf-map-wrap
                 relative
                 overflow-hidden
                 rounded-2xl sm:rounded-[21px]
@@ -158,6 +225,7 @@ export default function ContactSection() {
                 {/* Phone */}
                 <div
                   className="
+                    cf-float-card
                     bg-white/90 backdrop-blur-md
                     rounded-xl
                     p-3
@@ -171,6 +239,7 @@ export default function ContactSection() {
                 >
                   <div
                     className="
+                      cf-icon-chip
                       w-7 h-7 shrink-0
                       rounded-lg
                       bg-amber-100
@@ -181,13 +250,14 @@ export default function ContactSection() {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-gray-400 font-bold">
+                    <p className="cf-label text-[10px] uppercase tracking-[0.18em] text-gray-400 font-bold">
                       {t("contact.phoneLabel")}
                     </p>
 
                     <a
                       href="tel:+97142232269"
                       className="
+                        cf-value
                         text-sm font-semibold text-black
                         hover:text-amber-600
                         transition-colors
@@ -202,6 +272,7 @@ export default function ContactSection() {
                 {/* Email */}
                 <div
                   className="
+                    cf-float-card
                     bg-white/90 backdrop-blur-md
                     rounded-xl
                     p-3
@@ -215,6 +286,7 @@ export default function ContactSection() {
                 >
                   <div
                     className="
+                      cf-icon-chip
                       w-7 h-7 shrink-0
                       rounded-lg
                       bg-amber-100
@@ -225,13 +297,14 @@ export default function ContactSection() {
                   </div>
 
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.18em] text-gray-400 font-bold">
+                    <p className="cf-label text-[10px] uppercase tracking-[0.18em] text-gray-400 font-bold">
                       {t("contact.emailLabel")}
                     </p>
 
                     <a
                       href="mailto:info@tareeqk.ae"
                       className="
+                        cf-value
                         text-sm font-semibold text-black
                         hover:text-amber-600
                         transition-colors
@@ -243,7 +316,7 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-              
+
               </div>
 
               {/* Map */}
@@ -267,6 +340,7 @@ export default function ContactSection() {
               <a
                 href="tel:+97142232269"
                 className="
+                  cf-chip
                   flex items-center gap-2
                   rounded-lg bg-white
                   border border-black/5
@@ -275,14 +349,14 @@ export default function ContactSection() {
                   min-w-0
                 "
               >
-                <div className="w-8 h-8 shrink-0 rounded-lg bg-amber-100 flex items-center justify-center">
+                <div className="cf-icon-chip w-8 h-8 shrink-0 rounded-lg bg-amber-100 flex items-center justify-center">
                   <FiPhone className="text-amber-600 text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
+                  <p className="cf-label text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
                     {t("contact.phoneLabel")}
                   </p>
-                  <p className="text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
+                  <p className="cf-value text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
                     +971 4 223 2269
                   </p>
                 </div>
@@ -291,6 +365,7 @@ export default function ContactSection() {
               <a
                 href="mailto:info@tareeqk.ae"
                 className="
+                  cf-chip
                   flex items-center gap-2
                   rounded-lg bg-white
                   border border-black/5
@@ -299,14 +374,14 @@ export default function ContactSection() {
                   min-w-0
                 "
               >
-                <div className="w-8 h-8 shrink-0 rounded-lg bg-amber-100 flex items-center justify-center">
+                <div className="cf-icon-chip w-8 h-8 shrink-0 rounded-lg bg-amber-100 flex items-center justify-center">
                   <FiMail className="text-amber-600 text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
+                  <p className="cf-label text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
                     {t("contact.emailLabel")}
                   </p>
-                  <p className="text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
+                  <p className="cf-value text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
                     info@tareeqk.ae
                   </p>
                 </div>
@@ -317,6 +392,7 @@ export default function ContactSection() {
           {/* RIGHT SIDE */}
           <div
             className="
+              cf-form-card
               relative
               overflow-hidden
               rounded-[21px]
@@ -332,6 +408,7 @@ export default function ContactSection() {
             {/* Subtle Gradient */}
             <div
               className="
+                cf-form-glow
                 absolute inset-0
                 bg-gradient-to-br
                 from-white
@@ -346,6 +423,7 @@ export default function ContactSection() {
               <div className="mb-5">
                 <span
                   className="
+                    cf-eyebrow
                     inline-flex items-center gap-1
                     rounded-full
                     bg-amber-100/80
@@ -364,6 +442,7 @@ export default function ContactSection() {
 
                 <h3
                   className="
+                    cf-heading
                     text-lg md:text-xl
                     font-black
                     tracking-tight
@@ -373,7 +452,7 @@ export default function ContactSection() {
                   {t("contact.formHeading")}
                 </h3>
 
-                <p className="mt-2 text-sm leading-6 text-gray-600 max-w-lg">
+                <p className="cf-desc mt-2 text-sm leading-6 text-gray-600 max-w-lg">
                   {t("contact.formDescription")}
                 </p>
               </div>
@@ -388,6 +467,7 @@ export default function ContactSection() {
                   <div>
                     <label
                       className="
+                        cf-label
                         block mb-1
                         text-[10px]
                         uppercase
@@ -406,6 +486,7 @@ export default function ContactSection() {
                       onChange={handleChange}
                       placeholder={t("contact.namePlaceholder")}
                       className="
+                        cf-input
                         w-full h-9
                         rounded-xl
                         border border-gray-100
@@ -426,6 +507,7 @@ export default function ContactSection() {
                   <div>
                     <label
                       className="
+                        cf-label
                         block mb-1
                         text-[10px]
                         uppercase
@@ -446,6 +528,7 @@ export default function ContactSection() {
                       minLength={8}
                       placeholder={t("contact.mobilePlaceholder")}
                       className="
+                        cf-input
                         w-full h-9
                         rounded-xl
                         border border-gray-100
@@ -467,6 +550,7 @@ export default function ContactSection() {
                 <div>
                   <label
                     className="
+                      cf-label
                       block mb-1
                       text-[10px]
                       uppercase
@@ -486,6 +570,7 @@ export default function ContactSection() {
                     required
                     placeholder={t("contact.emailPlaceholder")}
                     className="
+                      cf-input
                       w-full h-9
                       rounded-xl
                       border border-gray-100
@@ -506,6 +591,7 @@ export default function ContactSection() {
                 <div>
                   <label
                     className="
+                      cf-label
                       block mb-1
                       text-[10px]
                       uppercase
@@ -525,6 +611,7 @@ export default function ContactSection() {
                     required
                     placeholder={t("contact.subjectPlaceholder")}
                     className="
+                      cf-input
                       w-full h-9
                       rounded-xl
                       border border-gray-100
@@ -545,6 +632,7 @@ export default function ContactSection() {
                 <div>
                   <label
                     className="
+                      cf-label
                       block mb-1
                       text-[10px]
                       uppercase
@@ -564,6 +652,7 @@ export default function ContactSection() {
                     required
                     placeholder={t("contact.messagePlaceholder")}
                     className="
+                      cf-input
                       w-full
                       rounded-xl
                       border border-gray-100
@@ -587,6 +676,7 @@ export default function ContactSection() {
                     type="submit"
                     disabled={loading}
                     className="
+                      cf-submit-btn
                       group
                       relative
                       overflow-hidden

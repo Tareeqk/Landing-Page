@@ -1,5 +1,4 @@
 
-
 @keyframes nasir-pop-in {
   0% {
     opacity: 0;
@@ -21,6 +20,85 @@
   }
 }
 
+@keyframes nasir-glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.12); }
+}
+
+.nasir-pop-in {
+  animation: nasir-pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.nasir-float {
+  animation: nasir-float 3.2s ease-in-out infinite;
+}
+
+/* Soft brand-gold halo behind the card — gives the floating button a bit
+   of presence against busy page backgrounds instead of a flat cutout. */
+.nasir-glow {
+  background: radial-gradient(circle, rgba(245,166,35,0.35) 0%, transparent 72%);
+  filter: blur(6px);
+  animation: nasir-glow-pulse 3.2s ease-in-out infinite;
+}
+
+/* Circular card backdrop the mascot sits on, instead of the bare image
+   floating directly on the page — gives it weight and a defined edge. */
+.nasir-badge {
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
+}
+@media (min-width: 640px) {
+  .nasir-badge { width: 76px; height: 76px; }
+}
+@media (min-width: 768px) {
+  .nasir-badge { width: 84px; height: 84px; }
+}
+
+body.dark .nasir-badge {
+  background: var(--dark-bg-surface, #1e1e1e);
+  border-color: var(--dark-border, rgba(255,255,255,0.1));
+  box-shadow: 0 10px 28px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.nasir-group:hover .nasir-badge {
+  transform: scale(1.06);
+  box-shadow: 0 14px 34px rgba(0,0,0,0.22), 0 3px 10px rgba(0,0,0,0.1);
+}
+body.dark .nasir-group:hover .nasir-badge {
+  box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 3px 10px rgba(0,0,0,0.35);
+}
+
+/* "Chat with us" label — hidden until hover, so the corner stays compact
+   by default and only expands into a hint on intent. */
+.nasir-tooltip {
+  position: absolute;
+  bottom: 50%;
+  transform: translateY(50%) translateX(-6px);
+  white-space: nowrap;
+  background: #0a0a0a;
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+[dir="ltr"] .nasir-tooltip { left: calc(100% + 12px); }
+[dir="rtl"] .nasir-tooltip { right: calc(100% + 12px); transform: translateY(50%) translateX(6px); }
+.nasir-group:hover .nasir-tooltip {
+  opacity: 1;
+  transform: translateY(50%) translateX(0);
+}
+@media (max-width: 640px) {
+  .nasir-tooltip { display: none; }
+}
+
 .nasir-pop-in {
   animation: nasir-pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
@@ -31,7 +109,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .nasir-pop-in,
-  .nasir-float {
+  .nasir-float,
+  .nasir-glow {
     animation: none;
   }
 }

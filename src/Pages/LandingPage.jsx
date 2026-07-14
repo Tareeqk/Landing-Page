@@ -12,7 +12,7 @@ const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 // without needing four distinct service photos we don't have yet.
 // Source: public/towing.jpg, 1024×640 — soft on large desktop viewports,
 // swap for a higher-resolution shoot when available.
-const HERO_PHOTO = '/new/whatweoffer.png';
+const HERO_PHOTO = '/new/hero_image.png';
 
 /* ── Typing cycle ──
    Drives the hero title's type/delete loop only — the background photo
