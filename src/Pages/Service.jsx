@@ -6,7 +6,7 @@ import {
   Smartphone, MapPin, Tag, ShieldCheck, Clock, Map, Lock, Zap,
   ArrowRight, ArrowLeft, Phone, MessageCircle, Car, Truck,
   Battery, Wrench, AlertTriangle, ChevronRight, ChevronLeft,
-  CheckCircle2, Trophy, DollarSign, HardHat, Download,
+  CheckCircle2, Trophy, DollarSign, HardHat, Download, Mountain, Bike,
 } from 'lucide-react';
 
 import howItWorksIllustration from '/how-it-works-illustration.png';
@@ -20,13 +20,15 @@ function ServicesPageSchema() {
     "name": "Tareeqk Roadside Assistance Services Dubai",
     "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery.",
     "url": "https://www.tareeqk.ae/service",
-    "numberOfItems": 5,
+    "numberOfItems": 7,
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://www.tareeqk.ae/car-recovery-dubai", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://www.tareeqk.ae/battery-service-dubai", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://www.tareeqk.ae/flat-tyre-repair-dubai", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://www.tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://www.tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://www.tareeqk.ae/desert-recovery-dubai", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://www.tareeqk.ae/bike-recovery-dubai", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
     ],
   };
   const howToSchema = {
@@ -122,6 +124,7 @@ function useServiceStyles() {
 
       /* ── Service cards ── */
       .svc-card {
+        position: relative;
         background: #fff;
         border-radius: 16px;
         border: 1px solid rgba(0,0,0,0.07);
@@ -138,6 +141,8 @@ function useServiceStyles() {
         border-color: var(--primary-yellow);
       }
       .svc-card-top-bar {
+        position: relative;
+        z-index: 2;
         height: 3px;
         background: var(--primary-yellow);
         transform: scaleX(0);
@@ -146,6 +151,24 @@ function useServiceStyles() {
       }
       [dir="rtl"] .svc-card-top-bar { transform-origin: right; }
       .svc-card:hover .svc-card-top-bar { transform: scaleX(1); }
+
+      /* Faint photo backdrop — the real photo sits behind a near-opaque
+         tint so it reads as texture/color, not a competing focal point,
+         and body text on top stays legible without per-card contrast checks. */
+      .svc-card-bg {
+        position: absolute; inset: 0; z-index: 0;
+        background-size: cover; background-position: center;
+        filter: grayscale(35%) brightness(1.08) contrast(0.96);
+      }
+      .svc-card-bg-tint {
+        position: absolute; inset: 0; z-index: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0.78) 38%, rgba(255,255,255,0.97) 68%, #fff 100%);
+      }
+      body.dark .svc-card-bg { filter: grayscale(45%) brightness(0.6) contrast(1.05); }
+      body.dark .svc-card-bg-tint {
+        background: linear-gradient(180deg, rgba(30,30,30,0.35) 0%, rgba(30,30,30,0.78) 38%, rgba(30,30,30,0.97) 68%, #1e1e1e 100%);
+      }
+
       body.dark .svc-card {
         background: var(--dark-bg-surface, #1e1e1e) !important;
         border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
@@ -353,7 +376,6 @@ function useServiceStyles() {
 
       /* ── Responsive ── */
       @media (max-width: 1024px) {
-        .svc-cards-grid { grid-template-columns: repeat(2, 1fr) !important; }
         .svc-why-grid   { grid-template-columns: repeat(2, 1fr) !important; }
       }
       @media (max-width: 900px) {
@@ -501,9 +523,9 @@ export default function Service({ isSection = false }) {
   // ── Data (i18n-driven) ─────────────────────────────────────────────────
   const SERVICES = [
     {
-      icon: <Car size={22} />,
+      icon: <Car size={18} />,
       href: '/car-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1673187139211-1e7ec3dd60ec?auto=format&fit=crop&w=1200&q=80',
+      img: 'https://images.unsplash.com/photo-1673187139211-1e7ec3dd60ec?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc1Tag'),
       tagBg: 'rgba(247,178,5,0.10)',
       tagColor: '#b07c00',
@@ -512,18 +534,18 @@ export default function Service({ isSection = false }) {
       bullets: [t('service.svc1b1'), t('service.svc1b2'), t('service.svc1b3'), t('service.svc1b4')],
     },
     {
-      icon: <Truck size={22} />,
+      icon: <Truck size={18} />,
       href: '/towing-service-dubai',
-      img: 'https://images.unsplash.com/photo-1686966933735-305bd8fe0a77?auto=format&fit=crop&w=1200&q=80',
+      img: 'https://images.unsplash.com/photo-1686966933735-305bd8fe0a77?auto=format&fit=crop&w=800&q=60',
       tag: null,
       title: t('service.svc2Title'),
       desc: t('service.svc2Desc'),
       bullets: [t('service.svc2b1'), t('service.svc2b2'), t('service.svc2b3'), t('service.svc2b4')],
     },
     {
-      icon: <Battery size={22} />,
+      icon: <Battery size={18} />,
       href: '/battery-service-dubai',
-      img: 'https://images.unsplash.com/photo-1708745427274-d5de5122fd57?auto=format&fit=crop&w=1200&q=80',
+      img: 'https://images.unsplash.com/photo-1708745427274-d5de5122fd57?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc3Tag'),
       tagBg: 'rgba(239,68,68,0.07)',
       tagColor: '#c93030',
@@ -532,24 +554,42 @@ export default function Service({ isSection = false }) {
       bullets: [t('service.svc3b1'), t('service.svc3b2'), t('service.svc3b3'), t('service.svc3b4')],
     },
     {
-      icon: <Wrench size={22} />,
+      icon: <Wrench size={18} />,
       href: '/flat-tyre-repair-dubai',
-      img: 'https://images.unsplash.com/photo-1657718817965-9d0f67fd064e?auto=format&fit=crop&w=1200&q=80',
+      img: 'https://images.unsplash.com/photo-1657718817965-9d0f67fd064e?auto=format&fit=crop&w=800&q=60',
       tag: null,
       title: t('service.svc4Title'),
       desc: t('service.svc4Desc'),
       bullets: [t('service.svc4b1'), t('service.svc4b2'), t('service.svc4b3'), t('service.svc4b4')],
     },
     {
-      icon: <AlertTriangle size={22} />,
+      icon: <AlertTriangle size={18} />,
       href: '/accident-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1548287233-af744a9ba268?auto=format&fit=crop&w=1200&q=80',
+      img: 'https://images.unsplash.com/photo-1548287233-af744a9ba268?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc5Tag'),
       tagBg: 'rgba(249,115,22,0.07)',
       tagColor: '#c04f00',
       title: t('service.svc5Title'),
       desc: t('service.svc5Desc'),
       bullets: [t('service.svc5b1'), t('service.svc5b2'), t('service.svc5b3'), t('service.svc5b4')],
+    },
+    {
+      icon: <Mountain size={18} />,
+      href: '/desert-recovery-dubai',
+      img: 'https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?auto=format&fit=crop&w=800&q=60',
+      tag: null,
+      title: t('service.svc6Title'),
+      desc: t('service.svc6Desc'),
+      bullets: [t('service.svc6b1'), t('service.svc6b2'), t('service.svc6b3'), t('service.svc6b4')],
+    },
+    {
+      icon: <Bike size={18} />,
+      href: '/bike-recovery-dubai',
+      img: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=60',
+      tag: null,
+      title: t('service.svc7Title'),
+      desc: t('service.svc7Desc'),
+      bullets: [t('service.svc7b1'), t('service.svc7b2'), t('service.svc7b3'), t('service.svc7b4')],
     },
   ];
 
@@ -599,86 +639,72 @@ export default function Service({ isSection = false }) {
 
   const HERO_STATS = [
     { stat: '20 min', label: t('service.statAvgResponse') },
-    { stat: '5',      label: t('service.statServices') },
+    { stat: '7',      label: t('service.statServices') },
     { stat: '4.9★',  label: t('service.statReviews') },
     { stat: 'RTA',    label: t('service.statLicensed') },
   ];
 
   // ── Render helpers ─────────────────────────────────────────────────────
   const renderServiceCard = (svc, i) => (
-    <a href={langLink(svc.href)} className="svc-card" style={{ display: 'block' }}>
+    <a href={langLink(svc.href)} className="svc-card svc-card-v2" style={{ display: 'block' }}>
       <div className="svc-card-top-bar" />
+      <div className="svc-card-bg" style={{ backgroundImage: `url(${svc.img})` }} aria-hidden="true" />
+      <div className="svc-card-bg-tint" aria-hidden="true" />
 
-      {/* Card image — rendered as a CSS background so it always fills the card */}
-      <div
-        role="img"
-        aria-label={svc.title}
-        style={{
-          position: 'relative',
-          height: '160px',
-          overflow: 'hidden',
-          backgroundColor: '#0a0a0a',
-          backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.55) 100%), url(${svc.img})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-      >
-        {svc.tag && (
-          <div style={{ position: 'absolute', top: '10px', left: isRTL ? 'auto' : '12px', right: isRTL ? '12px' : 'auto' }}>
+      <div style={{ position: 'relative', zIndex: 1, padding: '22px 20px 20px' }}>
+        {/* Icon + tag row */}
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '16px' }}>
+          <div
+            className="svc-card-icon"
+            style={{
+              width: '46px', height: '46px', borderRadius: '13px', background: '#fef9ec',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              transition: 'background 0.25s ease', color: 'var(--primary-yellow)', flexShrink: 0,
+            }}
+          >
+            {svc.icon}
+          </div>
+          {svc.tag && (
             <span
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '5px',
-                fontSize: '10px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase',
-                padding: '4px 10px', borderRadius: '100px',
-                background: svc.tagBg, color: svc.tagColor,
-                backdropFilter: 'blur(4px)',
+                fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
+                padding: '4px 9px', borderRadius: '100px',
+                background: svc.tagBg, color: svc.tagColor, whiteSpace: 'nowrap',
               }}
             >
-              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block' }} />
+              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block', flexShrink: 0 }} />
               {svc.tag}
             </span>
-          </div>
-        )}
-      </div>
-
-      <div style={{ padding: '22px 24px 26px' }}>
-        {/* Icon */}
-        <div
-          className="svc-card-icon"
-          style={{
-            width: '44px', height: '44px', borderRadius: '11px', background: '#fef9ec',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            marginBottom: '14px', transition: 'background 0.25s ease',
-            color: 'var(--primary-yellow)',
-          }}
-        >
-          {svc.icon}
+          )}
         </div>
 
-        <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '10px', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+        <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '14.5px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
           {svc.title}
         </h3>
-        <p className="svc-card-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px', marginBottom: '16px' }}>
+        <p
+          className="svc-card-body"
+          style={{
+            color: '#6b6b6b', lineHeight: 1.6, fontSize: '12px', marginBottom: '14px',
+            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+          }}
+        >
           {svc.desc}
         </p>
 
-        <ul style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '7px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
           {svc.bullets.map((b, j) => (
-            <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12.5px' }}>
-              <CheckCircle2
-                size={14}
-                style={{ color: 'var(--primary-yellow)', flexShrink: 0, marginTop: '1px' }}
-              />
-              <span className="svc-bullet-text" style={{ color: '#888' }}>{b}</span>
-            </li>
+            <div key={j} className="svc-feat-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 9px', borderRadius: '9px', border: '1px solid rgba(0,0,0,0.06)', background: '#fafafa' }}>
+              <CheckCircle2 size={11} style={{ color: 'var(--primary-yellow)', flexShrink: 0 }} />
+              <span className="svc-feat-label" style={{ fontSize: '10.5px', fontWeight: 600, color: '#444', lineHeight: 1.25 }}>{b}</span>
+            </div>
           ))}
-        </ul>
+        </div>
 
         <div
           style={{
-            marginTop: '18px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,0.05)',
-            fontSize: '12.5px', fontWeight: 700, color: 'var(--primary-yellow)',
+            marginTop: '16px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,0.06)',
+            fontSize: '11.5px', fontWeight: 700, color: 'var(--primary-yellow)',
             display: 'flex', alignItems: 'center', gap: '4px',
           }}
         >
@@ -1017,10 +1043,12 @@ export default function Service({ isSection = false }) {
             </h2>
           </div>
 
-          {/* Desktop grid */}
-          <div className="svc-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+          {/* Desktop grid — flex-wrap + centered so a trailing partial row
+              (7 cards don't divide evenly into any fixed column count)
+              centers itself instead of hugging one side with an empty gap. */}
+          <div className="svc-cards-grid" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px' }}>
             {SERVICES.map((svc, i) => (
-              <div key={i} className="svc-reveal" data-delay={i * 75}>
+              <div key={i} className="svc-reveal svc-card-slot" data-delay={i * 75} style={{ flex: '1 1 260px', maxWidth: '280px' }}>
                 {renderServiceCard(svc, i)}
               </div>
             ))}

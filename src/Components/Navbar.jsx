@@ -173,14 +173,7 @@ export default function Navbar({ isDark, setIsDark }) {
                           loading="lazy"
                         />
                       </span>
-                      <span
-                        className={classNames(
-                          "text-lg sm:text-xl font-black tracking-tight",
-                          isDark ? "text-white" : "text-[#0a0a0a]",
-                        )}
-                      >
-                        TAREEQK
-                      </span>
+                     
                       <span
                         className={classNames(
                           "hidden md:inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",

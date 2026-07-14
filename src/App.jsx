@@ -29,6 +29,8 @@ const FlatTyreRepairDubai   = lazy(() => import('./Pages/services/FlatTyreRepair
 const FuelDeliveryDubai     = lazy(() => import('./Pages/services/FuelDeliveryDubai'));
 const AccidentRecoveryDubai = lazy(() => import('./Pages/services/AccidentRecoveryDubai'));
 const TowingServiceDubai    = lazy(() => import('./Pages/services/Towingservicedubai'));
+const DesertRecoveryDubai   = lazy(() => import('./Pages/services/DesertRecoveryDubai'));
+const BikeRecoveryDubai     = lazy(() => import('./Pages/services/BikeRecoveryDubai'));
 
 // ── LOCATION PAGES ────────────────────────────────────────────────
 // locationComponents is a { ComponentName: Component } map built from
@@ -115,6 +117,8 @@ function App() {
           <Route path="fuel-delivery-dubai"     element={<FuelDeliveryDubai />} />
           <Route path="accident-recovery-dubai" element={<AccidentRecoveryDubai />} />
           <Route path="towing-service-dubai"    element={<TowingServiceDubai />} />
+          <Route path="desert-recovery-dubai"   element={<DesertRecoveryDubai />} />
+          <Route path="bike-recovery-dubai"     element={<BikeRecoveryDubai />} />
 
           {/* Location pages — driven by common.json via useTranslation */}
           {LOCATION_SLUGS.map(slug => {

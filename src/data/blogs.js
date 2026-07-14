@@ -148,8 +148,12 @@ function localizeBlog(blog, lang) {
   return { ...shared, ...tr }
 }
 
+// Newest-first, by date — so the listing page's featured slot and grid
+// order stay correct as posts are appended to BLOGS in any order.
 export function getLocalizedBlogs(lang = 'en') {
-  return BLOGS.map((b) => localizeBlog(b, lang))
+  return BLOGS
+    .map((b) => localizeBlog(b, lang))
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
 }
 
 export function getBlogBySlugOrId(slugOrId, lang = 'en') {

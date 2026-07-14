@@ -26,6 +26,13 @@ function useBlogsStyles() {
         position: absolute; inset: 0;
         width: 100%; height: 100%;
         object-fit: cover;
+        /* The source photo has a lot of plain road/backdrop above the
+           truck itself — centering the crop left that blank stretch
+           exposed at the top (only lightly darkened by the scrim there).
+           Biasing the crop down keeps the truck in frame and pushes the
+           blank part toward the bottom, where the scrim + text already
+           cover it. */
+        object-position: center 68%;
         filter: brightness(0.55) saturate(1.05);
       }
       .bl-hero-scrim {

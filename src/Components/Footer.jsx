@@ -21,9 +21,11 @@ import useLangLink from "../hooks/useLangLink"
 
 export const SERVICES = [
   { title: "Car Recovery Dubai", href: "/car-recovery-dubai" },
-  { title: "Towing Service Dubai", href: "/towing-service-dubai" },
   { title: "Battery Jump Start", href: "/battery-service-dubai" },
   { title: "Flat Tyre Repair", href: "/flat-tyre-repair-dubai" },
+  { title: "Desert Recovery Dubai", href: "/desert-recovery-dubai" },
+  { title: "Bike Recovery Dubai", href: "/bike-recovery-dubai" },
+  { title: "Towing Service Dubai", href: "/towing-service-dubai" },
   { title: "Accident Recovery", href: "/accident-recovery-dubai" },
 ]
 

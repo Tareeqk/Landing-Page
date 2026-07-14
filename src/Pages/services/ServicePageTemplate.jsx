@@ -8,6 +8,7 @@ import {
   FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock, FaStar,
   FaTruck, FaMapMarkerAlt, FaCheckCircle, FaUserShield, FaUserCheck,
   FaCar, FaCarBattery, FaTools, FaCarCrash, FaChevronDown, FaArrowRight, FaHeadset, FaTh,
+  FaMountain, FaMotorcycle,
 } from 'react-icons/fa';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
@@ -19,6 +20,8 @@ const ALL_SERVICES = [
   { label: 'Flat Tyre Repair Dubai', href: '/flat-tyre-repair-dubai', Icon: FaTools },
   { label: 'Accident Recovery Dubai', href: '/accident-recovery-dubai', Icon: FaCarCrash },
   { label: 'Towing Service Dubai', href: '/towing-service-dubai', Icon: FaTruck },
+  { label: 'Desert Recovery Dubai', href: '/desert-recovery-dubai', Icon: FaMountain },
+  { label: 'Bike Recovery Dubai', href: '/bike-recovery-dubai', Icon: FaMotorcycle },
 ];
 
 const ALL_LOCATIONS = [
@@ -541,15 +544,7 @@ export default function ServicePageTemplate({ config }) {
                 <FaMobileAlt size={13} /> App
               </button>
             </div>
-            <div style={styles.heroMetrics} className="svc-hero-metrics">
-              {heroMetrics.map((m, i) => (
-                <div key={i} style={styles.metricCardGlass}>
-                  <m.Icon size={16} style={{ color: COLORS.gold }} />
-                  <div style={styles.metricValue}>{m.value}</div>
-                  <div style={styles.metricLabel}>{m.label}</div>
-                </div>
-              ))}
-            </div>
+           
           </div>
         </section>
 
@@ -580,8 +575,8 @@ export default function ServicePageTemplate({ config }) {
                   backgroundImage: `linear-gradient(135deg, rgba(11,12,15,0.90), rgba(11,12,15,0.95)), url(${config.heroImage})`,
                   backgroundSize: 'cover', backgroundPosition: 'center',
                 }}>
-                  <div style={styles.trustCardRating}>4.9<span style={{ color: COLORS.gold }}>★</span></div>
-                  <div style={styles.trustCardSub}>from 1,200+ Dubai drivers</div>
+                  <div style={styles.trustCardRating}>24/7</div>
+                  <div style={styles.trustCardSub}>Available every</div>
                   <div style={styles.trustCardDivider} />
                   <div style={styles.trustCardRow}>
                     <span style={styles.trustCardRowIcon}><FaShieldAlt size={14} /></span>
