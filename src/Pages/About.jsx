@@ -508,7 +508,7 @@ export default function About({ isSection = false }) {
             className="abt-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/about_hero.png")',
+              backgroundImage: 'url("/new/Recovery_Van.webp")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 38%',
               backgroundRepeat: 'no-repeat',
@@ -521,7 +521,7 @@ export default function About({ isSection = false }) {
             className="abt-hero-img-mobile"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/about_hero.png")',
+              backgroundImage: 'url("/new/Recovery_Van.webp")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 30%',
               backgroundRepeat: 'no-repeat',

@@ -775,7 +775,7 @@ export default function Service({ isSection = false }) {
             className="svc-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/new/Recovery_Van.webp")',
+              backgroundImage: 'url("/about_hero.png")',
               backgroundSize: 'cover', backgroundPosition: 'center 40%', backgroundRepeat: 'no-repeat',
             }}
           />
