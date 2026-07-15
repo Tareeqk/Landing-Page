@@ -57,8 +57,8 @@ function useCjiStyles() {
         .cji-avatar-glow { animation: none; }
       }
       .cji-avatar-ring {
-        border: 3px solid #fff;
-        box-shadow: 0 10px 26px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.06);
+       
+      
       }
       body.dark .cji-avatar-ring {
         border-color: var(--dark-bg-surface, #1e1e1e);

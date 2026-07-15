@@ -525,3 +525,7 @@
       rgba(11,13,16,0.1) 40%,
       rgba(11,13,16,0) 64%);
 }
+/* Mirror the hero photo horizontally in RTL, matching the veil flip above */
+[dir="rtl"] .tk-hero__bg-img {
+  transform: scaleX(-1);
+}

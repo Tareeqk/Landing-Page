@@ -455,10 +455,10 @@ export default function AboutPreview() {
           {/* Image side */}
           <div className="abt-preview-media" style={{ order: isRTL ? 2 : 1 }}>
             <div className="abt-preview-media-main">
-              <img src="/new/car_breakdown.jpg" alt="Tareeqk recovery truck on a Dubai highway" />
+              <img src="/new/about_image2.png" alt="Tareeqk recovery truck on a Dubai highway" />
             </div>
 
-            <div className="abt-preview-float">
+            {/* <div className="abt-preview-float">
               <div className="abt-preview-float-img">
                 <img src="/icons/truck-recovery.png" alt="" />
                 <span className="abt-preview-float-arrow">↗</span>
@@ -469,7 +469,7 @@ export default function AboutPreview() {
                   {t("aboutPreview.floatText", "Every vehicle is loaded and secured with care, on a flatbed built for the job.")}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* Content side */}
