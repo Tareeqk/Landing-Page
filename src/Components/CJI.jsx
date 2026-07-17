@@ -16,21 +16,111 @@ function useCjiStyles() {
     const style = document.createElement("style")
     style.id = "cji-styles"
     style.textContent = `
-      body.dark .cji-section { background-image: linear-gradient(to bottom, var(--dark-bg-main, #141414), var(--dark-bg-main, #141414)) !important; }
+      .cji-section { background: transparent; }
+
+      /* Elevated panel — gives the section its own defined shape instead of
+         bleeding flat into the page background, so it doesn't read as a
+         dead gap between AboutPreview above and the service cards below. */
+      .cji-panel {
+        position: relative;
+        border-radius: 32px;
+        background: linear-gradient(180deg, #fffdf6 0%, #ffffff 55%);
+        border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 8px 24px -14px rgba(0,0,0,0.10);
+        overflow: hidden;
+      }
+      body.dark .cji-panel {
+        background: linear-gradient(180deg, var(--dark-bg-surface, #1c1c1c) 0%, var(--dark-bg-main, #121212) 60%) !important;
+        border-color: var(--dark-border, #2a2a2a) !important;
+        box-shadow: 0 8px 24px -14px rgba(0,0,0,0.4), 0 0 0 1px rgba(245,166,35,0.04) !important;
+      }
+      /* Faint ambient glow anchored to the corner where the avatar sits —
+         the one signature atmosphere touch, kept subtle so it reads as
+         depth, not decoration. */
+      .cji-panel::before {
+        content: "";
+        position: absolute;
+        top: -20%;
+        left: -10%;
+        width: 55%;
+        height: 70%;
+        background: radial-gradient(circle, rgba(245,166,35,0.10) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      body.dark .cji-panel::before {
+        background: radial-gradient(circle, rgba(245,166,35,0.16) 0%, transparent 70%) !important;
+      }
+      [dir="rtl"] .cji-panel::before { left: auto; right: -10%; }
+
+      .cji-badge {
+        position: relative;
+        z-index: 1;
+      }
       body.dark .cji-badge {
         background-color: rgba(245,166,35,0.14) !important;
         color: var(--primary-yellow, #f5a623) !important;
         box-shadow: none !important;
       }
+      .cji-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: cji-dot-pulse 2s ease-in-out infinite;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cji-badge-dot { animation: none; }
+      }
+      @keyframes cji-dot-pulse {
+        0%, 100% { opacity: 0.4; transform: scale(0.85); }
+        50% { opacity: 1; transform: scale(1.1); }
+      }
+
+      .cji-heading {
+        position: relative;
+        z-index: 1;
+        letter-spacing: -0.5px;
+      }
       body.dark .cji-heading { color: var(--dark-text-main, #f0f0f0) !important; }
+      .cji-desc { position: relative; z-index: 1; }
       body.dark .cji-desc { color: var(--dark-text-muted, #aaa) !important; }
+
+      .cji-video-wrap {
+        position: relative;
+        z-index: 1;
+      }
       body.dark .cji-video-wrap {
-        background-color: var(--dark-bg-surface, #1e1e1e) !important;
-        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+        background-color: var(--dark-bg-main, #121212) !important;
+        border-color: var(--dark-border, #2a2a2a) !important;
+      }
+
+      .cji-video-badge {
+        position: absolute;
+        top: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        z-index: 2;
+        background: rgba(10,10,10,0.72);
+        color: #fff;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+      }
+      [dir="ltr"] .cji-video-badge { left: 14px; }
+      [dir="rtl"] .cji-video-badge { right: 14px; }
+
+      .cji-divider {
+        border-top: 1px solid rgba(0,0,0,0.07);
+      }
+      body.dark .cji-divider { border-top-color: var(--dark-border, #2a2a2a) !important; }
+
+      .cji-feature-pill {
+        position: relative;
+        z-index: 1;
       }
       body.dark .cji-feature-pill {
-        background-color: var(--dark-bg-surface, #1e1e1e) !important;
-        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
+        background-color: var(--dark-bg-muted, #242424) !important;
+        border-color: var(--dark-border, #2a2a2a) !important;
         color: var(--dark-text-main, #eee) !important;
       }
       body.dark .cji-feature-icon {
@@ -39,11 +129,11 @@ function useCjiStyles() {
       }
 
       /* Circular frame around the Nasir avatar clip — a bare rectangular
-         <video> tag with no border/shadow read as an unstyled blob (and a
-         stray bg-white utility on the glow behind it was fully opaque,
-         hiding the amber glow entirely). Fixed square box + object-cover
-         keeps the circle true regardless of the source video's aspect
-         ratio. */
+         <video> tag with no border/shadow read as an unstyled blob, and
+         with no explicit background the still-loading (10MB) clip showed
+         as a stray white circle in dark mode before the first frame
+         painted. Explicit background on the ring itself removes that
+         flash regardless of load timing. */
       .cji-avatar-glow {
         background: radial-gradient(circle, rgba(245,166,35,0.45) 0%, transparent 72%);
         filter: blur(10px);
@@ -57,12 +147,14 @@ function useCjiStyles() {
         .cji-avatar-glow { animation: none; }
       }
       .cji-avatar-ring {
-       
-      
+        background: #fff9ec;
+        border: 3px solid var(--primary-yellow, #f5a623);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
       }
       body.dark .cji-avatar-ring {
-        border-color: var(--dark-bg-surface, #1e1e1e);
-        box-shadow: 0 10px 26px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
+        background: var(--dark-bg-muted, #242424) !important;
+        border-color: rgba(245,166,35,0.55) !important;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.35) !important;
       }
     `
     document.head.appendChild(style)
@@ -89,99 +181,94 @@ export default function CJI() {
   return (
     <section
       dir={isRTL ? "rtl" : "ltr"}
-      className="cji-section py-10 sm:py-12 lg:py-16 bg-gradient-to-b from-white to-gray-50"
+      className="cji-section pt-4 sm:pt-6 pb-16 sm:pb-20 lg:pb-24"
     >
       <div className="container mx-auto px-4">
-        {/* Section Header */}
-        <div
-          data-aos="fade-up"
-          className={`text-center mb-8 sm:mb-10 ${isUrdu ? "leading-loose" : ""}`}
-        >
-          <span className="cji-badge inline-flex items-center gap-2 bg-amber-100 text-amber-900 px-4 py-2 rounded-full text-sm font-semibold shadow-sm ring-1 ring-amber-200/60">
-            <Sparkles className="w-4 h-4" />
-            {t("cji.badge")}
-          </span>
-        </div>
+        <div className="cji-panel">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center p-6 sm:p-9 lg:p-12">
+            {/* Left Side */}
+            <div data-aos="fade-right">
+              <span className="cji-badge inline-flex items-center gap-2 bg-amber-100 text-amber-900 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-sm ring-1 ring-amber-200/60 mb-5">
+                <span className="cji-badge-dot" aria-hidden="true" />
+                <Sparkles className="w-3.5 h-3.5" />
+                {t("cji.badge")}
+              </span>
 
-        {/* Content */}
-        <div className="grid lg:grid-cols-2 gap-5 sm:gap-6 lg:gap-8 items-stretch">
-          {/* Left Side */}
-          <div
-            data-aos="fade-right"
-            className=" rounded-xl   p-6 sm:p-8 flex flex-col justify-center"
-          >
-            {/* Robot + Text */}
-            <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-              <div className="relative shrink-0 w-24 h-24 md:w-28 md:h-28">
-                <div className="cji-avatar-glow absolute -inset-2 rounded-full" aria-hidden="true" />
+              <div className="flex flex-col sm:flex-row items-start gap-6">
+                <div className="relative shrink-0 w-24 h-24 md:w-28 md:h-28 mx-auto sm:mx-0">
+                  <div className="cji-avatar-glow absolute -inset-2 rounded-full" aria-hidden="true" />
 
-                <div className="cji-avatar-ring relative w-full h-full rounded-full overflow-hidden">
-                  <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    src="/new/NASIRWAVING.mp4"
-                    className="w-full h-full object-cover"
-                  />
+                  <div className="cji-avatar-ring relative w-full h-full rounded-full overflow-hidden">
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      src="/new/NASIRWAVING.mp4"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+
+                <div className={isRTL ? "text-right sm:text-right" : "text-left"}>
+                  <h3 className="cji-heading text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+                    {t("cji.heading")}
+                  </h3>
+
+                  <p
+                    className={`cji-desc text-gray-600 leading-relaxed text-[15px] sm:text-base ${
+                      isUrdu ? "leading-loose" : ""
+                    }`}
+                  >
+                    {t("cji.description")}
+                  </p>
                 </div>
               </div>
+            </div>
 
-              <div className={isRTL ? "text-right" : "text-left"}>
-                <h3 className="cji-heading text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
-                  {t("cji.heading")}
-                </h3>
+            {/* Video Side */}
+            <div
+              id="nasir-video"
+              data-aos="fade-left"
+              className="cji-video-wrap relative overflow-hidden rounded-3xl border border-gray-100 shadow-sm bg-white"
+            >
+              <span className="cji-video-badge rounded-full px-3 py-1.5 text-xs font-semibold">
+                <Play className="w-3 h-3 fill-current" />
+                {t("cji.videoBadge")}
+              </span>
 
-                <p
-                  className={`cji-desc text-gray-600 leading-relaxed text-[15px] sm:text-base ${
-                    isUrdu ? "leading-loose" : ""
-                  }`}
-                >
-                  {t("cji.description")}
-                </p>
+              <div className="aspect-video w-full h-full">
+                <iframe
+                  className="w-full h-full"
+                  src="https://www.youtube.com/embed/dIX_NmPE2rs"
+                  title={t("cji.videoTitle")}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
               </div>
             </div>
           </div>
 
-          {/* Video Side */}
+          {/* Feature Pills — full panel width so all four fit on one row
+              on desktop; a 2-column grid on mobile instead of wrapping
+              unevenly. A hairline divider ties them to the header above
+              instead of floating in the panel's own empty space. */}
           <div
-            id="nasir-video"
-            data-aos="fade-left"
-            className="cji-video-wrap relative overflow-hidden rounded-3xl border border-gray-100 shadow-lg bg-white"
+            data-aos="fade-up"
+            className="cji-divider grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-center gap-3 sm:gap-4 px-6 sm:px-9 lg:px-12 py-6 sm:py-7"
           >
-
-
-            <div className="aspect-video w-full h-full">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/dIX_NmPE2rs"
-                title={t("cji.videoTitle")}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Feature Pills — full section width so all four fit on one row
-            on desktop (they were confined to the half-width left card
-            before and wrapped onto two lines); a 2-column grid on mobile
-            instead of wrapping unevenly. */}
-        <div
-          data-aos="fade-up"
-          className="grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-center gap-3 sm:gap-4 mt-5 sm:mt-7"
-        >
-          {FEATURES.map(({ icon: Icon, label }) => (
-            <span
-              key={label}
-              className="cji-feature-pill group inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-3 sm:py-2.5 rounded-2xl sm:rounded-full bg-white border border-gray-100 shadow-sm text-[12.5px] sm:text-sm font-semibold text-gray-800 whitespace-normal sm:whitespace-nowrap transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:border-amber-300"
-            >
-              <span className="cji-feature-icon flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 shrink-0 transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-black">
-                <Icon className="w-4 h-4" />
+            {FEATURES.map(({ icon: Icon, label }) => (
+              <span
+                key={label}
+                className="cji-feature-pill group inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-3 sm:py-2.5 rounded-2xl sm:rounded-full bg-white border border-gray-100 text-[12.5px] sm:text-sm font-semibold text-gray-800 whitespace-normal sm:whitespace-nowrap transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm hover:border-amber-300"
+              >
+                <span className="cji-feature-icon flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 shrink-0 transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-black">
+                  <Icon className="w-4 h-4" />
+                </span>
+                <span className="leading-tight">{label}</span>
               </span>
-              <span className="leading-tight">{label}</span>
-            </span>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

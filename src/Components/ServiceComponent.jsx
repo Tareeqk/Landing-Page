@@ -194,20 +194,33 @@ export default function WhatWeOffer() {
         margin: 0 auto;
         padding: 0 32px;
       }
+/* ════════════ HERO TOP ════════════ */
+.s4-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: flex-end;
+  margin-bottom: 0;
+  position: relative;
+}
 
-      /* ════════════ HERO TOP ════════════ */
-      .s4-top {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 0;
-        align-items: flex-end;
-        margin-bottom: 0;
-        position: relative;
-      }
-      @media (max-width: 768px) {
-        .s4-top { grid-template-columns: 1fr; }
-        .s4-hero-img-wrap { display: none; }
-      }
+@media (max-width: 768px) {
+  .s4-top { grid-template-columns: 1fr; }
+
+  .s4-hero-img-wrap {
+    display: block;
+    width: 100vw;
+    height: 220px;
+    margin: 24px calc(-50vw + 50%) 0; /* breaks out of .s4-container's 32px padding */
+    justify-content: center;
+  }
+
+  .s4-hero-img {
+    border-radius: 0; /* full-bleed square edges on mobile */
+    -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  }
+}
 
       .s4-hero-text { padding-bottom: 40px; }
 
@@ -316,12 +329,12 @@ export default function WhatWeOffer() {
         gap: 14px;
         /* Elevation so the row reads as floating over the hero image/page
            seam instead of looking pasted flat on top of it. */
-        box-shadow: 0 14px 32px rgba(0,0,0,0.09);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
       }
       body.dark .s4-stat {
         background: #1e1e1e;
         border-color: rgba(255,255,255,0.07);
-        box-shadow: 0 14px 32px rgba(0,0,0,0.4);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.25);
       }
       .s4-stat-icon {
         width: 46px; height: 46px;
@@ -498,10 +511,10 @@ export default function WhatWeOffer() {
       }
       .s4-card:hover {
         transform: translateY(-6px);
-        box-shadow: 0 18px 48px rgba(0,0,0,0.08);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.07);
       }
       body.dark .s4-card:hover {
-        box-shadow: 0 18px 48px rgba(0,0,0,0.4);
+        box-shadow: 0 10px 26px rgba(0,0,0,0.3);
       }
       .s4-card:hover .s4-icon-circle {
         transform: scale(1.08) rotate(-4deg);
@@ -570,7 +583,7 @@ export default function WhatWeOffer() {
         border-radius: 50%;
         background: #fff;
         border: 1.5px solid #ececec;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -580,7 +593,7 @@ export default function WhatWeOffer() {
       body.dark .s4-icon-circle {
         background: #2a2a2a;
         border-color: rgba(255,255,255,0.12);
-        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       }
       .s4-icon-circle img { width: 40px; height: 40px; object-fit: contain; }
 

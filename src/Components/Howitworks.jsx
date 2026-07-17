@@ -1,14 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-// The customer render is a full opaque 3D scene (recovery truck + phone),
-// so the device stage crops into it with object-fit:cover to feature just
-// the phone. The driver screenshot is an isolated phone on a transparent
-// background with generous padding baked into the canvas, so it needs
-// object-fit:contain instead — cover would crop straight into the tilted
-// phone's edges since there's no scenery to crop into around it.
-const CUSTOMER_APP_BG = "/new/howitworks_dark.png";
-const DRIVER_APP_BG = "/new/driver-app-mockup.png";
+// Both mockups are multi-phone group shots (booking flow + home screen /
+// wallet + active rides) on a transparent canvas, at the same 4:3 ratio —
+// object-fit:contain on both keeps every phone in the group fully visible
+// instead of cropping into the composition.
+const CUSTOMER_APP_BG = "/new/MOBILE MOCKUP TAREEQK CUSTOMER.png";
+const DRIVER_APP_BG = "/new/MOBILE MOCKUP TAREEQK DRIVER.png";
 
 // Each banner shows 4 cards with a real title + sentence to read — 6s gave
 // people almost no time to get through them before it auto-advanced.
@@ -32,9 +30,6 @@ export default function HowItWorks() {
       tabLabel: t("howItWorks.customerTab", "For Customers"),
       deviceLabel: t("howItWorks.customerTab", "For Customers"),
       accent: "#d4a017",
-      deviceFit: "cover",
-      devicePosition: "right center",
-      deviceFramed: true,
       eyebrow: t("howItWorks.subtitle"),
       title: t("howItWorks.title"),
       description: t("howItWorks.description"),
@@ -51,8 +46,6 @@ export default function HowItWorks() {
       tabLabel: t("howItWorks.driverTab", "For Drivers"),
       deviceLabel: t("howItWorks.driverTab", "For Drivers"),
       accent: "#3aa0ff",
-      deviceFit: "cover",
-      devicePosition: "center",
       eyebrow: t("howItWorks.driverSubtitle"),
       title: t("howItWorks.driverTitle"),
       description: t("howItWorks.driverDescription"),
@@ -151,30 +144,6 @@ export default function HowItWorks() {
         background-color: #0b0b0e;
       }
 
-      /* Background crossfade — one layer per banner, opacity-toggled by
-         activeBanner, so the photo changes together with the banner. */
-      .hiw-bg-stack {
-        position: absolute;
-        inset: 0;
-        left: 35%;
-        z-index: 0;
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, black 40%);
-        mask-image: linear-gradient(to right, transparent 0%, black 40%);
-      }
-      .hiw-bg-layer {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: right center;
-        background-repeat: no-repeat;
-        opacity: 0;
-        transition: opacity 1.1s ease;
-      }
-      .hiw-bg-layer--active { opacity: 0.22; }
-      @media (prefers-reduced-motion: reduce) {
-        .hiw-bg-layer { transition: none; }
-      }
-
       /* warm gold glow on the right to tie it together */
       .hiw-section::before {
         content: "";
@@ -259,22 +228,19 @@ export default function HowItWorks() {
         min-width: 0;
       }
 
-      /* Sidebar | large centered phone | stacked step cards — three
-         columns reading left to right as one composition, phone taking
-         center stage instead of being tucked into a corner. */
-      .hiw-layout {
+      /* Copy on the left, the phone group large on the right — the phone
+         is the thing being sold here, so it gets the dominant half of the
+         row instead of being squeezed into a slim center column between
+         two text blocks. Step cards move to their own full-width row
+         below, where they have real room instead of a cramped 1fr sliver. */
+      .hiw-top {
         display: grid;
-        grid-template-columns: 250px 320px 1fr;
-        gap: 26px;
+        grid-template-columns: minmax(260px, 420px) 1fr;
+        gap: 40px;
         align-items: center;
+        margin-bottom: 32px;
       }
-      .hiw-sidebar {
-        position: sticky;
-        top: 100px;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
-      }
+      .hiw-info { max-width: 460px; }
       .hiw-eyebrow {
         display: inline-flex;
         align-items: center;
@@ -350,41 +316,56 @@ export default function HowItWorks() {
       .hiw-perk-icon { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; display: block; }
       .hiw-perk-label { font-size: 12px; font-weight: 700; color: #d0d0d6; white-space: nowrap; }
 
-      /* ── PHONE — large, centered, its own column. Both banners
-         crossfade their own image + accent color here, so a real
-         driver-app screenshot is a one-line swap away (see DRIVER_APP_BG
-         above) — no layout work needed when it lands. ── */
+      /* ── PHONE — the section's visual lead. Both banners crossfade
+         their own image + accent color here, so swapping the source
+         mockup is a one-line change (see CUSTOMER_APP_BG/DRIVER_APP_BG
+         above) — no layout work needed when a new render lands. */
       .hiw-phone-col {
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 340px;
+        min-height: 380px;
+      }
+      .hiw-phone-stage {
+        position: relative;
+        width: 100%;
+        max-width: 560px;
+        aspect-ratio: 4 / 3;
+      }
+      /* Soft "console" panel behind the phones — gives the render a
+         defined edge to sit inside instead of floating loose against the
+         page's flat dark background, which is what was making it read as
+         small/washed-out. */
+      .hiw-phone-stage::before {
+        content: "";
+        position: absolute;
+        inset: 4%;
+        border-radius: 32px;
+        background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015));
+        border: 1px solid rgba(255,255,255,0.08);
+        z-index: 0;
       }
       .hiw-device-glow {
         position: absolute;
-        inset: -20px -30px;
+        inset: -10%;
         border-radius: 50%;
-        filter: blur(54px);
-        opacity: 0.5;
+        filter: blur(60px);
+        opacity: 0.6;
         transition: background 0.7s ease;
         pointer-events: none;
         z-index: 0;
       }
       .hiw-device-img {
-        /* object-fit/position/framing are set inline per banner — the
-           customer render is a full opaque scene that needs cropping into
-           (cover), the driver screenshot is an isolated phone on a
-           transparent canvas that needs to be shown whole (contain). */
         position: relative;
         z-index: 1;
         width: 100%;
         height: 100%;
-        filter: drop-shadow(0 26px 40px rgba(0,0,0,0.5));
+        filter: drop-shadow(0 18px 30px rgba(0,0,0,0.35));
       }
       .hiw-device-badge {
         position: absolute;
-        top: 10px;
+        top: 6%;
         left: 50%;
         transform: translateX(-50%);
         z-index: 2;
@@ -401,7 +382,7 @@ export default function HowItWorks() {
         font-weight: 800;
         color: #fff;
         white-space: nowrap;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
       }
       .hiw-device-badge-dot {
         width: 7px;
@@ -411,37 +392,36 @@ export default function HowItWorks() {
         flex-shrink: 0;
       }
 
-      /* ── Step cards — single stacked column beside the phone ── */
+      /* ── Step cards — full-width row below the phone, not squeezed into
+         a sliver beside it, so each one has room to breathe. ── */
       .hiw-cards {
         display: grid;
-        grid-template-columns: 1fr;
-        gap: 10px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
       }
       .hiw-step {
         /* Frosted glass, not a near-transparent tint — cards need to read
            cleanly on their own regardless of what the background photo is
-           doing underneath them. Wide single-column card now (not a 2×2
-           grid tile), so icon sits beside the text instead of above it. */
+           doing underneath them. */
         background: rgba(20,18,10,0.55);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
         border: 1px solid rgba(255,255,255,0.09);
         border-radius: 16px;
-        padding: 13px 20px;
+        padding: 20px 16px 16px;
         position: relative;
         transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         cursor: default;
         display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
       }
       .hiw-step:hover {
-        transform: translateX(4px);
+        transform: translateY(-4px);
         border-color: rgba(212,160,23,0.4);
-        box-shadow: 0 14px 32px rgba(212,160,23,0.1);
+        box-shadow: 0 10px 24px rgba(212,160,23,0.08);
       }
-      [dir="rtl"] .hiw-step:hover { transform: translateX(-4px); }
       .hiw-step-num {
         position: absolute;
         top: -10px;
@@ -507,17 +487,13 @@ export default function HowItWorks() {
          TABLET  ≤ 1080px
       ════════════════════ */
       @media (max-width: 1080px) {
-        .hiw-layout { grid-template-columns: 1fr; gap: 36px; }
-        .hiw-sidebar {
-          position: relative;
-          top: auto;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 24px;
-          align-items: start;
-        }
+        .hiw-top { grid-template-columns: 1fr; gap: 8px; }
+        .hiw-info { max-width: none; }
         .hiw-title { font-size: 36px; }
-        .hiw-phone-col { display: none; }
+        /* Stacks below the copy instead of sitting beside it — still the
+           full mockup, just smaller than the two-column desktop stage. */
+        .hiw-phone-col { min-height: 0; margin: 20px 0 8px; }
+        .hiw-phone-stage { max-width: 380px; margin: 0 auto; }
         .hiw-cards { grid-template-columns: 1fr 1fr; }
       }
 
@@ -528,9 +504,9 @@ export default function HowItWorks() {
         .hiw-section { padding: 56px 0 52px; }
         .hiw-container { padding: 0 18px; }
         .hiw-tabs { margin-bottom: 24px; }
-        .hiw-sidebar { grid-template-columns: 1fr; gap: 16px; }
         .hiw-title { font-size: 30px; }
         .hiw-desc { font-size: 14px; }
+        .hiw-phone-stage { max-width: 300px; }
 
         /* Perks become a horizontal scroll-snap strip instead of wrapping
            five pills into a cramped 3-row block. */
@@ -551,17 +527,13 @@ export default function HowItWorks() {
         .hiw-perk-label { font-size: 11px; }
 
         /* All 4 steps visible at once as a 2×2 grid — no horizontal
-           scrolling, no auto-advancing carousel to sit through. Cards
-           revert to icon-above-text (not beside it) since a 2-up grid at
-           phone width leaves too little room for a side-by-side row. */
+           scrolling, no auto-advancing carousel to sit through. */
         .hiw-cards {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 12px;
-          padding-top: 14px;
         }
         .hiw-step {
-          flex-direction: column;
           padding: 18px 14px 16px;
           min-width: 0;
         }
@@ -598,16 +570,6 @@ export default function HowItWorks() {
       onMouseEnter={() => { isPausedRef.current = true; }}
       onMouseLeave={() => { isPausedRef.current = false; }}
     >
-      <div className="hiw-bg-stack" aria-hidden="true">
-        {banners.map((banner, i) => (
-          <div
-            key={banner.key}
-            className={`hiw-bg-layer${i === activeBanner ? " hiw-bg-layer--active" : ""}`}
-            style={{ backgroundImage: `url(${banner.bg})` }}
-          />
-        ))}
-      </div>
-
       <div className="hiw-container" ref={sectionRef}>
         <div className={`hiw-tabs hiw-reveal${revealed ? " hiw-visible" : ""}`} role="tablist" aria-label="Audience">
           {banners.map((banner, i) => (
@@ -628,63 +590,56 @@ export default function HowItWorks() {
           <div className="hiw-track" style={{ transform: `translateX(${trackOffset}%)` }}>
             {banners.map((banner, bannerIdx) => (
               <div className="hiw-slide" key={banner.key} aria-hidden={bannerIdx !== activeBanner}>
-                <div className="hiw-layout">
-                  {/* ── SIDEBAR ── */}
-                  <div className="hiw-sidebar">
-                    <div className={`hiw-reveal${revealed ? " hiw-visible" : ""}`}>
-                      <div className="hiw-eyebrow">{banner.eyebrow}</div>
-                      <h2 className="hiw-title">{banner.title}</h2>
-                      <p className="hiw-desc">{banner.description}</p>
-                    </div>
+                <div className="hiw-top">
+                  <div className={`hiw-info hiw-reveal${revealed ? " hiw-visible" : ""}`}>
+                    <div className="hiw-eyebrow">{banner.eyebrow}</div>
+                    <h2 className="hiw-title">{banner.title}</h2>
+                    <p className="hiw-desc">{banner.description}</p>
                   </div>
 
-                  {/* ── PHONE — center stage ── */}
+                  {/* ── PHONE — the dominant visual, large on the right ── */}
                   <div
                     className={`hiw-phone-col hiw-reveal${revealed ? " hiw-visible" : ""}`}
                     style={{ transitionDelay: revealed ? "180ms" : "0ms" }}
                     aria-hidden="true"
                   >
-                    <div
-                      className="hiw-device-glow"
-                      style={{ background: `radial-gradient(circle, ${banner.accent}55 0%, transparent 70%)` }}
-                    />
-                    <img
-                      className="hiw-device-img"
-                      src={banner.bg}
-                      alt=""
-                      style={{
-                        objectFit: banner.deviceFit,
-                        objectPosition: banner.devicePosition,
-                        ...(banner.deviceFramed
-                          ? { borderRadius: "20px", border: "1px solid rgba(255,255,255,0.12)" }
-                          : {}),
-                      }}
-                    />
-                    <span className="hiw-device-badge">
-                      <span className="hiw-device-badge-dot" style={{ background: banner.accent }} />
-                      {banner.deviceLabel}
-                    </span>
-                  </div>
-
-                  {/* ── STEP CARDS — stacked single column ── */}
-                  <div className="hiw-cards">
-                    {banner.steps.map((step, i) => (
+                    <div className="hiw-phone-stage">
                       <div
-                        className={`hiw-step hiw-reveal${revealed ? " hiw-visible" : ""}`}
-                        style={{ transitionDelay: revealed ? `${i * 90}ms` : "0ms" }}
-                        key={step.num}
-                      >
-                        <span className="hiw-step-num">{step.num}</span>
-                        <div className="hiw-step-icon">
-                          <img src={step.iconSrc} alt="" aria-hidden="true" />
-                        </div>
-                        <div className="hiw-step-text">
-                          <h3 className="hiw-step-title">{step.title}</h3>
-                          <p className="hiw-step-desc">{step.desc}</p>
-                        </div>
-                      </div>
-                    ))}
+                        className="hiw-device-glow"
+                        style={{ background: `radial-gradient(circle, ${banner.accent}55 0%, transparent 70%)` }}
+                      />
+                      <img
+                        className="hiw-device-img"
+                        src={banner.bg}
+                        alt=""
+                        style={{ objectFit: "contain", objectPosition: "center" }}
+                      />
+                      <span className="hiw-device-badge">
+                        <span className="hiw-device-badge-dot" style={{ background: banner.accent }} />
+                        {banner.deviceLabel}
+                      </span>
+                    </div>
                   </div>
+                </div>
+
+                {/* ── STEP CARDS — full-width row below ── */}
+                <div className="hiw-cards">
+                  {banner.steps.map((step, i) => (
+                    <div
+                      className={`hiw-step hiw-reveal${revealed ? " hiw-visible" : ""}`}
+                      style={{ transitionDelay: revealed ? `${i * 90}ms` : "0ms" }}
+                      key={step.num}
+                    >
+                      <span className="hiw-step-num">{step.num}</span>
+                      <div className="hiw-step-icon">
+                        <img src={step.iconSrc} alt="" aria-hidden="true" />
+                      </div>
+                      <div className="hiw-step-text">
+                        <h3 className="hiw-step-title">{step.title}</h3>
+                        <p className="hiw-step-desc">{step.desc}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}
