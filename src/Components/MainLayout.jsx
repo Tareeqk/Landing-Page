@@ -6,6 +6,7 @@ import Navbar from "./Navbar"
 import Footer from "./Footer"
 import Nasir from "./Nasir"
 import HreflangTags from "../Hreflangtags"
+import CookieConsent from "./CookieConsent"
 
 const SUPPORTED_LANGS = ["en", "ar", "ur"]
 
@@ -36,6 +37,7 @@ const MainLayout = ({ isDark, setIsDark }) => {
         <Outlet />
       </main>
       <Footer isDark={isDark} setIsDark={setIsDark} />
+      <CookieConsent />
     </div>
   )
 }

@@ -19,6 +19,26 @@
       function gtag() {
         dataLayer.push(arguments)
       }
+
+      // Google Consent Mode v2: default to denied so no analytics/ad
+      // cookies are set until the visitor accepts in the cookie banner
+      // (src/Components/CookieConsent.jsx). If they already chose
+      // "accept" on a previous visit, honor that immediately instead of
+      // flashing "denied" for a returning visitor.
+      ;(function () {
+        var granted = false
+        try {
+          var stored = JSON.parse(localStorage.getItem("tk_cookie_consent") || "null")
+          granted = !!(stored && stored.analytics)
+        } catch (e) {}
+        gtag("consent", "default", {
+          analytics_storage: granted ? "granted" : "denied",
+          ad_storage: "denied",
+          ad_user_data: "denied",
+          ad_personalization: "denied",
+        })
+      })()
+
       gtag("js", new Date())
 
       gtag("config", "G-N8F28JJFW1")

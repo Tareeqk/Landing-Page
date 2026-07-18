@@ -18,6 +18,7 @@ import {
 import { Link, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import useLangLink from "../hooks/useLangLink"
+import { openCookieSettings } from "../utils/cookieConsent"
 
 export const SERVICES = [
   { title: "Car Recovery Dubai", href: "/car-recovery-dubai" },
@@ -379,6 +380,15 @@ const Footer = () => {
           color: #f5a623;
         }
 
+        .tk-legal-link-btn {
+          appearance: none;
+          background: none;
+          border: 0;
+          padding: 0;
+          font: inherit;
+          cursor: pointer;
+        }
+
         /* ─── BOTTOM BAR ─── */
         .tk-footer-bottom {
           padding: 20px 0;
@@ -551,6 +561,9 @@ const Footer = () => {
                 <Link to={langLink("/terms")} className="tk-legal-link">
                   Terms
                 </Link>
+                <button type="button" className="tk-legal-link tk-legal-link-btn" onClick={openCookieSettings}>
+                  {t("footer.cookieSettings", "Cookie Settings")}
+                </button>
               </div>
             </div>
 

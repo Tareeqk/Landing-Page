@@ -8,7 +8,7 @@
     "contact": "Contact",
     "call": "CALL NOW"
   },
-"landing": {
+  "landing": {
     "title": "CAR RECOVERY & TOWING SERVICES IN DUBAI",
     "subtitle": "Tareeqk provides 24/7 care recovery, towing services,roadside assistance, battery jump start, flat tire repair and punture repair across Dubai.",
     "book": "Book Now",
@@ -20,18 +20,17 @@
       "battery": "Battery Service",
       "tire": "Tire Service"
     },
-      "eyebrow": "24 / 7 · Fast Response  · Dubai",
-"callNow": "Call Now",
-"trust": {
-  "dispatchValue": "15-min",
-  "dispatchLabel": "Avg. Dispatch", 
-  "availabilityValue": "24/7",
-  "availabilityLabel": "Around The Clock",
-  "ratingValue": "📡 ",
-  "ratingLabel": "Live tracking"
-}
+    "eyebrow": "24 / 7 · Fast Response  · Dubai",
+    "callNow": "Call Now",
+    "trust": {
+      "dispatchValue": "15-min",
+      "dispatchLabel": "Avg. Dispatch",
+      "availabilityValue": "24/7",
+      "availabilityLabel": "Around The Clock",
+      "ratingValue": "📡 ",
+      "ratingLabel": "Live tracking"
+    }
   },
-
   "blogs": {
     "title": "Our Blogs",
     "subtitle": "Expert insights, tips, and news about car maintenance, roadside assistance, and automotive trends in the UAE",
@@ -57,8 +56,8 @@
     "heroInquire": " Book a Service",
     "originsTag": "Origins",
     "originsTitle": "Your Trusted Roadside Partner.",
-"originsP1": "Tareeqk is a smart, app-based <strong>roadside assistance</strong> platform designed to connect drivers across <strong>Dubai</strong> with <strong>fast, reliable support</strong> whenever they need it. Whether you're dealing with a <strong>vehicle breakdown</strong>, require <strong>car recovery</strong> or <strong>towing</strong>, need a <strong>battery jump start</strong>, <strong>tyre repair</strong>, or <strong>puncture assistance</strong>, help is just a few taps away.",
-"originsP2": "With an estimated arrival time of 15 minutes, our network of experienced roadside professionals is committed to delivering prompt, safe, and efficient assistance. Every request is managed with transparency, professionalism, and a customer-first approach, ensuring a smooth experience from the moment you book a service until you're back on the road. At Tareeqk, we're more than a roadside assistance provider—we're a trusted mobility partner dedicated to keeping Dubai's drivers safe, connected, and moving with confidence, 24 hours a day.",
+    "originsP1": "Tareeqk is a smart, app-based <strong>roadside assistance</strong> platform designed to connect drivers across <strong>Dubai</strong> with <strong>fast, reliable support</strong> whenever they need it. Whether you're dealing with a <strong>vehicle breakdown</strong>, require <strong>car recovery</strong> or <strong>towing</strong>, need a <strong>battery jump start</strong>, <strong>tyre repair</strong>, or <strong>puncture assistance</strong>, help is just a few taps away.",
+    "originsP2": "With an estimated arrival time of 15 minutes, our network of experienced roadside professionals is committed to delivering prompt, safe, and efficient assistance. Every request is managed with transparency, professionalism, and a customer-first approach, ensuring a smooth experience from the moment you book a service until you're back on the road. At Tareeqk, we're more than a roadside assistance provider—we're a trusted mobility partner dedicated to keeping Dubai's drivers safe, connected, and moving with confidence, 24 hours a day.",
     "statFounded": "Founded",
     "statRescues": "Rescues",
     "statRating": "Rating",
@@ -76,7 +75,6 @@
     "value4Body": "Request roadside assistance through the Tareeqk app and connect with professional support quickly and conveniently.",
     "value5Title": "24/7 Roadside Support",
     "value5Body": "Our services are available 24 hours a day, 7 days a week, providing reliable assistance whenever and wherever you need it.",
-
     "coreValuesTag": "What Drives Us",
     "coreValuesTitle": "Our Core Values",
     "coreValue1Title": "Reliability",
@@ -89,12 +87,10 @@
     "coreValue4Body": "We believe in honest communication, transparent pricing, and dependable service.",
     "coreValue5Title": "Excellence",
     "coreValue5Body": "We continuously improve our services to deliver quality, efficiency, and professionalism.",
-
     "missionTitle": "Our Mission",
     "missionBody": "Our mission is to provide fast, professional, and dependable roadside assistance that keeps drivers safe and minimizes disruption. We are committed to delivering exceptional customer service through quick response times, skilled professionals, and transparent communication.",
     "visionTitle": "Our Vision",
     "visionBody": "We aspire to become the first choice for roadside assistance by setting new standards in reliability, innovation, and customer satisfaction. Our vision is to create a safer driving experience where help is always just moments away.",
-
     "coverageTag": "Infrastructure",
     "coverageTitle": "Reliable Roadside Support ",
     "coverageSubtitle": "Localized hubs in Marina, Downtown, JVC, and Deira keep our 20-minute arrival promise unbroken, day or night.",
@@ -120,8 +116,6 @@
     "readMore": "Read More",
     "readLess": "Read Less"
   },
- 
-  
   "service": {
     "heroTag": "Premium Roadside Care",
     "heroTitle": "Fast Response. ",
@@ -135,7 +129,6 @@
     "statLicensed": "RTA Licensed",
     "readMore": "Read More",
     "readLess": "Read Less",
-
     "whoWeAreTag": "Who We Are",
     "whoWeAreTitle": "Roadside support made simple. ",
     "whoWeAreP1": "From emergency towing and vehicle recovery to battery assistance, flat tire support, and fuel delivery, Tareeqk provides dependable roadside services through one intelligent platform. Request help in seconds, follow your provider in real time, and get back on the road with confidence.",
@@ -148,11 +141,9 @@
     "feat4": "Verified Professionals",
     "feat5": "Transparent Pricing",
     "feat6": "24/7 Service",
-
     "whatWeOfferTag": "What We Offer",
     "whatWeOfferTitle": "Complete Roadside Assistance Services ",
     "whatWeOfferHighlight": "Across Dubai",
-
     "svc1Tag": "Most Requested",
     "svc1Title": "Car Recovery Dubai",
     "svc1Desc": "Premium 24/7 car recovery for cars, SUVs, and luxury vehicles — dispatched in under 20 minutes across Dubai.",
@@ -160,14 +151,12 @@
     "svc1b2": "Insurance & accident liaison",
     "svc1b3": "Secure transport, fully insured",
     "svc1b4": "Real-time tracking via app",
-
     "svc2Title": "Towing Service Dubai",
     "svc2Desc": "Professional vehicle towing across all Dubai districts and inter-emirate, handled by certified operators.",
     "svc2b1": "Light, medium & heavy-duty",
     "svc2b2": "Inter-emirate transport",
     "svc2b3": "Damage-free loading guaranteed",
     "svc2b4": "Transparent fixed pricing",
-
     "svc3Tag": "Urgent",
     "svc3Title": "Battery Boost & Replacement",
     "svc3Desc": "On-site jump-starts, diagnostics, and battery replacement — for cars, SUVs, and commercial vehicles.",
@@ -175,14 +164,12 @@
     "svc3b2": "Branded battery replacement",
     "svc3b3": "Warranty-backed install",
     "svc3b4": "Available 24/7 city-wide",
-
     "svc4Title": "Flat Tyre Repair Dubai",
     "svc4Desc": "Mobile tyre changes and roadside repairs delivered to your exact location — anywhere in Dubai.",
     "svc4b1": "Puncture repair on-site",
     "svc4b2": "Spare wheel fitment",
     "svc4b3": "Tow-to-tyre-shop option",
     "svc4b4": "All vehicle sizes supported",
-
     "svc5Tag": "Emergency",
     "svc5Title": "Accident Recovery Dubai",
     "svc5Desc": "Sensitive, rapid accident recovery — protecting your vehicle, your insurance claim, and your peace of mind.",
@@ -190,21 +177,18 @@
     "svc5b2": "Insurance documentation help",
     "svc5b3": "Secure overnight storage",
     "svc5b4": "Priority response priority",
-
     "svc6Title": "Desert Recovery Dubai",
     "svc6Desc": "Reliable recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain — fast, professional, and safe.",
     "svc6b1": "Sand, dune & off-road recovery",
     "svc6b2": "Average 15-minute response",
     "svc6b3": "Professional recovery equipment",
     "svc6b4": "Live GPS location dispatch",
-
     "svc7Title": "Bike Recovery Service Dubai",
     "svc7Desc": "Quick, careful recovery for motorcycles, scooters, and two-wheelers, with safe pickup and transport around the clock.",
     "svc7b1": "Motorcycles & scooters covered",
     "svc7b2": "Safe pickup & transport",
     "svc7b3": "Accident & breakdown recovery",
     "svc7b4": "Clear, upfront pricing",
-
     "stepsTag": "How It Works",
     "stepsTitle": "Help arrives in",
     "stepsHighlight": "4 simple steps.",
@@ -219,7 +203,6 @@
     "step3Body": "See your technician's live location and ETA on the map.",
     "step4Title": "Recovery Complete",
     "step4Body": "We recover, repair, or tow your vehicle safely to your chosen location.",
-
     "trust1Title": "Certified & Trusted",
     "trust1Body": "Experienced professionals",
     "trust2Title": "24/7 Available",
@@ -228,7 +211,6 @@
     "trust3Body": "City to desert, we reach you",
     "trust4Title": "Safe & Secure",
     "trust4Body": "Your vehicle is in safe hands",
-
     "whyTag": "Why Choose Tareeqk",
     "whyTitle": "Built for Dubai. Designed for trust.",
     "why1Title": "20-Minute Arrival",
@@ -243,19 +225,16 @@
     "why5Body": "Background-checked, in-house trained professionals — never outsourced, always accountable.",
     "why6Title": "Live App Tracking",
     "why6Body": "Track your driver, message the dispatcher, and rate the service — all from the Tareeqk app.",
-
     "coverageTag": "Coverage",
     "coverageTitle": "Every district.",
     "coverageHighlight": "Every hour.",
     "coverageSubtitle": "From Marina to Mirdif, Downtown to Deira — strategically positioned units across Dubai keep our 20-minute promise unbroken, day or night.",
     "coverageNotListed": "Area not listed? Contact us",
-
     "emergencyTag": "Emergency Line",
     "emergencyTitle": "Call Tareeqk Now",
     "emergencySubtitle": "Dispatchers ready in English, Arabic, and Urdu. One number — the fastest route back to the road.",
     "callBtn": "📞 Call Tareeqk",
     "whatsappBtn": "WhatsApp Support",
-
     "ctaTag": "Always Ready",
     "ctaTitle": "The road ahead is open.",
     "ctaHighlight": "We've got the rest.",
@@ -264,7 +243,6 @@
     "downloadCta": "Download the App",
     "learnMore": "Learn more"
   },
- 
   "about2": {
     "about": "Our Services",
     "title": "Best Roadside assistance in Dubai",
@@ -321,7 +299,6 @@
     "learnMore": "Learn More",
     "heroImageAlt": "Roadside assistance truck in Dubai"
   },
- 
   "nasir": {
     "nasir": "Meet Nasir",
     "title": "Your roadside rescue partner.",
@@ -336,14 +313,38 @@
   },
   "serviceDetails": {
     "roadside": [
-      { "icon": "/new/Tow.svg", "title": "Fast Vehicle Recovery – Under 12 Minutes", "content": "Quick dispatch for stranded vehicles across the UAE." },
-      { "icon": "/new/Settings.svg", "title": "24/7 Emergency Towing", "content": "Round-the-clock recovery service whenever and wherever you need it." },
-      { "icon": "/new/Trouble.svg", "title": "Desert & Off-Road Recovery", "content": "Specialized recovery for vehicles stuck in sand or off-road areas." }
+      {
+        "icon": "/new/Tow.svg",
+        "title": "Fast Vehicle Recovery – Under 12 Minutes",
+        "content": "Quick dispatch for stranded vehicles across the UAE."
+      },
+      {
+        "icon": "/new/Settings.svg",
+        "title": "24/7 Emergency Towing",
+        "content": "Round-the-clock recovery service whenever and wherever you need it."
+      },
+      {
+        "icon": "/new/Trouble.svg",
+        "title": "Desert & Off-Road Recovery",
+        "content": "Specialized recovery for vehicles stuck in sand or off-road areas."
+      }
     ],
     "towing": [
-      { "icon": "/new/Location.svg", "title": "Flatbed & Tow Truck Recovery", "content": "Safe transport for all types of vehicles with flatbeds and tow trucks." },
-      { "icon": "/new/Message.svg", "title": "Accident & Breakdown Recovery", "content": "Reliable recovery support during accidents or sudden breakdowns." },
-      { "icon": "/new/Emergency.svg", "title": "Long-Distance Recovery Across UAE", "content": "Secure transport for vehicles between cities and emirates." }
+      {
+        "icon": "/new/Location.svg",
+        "title": "Flatbed & Tow Truck Recovery",
+        "content": "Safe transport for all types of vehicles with flatbeds and tow trucks."
+      },
+      {
+        "icon": "/new/Message.svg",
+        "title": "Accident & Breakdown Recovery",
+        "content": "Reliable recovery support during accidents or sudden breakdowns."
+      },
+      {
+        "icon": "/new/Emergency.svg",
+        "title": "Long-Distance Recovery Across UAE",
+        "content": "Secure transport for vehicles between cities and emirates."
+      }
     ]
   },
   "aboutAccordion": {
@@ -354,18 +355,36 @@
     "towingServices": "Towing Services"
   },
   "howItWorks": {
-    "titleTag": "How it Works",
-    "mainTitle": "Fast Help in 3 Simple Steps",
-    "subtitle": "Easily request towing service, track help as it arrives, and get professional support at your location within minutes.",
-    "cta": "Get Towing Now",
-    "bannerText": "Fast & reliable help anytime, anywhere.",
-    "imageAlt": "Towing service",
-    "steps": [
-      { "number": "1", "title": "Book Your Recovery", "content": "Request recovery through our app or website and confirm your pickup details." },
-      { "number": "2", "title": "Driver Assigned Automatically", "content": "Our system instantly assigns the nearest driver and they move towards your location." },
-      { "number": "3", "title": "Pickup & Secure Loading", "content": "Your vehicle is safely picked up and loaded onto the recovery truck." },
-      { "number": "4", "title": "Payment & Drop-off", "content": "Complete the payment, and the driver heads to your selected destination for a smooth handover." }
-    ]
+    "subtitle": "HOW IT WORKS",
+    "title": "Roadside help in just four simple steps.",
+    "description": "Whether you need vehicle recovery, a battery jump start, tire repair, or puncture assistance, Tareeqk makes getting help quick, easy, and stress-free. ",
+    "mockupImageAlt": "Tareeqk app showing live tow truck tracking",
+    "customerTab": " Customer App",
+    "driverTab": "Driver App",
+    "step1Title": "Request a Tow",
+    "step1Desc": "Enter your location, choose your vehicle type and select the service you need.",
+    "step2Title": "We Find the Best Fit",
+    "step2Desc": "Tareeqk instantly matches you with the nearest verified tow truck available.",
+    "step3Title": "Track in Real-Time",
+    "step3Desc": "Track your tow truck in real time and get updates at every step until help arrives.",
+    "step4Title": "Safe & Hassle-Free",
+    "step4Desc": "Your vehicle is in safe hands. Pay securely and rate your experience.",
+    "driverSubtitle": "FOR DRIVERS",
+    "driverTitle": "Start earning in four simple steps.",
+    "driverDescription": "From sign-up to your first ride, Tareeqk makes joining our driver network fast, transparent, and hassle-free.",
+    "driverStep1Title": "Sign Up & Submit Docs",
+    "driverStep1Desc": "Register in minutes and upload your license, Mulkiya, and vehicle documents for review.",
+    "driverStep2Title": "Get Verified",
+    "driverStep2Desc": "Our team reviews your documents and approves your account — you're notified the moment you're cleared.",
+    "driverStep3Title": "Receive Ride Requests",
+    "driverStep3Desc": "Once approved, nearby job alerts land on your phone. Accept the ones that work for you.",
+    "driverStep4Title": "Navigate & Deliver",
+    "driverStep4Desc": "Follow in-app navigation to the customer and complete the job step-by-step until it's done.",
+    "perkVerified": "Verified Professionals",
+    "perkFast": "Fast Response",
+    "perkSecure": "Secure Payments",
+    "perkSupport": "24/7 Support",
+    "perkRated": "Top Rated Service"
   },
   "price": {
     "price": "Pricing",
@@ -373,9 +392,36 @@
     "subtitle": "Our pricing is calculated automatically based on distance and time. Simply select the service type that matches your vehicle, and you'll see an instant fare estimate before booking",
     "btn": "Get Started",
     "mostPopular": "Most Popular",
-    "item1": { "tons": "3 Tons", "subtitle": "Ideal for small vehicles and light towing needs.", "features": { "cars": "Cars", "smallSUV": "Small SUVs", "motorcycles": "Motorcycles" }, "featured": false },
-    "item2": { "tons": "5 Tons Recovery", "subtitle": "Perfect for larger personal and mid-sized vehicles.", "features": { "largeSUV": "Large SUVs", "vans": "Vans", "miniTrucks": "Mini Trucks / Small Trailers" }, "featured": true },
-    "item3": { "tons": "10 Ton Recovery", "subtitle": "Heavy-duty recovery for commercial and industrial vehicles.", "features": { "trucksBuses": "Trucks & Buses", "construction": "Construction Vehicles", "heavyEquipment": "Heavy Equipment / Machinery" }, "featured": false }
+    "item1": {
+      "tons": "3 Tons",
+      "subtitle": "Ideal for small vehicles and light towing needs.",
+      "features": {
+        "cars": "Cars",
+        "smallSUV": "Small SUVs",
+        "motorcycles": "Motorcycles"
+      },
+      "featured": false
+    },
+    "item2": {
+      "tons": "5 Tons Recovery",
+      "subtitle": "Perfect for larger personal and mid-sized vehicles.",
+      "features": {
+        "largeSUV": "Large SUVs",
+        "vans": "Vans",
+        "miniTrucks": "Mini Trucks / Small Trailers"
+      },
+      "featured": true
+    },
+    "item3": {
+      "tons": "10 Ton Recovery",
+      "subtitle": "Heavy-duty recovery for commercial and industrial vehicles.",
+      "features": {
+        "trucksBuses": "Trucks & Buses",
+        "construction": "Construction Vehicles",
+        "heavyEquipment": "Heavy Equipment / Machinery"
+      },
+      "featured": false
+    }
   },
   "contactForm": {
     "getInTouch": "Get in Touch",
@@ -394,37 +440,122 @@
   },
   "footer": {
     "brandDescription": "Tareeqk Portal, founded in 2022, is a UAE-based platform dedicated to providing fast, reliable, and on-demand vehicle recovery services, simplifying roadside experiences for drivers across the country.",
-    "socials": { "snapchat": "Snapchat", "instagram": "Instagram", "facebook": "Facebook", "twitter": "Twitter", "youtube": "YouTube" },
-    "home": { "title": "HOME", "links": { "home": "Home", "faqs": "FAQs", "driverFaqs": "Driver's FAQs" } },
-    "registration": { "title": "REGISTRATION", "links": { "driver": "Driver", "vendor": "Vendor", "customer": "Customer" } },
-    "policies": { "title": "POLICIES", "links": { "terms": "Terms and Conditions", "privacy": "Privacy Policy" } },
-    "contact": { "title": "REACH US", "address": "Tareeqk Office #126, Ras Al Khor, Dubai - UAE", "phone": "+971 4 223 2269", "email": "info@tareeqk.ae" },
-    "copyright": "© {{year}} Tareeqk. All Rights Reserved."
+    "socials": {
+      "snapchat": "Snapchat",
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "youtube": "YouTube"
+    },
+    "home": {
+      "title": "HOME",
+      "links": {
+        "home": "Home",
+        "faqs": "FAQs",
+        "driverFaqs": "Driver's FAQs"
+      }
+    },
+    "registration": {
+      "title": "REGISTRATION",
+      "links": {
+        "driver": "Driver",
+        "vendor": "Vendor",
+        "customer": "Customer"
+      }
+    },
+    "policies": {
+      "title": "POLICIES",
+      "links": {
+        "terms": "Terms and Conditions",
+        "privacy": "Privacy Policy"
+      }
+    },
+    "contact": {
+      "title": "REACH US",
+      "address": "Tareeqk Office #126, Ras Al Khor, Dubai - UAE",
+      "phone": "+971 4 223 2269",
+      "email": "info@tareeqk.ae"
+    },
+    "copyright": "© {{year}} Tareeqk. All Rights Reserved.",
+    "cookieSettings": "Cookie Settings"
   },
   "register": {
     "title": "Registration",
     "heading": "Become a Service Provider",
     "subtitle": "Be Part of Our Car Recovery Network",
-    "driver": { "title": "Driver Registration", "description": "Join our network of professional towing and recovery drivers", "benefits": ["Flexible working hours", "Competitive pay rates", "Instant job notifications"], "button": "Register Now" },
-    "vendor": { "title": "Vendor Registration", "description": "Connect your towing company or garage with our network", "benefits": ["Increased business visibility", "Streamlined operations", "Dedicated support"], "button": "Register Now" }
+    "driver": {
+      "title": "Driver Registration",
+      "description": "Join our network of professional towing and recovery drivers",
+      "benefits": [
+        "Flexible working hours",
+        "Competitive pay rates",
+        "Instant job notifications"
+      ],
+      "button": "Register Now"
+    },
+    "vendor": {
+      "title": "Vendor Registration",
+      "description": "Connect your towing company or garage with our network",
+      "benefits": [
+        "Increased business visibility",
+        "Streamlined operations",
+        "Dedicated support"
+      ],
+      "button": "Register Now"
+    }
   },
-  "policy": { "title": "Privacy Policy", "subtitle": "Learn how we collect, use, and protect your personal information" },
-  "faqs": { "title": "Frequently Asked Questions", "subtitle": "Find answers to the most common questions about Tareeqk services and how to get the best out of our platform" },
-  "drivers-faqs": { "title": "Frequently Drivers Asked Questions", "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform" },
-  "terms": { "title": "Terms and Conditions", "subtitle": "Learn about the terms and conditions that govern your use of the Tareeqk website and application" },
+  "policy": {
+    "title": "Privacy Policy",
+    "subtitle": "Learn how we collect, use, and protect your personal information"
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to the most common questions about Tareeqk services and how to get the best out of our platform"
+  },
+  "drivers-faqs": {
+    "title": "Frequently Drivers Asked Questions",
+    "subtitle": "Find answers to the most common questions drivers have about Tareeqk services and how to get the best out of our platform"
+  },
+  "terms": {
+    "title": "Terms and Conditions",
+    "subtitle": "Learn about the terms and conditions that govern your use of the Tareeqk website and application"
+  },
   "driverRegistration": {
-    "hero": { "title": "Join Our Team of Professional Drivers", "subtitle": "Registration with Tareeqk is the easiest, fastest way to start earning — and it's completely FREE!", "features": "No registration fees • Quick approval process • Only in 5 Minutes" },
-    "benefits": { "title": "Why Choose Tareeqk?", "items": [
-      { "title": "Easy Registration", "desc": "Our streamlined process gets you on the road quickly with minimal paperwork." },
-      { "title": "Fast Approval", "desc": "Get approved quickly and start accepting jobs almost immediately." },
-      { "title": "Zero Cost", "desc": "No registration fees or hidden charges. Start earning from day one." }
-    ] },
+    "hero": {
+      "title": "Join Our Team of Professional Drivers",
+      "subtitle": "Registration with Tareeqk is the easiest, fastest way to start earning — and it's completely FREE!",
+      "features": "No registration fees • Quick approval process • Only in 5 Minutes"
+    },
+    "benefits": {
+      "title": "Why Choose Tareeqk?",
+      "items": [
+        {
+          "title": "Easy Registration",
+          "desc": "Our streamlined process gets you on the road quickly with minimal paperwork."
+        },
+        {
+          "title": "Fast Approval",
+          "desc": "Get approved quickly and start accepting jobs almost immediately."
+        },
+        {
+          "title": "Zero Cost",
+          "desc": "No registration fees or hidden charges. Start earning from day one."
+        }
+      ]
+    },
     "process": {
       "title": "Start Your Journey With Us",
       "subtitle": "Follow these simple steps to become a Tareeqk driver partner",
       "intro": "To start your journey as a driver, you will need to download our Driver App and complete the signup process there. The app will guide you step by step to upload your personal details and required documents.",
       "requirementsTitle": "What You Need to Prepare:",
-      "requirements": ["A valid Emirates ID", "Your Driving License", "Your Vehicle Registration (Mulkiah)", "A recent Profile Picture", "Active Mobile Number and Email Address", "Any additional required documents"],
+      "requirements": [
+        "A valid Emirates ID",
+        "Your Driving License",
+        "Your Vehicle Registration (Mulkiah)",
+        "A recent Profile Picture",
+        "Active Mobile Number and Email Address",
+        "Any additional required documents"
+      ],
       "howToRegisterTitle": "How to Register:",
       "steps": [
         "Download the Driver App from the Google Play Store or Apple App Store.",
@@ -437,16 +568,34 @@
       ],
       "note": "Make sure all your documents are valid and clearly visible when uploading. Incomplete or incorrect applications may delay the approval process."
     },
-    "cta": { "title": "Ready to Get Started?", "subtitle": "Join hundreds of drivers who are already earning with Tareeqk. The process is simple, fast, and completely free!" }
+    "cta": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Join hundreds of drivers who are already earning with Tareeqk. The process is simple, fast, and completely free!"
+    }
   },
   "comingSoon": "VENDOR REGISTRATION, COMING SOON!",
   "whatsapp": "WhatsApp us",
   "meta": {
-    "home": { "title": "Tareeqk - Towing & Roadside Assistance in Dubai", "description": "Fast, reliable towing and roadside assistance in Dubai. Available 24/7 for car recovery, battery jump start, tire change and more." },
-    "about": { "title": "About Us - Tareeqk Dubai", "description": "Learn about Tareeqk, Dubai's trusted towing and roadside assistance service provider operating across the UAE." },
-    "service": { "title": "Our Services - Towing, Recovery & Roadside Assistance Dubai", "description": "Explore Tareeqk's full range of services including car towing, desert recovery, battery jump start, tire change and fuel delivery in Dubai." },
-    "blogs": { "title": "Blog - Car Tips & Roadside Assistance Guides | Tareeqk", "description": "Read Tareeqk's latest articles on car recovery, roadside safety tips, and driving guides for Dubai and the UAE." },
-    "faqs": { "title": "FAQs - Towing & Roadside Assistance Dubai | Tareeqk", "description": "Got questions? Find answers about Tareeqk's towing and roadside assistance services, pricing, and coverage areas in Dubai." }
+    "home": {
+      "title": "Tareeqk - Towing & Roadside Assistance in Dubai",
+      "description": "Fast, reliable towing and roadside assistance in Dubai. Available 24/7 for car recovery, battery jump start, tire change and more."
+    },
+    "about": {
+      "title": "About Us - Tareeqk Dubai",
+      "description": "Learn about Tareeqk, Dubai's trusted towing and roadside assistance service provider operating across the UAE."
+    },
+    "service": {
+      "title": "Our Services - Towing, Recovery & Roadside Assistance Dubai",
+      "description": "Explore Tareeqk's full range of services including car towing, desert recovery, battery jump start, tire change and fuel delivery in Dubai."
+    },
+    "blogs": {
+      "title": "Blog - Car Tips & Roadside Assistance Guides | Tareeqk",
+      "description": "Read Tareeqk's latest articles on car recovery, roadside safety tips, and driving guides for Dubai and the UAE."
+    },
+    "faqs": {
+      "title": "FAQs - Towing & Roadside Assistance Dubai | Tareeqk",
+      "description": "Got questions? Find answers about Tareeqk's towing and roadside assistance services, pricing, and coverage areas in Dubai."
+    }
   },
   "contact": {
     "eyebrow": "Get in Touch",
@@ -478,51 +627,6 @@
     "genericErrorAlert": "Something went wrong.",
     "errorAlert": "Something went wrong. Please try again."
   },
-
-  "howItWorks": {
-    "subtitle": "HOW IT WORKS",
-    "title": "Roadside help in just four simple steps.",
-    "description": "Whether you need vehicle recovery, a battery jump start, tire repair, or puncture assistance, Tareeqk makes getting help quick, easy, and stress-free. ",
-    "mockupImageAlt": "Tareeqk app showing live tow truck tracking",
-
-    "customerTab": " Customer App",
-    "driverTab": "Driver App",
-
-    "step1Title": "Request a Tow",
-    "step1Desc": "Enter your location, choose your vehicle type and select the service you need.",
-
-    "step2Title": "We Find the Best Fit",
-    "step2Desc": "Tareeqk instantly matches you with the nearest verified tow truck available.",
-
-    "step3Title": "Track in Real-Time",
-    "step3Desc": "Track your tow truck in real time and get updates at every step until help arrives.",
-
-    "step4Title": "Safe & Hassle-Free",
-    "step4Desc": "Your vehicle is in safe hands. Pay securely and rate your experience.",
-
-    "driverSubtitle": "FOR DRIVERS",
-    "driverTitle": "Start earning in four simple steps.",
-    "driverDescription": "From sign-up to your first ride, Tareeqk makes joining our driver network fast, transparent, and hassle-free.",
-
-    "driverStep1Title": "Sign Up & Submit Docs",
-    "driverStep1Desc": "Register in minutes and upload your license, Mulkiya, and vehicle documents for review.",
-
-    "driverStep2Title": "Get Verified",
-    "driverStep2Desc": "Our team reviews your documents and approves your account — you're notified the moment you're cleared.",
-
-    "driverStep3Title": "Receive Ride Requests",
-    "driverStep3Desc": "Once approved, nearby job alerts land on your phone. Accept the ones that work for you.",
-
-    "driverStep4Title": "Navigate & Deliver",
-    "driverStep4Desc": "Follow in-app navigation to the customer and complete the job step-by-step until it's done.",
-
-    "perkVerified": "Verified Professionals",
-    "perkFast": "Fast Response",
-    "perkSecure": "Secure Payments",
-    "perkSupport": "24/7 Support",
-    "perkRated": "Top Rated Service"
-  },
-  
   "cji": {
     "badge": "Meet Nasir",
     "heading": "Smarter Roads Start Here",
@@ -1276,6 +1380,22 @@
         "answer": "Yes — 24/7, including nights, weekends, and public holidays."
       }
     ]
+  },
+  "cookieConsent": {
+    "title": "We value your privacy",
+    "description": "We use cookies to run this site and, with your permission, to understand how it's used so we can improve it. You can accept all cookies, allow only the essential ones, or manage your preferences.",
+    "acceptAll": "Accept All",
+    "necessaryOnly": "Necessary Only",
+    "managePreferences": "Manage Preferences",
+    "privacyLink": "Privacy Policy",
+    "preferencesTitle": "Cookie Preferences",
+    "preferencesDescription": "Choose which cookies you allow. Necessary cookies keep the site working and can't be turned off.",
+    "necessaryTitle": "Necessary",
+    "necessaryDescription": "Required for core site functionality such as security and language settings. Always on.",
+    "analyticsTitle": "Analytics",
+    "analyticsDescription": "Helps us understand how visitors use the site (Google Analytics) so we can improve it.",
+    "savePreferences": "Save Preferences",
+    "back": "Back",
+    "close": "Close"
   }
-
 }
