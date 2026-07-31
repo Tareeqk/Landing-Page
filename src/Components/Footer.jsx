@@ -90,7 +90,7 @@ const FooterLink = ({ to, href, external, children }) => {
 const TRUST = [
   { icon: <FaClock />, label: "24/7 Support" },
   { icon: <FaShieldHalved />, label: "RTA Licensed" },
-  { icon: <FaStar />, label: "4.9 Rating" },
+  { icon: <FaStar />, label: "Live Tracking" },
   { icon: <FaBolt />, label: "Fast Response" },
 ]
 

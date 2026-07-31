@@ -353,7 +353,7 @@ export default function ContactSection() {
                   <FiPhone className="text-amber-600 text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <p className="cf-label text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
+                  <p className="cf-label text-[9.5px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
                     {t("contact.phoneLabel")}
                   </p>
                   <p className="cf-value text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
@@ -378,7 +378,7 @@ export default function ContactSection() {
                   <FiMail className="text-amber-600 text-xs" />
                 </div>
                 <div className="min-w-0">
-                  <p className="cf-label text-[8px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
+                  <p className="cf-label text-[9.5px] uppercase tracking-[0.1em] text-gray-400 font-bold leading-none">
                     {t("contact.emailLabel")}
                   </p>
                   <p className="cf-value text-[11.5px] font-bold text-black whitespace-nowrap mt-1">
@@ -487,7 +487,7 @@ export default function ContactSection() {
                       placeholder={t("contact.namePlaceholder")}
                       className="
                         cf-input
-                        w-full h-9
+                        w-full h-11
                         rounded-xl
                         border border-gray-100
                         bg-white
@@ -529,7 +529,7 @@ export default function ContactSection() {
                       placeholder={t("contact.mobilePlaceholder")}
                       className="
                         cf-input
-                        w-full h-9
+                        w-full h-11
                         rounded-xl
                         border border-gray-100
                         bg-white
@@ -571,7 +571,7 @@ export default function ContactSection() {
                     placeholder={t("contact.emailPlaceholder")}
                     className="
                       cf-input
-                      w-full h-9
+                      w-full h-11
                       rounded-xl
                       border border-gray-100
                       bg-white
@@ -612,7 +612,7 @@ export default function ContactSection() {
                     placeholder={t("contact.subjectPlaceholder")}
                     className="
                       cf-input
-                      w-full h-9
+                      w-full h-11
                       rounded-xl
                       border border-gray-100
                       bg-white
@@ -681,7 +681,7 @@ export default function ContactSection() {
                       relative
                       overflow-hidden
                       w-full sm:w-auto
-                      h-9
+                      h-11
                       px-5
                       rounded-xl
                       bg-black

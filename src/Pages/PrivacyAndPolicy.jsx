@@ -2,9 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
 
 const PrivacyAndPolicy = () => {
     const { t, i18n } = useTranslation();
+    const { lang } = useParams();
     const [policy, setPolicy] = useState('');
     const [loading, setLoading] = useState(true);
     const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -96,6 +98,7 @@ const PrivacyAndPolicy = () => {
                     <Helmet>
             <meta name="robots" content="index, follow" />
             <title>Privacy Policy </title>
+            <link rel="canonical" href={`https://tareeqk.ae/${lang}/privacy-policy`} />
           </Helmet>
             <section
                 style={{

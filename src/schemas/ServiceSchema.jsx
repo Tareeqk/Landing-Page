@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet-async';
 /**
  * @param {Object} props.service
  * @param {string} props.service.name         - "Car Recovery Dubai"
- * @param {string} props.service.url          - "https://www.tareeqk.ae/car-recovery-dubai"
+ * @param {string} props.service.url          - "https://tareeqk.ae/car-recovery-dubai"
  * @param {string} props.service.description  - Short description
  * @param {string} props.service.image        - Absolute image URL
  * @param {string[]} props.service.areas      - ["Dubai Marina", "JVC", ...]
@@ -20,13 +20,13 @@ export default function ServiceSchema({ service }) {
     "name": service.name,
     "url": service.url,
     "description": service.description,
-    "image": service.image || "https://www.tareeqk.ae/new/Recovery_Van.webp",
+    "image": service.image || "https://tareeqk.ae/new/Recovery_Van.webp",
     "provider": {
       "@type": "LocalBusiness",
-      "@id": "https://www.tareeqk.ae/#business",
+      "@id": "https://tareeqk.ae/#business",
       "name": "Tareeqk",
       "telephone": "+97142232269",
-      "url": "https://www.tareeqk.ae"
+      "url": "https://tareeqk.ae"
     },
     "areaServed": (service.areas || ["Dubai"]).map(area => ({
       "@type": "Place",
@@ -48,7 +48,7 @@ export default function ServiceSchema({ service }) {
       "closes": "23:59"
     },
     "serviceType": service.serviceType || "Roadside Assistance",
-    "termsOfService": "https://www.tareeqk.ae/terms",
+    "termsOfService": "https://tareeqk.ae/terms",
     "offers": {
       "@type": "Offer",
       "priceCurrency": "AED",

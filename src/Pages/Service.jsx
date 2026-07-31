@@ -11,6 +11,7 @@ import {
 
 import howItWorksIllustration from '/how-it-works-illustration.png';
 import useLangLink from '../hooks/useLangLink';
+import { useParams } from 'react-router-dom';
 
 // ── Schemas ────────────────────────────────────────────────────────────────
 function ServicesPageSchema() {
@@ -19,16 +20,16 @@ function ServicesPageSchema() {
     "@type": "ItemList",
     "name": "Tareeqk Roadside Assistance Services Dubai",
     "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery.",
-    "url": "https://www.tareeqk.ae/service",
+    "url": "https://tareeqk.ae/service",
     "numberOfItems": 7,
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://www.tareeqk.ae/car-recovery-dubai", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://www.tareeqk.ae/battery-service-dubai", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://www.tareeqk.ae/flat-tyre-repair-dubai", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://www.tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://www.tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://www.tareeqk.ae/desert-recovery-dubai", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://www.tareeqk.ae/bike-recovery-dubai", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://tareeqk.ae/car-recovery-dubai", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://tareeqk.ae/battery-service-dubai", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://tareeqk.ae/flat-tyre-repair-dubai", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://tareeqk.ae/desert-recovery-dubai", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://tareeqk.ae/bike-recovery-dubai", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
     ],
   };
   const howToSchema = {
@@ -152,24 +153,39 @@ function useServiceStyles() {
       [dir="rtl"] .svc-card-top-bar { transform-origin: right; }
       .svc-card:hover .svc-card-top-bar { transform: scaleX(1); }
 
-      /* Faint photo backdrop — the real photo sits behind a near-opaque
-         tint so it reads as texture/color, not a competing focal point,
-         and body text on top stays legible without per-card contrast checks. */
-      .svc-card-bg {
-        position: absolute; inset: 0; z-index: 0;
-        background-size: cover; background-position: center;
-        filter: saturate(1.08);
+      /* Photo header — a real, service-matched photo (see the SERVICES
+         data array for per-card object-position) rather than the old
+         mismatched Unsplash picks. Tall enough (150px) that a sensible
+         object-position doesn't need to crop out the actual subject, and
+         tinted with the card's own accent color (its urgency tag color
+         where it has one, brand amber otherwise) instead of a flat white
+         wash, so the photo and the rest of the card's color language
+         read as one designed thing instead of a stock photo pasted on. */
+      .svc-card-stage {
+        position: relative; z-index: 0;
+        height: 150px;
+        overflow: hidden;
       }
-      .svc-card-bg-tint {
-        position: absolute; inset: 0; z-index: 0;
-        /* Photo stays clear only behind the icon/tag row; everything from
-           the title down needs a solid backing so text contrast never
-           depends on how bright a given photo happens to be. */
-        background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.4) 20%, rgba(255,255,255,0.94) 34%, #fff 46%, #fff 100%);
+      .svc-card-stage-img {
+        position: absolute; inset: 0; width: 100%; height: 100%;
+        object-fit: cover;
+        filter: saturate(1.05);
       }
-      body.dark .svc-card-bg { filter: saturate(1.05) brightness(0.85); }
-      body.dark .svc-card-bg-tint {
-        background: linear-gradient(180deg, rgba(30,30,30,0.04) 0%, rgba(30,30,30,0.4) 20%, rgba(30,30,30,0.94) 34%, #1e1e1e 46%, #1e1e1e 100%);
+      body.dark .svc-card-stage-img { filter: saturate(1.02) brightness(0.82); }
+      .svc-card-stage-tint {
+        position: absolute; inset: 0;
+        background: linear-gradient(180deg,
+          color-mix(in srgb, var(--svc-accent, var(--primary-yellow)) 55%, transparent) 0%,
+          transparent 40%,
+          transparent 65%,
+          #fff 100%);
+      }
+      body.dark .svc-card-stage-tint {
+        background: linear-gradient(180deg,
+          color-mix(in srgb, var(--svc-accent, var(--primary-yellow)) 60%, transparent) 0%,
+          transparent 40%,
+          transparent 65%,
+          #1e1e1e 100%);
       }
 
       body.dark .svc-card {
@@ -307,6 +323,12 @@ function useServiceStyles() {
       .svc-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(247,178,5,0.40); }
       .svc-btn-ghost { transition: background 0.2s ease, border-color 0.2s ease; }
       .svc-btn-ghost:hover { background: rgba(255,255,255,0.13) !important; border-color: rgba(255,255,255,0.40) !important; }
+      /* Was inline onMouseEnter/onMouseLeave handlers on the bottom CTA's
+         WhatsApp button — every other button on this page (including the
+         other two WhatsApp links, in Hero and Coverage) uses a CSS class
+         for its hover state instead. */
+      .svc-btn-whatsapp { transition: background 0.2s ease, color 0.2s ease; }
+      .svc-btn-whatsapp:hover { background: #25D366 !important; color: #fff !important; }
 
       /* ── Location pills ── */
       .svc-loc-pill {
@@ -403,7 +425,9 @@ function useServiceStyles() {
         .svc-mobile-stats { display: none !important; }
       }
       @media (max-width: 480px) {
-        .svc-why-grid    { grid-template-columns: 1fr !important; }
+        /* .svc-why-grid is already display:none by 768px (below), so a
+           column-count override for it here was unreachable dead code —
+           removed. */
         .svc-steps-track, .svc-steps-cards { grid-template-columns: 1fr !important; }
         .svc-trust-item { flex: 1 1 100%; }
       }
@@ -500,6 +524,7 @@ function TouchSwiper({ items, renderSlide, className = '' }) {
 // ── Component ──────────────────────────────────────────────────────────────
 export default function Service({ isSection = false }) {
   const { t, i18n } = useTranslation();
+  const { lang } = useParams();
   const isRTL = i18n.dir() === 'rtl';
   const langLink = useLangLink();
   const HeadingTag = isSection ? 'h2' : 'h1';
@@ -515,12 +540,18 @@ export default function Service({ isSection = false }) {
     boxSizing: 'border-box',
   };
 
-  const scrollToDownload = () => {
-    const el = document.getElementById('download-buttons');
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 200;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+  // Was scrolling to an element with id="download-buttons" that doesn't
+  // exist anywhere on this page (only DriverRegistration renders that id),
+  // so every "Download" button here was a silent no-op. Same OS-detect
+  // redirect as the landing page and service pages instead.
+  const handleDownloadRedirect = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const iosUrl     = 'https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854';
+    const androidUrl = 'https://play.google.com/store/apps/details?id=com.tareeqk.order';
+    const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    const isMacOS = navigator.platform.toUpperCase().includes('MAC') ||
+      (navigator.userAgent.includes('Mac') && !('ontouchend' in document));
+    window.location.href = (isIOSDevice || isMacOS) ? iosUrl : androidUrl;
   };
 
   // ── Data (i18n-driven) ─────────────────────────────────────────────────
@@ -528,7 +559,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Car size={18} />,
       href: '/car-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1673187139211-1e7ec3dd60ec?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1728117190970-2583f89dfa15?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc1Tag'),
       tagBg: 'rgba(255,244,214,0.95)',
       tagColor: '#b07c00',
@@ -539,7 +570,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Truck size={18} />,
       href: '/towing-service-dubai',
-      img: 'https://images.unsplash.com/photo-1686966933735-305bd8fe0a77?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1730514784243-f0e7f09c9f50?auto=format&fit=crop&w=800&q=60',
       tag: null,
       title: t('service.svc2Title'),
       desc: t('service.svc2Desc'),
@@ -548,7 +579,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Battery size={18} />,
       href: '/battery-service-dubai',
-      img: 'https://images.unsplash.com/photo-1708745427274-d5de5122fd57?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1676337167752-2062c6ca7366?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc3Tag'),
       tagBg: 'rgba(254,226,226,0.95)',
       tagColor: '#c93030',
@@ -559,7 +590,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Wrench size={18} />,
       href: '/flat-tyre-repair-dubai',
-      img: 'https://images.unsplash.com/photo-1657718817965-9d0f67fd064e?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1664820578859-2a1eddb69bd5?auto=format&fit=crop&w=800&q=60',
       tag: null,
       title: t('service.svc4Title'),
       desc: t('service.svc4Desc'),
@@ -568,7 +599,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <AlertTriangle size={18} />,
       href: '/accident-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1548287233-af744a9ba268?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1713623311317-d3c43a4be4cf?auto=format&fit=crop&w=800&q=60',
       tag: t('service.svc5Tag'),
       tagBg: 'rgba(255,231,213,0.95)',
       tagColor: '#c04f00',
@@ -579,7 +610,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Mountain size={18} />,
       href: '/desert-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1473580044384-7ba9967e16a0?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1763535834153-22c340883793?auto=format&fit=crop&w=800&q=60',
       tag: null,
       title: t('service.svc6Title'),
       desc: t('service.svc6Desc'),
@@ -588,7 +619,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Bike size={18} />,
       href: '/bike-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=800&q=60',
+      img: 'https://images.unsplash.com/photo-1624535460536-4d3631ccea9c?auto=format&fit=crop&w=800&q=60',
       tag: null,
       title: t('service.svc7Title'),
       desc: t('service.svc7Desc'),
@@ -649,42 +680,61 @@ export default function Service({ isSection = false }) {
 
   // ── Render helpers ─────────────────────────────────────────────────────
   const renderServiceCard = (svc, i) => (
-    <a href={langLink(svc.href)} className="svc-card svc-card-v2" style={{ display: 'block' }}>
+    <a
+      href={langLink(svc.href)}
+      className="svc-card svc-card-v2"
+      style={{ display: 'block', '--svc-accent': svc.tagColor || undefined }}
+    >
       <div className="svc-card-top-bar" />
-      <div className="svc-card-bg" style={{ backgroundImage: `url(${svc.img})` }} aria-hidden="true" />
-      <div className="svc-card-bg-tint" aria-hidden="true" />
 
-      <div style={{ position: 'relative', zIndex: 1, padding: '22px 20px 20px' }}>
-        {/* Icon + tag row */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '16px' }}>
+      <div className="svc-card-stage">
+        <img
+          className="svc-card-stage-img"
+          src={svc.img}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          style={{ objectPosition: svc.photoPosition || 'center' }}
+        />
+        <div className="svc-card-stage-tint" aria-hidden="true" />
+        {svc.tag && (
+          <span
+            style={{
+              position: 'absolute', top: '12px', insetInlineEnd: '14px', zIndex: 1,
+              display: 'inline-flex', alignItems: 'center', gap: '5px',
+              fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
+              padding: '4px 9px', borderRadius: '100px',
+              background: svc.tagBg, color: svc.tagColor, whiteSpace: 'nowrap',
+              backdropFilter: 'blur(4px)', WebkitBackdropFilter: 'blur(4px)',
+            }}
+          >
+            <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block', flexShrink: 0 }} />
+            {svc.tag}
+          </span>
+        )}
+      </div>
+
+      {/* Icon + title straddle the photo/content seam — the icon overlaps
+          up into the photo (negative margin) instead of sitting inside a
+          flat block below it, so the title reads as introduced by the
+          image instead of following a disconnected caption. */}
+      <div style={{ position: 'relative', zIndex: 1, padding: '0 20px 20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '-22px', marginBottom: '14px' }}>
           <div
             className="svc-card-icon"
             style={{
-              width: '46px', height: '46px', borderRadius: '13px', background: '#fef9ec',
+              width: '46px', height: '46px', borderRadius: '13px', background: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              transition: 'background 0.25s ease', color: 'var(--primary-yellow)', flexShrink: 0,
+              boxShadow: '0 6px 16px rgba(0,0,0,0.14)', border: '1px solid rgba(0,0,0,0.05)',
+              transition: 'background 0.25s ease', color: 'var(--svc-accent, var(--primary-yellow))', flexShrink: 0,
             }}
           >
             {svc.icon}
           </div>
-          {svc.tag && (
-            <span
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '5px',
-                fontSize: '9.5px', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
-                padding: '4px 9px', borderRadius: '100px',
-                background: svc.tagBg, color: svc.tagColor, whiteSpace: 'nowrap',
-              }}
-            >
-              <span style={{ width: '5px', height: '5px', borderRadius: '50%', background: svc.tagColor, display: 'inline-block', flexShrink: 0 }} />
-              {svc.tag}
-            </span>
-          )}
+          <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '14.5px', color: '#111', letterSpacing: '-0.01em', lineHeight: 1.3, margin: 0 }}>
+            {svc.title}
+          </h3>
         </div>
-
-        <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '14.5px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
-          {svc.title}
-        </h3>
         <p
           className="svc-card-body"
           style={{
@@ -732,7 +782,7 @@ export default function Service({ isSection = false }) {
       <div
         className="svc-why-icon"
         style={{
-          width: '42px', height: '42px', borderRadius: '10px', background: '#fef9ec',
+          width: '42px', height: '42px', borderRadius: '10px', background: 'rgba(245,166,35,0.14)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           marginBottom: '18px', transition: 'background 0.25s ease',
           color: 'var(--primary-yellow)',
@@ -756,7 +806,7 @@ export default function Service({ isSection = false }) {
           <title>{t('meta.service.title')}</title>
           <meta name="description" content={t('meta.service.description')} />
           <meta name="robots" content="index, follow" />
-          <link rel="canonical" href="https://www.tareeqk.ae/service" />
+          <link rel="canonical" href={`https://tareeqk.ae/${lang}/service`} />
         </Helmet>
       )}
 
@@ -860,7 +910,7 @@ export default function Service({ isSection = false }) {
                 style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '44px' }}
               >
                 <button
-                  onClick={scrollToDownload}
+                  onClick={handleDownloadRedirect}
                   className="svc-btn-primary getTow-btn"
                   style={{
                     background: 'var(--primary-yellow)', color: '#000',
@@ -888,8 +938,6 @@ export default function Service({ isSection = false }) {
                   {t('service.heroWhatsapp')}
                 </a>
               </div>
-
-           
             </div>
           </div>
         </section>
@@ -969,7 +1017,7 @@ export default function Service({ isSection = false }) {
 
               {/* Right column — feature checklist + mini CTA */}
               <div style={{ paddingTop: '8px', order: isRTL ? 1 : 2 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '28px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', marginBottom: '14px' }}>
                   {FEATS.map((feat, i) => (
                     <div
                       key={i}
@@ -977,11 +1025,23 @@ export default function Service({ isSection = false }) {
                       data-delay={`${120 + i * 55}`}
                       style={{
                         display: 'flex', alignItems: 'center', gap: '10px',
-                        padding: '14px 16px', borderRadius: '10px',
+                        padding: '14px 16px', borderRadius: '14px',
                         border: '1px solid rgba(0,0,0,0.06)', background: '#fafafa',
                       }}
                     >
-                      <span style={{ color: 'var(--primary-yellow)', flexShrink: 0 }}>{feat.icon}</span>
+                      {/* Was a bare icon with no backing — every other icon
+                          on this page (service cards, Why Us cards) sits in
+                          a rounded, tinted badge; this was the one
+                          inconsistent exception. */}
+                      <span
+                        style={{
+                          width: '30px', height: '30px', borderRadius: '9px', background: 'rgba(245,166,35,0.14)',
+                          display: 'flex', alignItems: 'center', justifyContent: 'center',
+                          color: 'var(--primary-yellow)', flexShrink: 0,
+                        }}
+                      >
+                        {feat.icon}
+                      </span>
                       <span className="svc-feat-label" style={{ fontSize: '13px', fontWeight: 600, color: '#222', lineHeight: 1.3 }}>
                         {feat.label}
                       </span>
@@ -1006,7 +1066,7 @@ export default function Service({ isSection = false }) {
                       {t('service.needHelp')}
                     </div>
                     <button
-                      onClick={scrollToDownload}
+                      onClick={handleDownloadRedirect}
                       style={{
                         background: 'var(--primary-yellow)', color: '#000', border: 'none',
                         borderRadius: '6px', padding: '8px 18px', fontWeight: 700,
@@ -1113,7 +1173,7 @@ export default function Service({ isSection = false }) {
         <div className="svc-inner" style={inner}>
           <div
             className="svc-coverage-grid"
-            style={{ display: 'grid', gridTemplateColumns: '1fr 0.72fr', gap: '80px', alignItems: 'start' }}
+            style={{ display: 'grid', gridTemplateColumns: '1fr 0.72fr', gap: '80px', alignItems: 'stretch' }}
           >
             {/* Left — heading + location pills */}
             <div className="svc-reveal svc-left" style={{ order: isRTL ? 2 : 1 }}>
@@ -1167,46 +1227,58 @@ export default function Service({ isSection = false }) {
               </div>
             </div>
 
-            {/* Right — yellow CTA card */}
-            <div className="svc-reveal svc-right" style={{ order: isRTL ? 1 : 2 }}>
+            {/* Right — yellow CTA card. height:100% + flex column with the
+                text block and button stack pinned to top/bottom (instead
+                of just top-aligned content) so it fills the same visual
+                height as however many rows the location pills wrap to on
+                the left, rather than floating short next to a much taller
+                column. */}
+            <div className="svc-reveal svc-right" style={{ order: isRTL ? 1 : 2, height: '100%' }}>
               <div
-                style={{ background: 'var(--primary-yellow)', borderRadius: '18px', padding: '36px 30px', color: '#000' }}
+                style={{
+                  background: 'var(--primary-yellow)', borderRadius: '18px', padding: '36px 30px', color: '#000',
+                  height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+                }}
               >
-                <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.55, marginBottom: '10px' }}>
-                  {t('service.emergencyTag')}
+                <div>
+                  <div style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', opacity: 0.55, marginBottom: '10px' }}>
+                    {t('service.emergencyTag')}
+                  </div>
+                  <h3 style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em', marginBottom: '12px' }}>
+                    {t('service.emergencyTitle')}
+                  </h3>
+                  <p style={{ fontSize: '13.5px', lineHeight: 1.7, opacity: 0.75, marginBottom: '24px', fontWeight: 400 }}>
+                    {t('service.emergencySubtitle')}
+                  </p>
                 </div>
-                <h3 style={{ fontWeight: 800, fontSize: '20px', letterSpacing: '-0.02em', marginBottom: '12px' }}>
-                  {t('service.emergencyTitle')}
-                </h3>
-                <p style={{ fontSize: '13.5px', lineHeight: 1.7, opacity: 0.75, marginBottom: '24px', fontWeight: 400 }}>
-                  {t('service.emergencySubtitle')}
-                </p>
-                <a
-                  href="tel:+97142232269"
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                    padding: '14px', background: '#000', color: '#fff',
-                    textAlign: 'center', borderRadius: '9px', fontWeight: 700,
-                    textDecoration: 'none', fontSize: '14px', marginBottom: '8px',
-                  }}
-                >
-                  <Phone size={16} />
-                  {t('service.callBtn')}
-                </a>
-                <a
-                  href="https://wa.me/97142232269"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                    padding: '12px', background: 'rgba(0,0,0,0.10)', color: '#000',
-                    textAlign: 'center', borderRadius: '9px', fontWeight: 600,
-                    textDecoration: 'none', fontSize: '13.5px', border: '1px solid rgba(0,0,0,0.10)',
-                  }}
-                >
-                  <MessageCircle size={16} />
-                  {t('service.whatsappBtn')}
-                </a>
+                <div>
+                  <a
+                    href="tel:+97142232269"
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                      padding: '14px', background: '#000', color: '#fff',
+                      textAlign: 'center', borderRadius: '9px', fontWeight: 700,
+                      textDecoration: 'none', fontSize: '14px', marginBottom: '8px',
+                    }}
+                  >
+                    <Phone size={16} />
+                    {t('service.callBtn')}
+                  </a>
+                  <a
+                    href="https://wa.me/97142232269"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                      padding: '12px', background: 'rgba(0,0,0,0.10)', color: '#000',
+                      textAlign: 'center', borderRadius: '9px', fontWeight: 600,
+                      textDecoration: 'none', fontSize: '13.5px', border: '1px solid rgba(0,0,0,0.10)',
+                    }}
+                  >
+                    <MessageCircle size={16} />
+                    {t('service.whatsappBtn')}
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -1258,21 +1330,19 @@ export default function Service({ isSection = false }) {
                   href="https://wa.me/97142232269"
                   target="_blank"
                   rel="noreferrer"
+                  className="svc-btn-whatsapp"
                   style={{
                     background: 'rgba(37,211,102,0.12)', border: '1px solid rgba(37,211,102,0.3)',
                     color: '#4ade80', padding: '15px 38px', borderRadius: '8px', fontWeight: 600,
                     textDecoration: 'none', fontSize: '14px',
                     display: 'inline-flex', alignItems: 'center', gap: '8px',
-                    transition: 'background 0.2s ease, color 0.2s ease',
                   }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#25D366'; e.currentTarget.style.color = '#fff'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(37,211,102,0.12)'; e.currentTarget.style.color = '#4ade80'; }}
                 >
                   <MessageCircle size={16} />
                   {t('service.whatsappCta')}
                 </a>
                 <button
-                  onClick={scrollToDownload}
+                  onClick={handleDownloadRedirect}
                   className="svc-btn-ghost"
                   style={{
                     background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.22)',

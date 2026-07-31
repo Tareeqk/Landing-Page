@@ -581,12 +581,12 @@ export default function LocationPageTemplate({ config }) {
         <title>{config.metaTitle}</title>
         <meta name="description" content={config.metaDesc} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://www.tareeqk.ae/${lang}/${config.slug}`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:title" content={config.metaTitle} />
         <meta property="og:description" content={config.metaDesc} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.tareeqk.ae/${lang}/${config.slug}`} />
-        <meta property="og:image" content={`https://www.tareeqk.ae${config.heroImage}`} />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
+        <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
       </Helmet>
@@ -628,9 +628,9 @@ export default function LocationPageTemplate({ config }) {
       {/* ── SCHEMAS ── */}
       <ServiceSchema service={{
         name: `Car Recovery ${config.area}`,
-        url: `https://www.tareeqk.ae/${lang}/${config.slug}`,
+        url: `https://tareeqk.ae/${lang}/${config.slug}`,
         description: config.metaDesc,
-        image: `https://www.tareeqk.ae${config.heroImage}`,
+        image: `https://tareeqk.ae${config.heroImage}`,
         areas: [config.area, 'Dubai', 'UAE'],
         serviceType: 'Car Recovery',
       }} />

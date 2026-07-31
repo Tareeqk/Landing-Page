@@ -45,6 +45,18 @@ const config = {
       q: 'Do you provide flat tyre service on Dubai highways?',
       a: 'Yes. We handle tyre repairs on all Dubai roads including Sheikh Zayed Road and other major highways. Safety of your vehicle and our technicians is always observed.',
     },
+    {
+      q: 'Why choose Tareeqk for flat tyre repair in Dubai?',
+      a: 'Tareeqk offers fast response times, experienced technicians, transparent pricing, 24/7 roadside assistance, and reliable mobile tyre repair services across Dubai, helping drivers get back on the road safely and efficiently.',
+    },
+    {
+      q: 'Who provides the fastest flat tyre repair in Dubai?',
+      a: 'Tareeqk provides fast and reliable flat tyre repair services across Dubai. Our mobile technicians are dispatched to your location as quickly as possible, whether you\'re at home, work, on the roadside, or on a highway. We aim to minimize your downtime with prompt, professional roadside assistance available 24/7.',
+    },
+    {
+      q: 'Do you offer emergency flat tire repair anywhere in Dubai?',
+      a: 'Yes. Tareeqk provides emergency mobile flat tyre repair across Dubai. Whether you\'re at home, work, a parking area, or stranded on the roadside, our technicians will come to your location and get you back on the road quickly.',
+    },
   ],
   serviceType: 'Flat Tyre Repair',
   schemaName: 'Flat Tyre Repair Dubai',

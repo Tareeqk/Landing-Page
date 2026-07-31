@@ -14,6 +14,19 @@ const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 // swap for a higher-resolution shoot when available.
 const HERO_PHOTO = '/new/hero_image.png';
 
+// Portrait crop for phones — the wide desktop banner reduces to a sliver of
+// truck when cropped to a phone's aspect ratio, so mobile gets its own
+// render instead: same truck/car/robot artwork, composed tall with a solid
+// black upper half reserved for the hero text (see .tk-hero__inner's mobile
+// top-alignment below) instead of the skyline detail the wide crop needs.
+const HERO_PHOTO_MOBILE = '/new/hero_mobile.png';
+
+// Near-square crop for tablets — between the phone crop's tall portrait and
+// the desktop banner's wide 2.33:1 landscape, an iPad portrait viewport (e.g.
+// 768–1024 wide) doesn't fit either well. Same black-band-on-top composition
+// as the mobile render, just closer to a 1:1 aspect ratio.
+const HERO_PHOTO_TABLET = '/new/hero_tab.png';
+
 /* ── Typing cycle ──
    Drives the hero title's type/delete loop only — the background photo
    is static and does not change with it (previously four <picture>
@@ -83,14 +96,24 @@ function useTypingSlideCycle(phrases) {
 function HeroBackground() {
   return (
     <div className="tk-hero__bg" aria-hidden="true">
-      <img
-        src={HERO_PHOTO}
-        alt=""
-        className="tk-hero__bg-img"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-      />
+      <picture>
+        {/* Portrait phones only — a landscape phone at the same width
+            should still get the wide banner (see the orientation:landscape
+            rules in landing.css), not the tall portrait crop stretched
+            sideways. */}
+        <source media="(max-width: 767px) and (orientation: portrait)" srcSet={HERO_PHOTO_MOBILE} />
+        {/* Portrait tablets (iPad et al.) — landscape tablets keep the wide
+            banner, same reasoning as the phone source above. */}
+        <source media="(min-width: 768px) and (max-width: 1024px) and (orientation: portrait)" srcSet={HERO_PHOTO_TABLET} />
+        <img
+          src={HERO_PHOTO}
+          alt=""
+          className="tk-hero__bg-img"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </picture>
       <div className="tk-hero__veil" />
       <div className="tk-hero__grain" />
     </div>
@@ -226,6 +249,34 @@ export default function LandingPage() {
               {t('landing.subtitle')}
             </p>
 
+            {/* Service ticker — a 2-slot sliding window (see the SERVICE
+                TICKER block in landing.css): the left slot always shows
+                whatever matches the typing title (active/amber), the
+                right slot previews what's next. The whole 4-item track
+                shifts by one slot via the --tk-index custom property,
+                which CSS turns into the slide animation — this div just
+                sets that number each time the cycle advances. Clicking
+                either visible pill still jumps straight to it. Placed
+                ahead of the CTAs so it reads as "here's what we do"
+                right after the subtitle instead of sitting below the
+                buttons. */}
+            <div className="tk-service-track-viewport" data-testid="landing-service-pills" role="group">
+              <div className="tk-service-track" style={{ '--tk-index': index }}>
+                {SERVICE_KEYS.map((key, i) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => selectIndex(i)}
+                    className={`tk-service-pill ${i === index ? 'tk-service-pill--active' : ''}`}
+                    aria-pressed={i === index}
+                  >
+                    <span className="tk-service-pill__icon">{SERVICE_ICONS[key]}</span>
+                    <span className="tk-service-pill__label">{phrases[i]}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="tk-cta-row" data-testid="landing-cta-row">
               <button
                 onClick={handleDownloadRedirect}
@@ -287,23 +338,6 @@ export default function LandingPage() {
                 />
               </a>
             </div>
-
-            {/* Service picker — click a service to jump the typing title
-                and dots straight to it instead of waiting for the cycle. */}
-            <div className="tk-service-pills" data-testid="landing-service-pills" role="group">
-              {SERVICE_KEYS.map((key, i) => (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => selectIndex(i)}
-                  className={`tk-service-pill ${i === index ? 'tk-service-pill--active' : ''}`}
-                  aria-pressed={i === index}
-                >
-                  <span className="tk-service-pill__icon">{SERVICE_ICONS[key]}</span>
-                  <span>{phrases[i]}</span>
-                </button>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -322,6 +356,49 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+
+      {/* Floating store badges — mobile only (see .tk-store-badges--floating
+          in landing.css). Deliberately rendered as a sibling of <section
+          className="tk-hero"> rather than inside .tk-hero__content: that
+          element gets an AOS fade-up transform, and any transform on an
+          ancestor becomes the containing block for a position:fixed
+          descendant — it was silently anchoring these to the hero's text
+          column instead of the viewport corner. Same links as the in-flow
+          desktop badges above; that pair stays for desktop and hides on
+          mobile via CSS, this pair is the reverse. */}
+      <div className="tk-store-badges tk-store-badges--floating" data-testid="landing-store-badges-floating">
+        <a
+          href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="tk-store-badge"
+          aria-label="Download on the App Store"
+        >
+          <img
+            src="/applestore.png"
+            alt="Download on the App Store"
+            className="tk-store-badge__img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+
+        <a
+          href="https://play.google.com/store/apps/details?id=com.tareeqk.order"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="tk-store-badge"
+          aria-label="Get it on Google Play"
+        >
+          <img
+            src="/playstore.png"
+            alt="Get it on Google Play"
+            className="tk-store-badge__img"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+      </div>
     </>
   );
 }

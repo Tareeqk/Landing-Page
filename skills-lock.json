@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "skills": {
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "4eabc66183767153e404b39d1b839b1c37f2d82d86f0a0d7e880a579d8d62336"
+    },
+    "mobile-ux-optimizer": {
+      "source": "erichowens/some_claude_skills",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/mobile-ux-optimizer/SKILL.md",
+      "computedHash": "f2c02305be4b3860a7e21939faf4fad7fe969054a3372788cd1b3daa2f8c0485"
+    },
+    "react-vite-expert": {
+      "source": "questfortech-investments/claude-code-skills",
+      "sourceType": "github",
+      "skillPath": "react-vite-expert/SKILL.md",
+      "computedHash": "d8c575facdc8b9a6d55baa7eb35aad79ff50eb5dc1c6b8e15d36fc34e0f43ef5"
+    },
+    "seo-geo": {
+      "source": "resciencelab/opc-skills",
+      "sourceType": "github",
+      "skillPath": "skills/seo-geo/SKILL.md",
+      "computedHash": "56f90ba46b36563bb5461feb8462aed9283e74dfc4cdac2a98c42c4bc86a95be"
+    },
+    "vite-react-best-practices": {
+      "source": "claudiocebpaz/vite-react-best-practices",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "c383dacdd55b97e7c36641e7d0ac0c094266ef22458dea31c5000cb3e29e3d49"
+    },
+    "web-search": {
+      "source": "claude-office-skills/skills",
+      "sourceType": "github",
+      "skillPath": "web-search/SKILL.md",
+      "computedHash": "ec4bd9f90f8e7aea9ed7fa35b5a6a26bb88b5121dd22065aa6308187ed780f82"
+    }
+  }
+}

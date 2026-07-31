@@ -21,7 +21,10 @@ export default function AboutPreview() {
     style.id = "about-preview-styles";
     style.textContent = `
       .abt-preview {
-        padding: clamp(56px, 9vw, 110px) 0;
+        /* Top padding trimmed well below the bottom value — a full 9vw
+           top gap read as dead white space right under the hero; the
+           bottom gap before the next section stays generous. */
+        padding: clamp(24px, 3vw, 44px) 0 clamp(56px, 9vw, 110px);
         overflow: hidden;
         background: #fff;
       }
@@ -273,14 +276,22 @@ export default function AboutPreview() {
         color: var(--dark-text-muted, #999) !important;
       }
 
+      /* Below 700px, three fixed columns leave too little width per chip
+         to keep the value/label text legible — auto-fit lets the grid
+         drop to 2-up (third chip wraps to its own row, centered by the
+         grid) once a column would go under ~110px, instead of forcing
+         all three to keep shrinking their text to fit. */
       @media (max-width: 700px) {
         .abt-preview-proof {
-          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
           gap: 8px;
         }
       }
 
       @media (max-width: 480px) {
+        .abt-preview-proof {
+          grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+        }
         .abt-preview-stat {
           padding: 12px 6px;
           gap: 4px;
@@ -295,11 +306,11 @@ export default function AboutPreview() {
           height: 14px;
         }
         .abt-preview-stat-value {
-          font-size: 11.5px;
+          font-size: 12.5px;
           line-height: 1.2;
         }
         .abt-preview-stat-label {
-          font-size: 9.5px;
+          font-size: 10.5px;
         }
       }
 

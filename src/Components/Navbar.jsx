@@ -176,19 +176,19 @@ export default function Navbar({ isDark, setIsDark }) {
                      
                       <span
                         className={classNames(
-                          "hidden md:inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1",
+                          "hidden md:inline-flex shrink-0 items-center gap-1 lg:gap-1.5 rounded-full border px-2 py-0.5 lg:px-2.5 lg:py-1 whitespace-nowrap",
                           isDark
                             ? "border-white/10 bg-white/5"
                             : "border-black/10 bg-black/5",
                         )}
                       >
-                        <span className="relative flex h-1.5 w-1.5">
+                        <span className="relative flex h-1.5 w-1.5 shrink-0">
                           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary-yellow)] opacity-75" />
                           <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--primary-yellow)]" />
                         </span>
                         <span
                           className={classNames(
-                            "text-[10px] font-semibold uppercase tracking-wider",
+                            "text-[8.5px] lg:text-[10px] font-semibold uppercase tracking-wider whitespace-nowrap",
                             isDark ? "text-white/60" : "text-gray-500",
                           )}
                         >

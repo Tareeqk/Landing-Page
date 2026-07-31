@@ -27,7 +27,7 @@ const config = {
   faqs: [
     {
       q: 'What should I do if my car battery dies in Dubai?',
-      a: 'Yes. Our technicians carry a range of compatible batteries for most popular car brands in the UAE. If we have the right battery, we\'ll replace it on-site. If not, we\'ll jump-start you and arrange a follow-up.',
+      a: 'If your car battery dies, park safely, switch on your hazard lights, and contact Tareeqk for a fast battery jump start anywhere in Dubai. Our team will arrive quickly to get your vehicle running again.',
     },
     {
       q: 'Why do car batteries die quickly in Dubai?',
@@ -44,6 +44,22 @@ const config = {
     {
       q: 'What battery brands do you use for replacement?',
       a: 'We use trusted brands compatible with UAE vehicle requirements. Our technicians will recommend the right battery specification for your car model and usage.',
+    },
+    {
+      q: 'How quickly can you provide a battery jump start in Dubai?',
+      a: 'Our average response time depends on your location and traffic conditions, but we aim to reach customers as quickly as possible across Dubai.',
+    },
+    {
+      q: 'Do you offer 24/7 battery jump start service in Dubai?',
+      a: 'Yes. Tareeqk provides 24/7 emergency battery jump start service throughout Dubai, including nights, weekends, and public holidays.',
+    },
+    {
+      q: 'Can you jump start any type of vehicle?',
+      a: 'Yes. We provide battery jump start assistance for most cars, SUVs, vans, and light commercial vehicles.',
+    },
+    {
+      q: 'Can a dead battery be jump started?',
+      a: 'Yes. If the battery is simply discharged, a jump start can usually get your vehicle running again. If the battery has reached the end of its lifespan, additional repairs or replacement may be required by a battery specialist.',
     },
   ],
   serviceType: 'Battery Boost & Replacement',

@@ -17,16 +17,10 @@ function useCjiStyles() {
     style.id = "cji-styles"
     style.textContent = `
       .cji-section { background: transparent; }
-
-      /* Elevated panel — gives the section its own defined shape instead of
-         bleeding flat into the page background, so it doesn't read as a
-         dead gap between AboutPreview above and the service cards below. */
       .cji-panel {
         position: relative;
         border-radius: 32px;
         background: linear-gradient(180deg, #fffdf6 0%, #ffffff 55%);
-        border: 1px solid rgba(0,0,0,0.06);
-        box-shadow: 0 8px 24px -14px rgba(0,0,0,0.10);
         overflow: hidden;
       }
       body.dark .cji-panel {

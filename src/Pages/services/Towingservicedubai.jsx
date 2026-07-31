@@ -45,6 +45,22 @@ const config = {
       q: 'Can you tow my car to a specific garage or dealership?',
       a: 'Yes. Tell us the destination — your preferred garage, a dealership service centre, or your home — and we\'ll take it there directly.',
     },
+    {
+      q: 'Is towing available 24/7 in Dubai?',
+      a: 'Yes. Tareeqk offers 24/7 towing services, including nights, weekends, and public holidays, so you can request assistance whenever you need it.',
+    },
+    {
+      q: 'What types of vehicles can you tow?',
+      a: 'We tow sedans, SUVs, luxury vehicles, sports cars, electric vehicles, motorcycles, vans, and light commercial vehicles using suitable towing equipment.',
+    },
+    {
+      q: 'Can I schedule a towing service in advance?',
+      a: 'Yes. If you need your vehicle transported at a later time or date, you can schedule a towing service in advance based on availability.',
+    },
+    {
+      q: 'Do you provide towing after a road accident?',
+      a: 'Yes. If your vehicle is unsafe to drive after an accident, we can arrange towing to your preferred garage, dealership, or an insurance-approved repair center.',
+    },
   ],
   serviceType: 'Towing Service',
   schemaName: 'Car Towing Service Dubai',

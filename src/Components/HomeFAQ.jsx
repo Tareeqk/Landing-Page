@@ -34,7 +34,7 @@ function useHomeFaqStyles() {
 
       .hfaq-item {
         background: #fff; border: 1.5px solid rgba(0,0,0,0.08); border-radius: 12px;
-        padding: 2px 16px; margin-bottom: 8px;
+        padding: 6px 18px; margin-bottom: 12px;
         transition: border-color 0.2s ease, box-shadow 0.2s ease;
       }
       .hfaq-item:hover { border-color: rgba(245,166,35,0.4); }
@@ -69,7 +69,7 @@ function useHomeFaqStyles() {
 
       @media (max-width: 640px) {
         .hfaq-container { padding: 0 20px; }
-        .hfaq-item { padding: 1px 14px; }
+        .hfaq-item { padding: 4px 16px; }
       }
     `
     document.head.appendChild(style)

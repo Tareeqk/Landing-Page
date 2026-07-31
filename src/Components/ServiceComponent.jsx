@@ -28,7 +28,7 @@ export default function WhatWeOffer() {
       ],
       iconSrc: "/icons/TRUCK_ICON.png",
       photoSrc: "/icons/car_recovery.png",
-      photoPosition: "center 30%",
+      photoPosition: "right bottom",
     },
     {
       key: "battery",
@@ -43,7 +43,7 @@ export default function WhatWeOffer() {
       ],
       iconSrc: "/icons/BATTERY_ICON.png",
       photoSrc: "/icons/battery_jumpstart.png",
-      photoPosition: "center center",
+      photoPosition: "right bottom",
     },
     {
       key: "tyre",
@@ -58,7 +58,7 @@ export default function WhatWeOffer() {
       ],
       iconSrc: "/icons/TIRE_ICON.png",
       photoSrc: "/icons/tire_puncture.png",
-      photoPosition: "center bottom",
+      photoPosition: "right bottom",
     },
   ];
 
@@ -220,6 +220,12 @@ export default function WhatWeOffer() {
     -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
   }
+
+  /* Title had no mobile scale-down at all — 40px wrapped to 4 lines on a
+     ~330px-wide column and ate most of the first screen of this section. */
+  .s4-title { font-size: 30px; margin-bottom: 16px; }
+  .s4-desc { font-size: 14px; max-width: none; }
+  .s4-hero-text { padding-bottom: 0; }
 }
 
       .s4-hero-text { padding-bottom: 40px; }
@@ -320,8 +326,7 @@ export default function WhatWeOffer() {
       @media (max-width: 768px) { .s4-stats-desktop { display: none; } }
 
       .s4-stat {
-        background: #fff;
-        border: 1px solid #e8e8e8;
+     
         border-radius: 16px;
         padding: 18px 20px;
         display: flex;
@@ -329,7 +334,7 @@ export default function WhatWeOffer() {
         gap: 14px;
         /* Elevation so the row reads as floating over the hero image/page
            seam instead of looking pasted flat on top of it. */
-        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+
       }
       body.dark .s4-stat {
         background: #1e1e1e;
@@ -464,8 +469,26 @@ export default function WhatWeOffer() {
         grid-template-columns: repeat(3, 1fr);
         gap: 22px;
       }
-      @media (max-width: 860px) and (min-width: 641px) {
-        .s4-grid { grid-template-columns: 1fr; }
+      /* Tablet range (portrait iPads through landscape iPad/small laptop
+         windows): 3 columns here is narrow enough that "Vehicle Recovery"
+         wraps to two lines and collides with the absolutely-positioned
+         "Most Requested" badge (top-right, same spot the wrapped second
+         line lands); the old single-column fallback below 860px also made
+         each card nearly full viewport height, forcing a lot of scrolling
+         to see all three. Two columns fits comfortably at both ends of
+         this range without either problem. */
+      @media (max-width: 1180px) and (min-width: 641px) {
+        .s4-grid { grid-template-columns: repeat(2, 1fr); }
+      }
+      /* Safety net for the same wrap-vs-badge collision — belt and
+         suspenders alongside the two-column width above, since a longer
+         translated title could still wrap even with more room per card. */
+      @media (max-width: 1180px) and (min-width: 641px) {
+        .s4-badge {
+          position: static;
+          align-self: flex-start;
+          margin-bottom: 14px;
+        }
       }
 
       /* ── Mobile carousel ── */
@@ -652,13 +675,24 @@ export default function WhatWeOffer() {
       }
       .s4-check img { width: 12px; height: 12px; object-fit: contain; }
 
-      /* ── Card photo — blended into the card ── */
+      /* ── Card photo — blended into the card ──
+         The source PNGs (public/icons/*.png) are 500x500 with real alpha
+         transparency, but the vehicle itself only occupies a ~422x193
+         strip (~2.2:1) centered in that square — mostly transparent
+         padding above/below. The old box here was portrait-shaped
+         (52% wide, 75% tall), so object-fit: cover had to blow the
+         image up and crop deep into its width to fill that shape,
+         cutting the truck/robot in half. Reshaped to roughly match the
+         vehicle's real ~2.2:1 strip instead, with object-fit: contain
+         so nothing gets cropped regardless of exact card proportions —
+         it just scales to fit, and the transparent background means
+         there's no visible letterboxing. */
       .s4-card-photo-wrap {
         position: absolute;
         bottom: 0;
-        width: 52%;
-        max-width: 220px;
-        height: 75%;
+        width: 90%;
+        max-width: 300px;
+        height: 40%;
         pointer-events: none;
         z-index: 1;
       }
@@ -668,67 +702,50 @@ export default function WhatWeOffer() {
       .s4-card-photo {
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        object-position: center 30%;
+        object-fit: contain;
+        object-position: right bottom;
         display: block;
-        border-radius: 0 0 20px 0;
       }
       [dir="ltr"] .s4-card-photo {
-        -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, #000 70%),
-                            linear-gradient(to top, #000 60%, transparent 100%);
-        mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.6) 30%, #000 70%),
-                    linear-gradient(to top, #000 60%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 12%, #000 32%),
+                            linear-gradient(to top, #000 75%, transparent 100%);
+        mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.55) 12%, #000 32%),
+                    linear-gradient(to top, #000 75%, transparent 100%);
         -webkit-mask-composite: intersect;
         mask-composite: intersect;
       }
       [dir="rtl"] .s4-card-photo {
-        -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.6) 30%, #000 70%),
-                            linear-gradient(to top, #000 60%, transparent 100%);
-        mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.6) 30%, #000 70%),
-                    linear-gradient(to top, #000 60%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.55) 12%, #000 32%),
+                            linear-gradient(to top, #000 75%, transparent 100%);
+        mask-image: linear-gradient(to left, transparent 0%, rgba(0,0,0,0.55) 12%, #000 32%),
+                    linear-gradient(to top, #000 75%, transparent 100%);
         -webkit-mask-composite: intersect;
         mask-composite: intersect;
         transform: scaleX(-1);
       }
 
-      /* On mobile, card image is full-width bottom strip */
+      /* Mobile keeps the exact same card composition as desktop — badge
+         pinned top-right, photo bleeding into the bottom-right corner
+         behind the text via the same fade mask — just at reduced scale.
+         (An earlier version restructured this per-breakpoint — static
+         badge row, resized/repositioned photo, different text widths —
+         which is what actually caused the photo/checklist collision:
+         the rebuilt proportions didn't line up with each other. Scaling
+         everything down by the same factor instead of re-deriving new
+         numbers keeps every ratio that already works on desktop intact.) */
       @media (max-width: 640px) {
         .s4-card {
-          padding-bottom: 0;
-          min-height: 380px;
+          padding: 20px 18px 0;
+          min-height: 340px;
         }
-        .s4-card-photo-wrap {
-          width: 55%;
-          height: 60%;
-          max-width: none;
-        }
-        /* Desktop's mask fades the photo in from the left because it sits
-           behind text there — on mobile the photo is just a bottom-corner
-           image with nothing overlapping it, and with the hero image
-           hidden at this width it's the only photo left on the card, so
-           the heavy left-side fade just made it look washed out for no
-           reason. Keep only a soft top edge for blending. */
-        .s4-card-photo {
-          -webkit-mask-image: linear-gradient(to top, #000 80%, transparent 100%) !important;
-          mask-image: linear-gradient(to top, #000 80%, transparent 100%) !important;
-        }
-        [dir="rtl"] .s4-card-photo { transform: none; }
-        /* The photo is bottom-anchored and doesn't reach up this far, so
-           the description doesn't need to make room for it the way the
-           checklist below does — letting it use nearly the full card
-           width fixes the narrow, over-wrapped text from the 55% cap. */
-        .s4-card-desc { max-width: 94%; }
-        .s4-features { max-width: 55%; }
-
-        /* The badge was absolutely positioned over the title, colliding
-           with it once the title wrapped to two lines on narrow cards.
-           On mobile it flows as its own row above the header instead. */
-        .s4-badge {
-          position: static;
-          align-self: flex-start;
-          margin-bottom: 14px;
-        }
-        .s4-card-title { font-size: 19px; }
+        .s4-icon-circle { width: 48px; height: 48px; min-width: 48px; }
+        .s4-icon-circle img { width: 32px; height: 32px; }
+        .s4-card-title { font-size: 18px; }
+        .s4-card-desc, .s4-feature { font-size: 12.5px; }
+        .s4-badge { font-size: 11px; padding: 4px 10px 4px 8px; top: 16px; }
+        [dir="ltr"] .s4-badge { right: 16px; }
+        [dir="rtl"] .s4-badge { left: 16px; }
+        .s4-learn { font-size: 14px; margin-top: 18px; padding-bottom: 20px; }
       }
 
       /* ── Learn More ── */
@@ -773,7 +790,7 @@ export default function WhatWeOffer() {
       }
 
       .s4-carousel-btn {
-        width: 38px; height: 38px;
+        width: 44px; height: 44px;
         border-radius: 50%;
         background: #fff;
         border: 1.5px solid #e8e8e8;
@@ -803,13 +820,18 @@ export default function WhatWeOffer() {
         gap: 8px;
         align-items: center;
       }
+      /* Visual dot stays 8px (24px when active) — padding + background-clip
+         expands the actual clickable/tappable box to ~28px without
+         inflating what's drawn, since these are page-indicator dots, not
+         primary controls. */
       .s4-dot {
         width: 8px; height: 8px;
+        padding: 10px;
+        background-clip: content-box;
         border-radius: 999px;
         background: #d0d0d0;
         border: none;
         cursor: pointer;
-        padding: 0;
         transition: width 0.3s ease, background 0.3s ease;
         -webkit-tap-highlight-color: transparent;
       }

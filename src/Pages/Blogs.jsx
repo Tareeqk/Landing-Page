@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getLocalizedBlogs } from "../data/blogs"
 import useLangLink from "../hooks/useLangLink"
 
@@ -314,6 +314,7 @@ function useBlogsStyles() {
 
 export default function Blogs() {
   const { t, i18n } = useTranslation()
+  const { lang } = useParams()
   const isRTL = i18n.dir() === "rtl"
   const blogs = getLocalizedBlogs(i18n.language)
   const navigate = useNavigate()
@@ -355,6 +356,7 @@ export default function Blogs() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.blogs.title")}</title>
         <meta name="description" content={t("meta.blogs.description")} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/blogs`} />
       </Helmet>
 
       {/* ── Hero ── */}

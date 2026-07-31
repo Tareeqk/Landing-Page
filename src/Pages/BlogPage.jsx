@@ -230,7 +230,7 @@ function useBlogPageStyles() {
 }
 
 export default function BlogPage() {
-  const { blogSlug } = useParams();
+  const { blogSlug, lang } = useParams();
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === 'rtl';
   const langLink = useLangLink();
@@ -268,6 +268,7 @@ export default function BlogPage() {
       <Helmet>
         <title>{blog?.title || 'Article'}</title>
         <meta name="description" content={blog?.description || 'Read our latest article'} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/page/${blogSlug}`} />
       </Helmet>
 
       <div className="bp-progress-track" aria-hidden="true">

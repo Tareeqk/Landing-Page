@@ -1,5 +1,5 @@
 import {React, useEffect }from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Navbar from "./../Components/Navbar";
 import Footer from "./../Components/Footer";
 import LandingPage from "./LandingPage";
@@ -16,9 +16,11 @@ import PriceGroup from "../Components/PriceGroup";
 import Registration from "./Registration";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
+import LocalBusinessSchema from "../schemas/LocalBusinessSchema";
 
 export default function Home() {
   const { t } = useTranslation();
+  const { lang } = useParams();
    const location = useLocation();
   useEffect(() => {
     if (location.hash) {
@@ -42,7 +44,9 @@ export default function Home() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.home.title")}</title>
         <meta name="description" content={t("meta.home.description")} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}`} />
       </Helmet>
+      <LocalBusinessSchema />
       <div>
         <LandingPage />
          <AboutPreview />

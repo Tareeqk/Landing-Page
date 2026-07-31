@@ -2,9 +2,11 @@ import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
+import { useParams } from "react-router-dom"
 
 export default function FAQs() {
   const { t, i18n } = useTranslation()
+  const { lang } = useParams()
   const [faqs, setFaqs] = useState([])
   const [loading, setLoading] = useState(true)
   const [openIndexs, setOpenIndexs] = useState([])
@@ -46,6 +48,7 @@ export default function FAQs() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.faqs.title")}</title>
         <meta name="description" content={t("meta.faqs.description")} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/faq`} />
       </Helmet>
       <section
         style={{

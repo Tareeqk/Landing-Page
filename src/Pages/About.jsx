@@ -6,30 +6,11 @@ import {
   Zap, Trophy, Lightbulb, Handshake, Smartphone, Moon,
   Car, Battery, Wrench, Fuel, ChevronRight, ChevronLeft,
   Phone, MessageCircle, Star, Shield, Clock, MapPin,
-  Target, Eye, Heart, CheckCircle2,
+  Target, Eye, Heart, CheckCircle2, Truck, AlertTriangle,
+  Mountain, Bike,
 } from 'lucide-react';
-
-
-// ── Local Business Schema ──────────────────────────────────────────────────
-function LocalBusinessSchema() {
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": ["LocalBusiness", "TowingService"],
-    "name": "Tareeqk",
-    "alternateName": "Tareeqk Roadside Assistance Dubai",
-    "description": "24/7 car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery in Dubai, UAE. RTA-licensed operator.",
-    "url": "https://www.tareeqk.ae",
-    "logo": "https://www.tareeqk.ae/new/logo.png",
-    "image": "https://www.tareeqk.ae/new/Recovery_Van.webp",
-    "telephone": "+97142232269",
-    "address": { "@type": "PostalAddress", "addressLocality": "Dubai", "addressCountry": "AE" },
-    "geo": { "@type": "GeoCoordinates", "latitude": "25.2048", "longitude": "55.2708" },
-    "openingHours": "Mo-Sa 09:00-17:00",
-    "areaServed": { "@type": "City", "name": "Dubai" },
-    "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "1200", "bestRating": "5" },
-  };
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />;
-}
+import { useParams } from 'react-router-dom';
+import LocalBusinessSchema from '../schemas/LocalBusinessSchema';
 
 // ── Styles ─────────────────────────────────────────────────────────────────
 function useAboutStyles() {
@@ -134,6 +115,14 @@ function useAboutStyles() {
         transform: translateX(3px);
       }
       [dir="rtl"] .abt-svc-link:hover { transform: translateX(-3px); }
+
+      /* Four across on desktop now that the grid has the full section
+         width to itself (see .abt-coverage-grid above) — two rows of four
+         instead of four rows of two for the 8 services. */
+      .abt-svc-grid { grid-template-columns: repeat(4, 1fr); }
+      @media (max-width: 900px) {
+        .abt-svc-grid { grid-template-columns: 1fr 1fr; }
+      }
 
       /* ── Float badge RTL ── */
       [dir="rtl"] .abt-float-badge {
@@ -438,6 +427,7 @@ function ValuesSwiper({ items }) {
 // ── Component ──────────────────────────────────────────────────────────────
 export default function About({ isSection = false }) {
   const { t, i18n } = useTranslation();
+  const { lang } = useParams();
   const isRTL = i18n.dir() === 'rtl';
   useAboutStyles();
   const HeadingTag = isSection ? 'h2' : 'h1';
@@ -470,10 +460,17 @@ export default function About({ isSection = false }) {
   ];
 
   const SERVICES_LIST = [
-    { label: t('about.svc1'), href: '/car-recovery-dubai',     icon: <Car size={17} /> },
-    { label: t('about.svc2'), href: '/battery-service-dubai',  icon: <Battery size={17} /> },
-    { label: t('about.svc3'), href: '/flat-tyre-repair-dubai', icon: <Wrench size={17} /> },
-    { label: t('about.svc4'), href: '/fuel-delivery-dubai',    icon: <Fuel size={17} /> },
+    { label: t('about.svc1'), href: '/car-recovery-dubai',      icon: <Car size={17} /> },
+    { label: t('about.svc2'), href: '/battery-service-dubai',   icon: <Battery size={17} /> },
+    { label: t('about.svc3'), href: '/flat-tyre-repair-dubai',  icon: <Wrench size={17} /> },
+    // Was pointed at /fuel-delivery-dubai with the Fuel icon while the
+    // label read "Towing Service" — fuel delivery gets its own entry
+    // below now, and this one links to the page its text actually names.
+    { label: t('about.svc4'), href: '/towing-service-dubai',    icon: <Truck size={17} /> },
+    { label: t('about.svc5'), href: '/fuel-delivery-dubai',     icon: <Fuel size={17} /> },
+    { label: t('about.svc6'), href: '/accident-recovery-dubai', icon: <AlertTriangle size={17} /> },
+    { label: t('about.svc7'), href: '/desert-recovery-dubai',   icon: <Mountain size={17} /> },
+    { label: t('about.svc8'), href: '/bike-recovery-dubai',     icon: <Bike size={17} /> },
   ];
 
   // Mobile story photo — a single real Tareeqk photo, matching what
@@ -486,6 +483,7 @@ export default function About({ isSection = false }) {
         <Helmet>
           <title>{t('meta.about.title')}</title>
           <meta name="description" content={t('meta.about.description')} />
+          <link rel="canonical" href={`https://tareeqk.ae/${lang}/about`} />
         </Helmet>
       )}
       <LocalBusinessSchema />
@@ -508,7 +506,7 @@ export default function About({ isSection = false }) {
             className="abt-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/new/Recovery_Van.webp")',
+              backgroundImage: 'url("/new/about_header.png")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 38%',
               backgroundRepeat: 'no-repeat',
@@ -521,7 +519,7 @@ export default function About({ isSection = false }) {
             className="abt-hero-img-mobile"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/new/Recovery_Van.webp")',
+              backgroundImage: 'url("/new/mobile_about.png")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 30%',
               backgroundRepeat: 'no-repeat',
@@ -1079,12 +1077,16 @@ export default function About({ isSection = false }) {
         style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="abt-inner" style={inner}>
+          {/* Was a 1fr/0.72fr split reserving a right column for a yellow
+              CTA card — that card is commented out below (dead), so the
+              grid was leaving its own 0.72fr as permanent blank space
+              next to the service links. Single column now; the link grid
+              below fills the width itself with more columns instead. */}
           <div
             className="abt-coverage-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: '1fr 0.72fr',
-              gap: '80px',
+              gridTemplateColumns: '1fr',
               alignItems: 'start',
             }}
           >
@@ -1103,17 +1105,8 @@ export default function About({ isSection = false }) {
               >
                 {t('about.coverageTitle')}
               </h2>
-              <p
-                style={{
-                  color: 'rgba(255,255,255,0.65)',
-                  lineHeight: 1.75,
-                  fontSize: '15px',
-                  marginBottom: '36px',
-                }}
-              >
-                {t('about.coverageSubtitle')}
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+             
+              <div className="abt-svc-grid" style={{ display: 'grid', gap: '10px' }}>
                 {SERVICES_LIST.map((svc, i) => (
                   <a
                     key={i}

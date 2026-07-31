@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { parseHtmlSections } from "../utils/parseHtmlSections"
 import { Helmet } from "react-helmet-async"
+import { useParams } from "react-router-dom"
 
 const TermsAndConditions = () => {
 
   const { t, i18n } = useTranslation()
+  const { lang } = useParams()
   const [terms, setTerms] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -51,6 +53,7 @@ const TermsAndConditions = () => {
         <Helmet>
             <meta name="robots" content="index, follow" />
             <title>Terms Conditions </title>
+            <link rel="canonical" href={`https://tareeqk.ae/${lang}/terms`} />
           </Helmet>
       <section
         style={{

@@ -66,6 +66,10 @@ export default function HowItWorks() {
     { iconSrc: "/icons/all_service.png", label: t("howItWorks.perkSupport") },
     { iconSrc: "/icons/TopRated.png", label: t("howItWorks.perkRated") },
   ];
+  // Doubled so the marquee can loop seamlessly (translateX(-50%) lands
+  // exactly back on the first copy) — same trick as the offer section's
+  // mobile stats ticker.
+  const tickerPerks = [...perks, ...perks];
 
   const [activeBanner, setActiveBanner] = useState(0);
   const isPausedRef = useRef(false);
@@ -288,23 +292,23 @@ export default function HowItWorks() {
         border: 1px solid rgba(255,255,255,0.09);
         border-radius: 14px;
         background: rgba(255,255,255,0.02);
-        padding: 4px;
+        padding: 6px;
       }
       .hiw-perk {
         flex: 1 1 0;
         min-width: 170px;
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        padding: 9px 14px;
+        gap: 14px;
+        padding: 16px 22px;
         border-inline-end: 1px solid rgba(255,255,255,0.09);
         transition: background 0.2s ease;
       }
       .hiw-perk:last-child { border-inline-end: none; }
       .hiw-perk:hover { background: rgba(255,255,255,0.04); }
       .hiw-perk-icon-wrap {
-        width: 34px;
-        height: 34px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         background: rgba(212,160,23,0.08);
         border: 1px solid rgba(212,160,23,0.2);
@@ -313,8 +317,14 @@ export default function HowItWorks() {
         justify-content: center;
         flex-shrink: 0;
       }
-      .hiw-perk-icon { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; display: block; }
-      .hiw-perk-label { font-size: 12px; font-weight: 700; color: #d0d0d6; white-space: nowrap; }
+      .hiw-perk-icon { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; display: block; }
+      .hiw-perk-label { font-size: 13px; font-weight: 700; color: #d0d0d6; white-space: nowrap; }
+
+      /* ── PERKS TICKER — mobile-only auto-scrolling marquee, swapped in
+         for the desktop bar below (same pattern as the "What We Offer"
+         section's mobile stats ticker: duplicate the list once and
+         animate a continuous loop, no user interaction required). ── */
+      .hiw-perks-ticker { display: none; }
 
       /* ── PHONE — the section's visual lead. Both banners crossfade
          their own image + accent color here, so swapping the source
@@ -508,23 +518,66 @@ export default function HowItWorks() {
         .hiw-desc { font-size: 14px; }
         .hiw-phone-stage { max-width: 300px; }
 
-        /* Perks become a horizontal scroll-snap strip instead of wrapping
-           five pills into a cramped 3-row block. */
-        .hiw-perks-row {
-          flex-wrap: nowrap;
-          overflow-x: auto;
-          scroll-snap-type: x mandatory;
-          -webkit-overflow-scrolling: touch;
-          scrollbar-width: none;
-          padding: 2px 18px 6px;
+        /* Manual swipe strip is swapped for an always-moving ticker below —
+           five pills wrapped into a cramped 3-row block was the original
+           problem, and a cut-off swipeable strip read as narrow/broken
+           rather than inviting a swipe. Hide the desktop bar entirely. */
+        .hiw-perks-viewport { display: none; }
+
+        .hiw-perks-ticker {
+          display: block;
+          position: relative;
           margin: 20px -18px 0;
+          overflow: hidden;
         }
-        .hiw-perks-row::-webkit-scrollbar { display: none; }
-        .hiw-perk {
+        /* Same edge-fade hint as the "What We Offer" section's stats
+           ticker — signals continuous motion rather than a hard cutoff. */
+        .hiw-perks-ticker::before,
+        .hiw-perks-ticker::after {
+          content: "";
+          position: absolute;
+          top: 0; bottom: 0;
+          width: 28px;
+          z-index: 2;
+          pointer-events: none;
+        }
+        .hiw-perks-ticker::before {
+          left: 0;
+          background: linear-gradient(to right, #0b0b0e, transparent);
+        }
+        .hiw-perks-ticker::after {
+          right: 0;
+          background: linear-gradient(to left, #0b0b0e, transparent);
+        }
+        .hiw-perks-track {
+          display: flex;
+          gap: 10px;
+          width: max-content;
+          padding: 2px 18px;
+          animation: hiw-perks-scroll 22s linear infinite;
+        }
+        .hiw-perks-ticker:hover .hiw-perks-track { animation-play-state: paused; }
+        @media (prefers-reduced-motion: reduce) {
+          .hiw-perks-track { animation: none; }
+        }
+        @keyframes hiw-perks-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .hiw-ticker-perk {
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
           flex-shrink: 0;
-          scroll-snap-align: start;
+          padding: 10px 16px;
+          border: 1px solid rgba(255,255,255,0.09);
+          border-radius: 999px;
+          background: rgba(255,255,255,0.02);
+          white-space: nowrap;
         }
-        .hiw-perk-label { font-size: 11px; }
+        .hiw-ticker-perk .hiw-perk-icon-wrap { width: 32px; height: 32px; }
+        .hiw-ticker-perk .hiw-perk-icon { width: 32px; height: 32px; }
+        .hiw-ticker-perk .hiw-perk-label { font-size: 12px; }
 
         /* All 4 steps visible at once as a 2×2 grid — no horizontal
            scrolling, no auto-advancing carousel to sit through. */
@@ -646,19 +699,38 @@ export default function HowItWorks() {
           </div>
         </div>
 
-        {/* Perks row — shared across both banners */}
-        <div
-          className={`hiw-perks-row hiw-reveal${revealed ? " hiw-visible" : ""}`}
-          style={{ transitionDelay: revealed ? "440ms" : "0ms" }}
-        >
-          {perks.map((p) => (
-            <div className="hiw-perk" key={p.label}>
-              <div className="hiw-perk-icon-wrap">
-                <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
+        {/* Perks — wrapping bordered bar on desktop, hidden below 680px. */}
+        <div className="hiw-perks-viewport">
+          <div
+            className={`hiw-perks-row hiw-reveal${revealed ? " hiw-visible" : ""}`}
+            style={{ transitionDelay: revealed ? "440ms" : "0ms" }}
+          >
+            {perks.map((p) => (
+              <div className="hiw-perk" key={p.label}>
+                <div className="hiw-perk-icon-wrap">
+                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
+                </div>
+                <span className="hiw-perk-label">{p.label}</span>
               </div>
-              <span className="hiw-perk-label">{p.label}</span>
-            </div>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* Perks — auto-scrolling marquee, shown only below 680px (see
+            .hiw-perks-ticker in the mobile block above). aria-hidden since
+            the same five perks are already in the desktop bar above for
+            assistive tech; this is a decorative duplicate. */}
+        <div className="hiw-perks-ticker" aria-hidden="true">
+          <div className="hiw-perks-track">
+            {tickerPerks.map((p, i) => (
+              <div className="hiw-ticker-perk" key={`${p.label}-${i}`}>
+                <div className="hiw-perk-icon-wrap">
+                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" />
+                </div>
+                <span className="hiw-perk-label">{p.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

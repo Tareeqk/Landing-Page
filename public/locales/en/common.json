@@ -93,7 +93,6 @@
     "visionBody": "We aspire to become the first choice for roadside assistance by setting new standards in reliability, innovation, and customer satisfaction. Our vision is to create a safer driving experience where help is always just moments away.",
     "coverageTag": "Infrastructure",
     "coverageTitle": "Reliable Roadside Support ",
-    "coverageSubtitle": "Localized hubs in Marina, Downtown, JVC, and Deira keep our 20-minute arrival promise unbroken, day or night.",
     "svc1": "Car Recovery",
     "svc2": "Battery Boost",
     "svc3": "Tyre Repair",
@@ -114,7 +113,11 @@
     "statReviews": "1,200+ Reviews",
     "statLicensed": "Licensed",
     "readMore": "Read More",
-    "readLess": "Read Less"
+    "readLess": "Read Less",
+    "svc5": "Fuel Delivery",
+    "svc6": "Accident Recovery",
+    "svc7": "Desert Recovery",
+    "svc8": "Bike Recovery"
   },
   "service": {
     "heroTag": "Premium Roadside Care",
@@ -233,12 +236,12 @@
     "emergencyTag": "Emergency Line",
     "emergencyTitle": "Call Tareeqk Now",
     "emergencySubtitle": "Dispatchers ready in English, Arabic, and Urdu. One number — the fastest route back to the road.",
-    "callBtn": "📞 Call Tareeqk",
+    "callBtn": "Call Tareeqk",
     "whatsappBtn": "WhatsApp Support",
     "ctaTag": "Always Ready",
-    "ctaTitle": "The road ahead is open.",
-    "ctaHighlight": "We've got the rest.",
-    "ctaSubtitle": "Join 50,000+ drivers who trust Tareeqk as their first call across Dubai's roads.",
+    "ctaTitle": "Roadside Help, ",
+    "ctaHighlight": "Right When You Need It.",
+    "ctaSubtitle": "Fast, professional roadside assistance for battery jump starts, tyre repairs, towing, and vehicle recovery across Dubai—available 24/7.",
     "whatsappCta": "Chat on WhatsApp",
     "downloadCta": "Download the App",
     "learnMore": "Learn more"
@@ -766,6 +769,26 @@
       {
         "question": "Is roadside assistance in Dubai Marina available 24/7?",
         "answer": "Yes. Tareeqk operates 24 hours a day, 7 days a week, 365 days a year in Dubai Marina."
+      },
+      {
+        "question": "Where can I find emergency roadside assistance in Dubai Marina?",
+        "answer": "If your car breaks down in Dubai Marina, Tareeqk offers 24/7 emergency roadside assistance, including car recovery, towing, battery jump start, flat tyre assistance, fuel delivery, and vehicle lockout support."
+      },
+      {
+        "question": "Can I book a car recovery service in Dubai Marina online?",
+        "answer": "Yes. You can easily book a car recovery service in Dubai Marina through the Tareeqk website or mobile app. Simply share your location, and we'll connect you with the nearest available recovery partner."
+      },
+      {
+        "question": "How much does car recovery cost in Dubai Marina?",
+        "answer": "The cost depends on your vehicle type, pickup location, destination, and the service required. Tareeqk offers transparent pricing with no hidden charges before your booking is confirmed."
+      },
+      {
+        "question": "Can you recover luxury and sports cars in Dubai Marina?",
+        "answer": "Yes. Our recovery partners are experienced in handling luxury, sports, SUVs, and electric vehicles using professional recovery equipment to ensure safe transportation."
+      },
+      {
+        "question": "What should I do if my car breaks down in Dubai Marina?",
+        "answer": "Move your vehicle to a safe location if possible, switch on your hazard lights, and contact Tareeqk. Share your live location, and our recovery team will be dispatched to assist you as quickly as possible."
       }
     ]
   },
@@ -834,6 +857,22 @@
       {
         "question": "Can you tow my car from Downtown Dubai to another emirate?",
         "answer": "Yes. We can tow within Dubai or to neighbouring emirates — just let us know your destination when booking."
+      },
+      {
+        "question": "How do I book a recovery service in Downtown Dubai?",
+        "answer": "You can book through the Tareeqk mobile app or contact our support team. Share your location, vehicle details, and issue, and we'll dispatch the nearest available recovery driver."
+      },
+      {
+        "question": "Which areas near Downtown Dubai do you cover?",
+        "answer": "Besides Downtown Dubai, Tareeqk also serves Business Bay, DIFC, City Walk, Dubai Opera District, Sheikh Zayed Road, Al Wasl, and surrounding neighbourhoods, making it easy to get help wherever your vehicle stops."
+      },
+      {
+        "question": "What types of vehicles do you recover in Downtown Dubai?",
+        "answer": "We recover most passenger vehicles, including sedans, SUVs, luxury cars, electric vehicles, sports cars, and motorcycles using suitable recovery equipment."
+      },
+      {
+        "question": "Can you tow my car from Downtown Dubai to another location in Dubai?",
+        "answer": "Yes. We can tow your vehicle from Downtown Dubai to your home, office, garage, dealership, service centre, or any other location across Dubai."
       }
     ]
   },
@@ -902,6 +941,18 @@
       {
         "question": "Is night-time recovery available in Bur Dubai?",
         "answer": "Yes, we operate 24/7 across Bur Dubai including late nights and early mornings."
+      },
+      {
+        "question": "Do you provide car recovery in Bur Dubai?",
+        "answer": "Yes, Tareeqk provides car recovery and roadside assistance across Bur Dubai, offering 24/7 towing, breakdown, and accident recovery."
+      },
+      {
+        "question": "Which parts of Bur Dubai does Tareeqk cover?",
+        "answer": "Tareeqk covers all of Bur Dubai, including Al Fahidi, Meena Bazaar, Al Raffa, Al Mankhool, Al Jaffiliya, and Oud Metha, with recovery trucks positioned nearby for fast access."
+      },
+      {
+        "question": "What services does Tareeqk offer besides towing?",
+        "answer": "Tareeqk provides battery jump-starts, flat tire changes, roadside assistance, and accident recovery, in addition to standard towing in Bur Dubai."
       }
     ]
   },
@@ -936,6 +987,26 @@
       {
         "question": "Is roadside assistance available in Al Barsha at night?",
         "answer": "Yes — 24/7, including nights, weekends, and public holidays."
+      },
+      {
+        "question": "My car won't start in Al Barsha — what should I do?",
+        "answer": "Call or message Tareeqk with your location. We'll jump-start it on the spot if it's the battery, or tow it if not."
+      },
+      {
+        "question": "How much will it cost to tow my car in Al Barsha?",
+        "answer": "Pricing is based on distance travelled. Share your pickup and drop-off points with Tareeqk for an exact quote."
+      },
+      {
+        "question": "How long will it take for Tareeqk to reach me in Al Barsha?",
+        "answer": "Our estimated response time in Al Barsha is 15–20 minutes."
+      },
+      {
+        "question": "What information does Tareeqk need from me when I call?",
+        "answer": "Your location, vehicle make/model, the issue, and your drop-off point if it's a tow."
+      },
+      {
+        "question": "What if I'm not sure whether I need a jump-start or a tow?",
+        "answer": "Just describe the symptoms when you call — we'll advise and confirm once the driver inspects it."
       }
     ]
   },
@@ -970,6 +1041,22 @@
       {
         "question": "Is car recovery available in Jumeirah on weekends?",
         "answer": "Yes — we operate 24/7, seven days a week including all weekends and public holidays."
+      },
+      {
+        "question": "Can I book a recovery in advance for a specific time in Jumeirah?",
+        "answer": "Yes, Tareeqk accepts scheduled bookings in addition to emergency dispatch, useful if you know you'll need a tow at a set time."
+      },
+      {
+        "question": "What if the recovery truck damages my car during towing?",
+        "answer": "This is extremely rare given Tareeqk's insured, trained drivers, but any concerns should be raised immediately with the driver and reported to Tareeqk directly."
+      },
+      {
+        "question": "Do response times in Jumeirah change during rush hour?",
+        "answer": "Response times in Jumeirah may extend slightly during peak traffic hours, but Tareeqk dispatches the nearest available truck to minimize delays."
+      },
+      {
+        "question": "Do you cover the Jumeirah Islands and Jumeirah Village area?",
+        "answer": "Yes, Tareeqk extends coverage to Jumeirah Islands and nearby Jumeirah Village communities, in addition to core Jumeirah 1, 2, and 3."
       }
     ]
   },
@@ -1004,6 +1091,18 @@
       {
         "question": "Is car recovery available at night in JVC?",
         "answer": "Yes — 24/7, including nights, weekends, and UAE public holidays."
+      },
+      {
+        "question": "How much will it cost to tow my car in JVC?",
+        "answer": "Pricing is based on distance travelled. Share your pickup and drop-off points with Tareeqk for an exact quote."
+      },
+      {
+        "question": "Do you handle both breakdowns and accident recovery in JVC?",
+        "answer": "Yes, including battery failure, flat tyres, engine trouble, and post-accident towing."
+      },
+      {
+        "question": "Can you recover a car that overheated in JVC traffic?",
+        "answer": "Yes, we'll tow it to a garage of your choice. Turn off the engine and avoid opening the radiator cap if it's hot."
       }
     ]
   },
@@ -1038,6 +1137,18 @@
       {
         "question": "Can you tow my car out of JLT to a garage elsewhere?",
         "answer": "Yes. We can tow to any garage or dealership across Dubai."
+      },
+      {
+        "question": "Is Tareeqk available 24/7 in JLT?",
+        "answer": "Yes. Our emergency car recovery and roadside assistance services are available 24 hours a day, 7 days a week, including weekends and public holidays."
+      },
+      {
+        "question": "Can you tow a car from JLT to a location outside Dubai, like Sharjah or Abu Dhabi?",
+        "answer": "Yes, intercity towing from JLT to other emirates is possible. Let us know the destination when booking so we can quote accordingly, as pricing and vehicle type differ from in-city recovery."
+      },
+      {
+        "question": "Do you charge extra for recovery from JLT at night or on public holidays?",
+        "answer": "No, we don't add any extra charges for recovery at night or on public holidays. Our pricing stays the same 24/7."
       }
     ]
   },
@@ -1072,6 +1183,18 @@
       {
         "question": "Is recovery available in DSO on weekends?",
         "answer": "Yes, we operate 24/7, seven days a week, in Dubai Silicon Oasis."
+      },
+      {
+        "question": "Is there a way to book recovery in advance for a scheduled pickup?",
+        "answer": "Yes, you can pre-book a pickup time when the car isn't an emergency."
+      },
+      {
+        "question": "What if the jump-start doesn't work?",
+        "answer": "We'll switch to a tow to your preferred garage right away."
+      },
+      {
+        "question": "Do you send updates once a driver is on the way?",
+        "answer": "Yes, Tareeqk sends updates once a driver is on the way."
       }
     ]
   },
@@ -1106,6 +1229,18 @@
       {
         "question": "Is roadside assistance available at night in International City?",
         "answer": "Yes — 24/7, including nights and weekends."
+      },
+      {
+        "question": "Can you jump-start a dead battery on the spot, or do you always tow?",
+        "answer": "If a battery jump-start resolves the issue, we do it on-site and you won't need a tow. If the car still won't start, we tow it to your preferred garage or location."
+      },
+      {
+        "question": "How do I book a car recovery in International City?",
+        "answer": "You can book through our app, by phone call, or via WhatsApp message with your location and vehicle issue. Sharing a live location pin (or using the app's built-in location feature) speeds up dispatch."
+      },
+      {
+        "question": "How much does car recovery in International City cost?",
+        "answer": "Pricing depends on your exact cluster, vehicle type, and distance to the drop-off location. Contact us with your location for an exact quote before the driver is dispatched."
       }
     ]
   },
@@ -1140,6 +1275,18 @@
       {
         "question": "Is 24/7 service available in DIP?",
         "answer": "Yes, including nights and weekends, though we recommend calling ahead for very remote warehouse locations."
+      },
+      {
+        "question": "What types of vehicles do you recover in DIP?",
+        "answer": "We recover sedans, SUVs, pickups, vans, and light commercial vehicles. For heavy trucks or trailers, contact us to confirm equipment availability."
+      },
+      {
+        "question": "What areas within DIP does Tareeqk service?",
+        "answer": "Tareeqk covers all zones — DIP 1 (residential, commercial, and warehouse clusters) and DIP 2 (industrial and logistics zones) — including Green Community, Al Furjan-adjacent roads, and the DIP labour village."
+      },
+      {
+        "question": "Why choose Tareeqk for car recovery in DIP?",
+        "answer": "Tareeqk combines fast local response times, flatbed and wheel-lift equipment suited to warehouse and labour camp access, and 24/7 availability across all of DIP 1, DIP 2, and neighbouring Expo City."
       }
     ]
   },
@@ -1174,6 +1321,14 @@
       {
         "question": "Is roadside assistance available at night in Dubai Sports City?",
         "answer": "Yes — 24/7, including nights and weekends."
+      },
+      {
+        "question": "What should I do while waiting for recovery in Dubai Sports City?",
+        "answer": "Move to a safe spot away from traffic if possible, switch on hazard lights, and stay with the vehicle unless it's unsafe to do so. Keep your phone reachable, as our driver may call to confirm your exact spot on arrival."
+      },
+      {
+        "question": "Can you tow a car from Dubai Sports City to a garage outside the area?",
+        "answer": "Yes, we can tow to any garage or location of your choice, whether it's nearby in Motor City or further out. Let us know the destination when booking so we can quote accordingly."
       }
     ]
   },
@@ -1208,6 +1363,14 @@
       {
         "question": "Is recovery available in Motor City at night?",
         "answer": "Yes — 24/7, including nights, weekends, and holidays."
+      },
+      {
+        "question": "Can I track my recovery vehicle in real time once I book?",
+        "answer": "Yes, once you book, Tareeqk sends you a live tracking link so you can see your recovery vehicle's location and ETA as it makes its way through Motor City, Sports City, or Al Qudra Road."
+      },
+      {
+        "question": "Is there a car recovery service near me in Motor City right now?",
+        "answer": "Yes, Tareeqk operates 24/7 across Motor City, including Green Community, Uptown Motor City, and areas near the Dubai Autodrome, with an average 15-minute response time."
       }
     ]
   },
@@ -1276,6 +1439,14 @@
       {
         "question": "Is recovery available in Al Qusais at night?",
         "answer": "Yes — 24/7, including nights and weekends."
+      },
+      {
+        "question": "Can Tareeqk jump-start a dead battery in Al Qusais?",
+        "answer": "Yes, Tareeqk provides on-site battery jump-start service anywhere in Al Qusais; if the battery can't hold charge, we can also arrange a replacement or tow to the nearest battery shop."
+      },
+      {
+        "question": "Does Tareeqk handle accident recovery in Al Qusais Industrial Area?",
+        "answer": "Yes, Tareeqk provides accident recovery and vehicle clearance in Al Qusais Industrial Area, coordinating with police reporting requirements when needed."
       }
     ]
   },
@@ -1378,6 +1549,18 @@
       {
         "question": "Is roadside assistance available on Palm Jumeirah at night?",
         "answer": "Yes — 24/7, including nights, weekends, and public holidays."
+      },
+      {
+        "question": "How do I book a car recovery on Palm Jumeirah?",
+        "answer": "You can book through our app, by phone call, or via WhatsApp message with your location and vehicle issue."
+      },
+      {
+        "question": "Do you tow cars for scheduled service, not just breakdowns, on Palm Jumeirah?",
+        "answer": "Yes, you can book a non-emergency tow to take your car to a dealership or service center on the mainland — useful if the car is driveable but you'd rather not risk driving it yourself across the trunk road."
+      },
+      {
+        "question": "Do you provide recovery for cars with a dead battery at a Palm Jumeirah villa?",
+        "answer": "Yes, this is common for second homes or vacation villas left parked for extended periods. We can jump-start on the spot or tow the car if the battery needs replacement."
       }
     ]
   },

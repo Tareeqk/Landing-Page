@@ -2,7 +2,7 @@
 import { Helmet } from "react-helmet-async"
 import { useParams, useLocation } from "react-router-dom"
 
-const BASE_URL = "https://tareeqk.ae"
+const BASE_URL = "https://tareeqk.ae" // canonical domain — keep in sync with public/sitemap.xml and schemas/LocalBusinessSchema.jsx
 const ALL_LANGS = ["en", "ar", "ur"]
 
 export default function HreflangTags() {

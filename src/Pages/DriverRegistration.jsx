@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next"
 import { DownloadApps } from "../Components/DownloadApps"
 import { Helmet } from "react-helmet-async"
+import { useParams } from "react-router-dom"
 
 export default function DriverRegistrationPage() {
   const { t } = useTranslation()
+  const { lang } = useParams()
 
   const benefits = [
     {
@@ -73,6 +75,7 @@ export default function DriverRegistrationPage() {
       <Helmet>
         <meta name="robots" content="index, follow" />
         <title>Driver Registration </title>
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/driver-registration`} />
       </Helmet>
       {/* Hero Section */}
       <div

@@ -496,12 +496,12 @@ export default function ServicePageTemplate({ config }) {
         <title>{config.metaTitle}</title>
         <meta name="description" content={config.metaDesc} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://www.tareeqk.ae/${lang}/${config.slug}`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:title" content={config.metaTitle} />
         <meta property="og:description" content={config.metaDesc} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://www.tareeqk.ae/${lang}/${config.slug}`} />
-        <meta property="og:image" content={`https://www.tareeqk.ae${config.heroImage}`} />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
+        <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Helmet>
@@ -510,9 +510,9 @@ export default function ServicePageTemplate({ config }) {
       <ServiceSchema
         service={{
           name: config.schemaName,
-          url: `https://www.tareeqk.ae/${lang}/${config.slug}`,
+          url: `https://tareeqk.ae/${lang}/${config.slug}`,
           description: config.schemaDesc,
-          image: `https://www.tareeqk.ae${config.heroImage}`,
+          image: `https://tareeqk.ae${config.heroImage}`,
           areas: config.areas,
           serviceType: config.serviceType,
         }}
