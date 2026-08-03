@@ -14,7 +14,13 @@
       "Bash(magick hero_tab.png -resize 1600x -quality 80 hero_tab.webp)",
       "Bash(/usr/bin/grep -rn \"hero_image\\\\|hero_mobile\\\\|hero_tab\" index.html public/*.html)",
       "Bash(/usr/bin/grep -o 'hero_image[^\"]*\\\\.[a-z]*' dist/en/index.html)",
-      "Bash(/usr/bin/grep -o 'fetchpriority=\"high\"[^>]*' dist/en/index.html)"
+      "Bash(/usr/bin/grep -o 'fetchpriority=\"high\"[^>]*' dist/en/index.html)",
+      "Bash(/usr/bin/grep -n \"View all services\\\\|Car Recovery Dubai\\\\|Battery Jump Start\\\\|Flat Tyre Repair\\\\|serviceLinks\\\\|SERVICES\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src/Components/Navbar.jsx\")",
+      "Bash(/usr/bin/grep -n \"serviceLabels\\\\|footer.services\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src/Components/Footer.jsx\")",
+      "Bash(/usr/bin/grep -n \"View all services\\\\|import.*useTranslation\\\\|const { t\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src/Components/Navbar.jsx\")",
+      "Bash(/usr/bin/grep -n \"View all services\\\\|mobileServicesOpen\\\\|dropdown.map\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src/Components/Navbar.jsx\")",
+      "Bash(/usr/bin/grep -n '>[A-Z][a-zA-Z ]*<\\\\|\"[A-Z][a-z]* [A-Za-z ]*\"' \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src/Components/Navbar.jsx\")",
+      "Bash(/usr/bin/grep -v \"className\\\\|import\\\\|const \\\\|//\\\\|isDark\\\\|classNames\\\\|aria-\")"
     ]
   }
 }

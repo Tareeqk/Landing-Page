@@ -61,8 +61,11 @@ export default function Navbar({ isDark, setIsDark }) {
   // Expand/collapse state for the Services accordion inside the mobile drawer.
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
 
-  const serviceLinks = SERVICES.map((service) => ({
-    label: service.title,
+  // Labels come from footer.services (i18n) by index, same as Footer.jsx —
+  // SERVICES itself keeps its English .title as the untranslated fallback.
+  const serviceLabels = t("footer.services", { returnObjects: true, defaultValue: [] })
+  const serviceLinks = SERVICES.map((service, i) => ({
+    label: serviceLabels[i] || service.title,
     href: langLink(service.href),
   }))
 
@@ -142,7 +145,7 @@ export default function Navbar({ isDark, setIsDark }) {
                         )}
                       >
                         <span className="sr-only">
-                          {open ? "Close main menu" : "Open main menu"}
+                          {open ? t("navbar.closeMenu", "Close main menu") : t("navbar.openMenu", "Open main menu")}
                         </span>
                         {open ? (
                           <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -276,7 +279,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                     onClick={() => window.scrollTo(0, 0)}
                                     className="mt-1 flex items-center justify-center rounded-xl bg-[var(--primary-yellow)] px-4 py-2.5 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.02]"
                                   >
-                                    View all services
+                                    {t("navbar.viewAllServices", "View all services")}
                                   </Link>
                                 </div>
                               </div>
