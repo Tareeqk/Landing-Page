@@ -12,20 +12,20 @@ const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 // without needing four distinct service photos we don't have yet.
 // Source: public/towing.jpg, 1024×640 — soft on large desktop viewports,
 // swap for a higher-resolution shoot when available.
-const HERO_PHOTO = '/new/hero_image.png';
+const HERO_PHOTO = '/new/hero_image.webp';
 
 // Portrait crop for phones — the wide desktop banner reduces to a sliver of
 // truck when cropped to a phone's aspect ratio, so mobile gets its own
 // render instead: same truck/car/robot artwork, composed tall with a solid
 // black upper half reserved for the hero text (see .tk-hero__inner's mobile
 // top-alignment below) instead of the skyline detail the wide crop needs.
-const HERO_PHOTO_MOBILE = '/new/hero_mobile.png';
+const HERO_PHOTO_MOBILE = '/new/hero_mobile.webp';
 
 // Near-square crop for tablets — between the phone crop's tall portrait and
 // the desktop banner's wide 2.33:1 landscape, an iPad portrait viewport (e.g.
 // 768–1024 wide) doesn't fit either well. Same black-band-on-top composition
 // as the mobile render, just closer to a 1:1 aspect ratio.
-const HERO_PHOTO_TABLET = '/new/hero_tab.png';
+const HERO_PHOTO_TABLET = '/new/hero_tab.webp';
 
 /* ── Typing cycle ──
    Drives the hero title's type/delete loop only — the background photo

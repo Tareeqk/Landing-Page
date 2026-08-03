@@ -4,7 +4,17 @@
       "Bash(pkill -f \"vite --port 5192\")",
       "Bash(NODE_PATH=/Users/tareeqk-01/.npm/_npx/e41f203b7505f1fb/node_modules node /tmp/screenshot17.js)",
       "Bash(python3 -c ' *)",
-      "Bash(/usr/bin/grep -rln \"t\\('faqs\\\\.\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src\")"
+      "Bash(/usr/bin/grep -rln \"t\\('faqs\\\\.\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src\")",
+      "Bash(/usr/bin/grep -n \"background\\\\|Hero\\\\|hero\" src/Pages/Home.jsx)",
+      "Bash(/usr/bin/grep -rln \"Home\" src/App.jsx)",
+      "Bash(/usr/bin/grep -n \"\\\\\"/\\\\\"\\\\|path=\\\\\"/\\\\\"\\\\|Home\\\\b\" src/App.jsx)",
+      "Bash(/usr/bin/grep -n \"background\\\\|bg-\\\\|url\\(\\\\|<img\\\\|Image\\\\|\\\\.webp\\\\|\\\\.jpg\\\\|\\\\.png\\\\|video\" src/Pages/LandingPage.jsx)",
+      "Bash(magick hero_image.png -resize 2400x -quality 78 hero_image.webp)",
+      "Bash(magick hero_mobile.png -resize 900x -quality 80 hero_mobile.webp)",
+      "Bash(magick hero_tab.png -resize 1600x -quality 80 hero_tab.webp)",
+      "Bash(/usr/bin/grep -rn \"hero_image\\\\|hero_mobile\\\\|hero_tab\" index.html public/*.html)",
+      "Bash(/usr/bin/grep -o 'hero_image[^\"]*\\\\.[a-z]*' dist/en/index.html)",
+      "Bash(/usr/bin/grep -o 'fetchpriority=\"high\"[^>]*' dist/en/index.html)"
     ]
   }
 }
