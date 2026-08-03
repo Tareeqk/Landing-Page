@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(pkill -f \"vite --port 5192\")",
-      "Bash(NODE_PATH=/Users/tareeqk-01/.npm/_npx/e41f203b7505f1fb/node_modules node /tmp/screenshot17.js)"
+      "Bash(NODE_PATH=/Users/tareeqk-01/.npm/_npx/e41f203b7505f1fb/node_modules node /tmp/screenshot17.js)",
+      "Bash(python3 -c ' *)",
+      "Bash(/usr/bin/grep -rln \"t\\('faqs\\\\.\" \"/Users/tareeqk-01/Desktop/Tareeqk Portal/Landing-Page/src\")"
     ]
   }
 }

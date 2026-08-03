@@ -80,7 +80,7 @@ function useHomeFaqStyles() {
   }, [])
 }
 
-const FAQS = [
+const FAQS_FALLBACK = [
   {
     q: "How fast can Tareeqk reach me in Dubai?",
     a: "Our average response time is 15–20 minutes anywhere in Dubai. Once you request help via the app, call, or WhatsApp, the nearest certified unit is dispatched immediately.",
@@ -108,40 +108,47 @@ const FAQS = [
 ]
 
 export default function HomeFAQ() {
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
   const isRTL = i18n.dir() === "rtl"
   useHomeFaqStyles()
 
   const [openIndex, setOpenIndex] = useState(0)
+  const faqs = t('homeFaq.faqs', { returnObjects: true, defaultValue: FAQS_FALLBACK })
 
   return (
     <section className="hfaq-section" dir={isRTL ? "rtl" : "ltr"}>
       <div className="hfaq-container">
         <div data-aos="fade-up">
-          <span className="hfaq-eyebrow">FAQ</span>
-          <h2 className="hfaq-title">Frequently Asked Questions</h2>
+          <span className="hfaq-eyebrow">{t('homeFaq.eyebrow', 'FAQ')}</span>
+          <h2 className="hfaq-title">{t('homeFaq.title', 'Frequently Asked Questions')}</h2>
           <p className="hfaq-subtitle">
-            Quick answers about how Tareeqk works, our coverage, and what to expect when you request help.
+            {t('homeFaq.subtitle', 'Quick answers about how Tareeqk works, our coverage, and what to expect when you request help.')}
           </p>
         </div>
 
         <div>
-          {FAQS.map((faq, i) => (
-            <div
-              key={i}
-              data-aos="fade-up"
-              data-aos-delay={100 + i * 70}
-              className={`hfaq-item${openIndex === i ? " open" : ""}`}>
-              <button
-                className="hfaq-q"
-                onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                aria-expanded={openIndex === i}
-              >
-                <span>{faq.q}</span>
-                <ChevronDown size={16} className="hfaq-q-icon" />
-              </button>
-              <div className="hfaq-a">
-                <div className="hfaq-a-inner">{faq.a}</div>
+          {faqs.map((faq, i) => (
+            // The data-aos entrance attributes live on this static outer
+            // wrapper, not on the item below whose className toggles on
+            // click — AOS adds "aos-animate" to the DOM directly, and if
+            // that same element's className is also React-controlled,
+            // clicking triggers a re-render that overwrites the whole
+            // className and wipes the AOS class back out (once:true means
+            // it never gets re-added), so the item snaps to opacity:0 and
+            // looks like it disappeared.
+            <div key={i} data-aos="fade-up" data-aos-delay={100 + i * 70}>
+              <div className={`hfaq-item${openIndex === i ? " open" : ""}`}>
+                <button
+                  className="hfaq-q"
+                  onClick={() => setOpenIndex(openIndex === i ? null : i)}
+                  aria-expanded={openIndex === i}
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown size={16} className="hfaq-q-icon" />
+                </button>
+                <div className="hfaq-a">
+                  <div className="hfaq-a-inner">{faq.a}</div>
+                </div>
               </div>
             </div>
           ))}

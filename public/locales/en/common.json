@@ -1612,5 +1612,36 @@
     "savePreferences": "Save Preferences",
     "back": "Back",
     "close": "Close"
+  },
+  "homeFaq": {
+    "eyebrow": "FAQ",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Quick answers about how Tareeqk works, our coverage, and what to expect when you request help.",
+    "faqs": [
+      {
+        "q": "How fast can Tareeqk reach me in Dubai?",
+        "a": "Our average response time is 15–20 minutes anywhere in Dubai. Once you request help via the app, call, or WhatsApp, the nearest certified unit is dispatched immediately."
+      },
+      {
+        "q": "What services does Tareeqk offer?",
+        "a": "Car recovery, towing, battery boost & replacement, flat tyre repair, accident recovery, fuel delivery, desert recovery, and bike recovery — all available across Dubai."
+      },
+      {
+        "q": "Is Tareeqk available 24/7?",
+        "a": "Yes. We operate around the clock, every day of the year, including weekends and public holidays."
+      },
+      {
+        "q": "Is your pricing transparent?",
+        "a": "Yes. You see an upfront price in the Tareeqk app before we dispatch — no hidden fees or surprise charges."
+      },
+      {
+        "q": "How do I book a recovery or roadside service?",
+        "a": "Open the Tareeqk app, call our hotline, or message us on WhatsApp with your location — whichever is fastest for you."
+      },
+      {
+        "q": "Are your operators licensed and insured?",
+        "a": "Yes. Tareeqk is an RTA-licensed operator, and all recovery trucks and technicians are fully insured."
+      }
+    ]
   }
 }
