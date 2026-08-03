@@ -318,18 +318,18 @@ export default function Navbar({ isDark, setIsDark }) {
                       <div className="relative z-50">
                         <LanguageSwitcher />
                       </div>
-                      {/* Dark/light toggle lives inside the mobile drawer
-                          below `lg` instead — it was competing for space
-                          in the already-tight compact bar next to the
-                          language switcher and hamburger icon. */}
+                      {/* Dark/light toggle — temporarily restricted to
+                          light mode only. Hidden (not removed) at every
+                          breakpoint so it can be re-shown later; the
+                          isDark/setIsDark wiring stays untouched. */}
                       <span
                         className={classNames(
-                          "hidden lg:block h-4 w-px",
+                          "hidden h-4 w-px",
                           isDark ? "bg-white/15" : "bg-black/10",
                         )}
                         aria-hidden="true"
                       />
-                      <span className="hidden lg:block">
+                      <span className="hidden">
                         <DarkMode isDark={isDark} setIsDark={setIsDark} />
                       </span>
                     </div>

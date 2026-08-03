@@ -80,11 +80,23 @@ function App() {
   usePageViews();
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
+    // A flat duration with no easing curve made every AOS reveal across the
+    // app feel identical and mechanical regardless of section. `easing`
+    // gives entrances a premium deceleration instead of a linear pop, and
+    // `once` stops re-triggering on re-scroll. Individual elements still
+    // vary their own delay via `data-aos-delay` (see the per-item stagger
+    // added across the marketing sections) — this just sets the baseline
+    // feel, not a uniform one.
+    AOS.init({ duration: 1100, easing: 'ease-out-cubic', once: true, offset: 80 });
     setTimeout(() => { AOS.refresh(); }, 100);
   }, []);
 
-  const [isDark, setIsDark] = useState(() => localStorage.getItem("theme") === "dark");
+  // Dark mode is temporarily restricted to light-only — the toggle is
+  // hidden in Navbar.jsx, and this always starts light regardless of a
+  // previously stored "dark" preference so no one gets stuck without a
+  // way back. The isDark/setIsDark plumbing is left intact so the toggle
+  // can be re-shown later without redoing this wiring.
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     document.body.classList.remove("light", "dark");

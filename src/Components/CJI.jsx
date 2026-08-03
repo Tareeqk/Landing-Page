@@ -251,9 +251,11 @@ export default function CJI() {
             data-aos="fade-up"
             className="cji-divider grid grid-cols-2 sm:flex sm:flex-nowrap sm:justify-center gap-3 sm:gap-4 px-6 sm:px-9 lg:px-12 py-6 sm:py-7"
           >
-            {FEATURES.map(({ icon: Icon, label }) => (
+            {FEATURES.map(({ icon: Icon, label }, i) => (
               <span
                 key={label}
+                data-aos="fade-up"
+                data-aos-delay={i * 90}
                 className="cji-feature-pill group inline-flex items-center gap-2.5 px-3.5 sm:px-4 py-3 sm:py-2.5 rounded-2xl sm:rounded-full bg-white border border-gray-100 text-[12.5px] sm:text-sm font-semibold text-gray-800 whitespace-normal sm:whitespace-nowrap transition-all duration-300 hover:-translate-y-0.5 hover:shadow-sm hover:border-amber-300"
               >
                 <span className="cji-feature-icon flex items-center justify-center w-8 h-8 rounded-full bg-amber-100 text-amber-700 shrink-0 transition-colors duration-300 group-hover:bg-amber-400 group-hover:text-black">

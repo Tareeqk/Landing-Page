@@ -79,8 +79,8 @@ function useServiceStyles() {
       .svc-reveal {
         opacity: 0;
         transform: translateY(28px);
-        transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
-                    transform 0.75s cubic-bezier(0.16,1,0.3,1);
+        transition: opacity 1.05s cubic-bezier(0.16,1,0.3,1),
+                    transform 1.05s cubic-bezier(0.16,1,0.3,1);
       }
       .svc-reveal.svc-left  { transform: translateX(-28px); }
       .svc-reveal.svc-right { transform: translateX(28px); }
@@ -820,25 +820,30 @@ export default function Service({ isSection = false }) {
           className="svc-hero-section"
           style={{ position: 'relative', overflow: 'hidden', minHeight: '480px', display: 'flex', alignItems: 'center' }}
         >
-          {/* Desktop background */}
+          {/* Desktop background — service_banner.png was a 5.6MB, 7010px-wide
+              PNG (the hero is the LCP element on this route); re-encoded to
+              WebP at a realistic display width. */}
           <div
             className="svc-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/about_hero.png")',
+              backgroundImage: 'url("/new/service_banner_hero.webp")',
               backgroundSize: 'cover', backgroundPosition: 'center 40%', backgroundRepeat: 'no-repeat',
             }}
           />
-          {/* Mobile background — same real photo, tighter crop. The
-              dedicated portrait asset (service_hero_mobile.webp) this
-              pointed to didn't exist, so the mobile hero had no image at
-              all (both paths were also missing their leading "/"). */}
+          {/* Mobile background — cropped tight to the truck/skyline art
+              (service_mobile.png had ~50% dead black canvas above it).
+              `contain` + bottom anchoring pins the truck full-width at
+              its natural size instead of `cover` stretching that dead
+              space to fill the tall mobile hero; the matching bg color
+              makes the letterboxed area above read as intentional. */}
           <div
             className="svc-hero-img-mobile"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/new/Recovery_Van.webp")',
-              backgroundSize: 'cover', backgroundPosition: 'center 30%', backgroundRepeat: 'no-repeat',
+              backgroundColor: '#050505',
+              backgroundImage: 'url("/new/service_mobile_hero.webp")',
+              backgroundSize: 'contain', backgroundPosition: 'bottom center', backgroundRepeat: 'no-repeat',
             }}
           />
 

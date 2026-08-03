@@ -78,20 +78,20 @@ const AREA_TAGLINES = {
 const MOBILE_AREA_LIMIT = 6;
 
 const COLORS = {
-  ink: '#0b0c0f',
-  inkSoft: '#13151a',
+  ink: 'var(--primary-dark-bg)',
+  inkSoft: '#181818',
   muted: '#6b7280',
   mutedLight: '#9ca3af',
-  gold: '#fbbf24',
-  goldDeep: '#f59e0b',
+  gold: 'var(--primary-yellow)',
+  goldDeep: '#d99a04',
   line: '#edeef0',
-  bgAlt: '#fafafa',
+  bgAlt: 'var(--secondary-light-gray)',
   green: '#25D366',
 };
 
 const styles = {
   // Layout
-  page: { fontFamily: "'Inter', 'DM Sans', sans-serif", color: COLORS.ink, background: '#fff' },
+  page: { fontFamily: "'Manrope', sans-serif", color: COLORS.ink, background: '#fff' },
   container: { maxWidth: '1140px', margin: '0 auto', padding: '0 24px' },
 
   // Hero
@@ -127,7 +127,7 @@ const styles = {
     color: COLORS.gold, fontWeight: 700,
   },
   heroH1: {
-    fontFamily: "'Plus Jakarta Sans', 'Inter', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 'clamp(1rem, 2.6vw, 2.4rem)', fontWeight: 800,
     lineHeight: 1.12, marginBottom: '18px', letterSpacing: '-0.03em',
   },
@@ -142,13 +142,13 @@ const styles = {
     padding: '15px 30px', borderRadius: '11px', fontSize: '14.5px',
     fontWeight: 800, cursor: 'pointer', letterSpacing: '0.01em',
     transition: 'transform 0.15s, box-shadow 0.15s',
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
   },
   btnGreen: {
     display: 'inline-flex', alignItems: 'center', gap: '9px',
     background: COLORS.green, color: '#fff', border: 'none',
     padding: '15px 30px', borderRadius: '11px', fontSize: '14.5px',
-    fontWeight: 700, cursor: 'pointer', fontFamily: "'Inter', sans-serif",
+    fontWeight: 700, cursor: 'pointer', fontFamily: "'Manrope', sans-serif",
     transition: 'transform 0.15s, box-shadow 0.15s',
   },
   btnOutline: {
@@ -156,7 +156,7 @@ const styles = {
     background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
     color: '#fff', border: '1.5px solid rgba(255,255,255,0.28)',
     padding: '15px 30px', borderRadius: '11px', fontSize: '14.5px',
-    fontWeight: 600, cursor: 'pointer', fontFamily: "'Inter', sans-serif",
+    fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif",
     transition: 'transform 0.15s, background 0.15s',
   },
 
@@ -171,7 +171,7 @@ const styles = {
     padding: '18px 10px', textAlign: 'center',
   },
   metricValue: {
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: '11px', fontWeight: 800, color: '#fff', marginTop: '8px', letterSpacing: '-0.01em',
   },
   metricLabel: {
@@ -188,7 +188,7 @@ const styles = {
     marginBottom: '14px', display: 'block',
   },
   sectionH2: {
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 'clamp(1.6rem, 2.8vw, 2.3rem)', fontWeight: 800,
     color: COLORS.ink, marginBottom: '16px', letterSpacing: '-0.025em', lineHeight: 1.18,
   },
@@ -206,14 +206,25 @@ const styles = {
   grid2: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' },
   grid4: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px' },
 
-  // Feature ("Why Choose Us") cards
-  featureIconWrap: {
-    width: '54px', height: '54px', borderRadius: '16px',
-    background: `linear-gradient(135deg, ${COLORS.gold}, ${COLORS.goldDeep})`,
-    display: 'flex', alignItems: 'center', justifyContent: 'center',
-    marginBottom: '20px', flexShrink: 0,
+  // "Why Choose Us" — a slim divided strip of short reasons, deliberately
+  // quieter than the "Process" step cards above it (that section earns
+  // its cards because it's a real 4-step sequence; this one is a flat
+  // list of reasons, so it shouldn't look like the same component).
+  whyStrip: {
+    display: 'flex', flexWrap: 'wrap',
+    border: `1.5px solid ${COLORS.line}`, borderRadius: '20px', overflow: 'hidden',
   },
-  featureText: { fontWeight: 600, color: COLORS.ink, fontSize: '14.5px', lineHeight: 1.6 },
+  whyStripItem: {
+    flex: '1 1 0', minWidth: '230px',
+    display: 'flex', alignItems: 'flex-start', gap: '14px',
+    padding: '28px 26px',
+  },
+  whyStripIcon: {
+    width: '38px', height: '38px', borderRadius: '11px', flexShrink: 0,
+    background: COLORS.bgAlt, border: `1px solid ${COLORS.line}`, color: COLORS.goldDeep,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+  },
+  whyStripText: { fontWeight: 600, color: COLORS.ink, fontSize: '14px', lineHeight: 1.65, margin: 0 },
 
   // Trust panel (right side of "Why Drivers Trust" section)
   trustCard: {
@@ -221,7 +232,7 @@ const styles = {
     color: '#fff', position: 'relative', overflow: 'hidden',
     backgroundImage: 'radial-gradient(circle at 100% 0%, rgba(251,191,36,0.14) 0%, transparent 55%)',
   },
-  trustCardRating: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '44px', fontWeight: 800, lineHeight: 1 },
+  trustCardRating: { fontFamily: "'Manrope', sans-serif", fontSize: '44px', fontWeight: 800, lineHeight: 1 },
   trustCardSub: { color: '#9ca3af', fontSize: '13px', fontWeight: 600, marginTop: '8px' },
   trustCardDivider: { height: '1px', background: 'rgba(255,255,255,0.12)', margin: '28px 0' },
   trustCardRow: {
@@ -247,25 +258,34 @@ const styles = {
   },
   checklistLabel: { fontSize: '13.5px', fontWeight: 700, color: COLORS.ink },
 
-  // Process timeline cards
-  processCard: {
-    background: '#fff', borderRadius: '22px', border: `1.5px solid ${COLORS.line}`,
-    padding: '28px 24px', transition: 'box-shadow 0.25s, transform 0.25s, border-color 0.25s',
+  // Process — a dispatch-route line threading the 4 steps together (the
+  // same dotted-line motif as the CTA signature and the About page's
+  // story rail) instead of 4 disconnected number-cards, since this is a
+  // literal sequence: call → dispatch → arrive → resolve.
+  processConnector: {
+    position: 'absolute', top: '28px', left: '12.5%', right: '12.5%', height: 0,
+    borderTop: `2px dotted ${COLORS.gold}`, opacity: 0.5, zIndex: 0,
   },
-  processTop: { display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '22px' },
-  processNum: {
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
-    fontSize: '30px', fontWeight: 800, color: '#ececef', letterSpacing: '-0.02em',
+  processNode: {
+    position: 'relative', width: '56px', height: '56px', margin: '0 auto 20px',
+    borderRadius: '50%', background: '#fff', border: `2px solid ${COLORS.gold}`,
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    boxShadow: '0 8px 20px rgba(247,178,5,0.22)',
   },
-  processIconWrap: {
-    width: '40px', height: '40px', borderRadius: '12px',
-    background: COLORS.bgAlt, border: `1px solid ${COLORS.line}`, color: COLORS.goldDeep,
-    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+  processNodeBadge: {
+    position: 'absolute', top: '-6px', right: '-6px', width: '22px', height: '22px',
+    borderRadius: '50%', background: COLORS.ink, color: '#fff',
+    fontSize: '10px', fontWeight: 800, fontFamily: "'Manrope', sans-serif",
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
-  processLabel: { fontWeight: 700, color: COLORS.ink, fontSize: '14.5px', lineHeight: 1.5 },
+  processLabel: {
+    fontWeight: 700, color: COLORS.ink, fontSize: '14px', lineHeight: 1.55,
+    margin: '0 auto', maxWidth: '190px', textAlign: 'center',
+  },
 
   // Dark CTA section
   ctaSection: {
+    position: 'relative', overflow: 'hidden',
     background: `linear-gradient(135deg, ${COLORS.ink}, #15171c)`, borderRadius: '28px',
     padding: '56px 48px', color: '#fff',
     margin: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -278,7 +298,7 @@ const styles = {
     color: COLORS.gold, marginBottom: '14px',
   },
   ctaH2: {
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)', fontWeight: 800,
     marginBottom: '10px', letterSpacing: '-0.02em', maxWidth: '420px',
   },
@@ -295,7 +315,7 @@ const styles = {
     background: 'none', border: 'none', cursor: 'pointer',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     fontSize: '15px', fontWeight: 700, color: COLORS.ink, gap: '16px',
-    fontFamily: "'Inter', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
   },
   faqA: {
     paddingBottom: '22px', color: COLORS.muted, lineHeight: 1.7,
@@ -304,7 +324,7 @@ const styles = {
 
   // Areas section — left column
   areasH2: {
-    fontFamily: "'Plus Jakarta Sans', sans-serif",
+    fontFamily: "'Manrope', sans-serif",
     fontSize: 'clamp(2.1rem, 4.2vw, 3.1rem)', fontWeight: 800,
     color: COLORS.ink, marginBottom: '14px', letterSpacing: '-0.03em', lineHeight: 1.05,
   },
@@ -319,7 +339,7 @@ const styles = {
     padding: '24px', marginBottom: '20px', boxShadow: '0 2px 14px rgba(0,0,0,0.04)',
   },
   quickAccessHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' },
-  quickAccessTitle: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '16px', fontWeight: 800, color: COLORS.ink },
+  quickAccessTitle: { fontFamily: "'Manrope', sans-serif", fontSize: '16px', fontWeight: 800, color: COLORS.ink },
   quickAccessIconChip: {
     width: '34px', height: '34px', borderRadius: '10px', flexShrink: 0,
     background: '#fef3c7', color: COLORS.goldDeep,
@@ -346,7 +366,7 @@ const styles = {
 
   // Areas section — right column ("All Areas")
   allAreasHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' },
-  allAreasTitle: { fontFamily: "'Plus Jakarta Sans', sans-serif", fontSize: '18px', fontWeight: 800, color: COLORS.ink },
+  allAreasTitle: { fontFamily: "'Manrope', sans-serif", fontSize: '18px', fontWeight: 800, color: COLORS.ink },
   allAreasDivider: { height: '1px', background: COLORS.line, marginBottom: '22px' },
   allAreasGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '14px' },
   allAreaCard: {
@@ -366,7 +386,7 @@ const styles = {
     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
     width: '100%', background: '#fff', border: `1.5px solid ${COLORS.line}`, color: COLORS.ink,
     padding: '13px 22px', borderRadius: '100px', fontSize: '13.5px', fontWeight: 700,
-    cursor: 'pointer', marginTop: '20px', fontFamily: "'Inter', sans-serif",
+    cursor: 'pointer', marginTop: '20px', fontFamily: "'Manrope', sans-serif",
   },
 
   // Link pill
@@ -402,6 +422,17 @@ const styles = {
 // specificity, so these overrides use `!important` — the pragmatic way to
 // retrofit responsiveness onto a template built entirely with style props.
 const MOBILE_CSS = `
+.svc-why-strip-item { border-inline-end: 1.5px solid ${COLORS.line}; }
+.svc-why-strip-item:last-child { border-inline-end: none; }
+
+@media (max-width: 900px) {
+  .svc-why-strip-item { flex: 1 1 50%; border-inline-end: none; border-bottom: 1.5px solid ${COLORS.line}; }
+  .svc-why-strip-item:nth-child(odd) { border-inline-end: 1.5px solid ${COLORS.line}; }
+}
+@media (max-width: 480px) {
+  .svc-why-strip-item { flex: 1 1 100%; border-inline-end: none !important; }
+}
+
 @media (max-width: 768px) {
   .svc-hero { min-height: auto !important; }
   .svc-hero-content { padding: 108px 20px 40px !important; }
@@ -423,16 +454,22 @@ const MOBILE_CSS = `
   .svc-all-areas-grid .svc-all-area-card { padding: 14px !important; }
 
   .svc-trust-card { padding: 28px 22px !important; }
-  .svc-process-card { padding: 22px 18px !important; }
+  .svc-process-connector { display: none !important; }
 
   .svc-cta-wrap { margin: 48px auto !important; }
   .svc-cta-section { margin: 0 16px !important; padding: 32px 24px !important; border-radius: 22px !important; }
   .svc-cta-actions { flex-direction: column !important; align-items: stretch !important; width: 100% !important; }
   .svc-cta-actions button { width: 100% !important; justify-content: center !important; }
+
+  .svc-faq-item { padding: 4px 18px !important; border-radius: 14px !important; margin-bottom: 10px !important; }
+  .svc-faq-q { padding: 16px 0 !important; font-size: 13.5px !important; gap: 12px !important; }
+  .svc-faq-a { padding-bottom: 16px !important; font-size: 13px !important; line-height: 1.6 !important; }
 }
 
 @media (max-width: 420px) {
-  .svc-grid4 { grid-template-columns: 1fr !important; }
+  /* .svc-grid4 stays 2-up even on narrow phones — the previous 1fr
+     override turned the 4 process nodes and the 6 related-service
+     cards into one long stacked column instead of a compact grid. */
   .svc-hero-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
 `;
@@ -502,8 +539,6 @@ export default function ServicePageTemplate({ config }) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Helmet>
 
       {/* ── SCHEMAS ── */}
@@ -527,13 +562,15 @@ export default function ServicePageTemplate({ config }) {
           <img src={config.heroImage} alt={config.heroAlt} style={styles.heroBg} loading="eager" />
           <div style={styles.heroOverlay} />
           <div style={styles.heroGlow} />
-          <div style={styles.heroContent} className="svc-hero-content" data-aos="fade-up">
-            <span style={styles.heroTag} className="svc-hero-tag">
+          <div style={styles.heroContent} className="svc-hero-content">
+            {/* Each hero element gets its own entrance beat instead of the
+                tag/heading/subtitle/buttons all sharing one data-aos. */}
+            <span style={styles.heroTag} className="svc-hero-tag" data-aos="fade-up" data-aos-delay="0">
               <FaShieldAlt size={11} /> 24/7 · Fast Response · Dubai
             </span>
-            <h1 style={styles.heroH1} className="svc-hero-h1">{config.title}</h1>
-            <p style={styles.heroSubtitle} className="svc-hero-subtitle">{config.intro}</p>
-            <div style={styles.heroCtas} className="svc-hero-ctas">
+            <h1 style={styles.heroH1} className="svc-hero-h1" data-aos="fade-up" data-aos-delay="140">{config.title}</h1>
+            <p style={styles.heroSubtitle} className="svc-hero-subtitle" data-aos="fade-up" data-aos-delay="300">{config.intro}</p>
+            <div style={styles.heroCtas} className="svc-hero-ctas" data-aos="fade-up" data-aos-delay="440">
               <button onClick={handleCall} style={styles.btnPrimary} aria-label="Call Tareeqk">
                 <FaPhoneAlt size={13} /> Call Now
               </button>
@@ -544,7 +581,7 @@ export default function ServicePageTemplate({ config }) {
                 <FaMobileAlt size={13} /> App
               </button>
             </div>
-           
+
           </div>
         </section>
 
@@ -552,19 +589,25 @@ export default function ServicePageTemplate({ config }) {
         <section style={{ ...styles.section, background: '#fff' }} className="svc-section">
           <div style={styles.sectionInner} className="svc-section-inner">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '56px', alignItems: 'center' }} className="svc-grid2">
-              <div data-aos="fade-right">
-                <span style={styles.eyebrow}>Our Service</span>
-                <h2 style={styles.sectionH2} className="svc-section-h2">Why Drivers Trust Tareeqk</h2>
-                <p style={styles.sectionP}>{config.whatIsService}</p>
+              <div>
+                <div data-aos="fade-right">
+                  <span style={styles.eyebrow}>Our Service</span>
+                  <h2 style={styles.sectionH2} className="svc-section-h2">Why Drivers Trust Tareeqk</h2>
+                  <p style={styles.sectionP}>{config.whatIsService}</p>
+                </div>
                 <div style={styles.checklist}>
                   {TRUST_CHECKLIST.map((item, i) => (
-                    <div key={i} style={styles.checklistItem}>
+                    <div key={i} data-aos="fade-up" data-aos-delay={200 + i * 90} style={styles.checklistItem}>
                       <span style={styles.checklistIconWrap}><item.Icon size={13} /></span>
                       <span style={styles.checklistLabel}>{item.label}</span>
                     </div>
                   ))}
                 </div>
-                <div style={{ marginTop: '28px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <div
+                  data-aos="fade-up"
+                  data-aos-delay={200 + TRUST_CHECKLIST.length * 90 + 80}
+                  style={{ marginTop: '28px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}
+                >
                   <a href={langLink('/about')} style={styles.linkPill}>About Us <FaArrowRight size={10} /></a>
                   <a href={langLink("/#contact")} style={styles.linkPill}>Contact <FaArrowRight size={10} /></a>
                 </div>
@@ -592,7 +635,7 @@ export default function ServicePageTemplate({ config }) {
                   </div>
                   <div style={styles.trustCardAccent}>
                     <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>Service Type</div>
-                    <div style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Plus Jakarta Sans', sans-serif", marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Manrope', sans-serif", marginTop: '4px' }}>
                       {config.schemaName}
                     </div>
                   </div>
@@ -610,24 +653,19 @@ export default function ServicePageTemplate({ config }) {
               <h2 style={styles.sectionH2} className="svc-section-h2">From Call to Resolution in {config.responseTime}</h2>
               <p style={{ ...styles.sectionP, margin: '0 auto' }}>{config.responseDesc}</p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px' }} className="svc-grid4">
-              {processSteps.map((step, i) => (
-                <div
-                  key={i}
-                  className="svc-process-card"
-                  style={styles.processCard}
-                  data-aos="fade-up"
-                  data-aos-delay={i * 80}
-                  onMouseEnter={e => lift(e, true)}
-                  onMouseLeave={e => lift(e, false)}
-                >
-                  <div style={styles.processTop}>
-                    <span style={styles.processNum}>{String(i + 1).padStart(2, '0')}</span>
-                    <span style={styles.processIconWrap}><step.Icon size={16} /></span>
+            <div style={{ position: 'relative' }}>
+              <div style={styles.processConnector} className="svc-process-connector" />
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '20px', position: 'relative' }} className="svc-grid4">
+                {processSteps.map((step, i) => (
+                  <div key={i} data-aos="fade-up" data-aos-delay={i * 80}>
+                    <div style={styles.processNode}>
+                      <step.Icon size={20} color={COLORS.goldDeep} />
+                      <span style={styles.processNodeBadge}>{i + 1}</span>
+                    </div>
+                    <p style={styles.processLabel}>{step.label}</p>
                   </div>
-                  <div style={styles.processLabel}>{step.label}</div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </section>
@@ -639,22 +677,19 @@ export default function ServicePageTemplate({ config }) {
               <span style={styles.eyebrow}>Why Us</span>
               <h2 style={styles.sectionH2} className="svc-section-h2">Why Choose Tareeqk?</h2>
             </div>
-            <div style={styles.grid4} className="svc-grid4">
+            <div style={styles.whyStrip} className="svc-why-strip">
               {config.whyUs.map((reason, i) => {
                 const Icon = WHY_ICONS[i % WHY_ICONS.length];
                 return (
                   <div
                     key={i}
+                    className="svc-why-strip-item"
                     data-aos="fade-up"
                     data-aos-delay={i * 80}
-                    style={styles.card}
-                    onMouseEnter={e => lift(e, true)}
-                    onMouseLeave={e => lift(e, false)}
+                    style={styles.whyStripItem}
                   >
-                    <div style={styles.featureIconWrap}>
-                      <Icon size={22} color={COLORS.ink} />
-                    </div>
-                    <p style={styles.featureText}>{reason}</p>
+                    <span style={styles.whyStripIcon}><Icon size={17} /></span>
+                    <p style={styles.whyStripText}>{reason}</p>
                   </div>
                 );
               })}
@@ -667,18 +702,22 @@ export default function ServicePageTemplate({ config }) {
           <div style={styles.sectionInner} className="svc-section-inner">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '56px', alignItems: 'start' }} className="svc-grid2">
 
-              {/* Left: heading, contact pill, quick access, image */}
-              <div data-aos="fade-right">
-                <span style={styles.eyebrow}>Coverage</span>
-                <h2 style={styles.areasH2} className="svc-areas-h2">Areas We Serve</h2>
-                <p style={styles.sectionP}>
-                  Tareeqk covers all major Dubai districts. Need service in a specific area?
-                </p>
-                <a href={langLink("/#contact")} style={styles.contactPill}>
+              {/* Left: heading, contact pill, quick access, image — four
+                  distinct stacked objects, each gets its own beat rather
+                  than fading in as one flat column. */}
+              <div>
+                <div data-aos="fade-right" data-aos-delay="0">
+                  <span style={styles.eyebrow}>Coverage</span>
+                  <h2 style={styles.areasH2} className="svc-areas-h2">Areas We Serve</h2>
+                  <p style={styles.sectionP}>
+                    Tareeqk covers all major Dubai districts. Need service in a specific area?
+                  </p>
+                </div>
+                <a href={langLink("/#contact")} style={styles.contactPill} data-aos="fade-right" data-aos-delay="140">
                   Contact us <FaArrowRight size={11} />
                 </a>
 
-                <div style={styles.quickAccessCard}>
+                <div style={styles.quickAccessCard} data-aos="fade-right" data-aos-delay="260">
                   <div style={styles.quickAccessHeader}>
                     <span style={styles.quickAccessTitle}>Our Coverage</span>
                     <span style={styles.quickAccessIconChip}><FaTh size={13} /></span>
@@ -688,7 +727,7 @@ export default function ServicePageTemplate({ config }) {
                   </p>
                 </div>
 
-                <div style={styles.areasImageWrap}>
+                <div style={styles.areasImageWrap} data-aos="fade-right" data-aos-delay="380">
                   <img
                     src={config.areasImage || config.heroImage}
                     alt={`${config.schemaName} coverage across Dubai`}
@@ -706,17 +745,19 @@ export default function ServicePageTemplate({ config }) {
               </div>
 
               {/* Right: full area grid with taglines */}
-              <div data-aos="fade-left">
-                <div style={styles.allAreasHeader}>
+              <div>
+                <div data-aos="fade-left" style={styles.allAreasHeader}>
                   <span style={styles.allAreasTitle}>All Areas</span>
                 </div>
                 <div style={styles.allAreasDivider} />
                 <div style={styles.allAreasGrid} className="svc-all-areas-grid">
-                  {visibleAreas.map(area => (
+                  {visibleAreas.map((area, i) => (
                     <a
                       key={area}
                       href={langLink(getAreaHref(area, config.slug))}
                       className="svc-all-area-card"
+                      data-aos="fade-up"
+                      data-aos-delay={Math.min(i * 45, 400)}
                       style={styles.allAreaCard}
                       onMouseEnter={e => lift(e, true)}
                       onMouseLeave={e => lift(e, false)}
@@ -748,15 +789,38 @@ export default function ServicePageTemplate({ config }) {
 
         {/* ── CTA BLOCK ── */}
         <div style={{ maxWidth: '1140px', margin: '72px auto' }} className="svc-cta-wrap">
-          <div style={styles.ctaSection} className="svc-cta-section" data-aos="fade-up">
-            <div>
+          <div style={styles.ctaSection} className="svc-cta-section">
+            {/* Signature: dashed dispatch-route line with waypoint stops —
+                same motif as the location pages' CTA, so both templates
+                share one recognizable brand moment instead of each
+                inventing its own generic dark CTA box. */}
+            <svg
+              viewBox="0 0 1200 320" preserveAspectRatio="none"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.5, pointerEvents: 'none' }}
+            >
+              <path
+                d="M -20 60 C 220 60, 260 240, 560 220 S 900 90 1220 130"
+                fill="none" stroke="rgba(247,178,5,0.4)" strokeWidth="2"
+                strokeDasharray="3 11" strokeLinecap="round"
+              />
+              <circle cx="220" cy="93" r="4" fill="rgba(247,178,5,0.5)" />
+              <circle cx="560" cy="220" r="4" fill="rgba(247,178,5,0.5)" />
+              <circle cx="900" cy="150" r="5" fill={COLORS.gold} />
+              <circle cx="900" cy="150" r="10" fill="none" stroke={COLORS.gold} strokeWidth="1.5" opacity="0.5" />
+            </svg>
+            <div style={{ position: 'relative', zIndex: 1 }} data-aos="fade-up" data-aos-delay="0">
               <div style={styles.ctaEyebrow}><FaHeadset size={13} /> 24/7 Emergency Line</div>
               <h2 style={styles.ctaH2}>Need {config.schemaName} Right Now?</h2>
               <p style={styles.ctaP}>
                 Our team is on standby across Dubai. One tap or call is all it takes — we're already on our way.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }} className="svc-cta-actions">
+            <div
+              style={{ position: 'relative', zIndex: 1, display: 'flex', gap: '12px', flexWrap: 'wrap' }}
+              className="svc-cta-actions"
+              data-aos="fade-up"
+              data-aos-delay="180"
+            >
               <button onClick={handleCall} style={styles.btnPrimary}><FaPhoneAlt size={13} /> Call Now</button>
               <button onClick={handleWhatsApp} style={styles.btnGreen}><FaWhatsapp size={16} /> WhatsApp</button>
             </div>
@@ -770,9 +834,10 @@ export default function ServicePageTemplate({ config }) {
             <h2 style={styles.sectionH2} className="svc-section-h2">Frequently Asked Questions</h2>
             <div style={{ marginTop: '32px' }}>
               {config.faqs.map((faq, i) => (
-                <div key={i} style={styles.faqItem}>
+                <div key={i} style={styles.faqItem} className="svc-faq-item">
                   <button
                     style={styles.faqQ}
+                    className="svc-faq-q"
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     aria-expanded={openFaq === i}
                   >
@@ -790,7 +855,7 @@ export default function ServicePageTemplate({ config }) {
                     maxHeight: openFaq === i ? '400px' : '0',
                     overflow: 'hidden', transition: 'max-height 0.3s ease',
                   }}>
-                    <div style={styles.faqA}>{faq.a}</div>
+                    <div style={styles.faqA} className="svc-faq-a">{faq.a}</div>
                   </div>
                 </div>
               ))}

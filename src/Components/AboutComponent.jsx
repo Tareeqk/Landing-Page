@@ -436,11 +436,45 @@ export default function AboutPreview() {
       @media (max-width: 960px) {
         .abt-preview { padding: clamp(40px, 8vw, 72px) 0; }
       }
+
+      /* ── Scroll reveal — this section previously had no entrance
+         animation at all (appeared instantly), unlike the rest of the
+         site's sections. Same IntersectionObserver convention as
+         About.jsx/Service.jsx, scoped to this component. ── */
+      .abtprev-reveal {
+        opacity: 0;
+        transform: translateY(28px);
+        transition: opacity 1.05s cubic-bezier(0.16,1,0.3,1),
+                    transform 1.05s cubic-bezier(0.16,1,0.3,1);
+      }
+      .abtprev-reveal.abtprev-left  { transform: translateX(-28px); }
+      .abtprev-reveal.abtprev-right { transform: translateX(28px); }
+      .abtprev-reveal.abtprev-visible { opacity: 1 !important; transform: none !important; }
+      [dir="rtl"] .abtprev-reveal.abtprev-left  { transform: translateX(28px); }
+      [dir="rtl"] .abtprev-reveal.abtprev-right { transform: translateX(-28px); }
     `;
 
     document.head.appendChild(style);
 
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const delay = parseInt(el.dataset.delay || 0);
+            setTimeout(() => el.classList.add("abtprev-visible"), delay);
+            observer.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -32px 0px" }
+    );
+    setTimeout(() => {
+      document.querySelectorAll(".abtprev-reveal").forEach((el) => observer.observe(el));
+    }, 50);
+
     return () => {
+      observer.disconnect();
       const existing = document.getElementById("about-preview-styles");
       if (existing) existing.remove();
     };
@@ -455,7 +489,7 @@ export default function AboutPreview() {
           margin: "0 auto",
         }}
       >
-        <div className="abt-preview-eyebrow">
+        <div className="abt-preview-eyebrow abtprev-reveal" data-delay="0">
           <span className="abt-preview-eyebrow-pill">
             <span className="abt-preview-eyebrow-dot" />
             {t("aboutPreview.eyebrow", "About Us")}
@@ -464,7 +498,11 @@ export default function AboutPreview() {
 
         <div className="abt-preview-grid">
           {/* Image side */}
-          <div className="abt-preview-media" style={{ order: isRTL ? 2 : 1 }}>
+          <div
+            className={`abt-preview-media abtprev-reveal ${isRTL ? "abtprev-right" : "abtprev-left"}`}
+            data-delay="80"
+            style={{ order: isRTL ? 2 : 1 }}
+          >
             <div className="abt-preview-media-main">
               <img src="/new/about_image2.png" alt="Tareeqk recovery truck on a Dubai highway" />
             </div>
@@ -485,7 +523,8 @@ export default function AboutPreview() {
 
           {/* Content side */}
           <div
-            className="abt-preview-content"
+            className={`abt-preview-content abtprev-reveal ${isRTL ? "abtprev-left" : "abtprev-right"}`}
+            data-delay="140"
             style={{
               order: isRTL ? 1 : 2,
               textAlign: isRTL ? "right" : "left",
@@ -502,7 +541,7 @@ export default function AboutPreview() {
                 two truck photos (main + floating card); stacking three more
                 differently-styled photos here read as visual clutter. */}
             <div className="abt-preview-proof">
-              <div className="abt-preview-stat">
+              <div className="abt-preview-stat abtprev-reveal" data-delay="220">
                 <span className="abt-preview-stat-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
@@ -513,7 +552,7 @@ export default function AboutPreview() {
                 <span className="abt-preview-stat-label">{t("aboutPreview.response")}</span>
               </div>
 
-              <div className="abt-preview-stat">
+              <div className="abt-preview-stat abtprev-reveal" data-delay="290">
                 <span className="abt-preview-stat-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M12 3l7 3v6c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6l7-3z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
@@ -524,7 +563,7 @@ export default function AboutPreview() {
                 <span className="abt-preview-stat-label">{t("aboutPreview.badgeText")}</span>
               </div>
 
-              <div className="abt-preview-stat">
+              <div className="abt-preview-stat abtprev-reveal" data-delay="360">
                 <span className="abt-preview-stat-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M12 21s-7-6.5-7-11.5A7 7 0 0112 2a7 7 0 017 7.5C19 14.5 12 21 12 21z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />

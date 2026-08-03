@@ -181,8 +181,8 @@ export default function WhatWeOffer() {
       .s4-reveal {
         opacity: 0;
         transform: translateY(24px);
-        transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
-                    transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        transition: opacity 1.0s cubic-bezier(0.16,1,0.3,1),
+                    transform 1.0s cubic-bezier(0.16,1,0.3,1);
       }
       .s4-reveal.s4-visible { opacity: 1 !important; transform: none !important; }
       @media (prefers-reduced-motion: reduce) {

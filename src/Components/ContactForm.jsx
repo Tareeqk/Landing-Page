@@ -157,7 +157,7 @@ export default function ContactSection() {
         <div className="grid grid-cols-1 lg:grid-cols-[6fr_5fr] gap-5 xl:gap-6 items-stretch">
           
           {/* LEFT SIDE */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4" data-aos="fade-right">
             
             {/* Heading */}
             <div className="max-w-md">
@@ -224,6 +224,8 @@ export default function ContactSection() {
               >
                 {/* Phone */}
                 <div
+                  data-aos="fade-up"
+                  data-aos-delay="200"
                   className="
                     cf-float-card
                     bg-white/90 backdrop-blur-md
@@ -271,6 +273,8 @@ export default function ContactSection() {
 
                 {/* Email */}
                 <div
+                  data-aos="fade-up"
+                  data-aos-delay="280"
                   className="
                     cf-float-card
                     bg-white/90 backdrop-blur-md
@@ -391,6 +395,8 @@ export default function ContactSection() {
 
           {/* RIGHT SIDE */}
           <div
+            data-aos="fade-left"
+            data-aos-delay="150"
             className="
               cf-form-card
               relative

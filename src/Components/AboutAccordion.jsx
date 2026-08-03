@@ -95,6 +95,7 @@ function AboutAccordion() {
                     <div
                         className="bg-white dark-bg rounded-xl p-4 sm:p-6 shadow-lg"
                         data-aos="fade-up"
+                        data-aos-delay="150"
                     >
                         <h2 className="text-lg sm:text-xl font-bold text-[var(--primary-dark-bg)] mb-4 sm:mb-6 pb-2 border-b border-[var(--secondary-light-gray)]">
                             {t('aboutAccordion.towingServices')}

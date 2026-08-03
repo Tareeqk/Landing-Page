@@ -485,8 +485,8 @@ export default function HowItWorks() {
       .hiw-reveal {
         opacity: 0;
         transform: translateY(24px);
-        transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
-                    transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        transition: opacity 1.0s cubic-bezier(0.16,1,0.3,1),
+                    transform 1.0s cubic-bezier(0.16,1,0.3,1);
       }
       .hiw-reveal.hiw-visible { opacity: 1 !important; transform: none !important; }
       @media (prefers-reduced-motion: reduce) {

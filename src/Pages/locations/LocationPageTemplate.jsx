@@ -44,7 +44,7 @@ const IconClock = ({ size = 18, color = 'currentColor' }) => (
     <polyline points="12 7 12 12 15.5 14.5" />
   </svg>
 );
-const IconStar = ({ size = 16, color = '#fbbf24', filled = false }) => (
+const IconStar = ({ size = 16, color = 'var(--primary-yellow)', filled = false }) => (
   <svg width={size} height={size} viewBox="0 0 24 24"
     fill={filled ? color : 'none'} stroke={color} strokeWidth="2"
     strokeLinecap="round" strokeLinejoin="round">
@@ -56,14 +56,6 @@ const IconShield = ({ size = 20, color = 'currentColor' }) => (
     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 2L4 6v6c0 5.2 3.4 9.8 8 11 4.6-1.2 8-5.8 8-11V6l-8-4z" />
     <polyline points="9 12 11 14 15 10" />
-  </svg>
-);
-const IconUsers = ({ size = 16, color = 'currentColor' }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color}
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-    <circle cx="9" cy="7" r="4" />
-    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
   </svg>
 );
 const IconTruck = ({ size = 22, color = 'currentColor' }) => (
@@ -183,13 +175,13 @@ function ExpandableText({ text, limit = 220, style = {} }) {
           onClick={() => setExpanded(e => !e)}
           style={{
             marginTop: '10px', background: 'none', border: 'none', cursor: 'pointer',
-            color: '#fbbf24', fontWeight: 700, fontSize: '14px', padding: 0,
+            color: 'var(--primary-yellow)', fontWeight: 700, fontSize: '14px', padding: 0,
             display: 'inline-flex', alignItems: 'center', gap: '4px',
             fontFamily: 'inherit',
           }}
         >
           {expanded ? 'Read less' : 'Read more'}
-          <IconChevronDown size={14} color="#fbbf24" rotated={expanded} />
+          <IconChevronDown size={14} color="var(--primary-yellow)" rotated={expanded} />
         </button>
       )}
     </div>
@@ -232,8 +224,6 @@ const ALL_LOCATIONS = [
 // ─────────────────────── STYLES ─────────────────────────────────
 
 const S = {
-  page: { fontFamily: "'Syne', 'DM Sans', sans-serif" },
-
   // ── Hero ──
   hero: {
     position: 'relative', width: '100%',
@@ -267,11 +257,11 @@ const S = {
     background: 'rgba(251,191,36,0.14)', border: '1.5px solid rgba(251,191,36,0.55)',
     borderRadius: '100px', padding: '6px 14px',
     fontSize: '11.5px', fontWeight: 800, letterSpacing: '1.5px',
-    color: '#fbbf24', textTransform: 'uppercase',
+    color: 'var(--primary-yellow)', textTransform: 'uppercase',
   },
   badge247Dot: {
     width: '7px', height: '7px', borderRadius: '50%',
-    background: '#fbbf24', flexShrink: 0,
+    background: 'var(--primary-yellow)', flexShrink: 0,
   },
   badgeArea: {
     display: 'inline-flex', alignItems: 'center',
@@ -284,10 +274,10 @@ const S = {
     fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 800,
     lineHeight: 1.07, letterSpacing: '-0.025em', color: '#fff', margin: 0,
   },
-  heroH1Accent: { display: 'block', color: '#fbbf24' },
+  heroH1Accent: { display: 'block', color: 'var(--primary-yellow)' },
   heroUnderline: {
     width: '56px', height: '4px', borderRadius: '4px',
-    background: '#fbbf24', margin: '18px 0 20px',
+    background: 'var(--primary-yellow)', margin: '18px 0 20px',
   },
   heroSub: {
     fontSize: 'clamp(15px,2.2vw,17px)', color: '#d1d5db', lineHeight: 1.65,
@@ -306,39 +296,17 @@ const S = {
   heroBtnTitle: { fontSize: '14px', fontWeight: 800, lineHeight: 1.25 },
   heroBtnSub: { fontSize: '11px', fontWeight: 500, lineHeight: 1.3, marginTop: '1px' },
 
-  // floating card
-  floatingCard: {
-    width: '270px', flexShrink: 0,
-    background: 'rgba(8,8,8,0.82)', backdropFilter: 'blur(10px)',
-    WebkitBackdropFilter: 'blur(10px)',
-    border: '1.5px solid rgba(251,191,36,0.4)', borderRadius: '18px',
-    padding: '20px',
-  },
-  floatingCardTop: { display: 'flex', alignItems: 'flex-start', gap: '12px' },
-  floatingCardIconWrap: {
-    width: '40px', height: '40px', borderRadius: '50%', background: '#fbbf24',
-    display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-  },
-  floatingCardTitle: { fontSize: '14px', fontWeight: 800, color: '#fff', lineHeight: 1.3, marginBottom: '4px' },
-  floatingCardSub: { fontSize: '11.5px', color: '#9ca3af', lineHeight: 1.5 },
-  floatingCardDivider: { height: '1px', background: 'rgba(255,255,255,0.1)', margin: '14px 0' },
-  floatingCardStats: { display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' },
-  floatingCardStat: {
-    display: 'flex', alignItems: 'center', gap: '6px',
-    fontSize: '12px', fontWeight: 600, color: '#e5e7eb',
-  },
-
   // ── Shared section / typography ──
   section: { padding: 'clamp(48px,7vw,80px) 0' },
   inner: { maxWidth: '1140px', margin: '0 auto', padding: '0 20px' },
   eyebrow: {
     fontSize: '11px', fontWeight: 700, letterSpacing: '3px',
-    textTransform: 'uppercase', color: '#fbbf24',
+    textTransform: 'uppercase', color: 'var(--primary-yellow)',
     marginBottom: '12px', display: 'block',
   },
   h2: {
     fontSize: 'clamp(1.5rem, 3.2vw, 2.3rem)', fontWeight: 800,
-    color: '#111', marginBottom: '14px', letterSpacing: '-0.022em',
+    color: 'var(--primary-dark-bg)', marginBottom: '14px', letterSpacing: '-0.022em',
     lineHeight: 1.18,
   },
   p: { color: '#6b7280', lineHeight: 1.75, fontSize: '16px' },
@@ -348,13 +316,21 @@ const S = {
     display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px',
   },
   statCard: (dark = false) => ({
-    background: dark ? '#111' : '#f9fafb', borderRadius: '14px',
-    padding: '22px 18px',
-    border: `1.5px solid ${dark ? '#222' : '#f0f0f0'}`,
+    background: dark ? 'var(--primary-dark-bg)' : '#fff', borderRadius: '16px',
+    padding: '20px 18px',
+    border: `1.5px solid ${dark ? '#222' : '#eef0f2'}`,
+    boxShadow: dark ? '0 12px 28px -12px rgba(0,0,0,0.35)' : '0 2px 10px rgba(17,24,39,0.04)',
+    transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+  }),
+  statIconChip: (dark = false) => ({
+    width: '34px', height: '34px', borderRadius: '10px',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    background: dark ? 'rgba(251,191,36,0.14)' : 'rgba(251,191,36,0.1)',
+    marginBottom: '14px',
   }),
   statNum: (dark = false) => ({
-    fontSize: '22px', fontWeight: 800,
-    color: dark ? '#fbbf24' : '#111', marginBottom: '4px',
+    fontSize: '21px', fontWeight: 800, lineHeight: 1.15,
+    color: dark ? 'var(--primary-yellow)' : 'var(--primary-dark-bg)', marginBottom: '4px',
   }),
   statLabel: (dark = false) => ({
     fontSize: '12px', fontWeight: 600,
@@ -405,7 +381,7 @@ const S = {
   },
   stepNum: {
     width: '40px', height: '40px', borderRadius: '50%',
-    background: '#fbbf24', display: 'flex', alignItems: 'center',
+    background: 'var(--primary-yellow)', display: 'flex', alignItems: 'center',
     justifyContent: 'center', flexShrink: 0, marginTop: '2px',
   },
 
@@ -422,7 +398,7 @@ const S = {
     flexWrap: 'wrap',
   },
   btnPrimary: {
-    background: '#fbbf24', color: '#000', border: 'none',
+    background: 'var(--primary-yellow)', color: '#000', border: 'none',
     padding: '15px 30px', borderRadius: '12px', fontSize: '15px',
     fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit',
     display: 'inline-flex', alignItems: 'center', gap: '8px',
@@ -441,14 +417,14 @@ const S = {
     width: '100%', textAlign: 'left', padding: '20px 0',
     background: 'none', border: 'none', cursor: 'pointer',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-    fontSize: '15px', fontWeight: 700, color: '#111', gap: '16px',
+    fontSize: '15px', fontWeight: 700, color: 'var(--primary-dark-bg)', gap: '16px',
     borderBottom: '1px solid #f0f0f0', fontFamily: 'inherit',
   },
 
   // ── Pills ──
   linkPill: {
     display: 'inline-flex', alignItems: 'center',
-    border: '1.5px solid #fbbf24', color: '#111',
+    border: '1.5px solid var(--primary-yellow)', color: 'var(--primary-dark-bg)',
     padding: '8px 18px', borderRadius: '100px',
     fontSize: '13px', fontWeight: 700, textDecoration: 'none',
     transition: 'background 0.2s, color 0.2s',
@@ -508,7 +484,7 @@ function useInView(rootMargin = '0px 0px -64px 0px') {
 // components never animate in lockstep.
 function Reveal({
   children, as = 'div', direction = 'up', delay = 0,
-  duration = 640, style = {}, className, ...rest
+  duration = 820, style = {}, className, ...rest
 }) {
   const [ref, inView] = useInView();
   const Tag = as;
@@ -551,23 +527,27 @@ export default function LocationPageTemplate({ config }) {
   const currentHref = `/${config.slug}`;
   const otherLocations = ALL_LOCATIONS.filter(l => l.href !== currentHref);
 
-  const galleryImages = (config.gallery && config.gallery.length === 3)
+  const hasRealGallery = config.gallery && config.gallery.length === 3;
+  // No distinct per-location photography yet — real Tareeqk truck photos
+  // (already in /public, unbranded stock kept missing the mark) instead
+  // of the same hero image tiled three times under three captions.
+  const galleryImages = hasRealGallery
     ? config.gallery
     : [
       {
-        src: config.heroImage,
+        src: '/new/gallery_dispatched.webp',
         alt: t('locationPageTemplate.gallery.altDispatched', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — recovery truck dispatched' }),
         caption: t('locationPageTemplate.gallery.captionDispatched', { area: config.area, defaultValue: 'Recovery dispatched in {{area}}' }),
         pos: 'center',
       },
       {
-        src: config.heroImage,
+        src: '/new/gallery_arriving.webp',
         alt: t('locationPageTemplate.gallery.altArriving', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — technician arriving on site' }),
         caption: t('locationPageTemplate.gallery.captionArriving', { defaultValue: 'Technician arriving on-site' }),
         pos: 'top',
       },
       {
-        src: config.heroImage,
+        src: '/new/gallery_standby.webp',
         alt: t('locationPageTemplate.gallery.altStandby', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — unit on standby' }),
         caption: t('locationPageTemplate.gallery.captionStandby', { defaultValue: 'Standing by, 24/7' }),
         pos: 'bottom',
@@ -587,26 +567,24 @@ export default function LocationPageTemplate({ config }) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
       </Helmet>
 
       {/* ── GLOBAL MICRO-STYLES ── */}
       <style>{`
         a, button { outline-offset: 2px; }
         a:focus-visible, button:focus-visible {
-          outline: 2px solid #fbbf24; border-radius: 6px;
+          outline: 2px solid var(--primary-yellow); border-radius: 6px;
         }
-        .tk-link-pill:hover { background: #fbbf24 !important; color: #000 !important; }
+        .tk-link-pill:hover { background: var(--primary-yellow) !important; color: #000 !important; }
         .tk-svc-card:hover {
-          border-color: #fbbf24 !important;
+          border-color: var(--primary-yellow) !important;
           box-shadow: 0 6px 24px rgba(251,191,36,0.18) !important;
           transform: translateY(-3px) !important;
         }
         .tk-cta-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
         .tk-cta2-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
-        @media (max-width: 860px) {
-          .tk-hero-floating { display: none !important; }
+        @media (max-width: 700px) {
+          .tk-hero-bg { object-position: 8% center !important; }
         }
         @media (max-width: 600px) {
           .tk-hero-cta-row { flex-direction: column !important; }
@@ -640,7 +618,7 @@ export default function LocationPageTemplate({ config }) {
               HERO
       ══════════════════════════════════ */}
       <section style={S.hero}>
-        <img src={config.heroImage} alt={config.heroAlt} style={S.heroBg} loading="eager" />
+        <img src="/new/location_hero_banner.webp" alt={config.heroAlt} style={S.heroBg} className="tk-hero-bg" loading="eager" />
         <div style={S.heroOverlay} />
 
         {/* decorative dots top-right */}
@@ -650,8 +628,11 @@ export default function LocationPageTemplate({ config }) {
 
         <div style={S.heroInner}>
           <div style={S.heroRow}>
-            <Reveal as="div" direction="up" delay={0} style={S.heroContent}>
-              <div style={S.heroBadgeRow}>
+            <div style={S.heroContent}>
+              {/* Each hero element gets its own entrance beat instead of
+                  the badges/heading/subtitle/buttons all popping in as one
+                  block on a single shared Reveal. */}
+              <Reveal as="div" direction="up" delay={0} style={S.heroBadgeRow}>
                 <span style={S.badge247}>
                   <span style={S.badge247Dot} />
                   {t('locationPageTemplate.hero.badge247', { defaultValue: '24/7 Service' })}
@@ -659,24 +640,24 @@ export default function LocationPageTemplate({ config }) {
                 <span style={S.badgeArea}>
                   {t('locationPageTemplate.hero.badgeArea', { area: config.area, defaultValue: '{{area}} • Dubai' })}
                 </span>
-              </div>
+              </Reveal>
 
-              <h1 style={S.heroH1}>
+              <Reveal as="h1" direction="up" delay={140} style={S.heroH1}>
                 {t('locationPageTemplate.hero.titleLine1', { defaultValue: 'Car Recovery in' })}
                 <span style={S.heroH1Accent}>{config.area}</span>
-              </h1>
-              <div style={S.heroUnderline} />
+              </Reveal>
+              <Reveal as="div" direction="left" delay={260} duration={500} style={S.heroUnderline} />
 
-              <p style={S.heroSub}>
+              <Reveal as="p" direction="up" delay={320} style={S.heroSub}>
                 {t('locationPageTemplate.hero.subtitle', {
                   area: config.area, responseTime: config.responseTime,
                   defaultValue: 'Stuck in {{area}}? We reach you in {{responseTime}} — day or night, every day.',
                 })}
-              </p>
+              </Reveal>
 
-              <div style={S.heroCtaRow} className="tk-hero-cta-row">
+              <Reveal as="div" direction="up" delay={440} style={S.heroCtaRow} className="tk-hero-cta-row">
                 <button onClick={handleCall} className="tk-cta-btn"
-                  style={{ ...S.heroBtn, background: '#fbbf24', color: '#000' }}>
+                  style={{ ...S.heroBtn, background: 'var(--primary-yellow)', color: '#000' }}>
                   <IconPhone size={18} color="#000" />
                   <span>
                     <div style={S.heroBtnTitle}>{t('locationPageTemplate.hero.callNow', { defaultValue: 'Call Now' })}</div>
@@ -695,36 +676,8 @@ export default function LocationPageTemplate({ config }) {
                     </div>
                   </span>
                 </button>
-              </div>
-            </Reveal>
-
-            {/* Floating info card — hidden on mobile */}
-            <Reveal as="div" direction="up" delay={220} style={S.floatingCard} className="tk-hero-floating">
-              <div style={S.floatingCardTop}>
-                <div style={S.floatingCardIconWrap}>
-                  <IconShield size={20} color="#000" />
-                </div>
-                <div>
-                  <div style={S.floatingCardTitle}>
-                    {t('locationPageTemplate.hero.floatingCard.title', { defaultValue: 'Reliable. Fast. Professional.' })}
-                  </div>
-                  <div style={S.floatingCardSub}>
-                    {t('locationPageTemplate.hero.floatingCard.subtitle', { defaultValue: 'RTA Licensed · Fully Insured · Modern Fleet' })}
-                  </div>
-                </div>
-              </div>
-              <div style={S.floatingCardDivider} />
-              <div style={S.floatingCardStats}>
-                <span style={S.floatingCardStat}>
-                  <IconTruck size={14} color="#fbbf24" filled />
-                  {t('locationPageTemplate.hero.floatingCard.liveTracking', { defaultValue: 'Live Tracking' })}
-                </span>
-                <span style={S.floatingCardStat}>
-                  <IconUsers size={14} color="#fbbf24" />
-                  {t('locationPageTemplate.hero.floatingCard.customers', { defaultValue: '5,000+ Customers' })}
-                </span>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
@@ -758,10 +711,12 @@ export default function LocationPageTemplate({ config }) {
               </div>
             </Reveal>
 
-            {/* Right column: real photo + stat cards */}
-            <Reveal direction="right" delay={120}>
+            {/* Right column: real photo + stat cards — the photo gets its
+                own beat, separate from the stat cards' own per-item
+                stagger below, instead of both sharing one wrapper delay. */}
+            <div>
               {/* Real photo */}
-              <div style={{
+              <Reveal direction="right" delay={120} style={{
                 borderRadius: '20px', overflow: 'hidden',
                 position: 'relative', aspectRatio: '16/9',
                 marginBottom: '16px',
@@ -798,23 +753,36 @@ export default function LocationPageTemplate({ config }) {
                     {t('locationPageTemplate.about.unitsActiveBadge', { area: config.area, defaultValue: 'Units active in {{area}}' })}
                   </span>
                 </div>
-              </div>
+              </Reveal>
 
-              {/* Stat cards — each one reveals on its own beat */}
+              {/* Stat cards — each one reveals on its own beat, and each
+                  gets its own icon chip so the grid reads as one family
+                  of four trust signals instead of one icon card next to
+                  three plain text-only ones. */}
               <div style={S.statGrid} className="tk-stat-grid">
                 {[
-                  { num: config.responseTime, label: t('locationPageTemplate.about.stats.avgResponseLabel', { defaultValue: 'Avg. Response' }), dark: true },
-                  { num: t('locationPageTemplate.about.stats.availableValue', { defaultValue: '24/7' }), label: t('locationPageTemplate.about.stats.availableLabel', { defaultValue: 'Available' }), dark: false },
-                  { num: '', label: t('locationPageTemplate.about.stats.liveTrackingLabel', { defaultValue: 'Live Tracking' }), dark: false },
-                  { num: t('locationPageTemplate.about.stats.licensedValue', { defaultValue: 'RTA' }), label: t('locationPageTemplate.about.stats.licensedLabel', { defaultValue: 'Licensed' }), dark: false },
+                  { Icon: IconClock, num: config.responseTime, label: t('locationPageTemplate.about.stats.avgResponseLabel', { defaultValue: 'Avg. Response' }), dark: true },
+                  { Icon: IconBolt, num: t('locationPageTemplate.about.stats.availableValue', { defaultValue: '24/7' }), label: t('locationPageTemplate.about.stats.availableLabel', { defaultValue: 'Available' }), dark: false },
+                  { live: true, num: 'GPS', label: t('locationPageTemplate.about.stats.liveTrackingLabel', { defaultValue: 'Live Tracking' }), dark: false },
+                  { Icon: IconShield, num: t('locationPageTemplate.about.stats.licensedValue', { defaultValue: 'RTA' }), label: t('locationPageTemplate.about.stats.licensedLabel', { defaultValue: 'Licensed' }), dark: false },
                 ].map((s, i) => (
                   <Reveal key={i} as="div" direction="up" delay={stagger(i, 90, 160)} style={S.statCard(s.dark)}>
+                    <div style={S.statIconChip(s.dark)}>
+                      {s.live ? (
+                        <span style={{
+                          width: '9px', height: '9px', borderRadius: '50%',
+                          background: '#4ade80', boxShadow: '0 0 8px #4ade80', flexShrink: 0,
+                        }} />
+                      ) : (
+                        <s.Icon size={17} color="var(--primary-yellow)" />
+                      )}
+                    </div>
                     <div style={S.statNum(s.dark)}>{s.num}</div>
                     <div style={S.statLabel(s.dark)}>{s.label}</div>
                   </Reveal>
                 ))}
               </div>
-            </Reveal>
+            </div>
           </div>
         </div>
       </section>
@@ -830,7 +798,6 @@ export default function LocationPageTemplate({ config }) {
             <p style={S.p}>{t('locationPageTemplate.gallery.subtitle', { defaultValue: 'Real units, real equipment, real coverage — every time you call.' })}</p>
           </Reveal>
 
-          {/* If no real images yet, show illustrated placeholder tiles */}
           <div style={S.galleryGrid} className="tk-gallery-grid">
             {galleryImages.map((img, i) => (
               <Reveal key={i} as="div" direction="up" delay={stagger(i, 110)} style={S.galleryItem}>
@@ -843,7 +810,7 @@ export default function LocationPageTemplate({ config }) {
                 {/* Gradient + caption */}
                 <div style={S.galleryCaption}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <IconCheckCircle size={14} color="#fbbf24" />
+                    <IconCheckCircle size={14} color="var(--primary-yellow)" />
                     {img.caption}
                   </div>
                 </div>
@@ -869,7 +836,7 @@ export default function LocationPageTemplate({ config }) {
                 <div style={S.svcIconWrap}>
                   {SERVICE_ICONS[svc.name] || <IconWrench size={26} color="#92400e" />}
                 </div>
-                <p style={{ fontSize: '13px', fontWeight: 700, color: '#111', margin: 0 }}>
+                <p style={{ fontSize: '13px', fontWeight: 700, color: 'var(--primary-dark-bg)', margin: 0 }}>
                   {t(`locationPageTemplate.services.names.${svc.nameKey}`, { defaultValue: svc.name })}
                 </p>
               </Reveal>
@@ -889,11 +856,13 @@ export default function LocationPageTemplate({ config }) {
             gap: 'clamp(32px,5vw,52px)', alignItems: 'start',
           }} className="tk-process-grid">
             {/* Left */}
-            <Reveal direction="left" delay={0}>
-              <span style={S.eyebrow}>{t('locationPageTemplate.process.eyebrow', { defaultValue: 'Response Time' })}</span>
-              <h2 style={S.h2}>{t('locationPageTemplate.process.title', { area: config.area, defaultValue: 'How fast do we reach {{area}}?' })}</h2>
-              <ExpandableText text={config.responseDesc} limit={200} />
-              <div style={{ marginTop: '20px' }}>
+            <div>
+              <Reveal direction="left" delay={0}>
+                <span style={S.eyebrow}>{t('locationPageTemplate.process.eyebrow', { defaultValue: 'Response Time' })}</span>
+                <h2 style={S.h2}>{t('locationPageTemplate.process.title', { area: config.area, defaultValue: 'How fast do we reach {{area}}?' })}</h2>
+                <ExpandableText text={config.responseDesc} limit={200} />
+              </Reveal>
+              <Reveal direction="up" delay={180} style={{ marginTop: '20px' }}>
                 <span style={{
                   background: '#fef3c7', border: '1px solid #fde68a',
                   color: '#92400e', padding: '7px 18px', borderRadius: '100px',
@@ -903,8 +872,8 @@ export default function LocationPageTemplate({ config }) {
                   <IconClock size={14} color="#92400e" />
                   {t('locationPageTemplate.process.dispatchBadge', { responseTime: config.responseTime, defaultValue: 'Avg. {{responseTime}} dispatch' })}
                 </span>
-              </div>
-            </Reveal>
+              </Reveal>
+            </div>
 
             {/* Steps — each one steps in right after the last */}
             <div>
@@ -919,7 +888,7 @@ export default function LocationPageTemplate({ config }) {
                     <ProcessStepIcon step={i} />
                   </div>
                   <div style={{ paddingTop: '8px' }}>
-                    <div style={{ fontWeight: 600, color: '#111', fontSize: '15px', lineHeight: 1.4 }}>
+                    <div style={{ fontWeight: 600, color: 'var(--primary-dark-bg)', fontSize: '15px', lineHeight: 1.4 }}>
                       {step.label}
                     </div>
                   </div>
@@ -960,41 +929,43 @@ export default function LocationPageTemplate({ config }) {
             />
             <circle cx="220" cy="328" r="4" fill="rgba(251,191,36,0.5)" />
             <circle cx="560" cy="200" r="4" fill="rgba(251,191,36,0.5)" />
-            <circle cx="900" cy="78" r="5" fill="#fbbf24" />
-            <circle cx="900" cy="78" r="10" fill="none" stroke="#fbbf24" strokeWidth="1.5" opacity="0.5" />
+            <circle cx="900" cy="78" r="5" fill="var(--primary-yellow)" />
+            <circle cx="900" cy="78" r="10" fill="none" stroke="var(--primary-yellow)" strokeWidth="1.5" opacity="0.5" />
           </svg>
 
-          {/* Content */}
+          {/* Content — each piece gets its own beat within the box's own
+              scale-in, instead of the badge/heading/paragraph/buttons/trust
+              row all appearing on the box's single reveal. */}
           <div style={{ position: 'relative', zIndex: 2, maxWidth: '600px', margin: '0 auto' }}>
             {/* Status row — plain text + dot, not a boxed badge like the hero/about pills */}
-            <div style={{
+            <Reveal direction="up" delay={120} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
               marginBottom: '18px',
             }}>
               <span style={{
                 width: '7px', height: '7px', borderRadius: '50%',
-                background: '#fbbf24', boxShadow: '0 0 8px #fbbf24',
+                background: 'var(--primary-yellow)', boxShadow: '0 0 8px var(--primary-yellow)',
                 flexShrink: 0,
               }} />
               <span style={{
                 fontSize: '11.5px', fontWeight: 700, letterSpacing: '1.5px',
-                textTransform: 'uppercase', color: '#fbbf24',
+                textTransform: 'uppercase', color: 'var(--primary-yellow)',
               }}>
                 {t('locationPageTemplate.cta.liveBadge', { defaultValue: 'Units on standby now' })}
               </span>
-            </div>
+            </Reveal>
 
-            <h2 style={{
+            <Reveal as="h2" direction="up" delay={220} style={{
               fontSize: 'clamp(1.7rem,3.6vw,2.6rem)', fontWeight: 800,
               color: '#fff', letterSpacing: '-0.025em', lineHeight: 1.12,
               marginBottom: '14px',
             }}>
               {t('locationPageTemplate.cta.titleLine1', { defaultValue: 'Need Help in' })}{' '}
-              <span style={{ color: '#fbbf24' }}>{config.area}</span><br />
+              <span style={{ color: 'var(--primary-yellow)' }}>{config.area}</span><br />
               {t('locationPageTemplate.cta.titleLine2', { defaultValue: 'Right Now?' })}
-            </h2>
+            </Reveal>
 
-            <p style={{
+            <Reveal as="p" direction="up" delay={320} style={{
               color: '#9ca3af', fontSize: '16px', lineHeight: 1.65,
               marginBottom: '32px', maxWidth: '440px', margin: '0 auto 32px',
             }}>
@@ -1002,16 +973,16 @@ export default function LocationPageTemplate({ config }) {
                 responseTime: config.responseTime,
                 defaultValue: "One call and we're already moving. Our nearest unit reaches you in {{responseTime}} — day or night.",
               })}
-            </p>
+            </Reveal>
 
             {/* Two equal pill buttons, side by side — a different shape language than the hero's icon-tile buttons */}
-            <div style={{
+            <Reveal direction="up" delay={420} style={{
               display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap',
               marginBottom: '28px',
             }} className="tk-cta2-btn-row">
               <button onClick={handleCall} className="tk-cta2-btn" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '10px',
-                background: '#fbbf24', color: '#000', border: 'none',
+                background: 'var(--primary-yellow)', color: '#000', border: 'none',
                 padding: '15px 30px', borderRadius: '100px',
                 fontSize: '15px', fontWeight: 800, cursor: 'pointer',
                 fontFamily: 'inherit', transition: 'filter 0.2s, transform 0.2s',
@@ -1031,10 +1002,10 @@ export default function LocationPageTemplate({ config }) {
                 <IconWhatsApp size={17} color="#25D366" />
                 {t('locationPageTemplate.cta.whatsappTitle', { defaultValue: 'WhatsApp' })}
               </button>
-            </div>
+            </Reveal>
 
             {/* Trust row — plain inline text with dot separators, not pill badges */}
-            <div style={{
+            <Reveal direction="up" delay={520} style={{
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexWrap: 'wrap', gap: '10px',
               fontSize: '12.5px', fontWeight: 600, color: '#6b7280',
@@ -1053,7 +1024,7 @@ export default function LocationPageTemplate({ config }) {
                 <IconClock size={13} color="#9ca3af" />
                 {t('locationPageTemplate.cta.responseFooter', { responseTime: config.responseTime, defaultValue: 'Average response · {{responseTime}}' })}
               </span>
-            </div>
+            </Reveal>
           </div>
         </Reveal>
       </div>
@@ -1076,7 +1047,7 @@ export default function LocationPageTemplate({ config }) {
                   aria-expanded={openFaq === i}
                 >
                   <span style={{ flex: 1 }}>{faq.q}</span>
-                  <IconChevronDown size={18} color="#fbbf24" rotated={openFaq === i} />
+                  <IconChevronDown size={18} color="var(--primary-yellow)" rotated={openFaq === i} />
                 </button>
                 <div style={{
                   maxHeight: openFaq === i ? '600px' : '0',
@@ -1108,28 +1079,32 @@ export default function LocationPageTemplate({ config }) {
             gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
             gap: '40px',
           }} className="tk-footer-grid">
-            <Reveal direction="left" delay={0}>
-              <span style={S.eyebrow}>{t('locationPageTemplate.footer.otherAreasEyebrow', { defaultValue: 'Other Areas' })}</span>
-              <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>{t('locationPageTemplate.footer.otherAreasTitle', { defaultValue: 'We Also Cover' })}</h2>
+            <div>
+              <Reveal direction="left" delay={0}>
+                <span style={S.eyebrow}>{t('locationPageTemplate.footer.otherAreasEyebrow', { defaultValue: 'Other Areas' })}</span>
+                <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>{t('locationPageTemplate.footer.otherAreasTitle', { defaultValue: 'We Also Cover' })}</h2>
+              </Reveal>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {otherLocations.map(loc => (
-                  <a key={loc.href} href={langLink(loc.href)} className="tk-link-pill" style={S.linkPill}>
+                {otherLocations.map((loc, i) => (
+                  <Reveal key={loc.href} as="a" href={langLink(loc.href)} direction="up" delay={120 + Math.min(i * 25, 200)} className="tk-link-pill" style={S.linkPill}>
                     {loc.label}
-                  </a>
+                  </Reveal>
                 ))}
               </div>
-            </Reveal>
-            <Reveal direction="right" delay={100}>
-              <span style={S.eyebrow}>{t('locationPageTemplate.footer.allServicesEyebrow', { defaultValue: 'All Services' })}</span>
-              <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>{t('locationPageTemplate.footer.allServicesTitle', { defaultValue: 'Roadside Services' })}</h2>
+            </div>
+            <div>
+              <Reveal direction="right" delay={100}>
+                <span style={S.eyebrow}>{t('locationPageTemplate.footer.allServicesEyebrow', { defaultValue: 'All Services' })}</span>
+                <h2 style={{ ...S.h2, fontSize: '1.35rem' }}>{t('locationPageTemplate.footer.allServicesTitle', { defaultValue: 'Roadside Services' })}</h2>
+              </Reveal>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                {ALL_SERVICES.map(svc => (
-                  <a key={svc.href} href={langLink(svc.href)} className="tk-link-pill" style={S.linkPill}>
+                {ALL_SERVICES.map((svc, i) => (
+                  <Reveal key={svc.href} as="a" href={langLink(svc.href)} direction="up" delay={220 + Math.min(i * 30, 180)} className="tk-link-pill" style={S.linkPill}>
                     {t(`locationPageTemplate.services.names.${svc.nameKey}`, { defaultValue: svc.name })}
-                  </a>
+                  </Reveal>
                 ))}
               </div>
-            </Reveal>
+            </div>
           </div>
 
           <Reveal direction="up" delay={160} style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid #eee' }}>

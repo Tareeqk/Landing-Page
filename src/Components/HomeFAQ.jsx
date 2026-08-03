@@ -117,15 +117,21 @@ export default function HomeFAQ() {
   return (
     <section className="hfaq-section" dir={isRTL ? "rtl" : "ltr"}>
       <div className="hfaq-container">
-        <span className="hfaq-eyebrow">FAQ</span>
-        <h2 className="hfaq-title">Frequently Asked Questions</h2>
-        <p className="hfaq-subtitle">
-          Quick answers about how Tareeqk works, our coverage, and what to expect when you request help.
-        </p>
+        <div data-aos="fade-up">
+          <span className="hfaq-eyebrow">FAQ</span>
+          <h2 className="hfaq-title">Frequently Asked Questions</h2>
+          <p className="hfaq-subtitle">
+            Quick answers about how Tareeqk works, our coverage, and what to expect when you request help.
+          </p>
+        </div>
 
         <div>
           {FAQS.map((faq, i) => (
-            <div key={i} className={`hfaq-item${openIndex === i ? " open" : ""}`}>
+            <div
+              key={i}
+              data-aos="fade-up"
+              data-aos-delay={100 + i * 70}
+              className={`hfaq-item${openIndex === i ? " open" : ""}`}>
               <button
                 className="hfaq-q"
                 onClick={() => setOpenIndex(openIndex === i ? null : i)}

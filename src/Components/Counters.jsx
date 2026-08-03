@@ -17,7 +17,7 @@ const Counters = () => {
             <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 rounded-2xl bg-[var(--secondary-light-gray)] dark-bg">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
                     {stats.map((stat, idx) => (
-                        <div key={idx} ref={ref} data-aos="fade-up">
+                        <div key={idx} ref={ref} data-aos="fade-up" data-aos-delay={idx * 150}>
                             <h2 className="text-3xl sm:text-5xl font-bold text-primary-yellow">
                                 {inView ? <CountUp end={stat.value} duration={2.5} /> : 0}+
                             </h2>

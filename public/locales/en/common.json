@@ -36,7 +36,17 @@
     "subtitle": "Expert insights, tips, and news about car maintenance, roadside assistance, and automotive trends in the UAE",
     "no_blogs": "No blogs yet",
     "mins": "mins read",
-    "readMore": "Read More"
+    "readMore": "Read More",
+    "exploreEyebrow": "In The Meantime",
+    "exploreTitle": "Explore our roadside services",
+    "exploreServices": {
+      "carRecovery": "Car Recovery Dubai",
+      "towing": "Towing Service Dubai",
+      "accident": "Accident Recovery Dubai",
+      "battery": "Battery Service Dubai"
+    },
+    "inThisArticle": "In This Article",
+    "tocCtaDesc": "24/7 dispatch across Dubai — help is closer than you think."
   },
   "about": {
     "about": "About Us",
@@ -480,7 +490,29 @@
       "email": "info@tareeqk.ae"
     },
     "copyright": "© {{year}} Tareeqk. All Rights Reserved.",
-    "cookieSettings": "Cookie Settings"
+    "cookieSettings": "Cookie Settings",
+    "description": "Professional roadside assistance and car recovery services across Dubai. Available 24/7 with fast response times and licensed recovery operators.",
+    "servicesTitle": "Services",
+    "services": [
+      "Car Recovery Dubai",
+      "Battery Jump Start",
+      "Flat Tyre Repair",
+      "Desert Recovery Dubai",
+      "Bike Recovery Dubai",
+      "Towing Service Dubai",
+      "Accident Recovery"
+    ],
+    "areasTitle": "Areas We Cover",
+    "trust": [
+      "24/7 Support",
+      "RTA Licensed",
+      "Live Tracking",
+      "Fast Response"
+    ],
+    "contactTitle": "Contact",
+    "emergencyCall": "Emergency Call",
+    "bottomCopyright": "© {{year}} Tareeqk. All rights reserved.",
+    "bottomTagline": "Car Recovery & Roadside Assistance in Dubai"
   },
   "register": {
     "title": "Registration",

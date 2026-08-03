@@ -2,8 +2,16 @@ import React, { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
 import { useNavigate, useParams } from "react-router-dom"
+import { Car, Truck, CarFront, BatteryCharging, ArrowRight } from "lucide-react"
 import { getLocalizedBlogs } from "../data/blogs"
 import useLangLink from "../hooks/useLangLink"
+
+const EXPLORE_SERVICES = [
+  { key: "carRecovery", href: "/car-recovery-dubai", label: "Car Recovery Dubai", Icon: Car },
+  { key: "towing", href: "/towing-service-dubai", label: "Towing Service Dubai", Icon: Truck },
+  { key: "accident", href: "/accident-recovery-dubai", label: "Accident Recovery Dubai", Icon: CarFront },
+  { key: "battery", href: "/battery-service-dubai", label: "Battery Service Dubai", Icon: BatteryCharging },
+]
 
 function useBlogsStyles() {
   useEffect(() => {
@@ -303,6 +311,48 @@ function useBlogsStyles() {
         color: #8a8a8a;
       }
       body.dark .bl-empty { color: var(--dark-text-muted, #999); }
+
+      /* ── Explore bridge — fills the gap when there are few articles,
+         instead of cutting straight from one post into the footer. ── */
+      .bl-explore { margin-top: 64px; padding-top: 56px; border-top: 1px solid rgba(0,0,0,0.08); }
+      body.dark .bl-explore { border-color: var(--dark-border, rgba(255,255,255,0.08)); }
+      .bl-explore-eyebrow {
+        font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;
+        color: var(--primary-yellow, #c9860f); margin-bottom: 10px;
+      }
+      body.dark .bl-explore-eyebrow { color: var(--primary-yellow, #f5a623); }
+      .bl-explore-title { font-size: clamp(20px, 2.4vw, 28px); font-weight: 900; color: #0a0a0a; margin: 0 0 28px; letter-spacing: -0.01em; }
+      body.dark .bl-explore-title { color: var(--dark-text-main, #f0f0f0); }
+      .bl-explore-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+      @media (max-width: 860px) { .bl-explore-grid { grid-template-columns: repeat(2, 1fr); } }
+      .bl-explore-card {
+        display: flex; flex-direction: column; gap: 14px;
+        padding: 22px 20px; border-radius: 16px;
+        border: 1px solid rgba(0,0,0,0.08);
+        text-decoration: none; color: inherit;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      }
+      body.dark .bl-explore-card { border-color: var(--dark-border, rgba(255,255,255,0.1)); }
+      .bl-explore-card:hover { transform: translateY(-4px); border-color: rgba(245,166,35,0.4); box-shadow: 0 16px 36px -16px rgba(0,0,0,0.18); }
+      .bl-explore-icon {
+        width: 42px; height: 42px; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        background: rgba(245,166,35,0.12); color: var(--primary-yellow, #c9860f);
+      }
+      body.dark .bl-explore-icon { color: var(--primary-yellow, #f5a623); }
+      .bl-explore-label { font-size: 14.5px; font-weight: 700; color: #0f0f0f; line-height: 1.3; }
+      body.dark .bl-explore-label { color: var(--dark-text-main, #f0f0f0); }
+      .bl-explore-link { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 700; color: #8a8a8a; margin-top: auto; }
+      .bl-explore-card:hover .bl-explore-link { color: var(--primary-yellow, #c9860f); }
+      body.dark .bl-explore-card:hover .bl-explore-link { color: var(--primary-yellow, #f5a623); }
+      [dir="rtl"] .bl-explore-link svg { transform: scaleX(-1); }
+
+      @media (max-width: 640px) {
+        .bl-explore { margin-top: 44px; padding-top: 36px; }
+        .bl-explore-title { font-size: 20px; margin-bottom: 20px; }
+        .bl-explore-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .bl-explore-card { padding: 18px 16px; }
+      }
     `
     document.head.appendChild(style)
     return () => {
@@ -436,6 +486,32 @@ export default function Blogs() {
                       </div>
                     </div>
                   ))}
+                </div>
+              )}
+
+              {/* Bridge section — keeps the page from cutting straight from
+                  a lone post into the footer while the journal is young. */}
+              {rest.length === 0 && (
+                <div className={`bl-explore bl-reveal${revealed ? " bl-visible" : ""}`} style={{ transitionDelay: revealed ? "160ms" : "0ms" }}>
+                  <div className="bl-explore-eyebrow">{t("blogs.exploreEyebrow", "In The Meantime")}</div>
+                  <h3 className="bl-explore-title">{t("blogs.exploreTitle", "Explore our roadside services")}</h3>
+                  <div className="bl-explore-grid">
+                    {EXPLORE_SERVICES.map(({ key, href, label, Icon }, i) => (
+                      <a
+                        key={key}
+                        href={langLink(href)}
+                        className={`bl-explore-card bl-reveal${revealed ? " bl-visible" : ""}`}
+                        style={{ transitionDelay: revealed ? `${220 + i * 70}ms` : "0ms" }}
+                      >
+                        <span className="bl-explore-icon"><Icon size={20} /></span>
+                        <span className="bl-explore-label">{t(`blogs.exploreServices.${key}`, label)}</span>
+                        <span className="bl-explore-link">
+                          {t("blogs.readMore")}
+                          <ArrowRight size={13} />
+                        </span>
+                      </a>
+                    ))}
+                  </div>
                 </div>
               )}
             </>

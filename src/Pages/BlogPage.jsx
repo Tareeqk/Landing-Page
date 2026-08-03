@@ -99,14 +99,63 @@ function useBlogPageStyles() {
       .bp-hero-meta-item { display: flex; align-items: center; gap: 6px; }
       .bp-hero-meta-item svg { color: var(--primary-yellow, #f5a623); flex-shrink: 0; }
 
-      /* ── Body ── */
-      .bp-body {
-        max-width: 720px;
+      /* ── Layout — main column + sticky ToC/CTA rail on wide screens.
+         Below 1040px there isn't room for a real sidebar, so it drops
+         out entirely rather than being squeezed thin. ── */
+      .bp-layout {
+        max-width: 1040px;
         margin: 0 auto;
         padding: 56px 24px 0;
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 1040px) {
+        .bp-layout { grid-template-columns: 720px 260px; gap: 56px; align-items: start; }
       }
 
-      .bp-section { margin-bottom: 40px; }
+      .bp-body { padding: 0; }
+
+      .bp-toc {
+        display: none;
+      }
+      @media (min-width: 1040px) {
+        .bp-toc { display: block; position: sticky; top: 32px; }
+        .bp-toc-label {
+          font-size: 11px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase;
+          color: #9a9a9a; margin: 0 0 14px;
+        }
+        body.dark .bp-toc-label { color: var(--dark-text-disabled, #777); }
+        .bp-toc-list { list-style: none; margin: 0 0 28px; padding: 0; border-inline-start: 2px solid rgba(0,0,0,0.08); }
+        body.dark .bp-toc-list { border-color: var(--dark-border, rgba(255,255,255,0.1)); }
+        .bp-toc-link {
+          display: block; padding: 7px 0 7px 16px; margin-inline-start: -2px;
+          border-inline-start: 2px solid transparent;
+          font-size: 13.5px; font-weight: 600; line-height: 1.4;
+          color: #6b6b6b; text-decoration: none;
+          transition: color 0.2s ease, border-color 0.2s ease;
+        }
+        body.dark .bp-toc-link { color: var(--dark-text-muted, #999); }
+        .bp-toc-link:hover { color: #0a0a0a; border-inline-start-color: rgba(245,166,35,0.5); }
+        body.dark .bp-toc-link:hover { color: var(--dark-text-main, #f0f0f0); }
+
+        .bp-toc-cta {
+          border-radius: 16px;
+          padding: 20px;
+          background: var(--primary-dark-bg, #171a1f);
+        }
+        .bp-toc-cta-title { font-size: 14.5px; font-weight: 800; color: #fff; margin: 0 0 6px; }
+        .bp-toc-cta-desc { font-size: 12.5px; color: rgba(255,255,255,0.6); line-height: 1.6; margin: 0 0 16px; }
+        .bp-toc-cta-btn {
+          display: flex; align-items: center; justify-content: center; gap: 6px;
+          width: 100%; padding: 10px 14px; border-radius: 9px;
+          background: var(--primary-yellow, #f5a623); color: #111;
+          font-weight: 700; font-size: 13px; text-decoration: none;
+          margin-bottom: 8px; border: none; cursor: pointer;
+        }
+        .bp-toc-cta-btn--ghost { background: rgba(255,255,255,0.1); color: #fff; margin-bottom: 0; }
+      }
+
+      .bp-section { margin-bottom: 40px; scroll-margin-top: 24px; }
       .bp-section-heading {
         font-size: clamp(20px, 2.4vw, 26px);
         font-weight: 800;
@@ -121,6 +170,13 @@ function useBlogPageStyles() {
       .bp-prose { color: #444; line-height: 1.8; font-size: 16px; }
       body.dark .bp-prose { color: var(--dark-text-muted, #bbb); }
       .bp-prose p { margin: 0 0 16px; }
+      /* Lede — the article's opening paragraph reads larger and lighter,
+         same editorial cue as a magazine drop-in, before settling into
+         regular body copy for the rest of the piece. */
+      .bp-body > div:first-child .bp-prose p:first-child {
+        font-size: 19px; font-weight: 500; color: #222; line-height: 1.65;
+      }
+      body.dark .bp-body > div:first-child .bp-prose p:first-child { color: var(--dark-text-main, #e4e4e4); }
       .bp-prose ul, .bp-prose ol { margin: 0 0 16px; padding-inline-start: 22px; display: flex; flex-direction: column; gap: 8px; }
       .bp-prose li { line-height: 1.7; }
       .bp-prose li::marker { color: var(--primary-yellow, #c9860f); }
@@ -146,7 +202,7 @@ function useBlogPageStyles() {
         .bp-hero-inner { padding: 0 20px 28px; }
         .bp-hero-meta { gap: 14px; font-size: 12.5px; }
 
-        .bp-body { padding: 36px 20px 0; }
+        .bp-layout { padding: 36px 20px 0; }
         .bp-section { margin-bottom: 32px; }
         .bp-section-heading { font-size: 20px; margin-bottom: 14px; }
         .bp-prose { font-size: 15px; }
@@ -299,38 +355,65 @@ export default function BlogPage() {
         </div>
       </section>
 
-      <article className="bp-body">
-        <Link to={langLink('/blogs')} className="bp-back-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" />
-          </svg>
-          {t('blogs.backToAll', 'Back to all articles')}
-        </Link>
+      <div className="bp-layout">
+        <article className="bp-body">
+          <Link to={langLink('/blogs')} className="bp-back-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 12H5m0 0l7 7m-7-7l7-7" />
+            </svg>
+            {t('blogs.backToAll', 'Back to all articles')}
+          </Link>
 
-        {sections.map((section, i) => (
-          <div key={i}>
-            <div className="bp-section">
-              {section.heading && <h2 className="bp-section-heading">{section.heading}</h2>}
-              <div className="bp-prose" dangerouslySetInnerHTML={{ __html: section.content }} />
-              {section.subSections?.map((sub, j) => (
-                <div key={j} className="bp-prose" style={{ marginTop: 12 }}>
-                  <div dangerouslySetInnerHTML={{ __html: sub.content }} />
-                </div>
-              ))}
+          {sections.map((section, i) => (
+            <div key={i}>
+              <div className="bp-section" id={`bp-section-${i}`}>
+                {section.heading && <h2 className="bp-section-heading">{section.heading}</h2>}
+                <div className="bp-prose" dangerouslySetInnerHTML={{ __html: section.content }} />
+                {section.subSections?.map((sub, j) => (
+                  <div key={j} className="bp-prose" style={{ marginTop: 12 }}>
+                    <div dangerouslySetInnerHTML={{ __html: sub.content }} />
+                  </div>
+                ))}
+              </div>
+
+              {/* Visual break every other section — not after the last one */}
+              {i % 2 === 1 && i !== sections.length - 1 && (() => {
+                const breakImage = SECTION_IMAGES[Math.floor(i / 2) % SECTION_IMAGES.length];
+                return (
+                  <div className="bp-image-break">
+                    <img src={breakImage.src} alt={breakImage.alt} loading="lazy" />
+                  </div>
+                );
+              })()}
             </div>
+          ))}
+        </article>
 
-            {/* Visual break every other section — not after the last one */}
-            {i % 2 === 1 && i !== sections.length - 1 && (() => {
-              const breakImage = SECTION_IMAGES[Math.floor(i / 2) % SECTION_IMAGES.length];
-              return (
-                <div className="bp-image-break">
-                  <img src={breakImage.src} alt={breakImage.alt} loading="lazy" />
-                </div>
-              );
-            })()}
-          </div>
-        ))}
-      </article>
+        {sections.some(s => s.heading) && (
+          <aside className="bp-toc">
+            <p className="bp-toc-label">{t('blogs.inThisArticle', 'In This Article')}</p>
+            <ul className="bp-toc-list">
+              {sections.map((section, i) => section.heading && (
+                <li key={i}>
+                  <a href={`#bp-section-${i}`} className="bp-toc-link">{section.heading}</a>
+                </li>
+              ))}
+            </ul>
+            <div className="bp-toc-cta">
+              <p className="bp-toc-cta-title">{t('blogs.ctaTitle', 'Need roadside help right now?')}</p>
+              <p className="bp-toc-cta-desc">{t('blogs.tocCtaDesc', "24/7 dispatch across Dubai — help is closer than you think.")}</p>
+              <a href="tel:+97142232269" className="bp-toc-cta-btn">
+                <Phone size={14} />
+                {t('blogs.ctaCall', 'Call Now')}
+              </a>
+              <a href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854" target="_blank" rel="noopener noreferrer" className="bp-toc-cta-btn bp-toc-cta-btn--ghost">
+                <Download size={14} />
+                {t('blogs.ctaDownload', 'Download the App')}
+              </a>
+            </div>
+          </aside>
+        )}
+      </div>
 
       {/* ── Bottom CTA ── */}
       <div className="bp-cta">

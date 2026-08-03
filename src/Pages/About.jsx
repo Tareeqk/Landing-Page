@@ -1,5 +1,5 @@
 // pages/About.jsx
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,8 +23,8 @@ function useAboutStyles() {
       .abt-reveal {
         opacity: 0;
         transform: translateY(28px);
-        transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
-                    transform 0.75s cubic-bezier(0.16,1,0.3,1);
+        transition: opacity 1.05s cubic-bezier(0.16,1,0.3,1),
+                    transform 1.05s cubic-bezier(0.16,1,0.3,1);
       }
       .abt-reveal.abt-left  { transform: translateX(-28px); }
       .abt-reveal.abt-right { transform: translateX(28px); }
@@ -42,36 +42,9 @@ function useAboutStyles() {
         .abt-hero-img-mobile  { display: block; }
       }
 
-      /* ── Mission/Vision + Core Values responsive ── */
+      /* ── Mission/Vision responsive ── */
       @media (max-width: 900px) {
         .abt-mv-grid { grid-template-columns: 1fr !important; }
-        .abt-corevalues-grid { grid-template-columns: repeat(2, 1fr) !important; }
-      }
-      /* Stays 2-up (2x2, with the 5th card on its own row) on phones too,
-         instead of falling back to a single stacked column — scaled down
-         so two cards comfortably share the width. */
-      @media (max-width: 480px) {
-        .abt-corevalues-grid { gap: 10px !important; }
-        .abt-corevalues-grid .abt-value-card {
-          padding: 16px 12px !important;
-        }
-        .abt-corevalues-grid .abt-icon-box {
-          width: 32px !important;
-          height: 32px !important;
-          margin-bottom: 10px !important;
-        }
-        .abt-corevalues-grid .abt-icon-box svg {
-          width: 16px !important;
-          height: 16px !important;
-        }
-        .abt-corevalues-grid .abt-card-title {
-          font-size: 13px !important;
-          margin-bottom: 5px !important;
-        }
-        .abt-corevalues-grid .abt-card-body {
-          font-size: 11.5px !important;
-          line-height: 1.55 !important;
-        }
       }
 
       /* ── Value cards ── */
@@ -143,49 +116,6 @@ function useAboutStyles() {
         background: linear-gradient(270deg, var(--primary-yellow), transparent) !important;
       }
 
-      /* ── Mobile values swiper ── */
-      .abt-swiper-wrap {
-        position: relative;
-        overflow: hidden;
-      }
-      .abt-swiper-track {
-        display: flex;
-        gap: 14px;
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        padding-bottom: 8px;
-      }
-      .abt-swiper-track::-webkit-scrollbar { display: none; }
-      .abt-swiper-slide {
-        flex: 0 0 82vw;
-        max-width: 320px;
-        scroll-snap-align: start;
-      }
-
-      /* ── Swiper dots ── */
-      .abt-swiper-dots {
-        display: flex;
-        justify-content: center;
-        gap: 6px;
-        margin-top: 16px;
-      }
-      .abt-swiper-dot {
-        width: 6px; height: 6px;
-        border-radius: 50%;
-        background: rgba(0,0,0,0.15);
-        transition: background 0.2s ease, width 0.2s ease;
-        cursor: pointer;
-        border: none;
-        padding: 0;
-      }
-      .abt-swiper-dot.active {
-        width: 20px;
-        border-radius: 3px;
-        background: var(--primary-yellow);
-      }
-
       /* ── Mobile story photo — single image, matching the one desktop
          shows, instead of a 4-photo scroll strip ── */
       .abt-photo-strip {
@@ -230,7 +160,6 @@ function useAboutStyles() {
       body.dark .abt-float-badge-sub   { color: var(--dark-text-muted, #aaa) !important; }
       body.dark .abt-icon-box      { background-color: var(--dark-bg-muted, #252525) !important; }
       body.dark .abt-story-strong  { color: var(--dark-text-main, #f0f0f0) !important; }
-      body.dark .abt-swiper-dot    { background: rgba(255,255,255,0.15) !important; }
       body.dark .abt-read-more-btn { color: var(--primary-yellow) !important; }
 
       /* ── Read more button ── */
@@ -257,17 +186,9 @@ function useAboutStyles() {
         .abt-coverage-grid .abt-cta-card { margin-top: 0 !important; }
       }
       @media (max-width: 768px) {
-        .abt-values-grid  { display: none !important; }
-        .abt-values-swiper { display: block !important; }
         .abt-float-badge  { display: none !important; }
         .abt-inner        { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
         .abt-story-section .abt-story-img-col { display: none !important; }
-      }
-      @media (min-width: 769px) {
-        .abt-values-swiper { display: none !important; }
-      }
-      @media (max-width: 480px) {
-        .abt-values-grid  { grid-template-columns: 1fr !important; }
       }
 
       /* ── App-like density on mobile: desktop's 80-96px section padding
@@ -279,8 +200,6 @@ function useAboutStyles() {
         .abt-coverage-section { padding: 44px 0 !important; }
         .abt-cta-section    { padding: 56px 0 !important; }
         .abt-mv-grid        { gap: 14px !important; margin-bottom: 40px !important; }
-        .abt-corevalues-grid,
-        .abt-values-grid    { gap: 12px !important; }
         .abt-coverage-grid  { gap: 32px !important; }
       }
 
@@ -311,6 +230,107 @@ function useAboutStyles() {
         .abt-mv-icon svg { width: 16px !important; height: 16px !important; }
         .abt-mv-title { font-size: 16.5px !important; }
         .abt-mv-body { font-size: 13px !important; line-height: 1.6 !important; }
+      }
+
+      /* ── Story "route" rail — a dotted line + two waypoint dots framing
+         the origin text, echoing dispatch/route imagery (this is a
+         recovery-dispatch company) instead of a plain paragraph block. ── */
+      .abt-route-rail {
+        position: absolute;
+        top: 8px; bottom: 8px;
+        left: -28px;
+        width: 2px;
+        background-image: linear-gradient(rgba(247,178,5,0.4) 0 6px, transparent 6px 13px);
+        background-size: 2px 13px;
+      }
+      [dir="rtl"] .abt-route-rail { left: auto; right: -28px; }
+      .abt-route-dot {
+        position: absolute; left: -33px;
+        width: 12px; height: 12px; border-radius: 50%;
+        background: #fff; border: 2px solid var(--primary-yellow);
+        box-shadow: 0 0 0 4px #fff;
+      }
+      body.dark .abt-route-dot { background: var(--dark-bg-main, #0f0f0f) !important; box-shadow: 0 0 0 4px var(--dark-bg-main, #0f0f0f) !important; }
+      [dir="rtl"] .abt-route-dot { left: auto; right: -33px; }
+      @media (max-width: 900px) {
+        .abt-route-rail, .abt-route-dot { display: none; }
+      }
+
+      /* ── Dispatch note — origins P2 framed like an operations status
+         update rather than a second identical paragraph. ── */
+      .abt-dispatch-note {
+        padding: 18px 20px;
+        border-radius: 10px;
+        background: var(--secondary-light-gray);
+        border-inline-start: 3px solid var(--primary-yellow);
+      }
+      body.dark .abt-dispatch-note { background: var(--dark-bg-surface, #1e1e1e) !important; }
+
+      /* ── Core values — a compact divided strip instead of a card grid,
+         so it reads as a different kind of content than the trust/value
+         cards below it, not the same component twice. ── */
+      .abt-principles-strip {
+        display: flex; flex-wrap: wrap;
+        border: 1px solid rgba(0,0,0,0.08); border-radius: 14px;
+        overflow: hidden;
+      }
+      body.dark .abt-principles-strip { border-color: var(--dark-border, rgba(255,255,255,0.08)) !important; }
+      .abt-principle-item {
+        flex: 1 1 0; min-width: 168px;
+        display: flex; align-items: flex-start; gap: 12px;
+        padding: 22px 20px;
+        border-inline-end: 1px solid rgba(0,0,0,0.07);
+      }
+      body.dark .abt-principle-item { border-color: var(--dark-border, rgba(255,255,255,0.08)) !important; }
+      .abt-principle-item:last-child { border-inline-end: none; }
+      @media (max-width: 900px) {
+        .abt-principle-item {
+          flex: 1 1 50%; border-inline-end: none !important;
+          border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+        body.dark .abt-principle-item { border-color: var(--dark-border, rgba(255,255,255,0.08)) !important; }
+        .abt-principle-item:nth-child(odd) { border-inline-end: 1px solid rgba(0,0,0,0.07) !important; }
+        body.dark .abt-principle-item:nth-child(odd) { border-color: var(--dark-border, rgba(255,255,255,0.08)) !important; }
+      }
+      @media (max-width: 480px) {
+        .abt-principle-item { flex: 1 1 100%; border-inline-end: none !important; }
+      }
+
+      /* ── Value proposition — one stat-hero card (15-min ETA is the
+         single most decision-relevant number on the page) plus a
+         compact feature list, instead of five identical cards. ── */
+      .abt-trust-layout {
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 16px;
+      }
+      @media (max-width: 900px) {
+        .abt-trust-layout { grid-template-columns: 1fr; }
+      }
+      .abt-stat-hero {
+        position: relative; overflow: hidden;
+        border-radius: 18px; padding: 32px 28px;
+        background: var(--primary-dark-bg);
+        display: flex; flex-direction: column; justify-content: flex-end;
+        min-height: 220px;
+      }
+      .abt-trust-feature-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 640px) {
+        .abt-trust-feature-list { grid-template-columns: 1fr; }
+      }
+      .abt-trust-feature-row {
+        display: flex; align-items: flex-start; gap: 14px;
+        padding: 20px; border-radius: 14px;
+        background: #fff; border: 1px solid rgba(0,0,0,0.06);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      }
+      body.dark .abt-trust-feature-row {
+        background: var(--dark-bg-surface, #1e1e1e) !important;
+        border-color: var(--dark-border, rgba(255,255,255,0.08)) !important;
       }
     `;
     document.head.appendChild(style);
@@ -351,78 +371,6 @@ const eyebrow = {
   marginBottom: '12px',
   display: 'block',
 };
-
-// ── Values Swiper (mobile) ─────────────────────────────────────────────────
-function ValuesSwiper({ items }) {
-  const [active, setActive] = useState(0);
-  const trackRef = useRef(null);
-
-  const onScroll = () => {
-    if (!trackRef.current) return;
-    const { scrollLeft, offsetWidth } = trackRef.current;
-    const slideW = offsetWidth * 0.82 + 14;
-    setActive(Math.round(scrollLeft / slideW));
-  };
-
-  const goTo = (i) => {
-    if (!trackRef.current) return;
-    const slideW = trackRef.current.offsetWidth * 0.82 + 14;
-    trackRef.current.scrollTo({ left: i * slideW, behavior: 'smooth' });
-  };
-
-  return (
-    <div className="abt-swiper-wrap">
-      <div className="abt-swiper-track" ref={trackRef} onScroll={onScroll}>
-        {items.map((v, i) => (
-          <div key={i} className="abt-swiper-slide">
-            <div
-              className="abt-value-card abt-card"
-              style={{
-                padding: '24px',
-                borderRadius: '14px',
-                background: '#fff',
-                border: '1px solid rgba(0,0,0,0.06)',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                height: '100%',
-              }}
-            >
-              <div
-                className="abt-icon-box"
-                style={{
-                  width: '42px', height: '42px',
-                  borderRadius: '10px',
-                  background: '#fef9ec',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  marginBottom: '16px',
-                  transition: 'background 0.25s ease',
-                  color: 'var(--primary-yellow)',
-                }}
-              >
-                {v.icon}
-              </div>
-              <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '15px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
-                {v.title}
-              </h3>
-              <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.7, fontSize: '13.5px' }}>
-                {v.body}
-              </p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="abt-swiper-dots">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            className={`abt-swiper-dot${active === i ? ' active' : ''}`}
-            onClick={() => goTo(i)}
-            aria-label={`Slide ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ── Component ──────────────────────────────────────────────────────────────
 export default function About({ isSection = false }) {
@@ -501,27 +449,30 @@ export default function About({ isSection = false }) {
             alignItems: 'center',
           }}
         >
-          {/* Desktop hero image */}
+          {/* Desktop hero image — about_header.png was a 5.5MB, 7010px-wide
+              PNG; re-encoded to WebP at a realistic display width. */}
           <div
             className="abt-hero-img-desktop"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/new/about_header.png")',
+              backgroundImage: 'url("/new/about_banner_hero.webp")',
               backgroundSize: 'cover',
               backgroundPosition: 'center 38%',
               backgroundRepeat: 'no-repeat',
             }}
           />
-          {/* Mobile hero image — same photo, tighter crop. The dedicated
-              portrait asset (about_hero_mobile.png) this pointed to didn't
-              exist, so the mobile hero rendered with no image at all. */}
+          {/* Mobile hero image — mobile_about.png had ~55% dead black
+              canvas above the actual photo. `contain` + bottom anchoring
+              pins the real content full-width instead of `cover`
+              stretching that dead space to fill the tall mobile hero. */}
           <div
             className="abt-hero-img-mobile"
             style={{
               position: 'absolute', inset: 0, zIndex: 0,
-              backgroundImage: 'url("/new/mobile_about.png")',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center 30%',
+              backgroundColor: '#050505',
+              backgroundImage: 'url("/new/about_mobile_hero.webp")',
+              backgroundSize: 'contain',
+              backgroundPosition: 'bottom center',
               backgroundRepeat: 'no-repeat',
             }}
           />
@@ -675,8 +626,11 @@ export default function About({ isSection = false }) {
             {/* Text column */}
             <div
               className="abt-reveal abt-left"
-              style={{ order: isRTL ? 2 : 1 }}
+              style={{ order: isRTL ? 2 : 1, position: 'relative' }}
             >
+              <div className="abt-route-rail" aria-hidden="true" />
+              <div className="abt-route-dot" style={{ top: '2px' }} aria-hidden="true" />
+              <div className="abt-route-dot" style={{ bottom: '2px' }} aria-hidden="true" />
               <span style={eyebrow}>{t('about.originsTag')}</span>
               <h2
                 className="abt-h2"
@@ -706,17 +660,17 @@ export default function About({ isSection = false }) {
                 </p>
                 {/* Read more / less on mobile */}
                 <div>
-                  <p
-                    className="abt-body-text"
+                  <div
                     style={{
-                      color: '#555', lineHeight: 1.8, fontSize: '15px',
                       overflow: storyExpanded ? 'visible' : 'hidden',
                       maxHeight: storyExpanded ? 'none' : '0',
                       transition: 'max-height 0.4s ease',
                     }}
                   >
-                    {t('about.originsP2')}
-                  </p>
+                    <p className="abt-body-text abt-dispatch-note" style={{ color: '#555', lineHeight: 1.8, fontSize: '15px', margin: 0 }}>
+                      {t('about.originsP2')}
+                    </p>
+                  </div>
                   <button
                     className="abt-read-more-btn"
                     onClick={() => setStoryExpanded(v => !v)}
@@ -919,43 +873,34 @@ export default function About({ isSection = false }) {
             </h2>
           </div>
 
-          <div
-            className="abt-corevalues-grid"
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }}
-          >
+          <div className="abt-principles-strip">
             {CORE_VALUES.map((v, i) => (
               <div
                 key={i}
-                className="abt-reveal abt-value-card abt-card"
-                data-delay={i * 60}
-                style={{
-                  padding: '24px 20px',
-                  borderRadius: '14px',
-                  background: '#fff',
-                  border: '1px solid rgba(0,0,0,0.06)',
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-                }}
+                className="abt-reveal abt-principle-item"
+                data-delay={i * 70}
               >
                 <div
                   className="abt-icon-box"
                   style={{
-                    width: '40px', height: '40px',
-                    borderRadius: '10px',
+                    width: '34px', height: '34px', flexShrink: 0,
+                    borderRadius: '9px',
                     background: '#fef9ec',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    marginBottom: '16px',
                     transition: 'background 0.25s ease',
                     color: 'var(--primary-yellow)',
                   }}
                 >
                   {v.icon}
                 </div>
-                <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '14.5px', color: '#111', marginBottom: '8px', letterSpacing: '-0.01em' }}>
-                  {v.title}
-                </h3>
-                <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.65, fontSize: '12.5px' }}>
-                  {v.body}
-                </p>
+                <div>
+                  <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '13.5px', color: '#111', marginBottom: '4px', letterSpacing: '-0.01em' }}>
+                    {v.title}
+                  </h3>
+                  <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.55, fontSize: '12px', margin: 0 }}>
+                    {v.body}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -987,83 +932,62 @@ export default function About({ isSection = false }) {
             </h2>
           </div>
 
-          {/* Desktop grid */}
-          <div
-            className="abt-values-grid"
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}
-          >
-            {VALUES.map((v, i) => (
-              <div
-  key={i}
-  className="abt-reveal abt-value-card abt-card"
-  data-delay={i * 60}
-  style={{
-    padding: '28px',
-    borderRadius: '14px',
-    background: '#fff',
-    border: '1px solid rgba(0,0,0,0.06)',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
-  }}
->
-  {/* Icon + Title */}
-  <div
-    style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '12px',
-      marginBottom: '16px',
-    }}
-  >
-    <div
-      className="abt-icon-box"
-      style={{
-        width: '42px',
-        height: '42px',
-        borderRadius: '10px',
-        background: '#fef9ec',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        transition: 'background 0.25s ease',
-        color: 'var(--primary-yellow)',
-        flexShrink: 0,
-      }}
-    >
-      {v.icon}
-    </div>
+          {/* Stat-hero (the 15-min ETA — the single most decision-relevant
+              number on this page) + a compact feature list for the rest,
+              instead of five identical cards. */}
+          <div className="abt-trust-layout">
+            <div
+              className="abt-reveal abt-left abt-stat-hero"
+              data-delay="0"
+              style={{
+                backgroundImage: 'linear-gradient(165deg, rgba(10,10,10,0.72) 0%, rgba(10,10,10,0.92) 100%), url("https://images.unsplash.com/photo-1730514784243-f0e7f09c9f50?auto=format&fit=crop&w=900&q=60")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            >
+              <div style={{ position: 'absolute', inset: 0, zIndex: 0, background: 'radial-gradient(ellipse 60% 60% at 0% 100%, rgba(247,178,5,0.22) 0%, transparent 70%)' }} />
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <div style={{ color: 'var(--primary-yellow)', marginBottom: '14px' }}>{VALUES[0].icon}</div>
+                <h3 className="abt-stat-hero-title" style={{ fontWeight: 800, fontSize: 'clamp(22px, 2.6vw, 28px)', color: '#fff', letterSpacing: '-0.02em', lineHeight: 1.15, margin: '0 0 12px' }}>
+                  {VALUES[0].title}
+                </h3>
+                <p style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.7, fontSize: '13.5px', margin: 0 }}>
+                  {VALUES[0].body}
+                </p>
+              </div>
+            </div>
 
-    <h3
-      className="abt-card-title"
-      style={{
-        fontWeight: 700,
-        fontSize: '15px',
-        color: '#111',
-        margin: 0,
-        letterSpacing: '-0.01em',
-      }}
-    >
-      {v.title}
-    </h3>
-  </div>
-
-  <p
-    className="abt-card-body"
-    style={{
-      color: '#6b6b6b',
-      lineHeight: 1.7,
-      fontSize: '13.5px',
-      margin: 0,
-    }}
-  >
-    {v.body}
-  </p>
-</div>
-            ))}
-          </div>
-
-          {/* Mobile swiper */}
-          <div className="abt-values-swiper">
-            <ValuesSwiper items={VALUES} />
+            <div className="abt-trust-feature-list">
+              {VALUES.slice(1).map((v, i) => (
+                <div
+                  key={i}
+                  className="abt-reveal abt-right abt-trust-feature-row"
+                  data-delay={i * 70}
+                >
+                  <div
+                    className="abt-icon-box"
+                    style={{
+                      width: '38px', height: '38px', flexShrink: 0,
+                      borderRadius: '10px',
+                      background: '#fef9ec',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      transition: 'background 0.25s ease',
+                      color: 'var(--primary-yellow)',
+                    }}
+                  >
+                    {v.icon}
+                  </div>
+                  <div>
+                    <h3 className="abt-card-title" style={{ fontWeight: 700, fontSize: '14px', color: '#111', marginBottom: '5px', letterSpacing: '-0.01em' }}>
+                      {v.title}
+                    </h3>
+                    <p className="abt-card-body" style={{ color: '#6b6b6b', lineHeight: 1.6, fontSize: '12.5px', margin: 0 }}>
+                      {v.body}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>

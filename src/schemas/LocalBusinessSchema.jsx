@@ -137,7 +137,7 @@ const schema = {
   },
   "sameAs": [
     "https://www.instagram.com/tareeqk",
-    "https://www.facebook.com/tareeqk",
+    "https://www.facebook.com/share/1Dv6SMaQx1/?mibextid=wwXIfr",
     "https://www.tiktok.com/@tareeqk"
   ],
   "priceRange": "$$",

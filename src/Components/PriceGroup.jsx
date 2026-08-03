@@ -42,63 +42,79 @@ export default function PriceGroup() {
       </div>
 
       {/* Plans */}
-      <div
-        data-aos="fade-up"
-        className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-3"
-      >
-        {tiers.map((tier) => (
+      <div className="mx-auto mt-16 grid max-w-7xl grid-cols-1 gap-8 sm:grid-cols-1 lg:grid-cols-3 items-stretch">
+        {tiers.map((tier, i) => (
           <div
             key={tier.id}
+            data-aos="fade-up"
+            data-aos-delay={i * 130}
             className={classNames(
               tier.featured
-                ? "scale-[1.02] transform shadow-xl border-2 border-[var(--primary-yellow)] dark-bg"
-                : "border border-gray-200 dark-bg",
-              "relative rounded-xl bg-white dark-bg p-6 sm:p-8 transition-all duration-300 hover:shadow-md flex flex-col h-full"
+                ? "text-white shadow-[0_28px_64px_-24px_rgba(247,178,5,0.35)]"
+                : "bg-white border border-gray-200 hover:shadow-lg hover:-translate-y-1",
+              "relative overflow-hidden rounded-2xl p-6 sm:p-8 transition-all duration-300 flex flex-col h-full"
             )}
+            style={tier.featured ? { background: 'linear-gradient(155deg, var(--primary-dark-bg), #050505)' } : undefined}
           >
+            {/* Ambient glow — the featured tier's one signature touch,
+                echoing the dark accent panels used elsewhere on the site
+                (About's mission card, the service CTA) instead of a plain
+                flat dark rectangle. */}
+            {tier.featured && (
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse 70% 60% at 100% 0%, rgba(247,178,5,0.20) 0%, transparent 60%)' }}
+              />
+            )}
+
             {/* Most popular badge */}
             {tier.featured && (
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[var(--primary-yellow)] text-white text-xs font-bold px-3 py-1 rounded-full">
+              <div className="relative inline-flex items-center gap-1.5 self-start bg-[var(--primary-yellow)] text-black text-xs font-bold px-3 py-1 rounded-full mb-5">
                 {t("price.mostPopular", "Most Popular")}
               </div>
             )}
 
             {/* Content */}
-            <div className="flex flex-col flex-1">
-              <h3 className="text-xl font-bold text-gray-900">{tier.name}</h3>
+            <div className="relative flex flex-col flex-1">
+              <h3 className={classNames(tier.featured ? "text-white" : "text-gray-900", "text-xl font-bold")}>
+                {tier.name}
+              </h3>
 
               <div className="mt-4 flex items-baseline gap-x-2">
                 <span
                   className={classNames(
-                    tier.featured
-                      ? "text-[var(--primary-yellow)]"
-                      : "text-secondary-dark-bg",
-                    "text-3xl font-bold text-secondary-dark-bg"
+                    tier.featured ? "text-[var(--primary-yellow)]" : "text-secondary-dark-bg",
+                    "text-3xl font-bold"
                   )}
                 >
                   {tier.package}
                 </span>
               </div>
 
-              <p className="text-[var(--primary-light-gray)] mt-2 text-sm">
+              <p className={classNames(tier.featured ? "text-white/55" : "text-[var(--primary-light-gray)]", "mt-2 text-sm")}>
                 {tier.description}
               </p>
 
               {/* Features */}
-              <ul className="mt-6 space-y-3 flex-1">
+              <ul className="mt-6 space-y-3.5 flex-1">
                 {Object.entries(tier.features).map(([featureKey, featureLabel]) => {
                   const Icon = featureIcons[featureKey] || featureIcons["cars"];
                   return (
-                    <li key={featureKey} className="flex items-center">
-                      <Icon
+                    <li key={featureKey} className="flex items-center gap-3">
+                      <span
                         className={classNames(
                           tier.featured
-                            ? "text-[var(--primary-yellow)]"
-                            : "subtitle",
-                          "h-5 w-5 flex-shrink-0"
+                            ? "bg-white/10 text-[var(--primary-yellow)]"
+                            : "bg-[var(--secondary-light-gray)] text-[var(--primary-yellow)]",
+                          "flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0"
                         )}
-                      />
-                      <span className="text-sm mx-2">{featureLabel}</span>
+                      >
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className={classNames(tier.featured ? "text-white/85" : "text-gray-700", "text-sm")}>
+                        {featureLabel}
+                      </span>
                     </li>
                   );
                 })}
@@ -109,9 +125,9 @@ export default function PriceGroup() {
                 href={tier.href}
                 className={classNames(
                   tier.featured
-                    ? "bg-[var(--primary-yellow)] text-white hover:bg-yellow-500"
+                    ? "bg-[var(--primary-yellow)] text-black hover:brightness-105"
                     : "bg-gray-50 border text-gray-700 hover:bg-gray-100",
-                  "mt-8 block w-full rounded-lg py-3 px-4 text-center text-sm font-semibold transition-colors"
+                  "mt-8 block w-full rounded-lg py-3 px-4 text-center text-sm font-semibold transition-all"
                 )}
               >
                 {t("price.btn", "Get started")}

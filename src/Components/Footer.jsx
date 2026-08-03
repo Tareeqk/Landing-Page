@@ -20,6 +20,9 @@ import { useTranslation } from "react-i18next"
 import useLangLink from "../hooks/useLangLink"
 import { openCookieSettings } from "../utils/cookieConsent"
 
+// `title` here is the English fallback (also used by Navbar, which imports
+// this array directly) — Footer's own render pulls the translated label
+// from footer.services by index instead of using .title.
 export const SERVICES = [
   { title: "Car Recovery Dubai", href: "/car-recovery-dubai" },
   { title: "Battery Jump Start", href: "/battery-service-dubai" },
@@ -30,6 +33,8 @@ export const SERVICES = [
   { title: "Accident Recovery", href: "/accident-recovery-dubai" },
 ]
 
+// Area/city names are intentionally not translated — proper nouns stay
+// in English across all locales.
 const AREAS = [
   { label: "Dubai Marina", href: "/car-recovery-dubai-marina" },
   { label: "Business Bay", href: "/car-recovery-business-bay" },
@@ -87,24 +92,23 @@ const FooterLink = ({ to, href, external, children }) => {
   )
 }
 
-const TRUST = [
-  { icon: <FaClock />, label: "24/7 Support" },
-  { icon: <FaShieldHalved />, label: "RTA Licensed" },
-  { icon: <FaStar />, label: "Live Tracking" },
-  { icon: <FaBolt />, label: "Fast Response" },
-]
+// Labels come from footer.trust (i18n) by index — see the render below.
+const TRUST_ICONS = [<FaClock />, <FaShieldHalved />, <FaStar />, <FaBolt />]
 
 const SOCIALS = [
   { icon: <FaInstagram />, href: "https://www.instagram.com/tareeqk.ae/" },
-  { icon: <FaFacebookF />, href: "https://www.facebook.com/tareeqk.ae" },
+  { icon: <FaFacebookF />, href: "https://www.facebook.com/share/1Dv6SMaQx1/?mibextid=wwXIfr" },
   { icon: <FaXTwitter />, href: "https://x.com/Tareeqkportal" },
   { icon: <FaYoutube />, href: "https://www.youtube.com/@tareeqk" },
-  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/tareeqk" },
+  { icon: <FaLinkedinIn />, href: "https://www.linkedin.com/company/tareeqk-portal/posts/?feedView=all" },
 ]
 
 const Footer = () => {
   const { t } = useTranslation()
   const langLink = useLangLink()
+
+  const trustLabels = t("footer.trust", { returnObjects: true, defaultValue: [] })
+  const serviceLabels = t("footer.services", { returnObjects: true, defaultValue: [] })
 
   return (
     <footer className="tk-footer">
@@ -471,16 +475,14 @@ const Footer = () => {
               />
 
               <p className="tk-brand-desc">
-                Professional roadside assistance and car recovery services
-                across Dubai. Available 24/7 with fast response times and
-                licensed recovery operators.
+                {t("footer.description")}
               </p>
 
               <div className="tk-trust-grid">
-                {TRUST.map(item => (
-                  <div key={item.label} className="tk-trust-badge">
-                    <span className="tk-trust-icon">{item.icon}</span>
-                    {item.label}
+                {TRUST_ICONS.map((icon, i) => (
+                  <div key={i} className="tk-trust-badge">
+                    <span className="tk-trust-icon">{icon}</span>
+                    {trustLabels[i]}
                   </div>
                 ))}
               </div>
@@ -503,17 +505,18 @@ const Footer = () => {
 
             {/* SERVICES */}
             <div>
-              <h3 className="tk-col-heading">Services</h3>
-              {SERVICES.map(service => (
+              <h3 className="tk-col-heading">{t("footer.servicesTitle")}</h3>
+              {SERVICES.map((service, i) => (
                 <FooterLink key={service.href} href={langLink(service.href)}>
-                  {service.title}
+                  {serviceLabels[i] || service.title}
                 </FooterLink>
               ))}
             </div>
 
-            {/* LOCATIONS */}
+            {/* LOCATIONS — area/city names stay in English (proper nouns),
+                only the column heading is translated. */}
             <div>
-              <h3 className="tk-col-heading">Areas We Cover</h3>
+              <h3 className="tk-col-heading">{t("footer.areasTitle")}</h3>
               <div className="area-grid">
                 {AREAS.map(area => (
                   <AreaLink key={area.href} href={langLink(area.href)}>
@@ -525,7 +528,7 @@ const Footer = () => {
 
             {/* CONTACT */}
             <div>
-              <h3 className="tk-col-heading">Contact</h3>
+              <h3 className="tk-col-heading">{t("footer.contactTitle")}</h3>
 
               <div className="tk-contact-list">
                 <a href="tel:+97142232269" className="tk-contact-item">
@@ -551,15 +554,15 @@ const Footer = () => {
 
               <a href="tel:+97142232269" className="tk-cta-btn">
                 <FaPhone />
-                Emergency Call
+                {t("footer.emergencyCall")}
               </a>
 
               <div className="tk-legal-links">
                 <Link to={langLink("/privacy-policy")} className="tk-legal-link">
-                  Privacy Policy
+                  {t("footer.policies.links.privacy")}
                 </Link>
                 <Link to={langLink("/terms")} className="tk-legal-link">
-                  Terms
+                  {t("footer.policies.links.terms")}
                 </Link>
                 <button type="button" className="tk-legal-link tk-legal-link-btn" onClick={openCookieSettings}>
                   {t("footer.cookieSettings", "Cookie Settings")}
@@ -577,10 +580,10 @@ const Footer = () => {
       <div className="tk-footer-inner">
         <div className="tk-footer-bottom">
           <span className="tk-footer-bottom-text">
-            © {new Date().getFullYear()} Tareeqk. All rights reserved.
+            {t("footer.bottomCopyright", { year: new Date().getFullYear() })}
           </span>
           <span className="tk-footer-bottom-brand">
-            Car Recovery & Roadside Assistance in Dubai
+            {t("footer.bottomTagline")}
           </span>
         </div>
       </div>
