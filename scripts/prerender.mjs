@@ -14,7 +14,6 @@
 // hydrateRoot(), so it simply replaces the prerendered DOM on mount).
 
 import { preview } from 'vite';
-import puppeteer from 'puppeteer';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,7 +29,31 @@ const server = await preview({
 });
 const baseUrl = server.resolvedUrls.local[0];
 
-const browser = await puppeteer.launch({ headless: true });
+// Vercel's build image doesn't have the shared libraries (libnspr4,
+// libnss3, etc.) that a locally-installed `puppeteer` Chrome needs, so its
+// launch fails there with "error while loading shared libraries". On
+// Vercel (and any other serverless-style build environment), swap in
+// `@sparticuz/chromium` — a Chromium build compiled specifically for that
+// sandbox — driven through `puppeteer-core`. Everywhere else (local dev,
+// the cPanel deploy build), keep using regular `puppeteer` with its
+// bundled Chrome, unchanged.
+const isServerlessBuild = !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+
+let browser;
+if (isServerlessBuild) {
+  const [{ default: chromium }, { default: puppeteerCore }] = await Promise.all([
+    import('@sparticuz/chromium'),
+    import('puppeteer-core'),
+  ]);
+  browser = await puppeteerCore.launch({
+    args: chromium.args,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+  });
+} else {
+  const { default: puppeteer } = await import('puppeteer');
+  browser = await puppeteer.launch({ headless: true });
+}
 const page = await browser.newPage();
 
 const pages = getAllPages();
