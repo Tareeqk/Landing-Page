@@ -12,7 +12,7 @@ const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 // without needing four distinct service photos we don't have yet.
 // Source: public/towing.jpg, 1024×640 — soft on large desktop viewports,
 // swap for a higher-resolution shoot when available.
-const HERO_PHOTO = '/new/hero_image.webp';
+const HERO_PHOTO = '/new/barner.png';
 
 // Portrait crop for phones — the wide desktop banner reduces to a sliver of
 // truck when cropped to a phone's aspect ratio, so mobile gets its own
