@@ -336,6 +336,27 @@ function useAboutStyles() {
     `;
     document.head.appendChild(style);
 
+    return () => {
+      const el = document.getElementById('trq-about-styles');
+      if (el) document.head.removeChild(el);
+    };
+  }, []);
+
+  // Scroll-reveal observer — its own effect, not bundled into the
+  // style-injection one above. That effect skips its body (via the
+  // "already injected" guard) on any mount after the first, but this
+  // page's prerendered HTML (see scripts/prerender.mjs) already has the
+  // style tag baked in from the snapshot — so on a real page load the
+  // guard trips immediately, and if the observer setup lived inside that
+  // same effect, it would never run and .abt-visible would never get
+  // added, leaving every reveal section permanently invisible. This
+  // effect has no such guard, so it sets up a fresh observer every mount.
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.abt-reveal').forEach(el => el.classList.add('abt-visible'));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
@@ -350,14 +371,13 @@ function useAboutStyles() {
       { threshold: 0.08, rootMargin: '0px 0px -32px 0px' }
     );
 
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       document.querySelectorAll('.abt-reveal').forEach(el => observer.observe(el));
     }, 50);
 
     return () => {
+      clearTimeout(timeout);
       observer.disconnect();
-      const el = document.getElementById('trq-about-styles');
-      if (el) document.head.removeChild(el);
     };
   }, []);
 }

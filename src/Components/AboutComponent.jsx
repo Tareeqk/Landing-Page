@@ -456,6 +456,27 @@ export default function AboutPreview() {
 
     document.head.appendChild(style);
 
+    return () => {
+      const existing = document.getElementById("about-preview-styles");
+      if (existing) existing.remove();
+    };
+  }, []);
+
+  // Scroll-reveal observer — deliberately its own effect, not bundled into
+  // the style-injection one above. That effect skips its body (via the
+  // "already injected" guard) on any mount after the first, but this
+  // section's prerendered HTML (see scripts/prerender.mjs) already has the
+  // style tag baked in from the snapshot — so on a real page load the style
+  // guard trips immediately, and if the observer setup lived inside that
+  // same effect, it would never run and .abtprev-visible would never get
+  // added, leaving the whole section permanently invisible. This effect has
+  // no such guard, so it sets up a fresh observer on every mount regardless.
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll(".abtprev-reveal").forEach((el) => el.classList.add("abtprev-visible"));
+      return;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -469,14 +490,13 @@ export default function AboutPreview() {
       },
       { threshold: 0.08, rootMargin: "0px 0px -32px 0px" }
     );
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       document.querySelectorAll(".abtprev-reveal").forEach((el) => observer.observe(el));
     }, 50);
 
     return () => {
+      clearTimeout(timeout);
       observer.disconnect();
-      const existing = document.getElementById("about-preview-styles");
-      if (existing) existing.remove();
     };
   }, []);
 
