@@ -433,24 +433,30 @@
 }
 
 /* ============================================================
-   MOBILE HERO PHOTO — landingpage_banner.png is a tall portrait render
-   with a solid-black upper band so the truck/robot/service-tag artwork
-   reads as emerging from the page's own dark background rather than
-   sitting inside a visible photo rectangle — keep it full-bleed, don't
-   crop it away. The job here is fitting the text stack inside that band,
-   not shrinking the band to fit the text. The Download/Call CTA row is
-   dropped entirely at this breakpoint (two backdrop-blur/card treatments
-   were tried instead — a big rounded card hid the "Car Recovery"/
-   "Battery Jump Start" tags it sat near, and dropping the subtitle
-   instead still left the buttons landing on the tags) — the app-store
-   badges further down still carry the download path, and dropping the
-   row is what actually clears the stack instead of fighting it inch by
-   inch. Content is top-anchored so it sits inside the black band instead
-   of over the artwork below, clearing the fixed navbar (h-16, 64px)
-   first. Portrait only — a landscape phone at this width still shows
-   the wide banner (below), which has no black band to anchor to.
-   ============================================================ */
-@media (max-width: 767px) and (orientation: portrait) {
+   MOBILE/PORTRAIT HERO PHOTO — landingpage_banner.png is a tall portrait
+   render with a solid-black upper band so the truck/robot/service-tag
+   artwork reads as emerging from the page's own dark background rather
+   than sitting inside a visible photo rectangle — keep it full-bleed,
+   don't crop it away. The job here is fitting the text stack inside that
+   band, not shrinking the band to fit the text. The Download/Call CTA
+   row is dropped entirely at this breakpoint (two backdrop-blur/card
+   treatments were tried instead — a big rounded card hid the "Car
+   Recovery"/"Battery Jump Start" tags it sat near, and dropping the
+   subtitle instead still left the buttons landing on the tags) — the
+   app-store badges further down still carry the download path, and
+   dropping the row is what actually clears the stack instead of
+   fighting it inch by inch. Content is top-anchored so it sits inside
+   the black band instead of over the artwork below, clearing the fixed
+   navbar (h-16, 64px) first.
+   Cap raised from 767px to 1200px, and this is no longer phone-only:
+   any portrait-oriented viewport in that range — a resized desktop
+   window included, not just phones/tablets — gets this same tall image
+   and compact layout, because the wide desktop banner's right-side tag
+   content collides with the left text column once the window is
+   narrower than it is tall, regardless of absolute pixel width. A
+   landscape phone/window at the same width still shows the wide banner
+   (below), which has no black band to anchor to. */
+@media (max-width: 1200px) and (orientation: portrait) {
   .tk-hero {
     min-height: clamp(560px, 88vh, 880px);
     min-height: clamp(560px, 88dvh, 880px);
@@ -461,6 +467,28 @@
     padding-top: clamp(68px, 12vw, 88px);
     padding-bottom: clamp(20px, 5vw, 28px);
   }
+
+  /* Content width/centering and the top-right trust cards are otherwise
+     only handled by separate width-only breakpoints (768px / 900px) —
+     both stop short of this block's 1200px cap, which left a gap where
+     a portrait window between ~769–1200px kept the desktop's left-
+     aligned 620px-wide text column and visible trust cards, both of
+     which collide with this tall image's tag column. Restated here so
+     the whole 0–1200px portrait range behaves consistently. */
+  .tk-hero__content {
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .tk-hero__title { max-width: none; }
+
+  .tk-cta-row,
+  .tk-store-badges {
+    justify-content: center;
+  }
+
+  .tk-hero__trust { display: none; }
 
   /* Phone aspect ratios run very slightly wider than the image's own
      (~0.53), so object-fit: cover has a little vertical overflow to crop.
