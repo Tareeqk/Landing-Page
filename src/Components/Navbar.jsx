@@ -273,14 +273,6 @@ export default function Navbar({ isDark, setIsDark }) {
                                       {sub.label}
                                     </Link>
                                   ))}
-
-                                  <Link
-                                    to={item.href}
-                                    onClick={() => window.scrollTo(0, 0)}
-                                    className="mt-1 flex items-center justify-center rounded-xl bg-[var(--primary-yellow)] px-4 py-2.5 text-sm font-semibold text-black transition-transform duration-300 hover:scale-[1.02]"
-                                  >
-                                    {t("navbar.viewAllServices", "View all services")}
-                                  </Link>
                                 </div>
                               </div>
                             </div>

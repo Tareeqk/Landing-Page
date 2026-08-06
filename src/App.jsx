@@ -14,10 +14,7 @@ import Service from './Pages/Service';
 import About from './Pages/About';
 import FAQs from './Pages/FAQs';
 import TermsAndConditions from './Pages/TermsAndConditions';
-import DriversFAQs from './Pages/DriversFAQs';
 import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
-import DriverRegistrationPage from './Pages/DriverRegistration';
-import VendorRegistration from './Pages/VendorRegistration';
 import Blogs from './Pages/Blogs';
 import BlogPage from './Pages/BlogPage';
 import NotFound from './Pages/NotFound';
@@ -112,14 +109,11 @@ function App() {
         <Route path="/:lang" element={<MainLayout isDark={isDark} setIsDark={setIsDark} />}>
           <Route index element={<Home />} />
           <Route path="faq" element={<FAQs />} />
-          <Route path="drivers-FAQs" element={<DriversFAQs />} />
           <Route path="about" element={<About />} />
           <Route path="blogs" element={<Blogs />} />
           <Route path="page/:blogSlug" element={<BlogPage />} />
           <Route path="service" element={<Service />} />
           <Route path="terms" element={<TermsAndConditions />} />
-          <Route path="driver-registration" element={<DriverRegistrationPage />} />
-          <Route path="vendor-registration" element={<VendorRegistration />} />
           <Route path="privacy-policy" element={<PrivacyAndPolicy />} />
 
           {/* Service pages */}
@@ -139,6 +133,13 @@ function App() {
               ? <Route key={slug} path={slug} element={<Component />} />
               : null;
           })}
+
+          {/* Unmatched paths under a known /:lang prefix (the vast majority of
+              real 404s) render inside MainLayout, so a broken link doesn't
+              also strand the visitor without a navbar, footer, or phone
+              number. The top-level "*" below is only a fallback for URLs
+              that don't even have a language segment. */}
+          <Route path="*" element={<NotFound />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

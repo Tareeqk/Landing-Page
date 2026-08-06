@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
 import { useParams } from "react-router-dom"
 import { Phone, Mail, ChevronDown } from "lucide-react"
+import HreflangTags from "./HreflangTags"
 
 // NOTE: this codebase sets `overflow-x: hidden` on both `html` and `body`
 // (src/index.css). Per the CSS overflow spec, setting overflow-x to a
@@ -325,8 +326,10 @@ export default function LegalDocument({ namespace, heroImage = "/new/second_img.
       <Helmet>
         <meta name="robots" content="index, follow" />
         <title>{t(`${namespace}.title`)} | Tareeqk</title>
+        <meta name="description" content={t(`${namespace}.subtitle`)} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/${path}`} />
       </Helmet>
+      <HreflangTags path={path} />
       <section
         style={{
           position: "relative", width: "100%", minHeight: "clamp(280px, 38vw, 380px)",
@@ -395,7 +398,7 @@ export default function LegalDocument({ namespace, heroImage = "/new/second_img.
               <span className="lgl-contact-icon"><Phone size={16} /></span>
               <span className="lgl-contact-text">
                 <span className="lgl-contact-label">Phone</span>
-                <span className="lgl-contact-value">+971 4 223 2269</span>
+                <span className="lgl-contact-value" dir="ltr">+971 4 223 2269</span>
               </span>
             </a>
           </div>

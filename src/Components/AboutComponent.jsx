@@ -183,7 +183,7 @@ export default function AboutPreview() {
         color: #0a0a0a;
         margin: 0 0 22px;
         letter-spacing: -1px;
-        font-family: Georgia, "Times New Roman", serif;
+        font-family: "Poppins", sans-serif;
       }
       @media (max-width: 960px) { .abt-preview-title { font-size: 38px; } }
       @media (max-width: 640px) { .abt-preview-title { font-size: 30px; } }
@@ -504,7 +504,7 @@ export default function AboutPreview() {
             style={{ order: isRTL ? 2 : 1 }}
           >
             <div className="abt-preview-media-main">
-              <img src="/new/about_image2.png" alt="Tareeqk recovery truck on a Dubai highway" />
+              <img src="/new/about_component.png" alt="Tareeqk recovery truck on a Dubai highway" />
             </div>
 
             {/* <div className="abt-preview-float">

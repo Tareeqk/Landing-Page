@@ -113,10 +113,8 @@ const Footer = () => {
   return (
     <footer className="tk-footer">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap');
-
         .tk-footer * {
-          font-family: 'Inter', sans-serif;
+          font-family: 'Poppins', sans-serif;
           box-sizing: border-box;
         }
 
@@ -533,7 +531,7 @@ const Footer = () => {
               <div className="tk-contact-list">
                 <a href="tel:+97142232269" className="tk-contact-item">
                   <FaPhone className="tk-contact-icon" />
-                  +971 4 223 2269
+                  <span dir="ltr">+971 4 223 2269</span>
                 </a>
 
                 <a href="mailto:info@tareeqk.ae" className="tk-contact-item">

@@ -11,6 +11,8 @@ import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
+import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
+import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
 import { Icon } from 'lucide-react';
 
@@ -567,7 +569,19 @@ export default function LocationPageTemplate({ config }) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={config.metaTitle} />
+        <meta name="twitter:description" content={config.metaDesc} />
+        <meta name="twitter:image" content={`https://tareeqk.ae${config.heroImage}`} />
       </Helmet>
+      <HreflangTags path={config.slug} />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: `https://tareeqk.ae/${lang}` },
+          { name: 'Services', url: `https://tareeqk.ae/${lang}/service` },
+          { name: config.area },
+        ]}
+      />
 
       {/* ── GLOBAL MICRO-STYLES ── */}
       <style>{`
@@ -583,6 +597,16 @@ export default function LocationPageTemplate({ config }) {
         }
         .tk-cta-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
         .tk-cta2-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        /* Below ~1100px the hero was still using the wide desktop crop
+           (object-position defaulted to center) all the way down to the
+           700px breakpoint below — a shrunk-but-still-landscape browser
+           window (e.g. 800–1100px wide) got no adjustment at all until it
+           hit that cutoff. This intermediate tier smooths the transition
+           toward the already-tuned 8% mobile crop instead of jumping
+           straight from center to it. */
+        @media (max-width: 1100px) {
+          .tk-hero-bg { object-position: 28% center !important; }
+        }
         @media (max-width: 700px) {
           .tk-hero-bg { object-position: 8% center !important; }
         }

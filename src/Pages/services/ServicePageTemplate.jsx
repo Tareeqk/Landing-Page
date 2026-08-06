@@ -12,6 +12,8 @@ import {
 } from 'react-icons/fa';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
+import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
+import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
 
 const ALL_SERVICES = [
@@ -91,7 +93,7 @@ const COLORS = {
 
 const styles = {
   // Layout
-  page: { fontFamily: "'Manrope', sans-serif", color: COLORS.ink, background: '#fff' },
+  page: { fontFamily: "'Poppins', sans-serif", color: COLORS.ink, background: '#fff' },
   container: { maxWidth: '1140px', margin: '0 auto', padding: '0 24px' },
 
   // Hero
@@ -127,7 +129,7 @@ const styles = {
     color: COLORS.gold, fontWeight: 700,
   },
   heroH1: {
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: 'clamp(1rem, 2.6vw, 2.4rem)', fontWeight: 800,
     lineHeight: 1.12, marginBottom: '18px', letterSpacing: '-0.03em',
   },
@@ -142,13 +144,13 @@ const styles = {
     padding: '15px 30px', borderRadius: '11px', fontSize: '14.5px',
     fontWeight: 800, cursor: 'pointer', letterSpacing: '0.01em',
     transition: 'transform 0.15s, box-shadow 0.15s',
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
   },
   btnGreen: {
     display: 'inline-flex', alignItems: 'center', gap: '9px',
     background: COLORS.green, color: '#fff', border: 'none',
     padding: '15px 30px', borderRadius: '11px', fontSize: '14.5px',
-    fontWeight: 700, cursor: 'pointer', fontFamily: "'Manrope', sans-serif",
+    fontWeight: 700, cursor: 'pointer', fontFamily: "'Poppins', sans-serif",
     transition: 'transform 0.15s, box-shadow 0.15s',
   },
   btnOutline: {
@@ -156,7 +158,7 @@ const styles = {
     background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
     color: '#fff', border: '1.5px solid rgba(255,255,255,0.28)',
     padding: '15px 30px', borderRadius: '11px', fontSize: '14.5px',
-    fontWeight: 600, cursor: 'pointer', fontFamily: "'Manrope', sans-serif",
+    fontWeight: 600, cursor: 'pointer', fontFamily: "'Poppins', sans-serif",
     transition: 'transform 0.15s, background 0.15s',
   },
 
@@ -171,7 +173,7 @@ const styles = {
     padding: '18px 10px', textAlign: 'center',
   },
   metricValue: {
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: '11px', fontWeight: 800, color: '#fff', marginTop: '8px', letterSpacing: '-0.01em',
   },
   metricLabel: {
@@ -188,7 +190,7 @@ const styles = {
     marginBottom: '14px', display: 'block',
   },
   sectionH2: {
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: 'clamp(1.6rem, 2.8vw, 2.3rem)', fontWeight: 800,
     color: COLORS.ink, marginBottom: '16px', letterSpacing: '-0.025em', lineHeight: 1.18,
   },
@@ -232,7 +234,7 @@ const styles = {
     color: '#fff', position: 'relative', overflow: 'hidden',
     backgroundImage: 'radial-gradient(circle at 100% 0%, rgba(251,191,36,0.14) 0%, transparent 55%)',
   },
-  trustCardRating: { fontFamily: "'Manrope', sans-serif", fontSize: '44px', fontWeight: 800, lineHeight: 1 },
+  trustCardRating: { fontFamily: "'Poppins', sans-serif", fontSize: '44px', fontWeight: 800, lineHeight: 1 },
   trustCardSub: { color: '#9ca3af', fontSize: '13px', fontWeight: 600, marginTop: '8px' },
   trustCardDivider: { height: '1px', background: 'rgba(255,255,255,0.12)', margin: '28px 0' },
   trustCardRow: {
@@ -275,7 +277,7 @@ const styles = {
   processNodeBadge: {
     position: 'absolute', top: '-6px', right: '-6px', width: '22px', height: '22px',
     borderRadius: '50%', background: COLORS.ink, color: '#fff',
-    fontSize: '10px', fontWeight: 800, fontFamily: "'Manrope', sans-serif",
+    fontSize: '10px', fontWeight: 800, fontFamily: "'Poppins', sans-serif",
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   },
   processLabel: {
@@ -298,7 +300,7 @@ const styles = {
     color: COLORS.gold, marginBottom: '14px',
   },
   ctaH2: {
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)', fontWeight: 800,
     marginBottom: '10px', letterSpacing: '-0.02em', maxWidth: '420px',
   },
@@ -315,7 +317,7 @@ const styles = {
     background: 'none', border: 'none', cursor: 'pointer',
     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
     fontSize: '15px', fontWeight: 700, color: COLORS.ink, gap: '16px',
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
   },
   faqA: {
     paddingBottom: '22px', color: COLORS.muted, lineHeight: 1.7,
@@ -324,7 +326,7 @@ const styles = {
 
   // Areas section — left column
   areasH2: {
-    fontFamily: "'Manrope', sans-serif",
+    fontFamily: "'Poppins', sans-serif",
     fontSize: 'clamp(2.1rem, 4.2vw, 3.1rem)', fontWeight: 800,
     color: COLORS.ink, marginBottom: '14px', letterSpacing: '-0.03em', lineHeight: 1.05,
   },
@@ -339,7 +341,7 @@ const styles = {
     padding: '24px', marginBottom: '20px', boxShadow: '0 2px 14px rgba(0,0,0,0.04)',
   },
   quickAccessHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' },
-  quickAccessTitle: { fontFamily: "'Manrope', sans-serif", fontSize: '16px', fontWeight: 800, color: COLORS.ink },
+  quickAccessTitle: { fontFamily: "'Poppins', sans-serif", fontSize: '16px', fontWeight: 800, color: COLORS.ink },
   quickAccessIconChip: {
     width: '34px', height: '34px', borderRadius: '10px', flexShrink: 0,
     background: '#fef3c7', color: COLORS.goldDeep,
@@ -366,7 +368,7 @@ const styles = {
 
   // Areas section — right column ("All Areas")
   allAreasHeader: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' },
-  allAreasTitle: { fontFamily: "'Manrope', sans-serif", fontSize: '18px', fontWeight: 800, color: COLORS.ink },
+  allAreasTitle: { fontFamily: "'Poppins', sans-serif", fontSize: '18px', fontWeight: 800, color: COLORS.ink },
   allAreasDivider: { height: '1px', background: COLORS.line, marginBottom: '22px' },
   allAreasGrid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: '14px' },
   allAreaCard: {
@@ -386,7 +388,7 @@ const styles = {
     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
     width: '100%', background: '#fff', border: `1.5px solid ${COLORS.line}`, color: COLORS.ink,
     padding: '13px 22px', borderRadius: '100px', fontSize: '13.5px', fontWeight: 700,
-    cursor: 'pointer', marginTop: '20px', fontFamily: "'Manrope', sans-serif",
+    cursor: 'pointer', marginTop: '20px', fontFamily: "'Poppins', sans-serif",
   },
 
   // Link pill
@@ -539,7 +541,19 @@ export default function ServicePageTemplate({ config }) {
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={config.metaTitle} />
+        <meta name="twitter:description" content={config.metaDesc} />
+        <meta name="twitter:image" content={`https://tareeqk.ae${config.heroImage}`} />
       </Helmet>
+      <HreflangTags path={config.slug} />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: `https://tareeqk.ae/${lang}` },
+          { name: 'Services', url: `https://tareeqk.ae/${lang}/service` },
+          { name: config.title },
+        ]}
+      />
 
       {/* ── SCHEMAS ── */}
       <ServiceSchema
@@ -635,7 +649,7 @@ export default function ServicePageTemplate({ config }) {
                   </div>
                   <div style={styles.trustCardAccent}>
                     <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>Service Type</div>
-                    <div style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Manrope', sans-serif", marginTop: '4px' }}>
+                    <div style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Poppins', sans-serif", marginTop: '4px' }}>
                       {config.schemaName}
                     </div>
                   </div>

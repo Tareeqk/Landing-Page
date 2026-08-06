@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Car, Truck, CarFront, BatteryCharging, ArrowRight } from "lucide-react"
 import { getLocalizedBlogs } from "../data/blogs"
 import useLangLink from "../hooks/useLangLink"
+import HreflangTags from "../Components/HreflangTags"
 
 const EXPLORE_SERVICES = [
   { key: "carRecovery", href: "/car-recovery-dubai", label: "Car Recovery Dubai", Icon: Car },
@@ -407,7 +408,17 @@ export default function Blogs() {
         <title>{t("meta.blogs.title")}</title>
         <meta name="description" content={t("meta.blogs.description")} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/blogs`} />
+        <meta property="og:title" content={t("meta.blogs.title")} />
+        <meta property="og:description" content={t("meta.blogs.description")} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/blogs`} />
+        <meta property="og:image" content="https://tareeqk.ae/new/blogs.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={t("meta.blogs.title")} />
+        <meta name="twitter:description" content={t("meta.blogs.description")} />
+        <meta name="twitter:image" content="https://tareeqk.ae/new/blogs.webp" />
       </Helmet>
+      <HreflangTags path="blogs" />
 
       {/* ── Hero ── */}
       <section className="bl-hero">

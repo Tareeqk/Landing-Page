@@ -266,7 +266,7 @@ export default function ContactSection() {
                         block mt-1
                       "
                     >
-                      +971 4 223 2269
+                      <span dir="ltr">+971 4 223 2269</span>
                     </a>
                   </div>
                 </div>

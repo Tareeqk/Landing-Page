@@ -19,11 +19,8 @@ export const STATIC_PAGES = [
   { slug: 'service', priority: '0.8' },
   { slug: 'blogs', priority: '0.7' },
   { slug: 'faq', priority: '0.7' },
-  { slug: 'drivers-FAQs', priority: '0.7' },
   { slug: 'terms', priority: '0.6' },
   { slug: 'privacy-policy', priority: '0.6' },
-  { slug: 'driver-registration', priority: '0.6' },
-  { slug: 'vendor-registration', priority: '0.6' },
 ];
 
 // Must match the lazy-loaded routes in src/App.jsx.

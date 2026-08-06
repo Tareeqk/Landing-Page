@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { parseHtmlSections } from '../utils/parseHtmlSections';
 import { getBlogBySlugOrId } from '../data/blogs';
 import useLangLink from '../hooks/useLangLink';
+import HreflangTags from '../Components/HreflangTags';
+import ArticleSchema from '../schemas/ArticleSchema';
+import BreadcrumbSchema from '../schemas/BreadcrumbSchema';
 
 // Real Tareeqk photography, cycled between article sections as visual
 // breaks — generic/reusable for any article this template renders, not
@@ -325,7 +328,32 @@ export default function BlogPage() {
         <title>{blog?.title || 'Article'}</title>
         <meta name="description" content={blog?.description || 'Read our latest article'} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/page/${blogSlug}`} />
+        <meta property="og:title" content={blog?.title || 'Article'} />
+        <meta property="og:description" content={blog?.description || 'Read our latest article'} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/page/${blogSlug}`} />
+        {blog?.image && <meta property="og:image" content={`https://tareeqk.ae${blog.image}`} />}
+        {blog?.date && <meta property="article:published_time" content={new Date(blog.date).toISOString()} />}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={blog?.title || 'Article'} />
+        <meta name="twitter:description" content={blog?.description || 'Read our latest article'} />
+        {blog?.image && <meta name="twitter:image" content={`https://tareeqk.ae${blog.image}`} />}
       </Helmet>
+      <HreflangTags path={`page/${blogSlug}`} />
+      <ArticleSchema
+        title={blog?.title}
+        description={blog?.description}
+        image={blog?.image ? `https://tareeqk.ae${blog.image}` : undefined}
+        datePublished={blog?.date}
+        url={`https://tareeqk.ae/${lang}/page/${blogSlug}`}
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: `https://tareeqk.ae/${lang}` },
+          { name: 'Blog', url: `https://tareeqk.ae/${lang}/blogs` },
+          { name: blog?.title },
+        ]}
+      />
 
       <div className="bp-progress-track" aria-hidden="true">
         <div className="bp-progress-bar" style={{ transform: `scaleX(${progress})` }} />

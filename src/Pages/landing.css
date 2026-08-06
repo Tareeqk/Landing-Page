@@ -16,9 +16,9 @@
   --tk-radius-md:   14px;
   --tk-radius-pill: 999px;
 
-  --tk-display: "Sora", "Syne", "Space Grotesk", ui-sans-serif, system-ui, -apple-system,
+  --tk-display: "Poppins", ui-sans-serif, system-ui, -apple-system,
                 "Segoe UI", Roboto, sans-serif;
-  --tk-body:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+  --tk-body:    "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
                 Roboto, sans-serif;
 }
 
@@ -69,79 +69,6 @@
   filter: saturate(1.05) contrast(1.05); /* brightness dimming removed — photo shows at full brightness */
 }
 
-/* Veil: flat dark wash removed entirely — photo now shows clear at full
-   brightness across the whole hero. Only a light gradient remains at the
-   bottom and left edge, just enough to keep CTA/subtitle text readable
-   where it sits directly over the image. Mirrored for RTL below since
-   gradients don't support logical directions. */
-.tk-hero__veil {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg,
-      rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0) 50%,
-      rgba(11,13,16,0.25) 78%,
-      rgba(11,13,16,0.55) 100%),
-    linear-gradient(90deg,
-      rgba(11,13,16,0.25) 0%,
-      rgba(11,13,16,0.1) 40%,
-      rgba(11,13,16,0) 64%);
-}
-
-/* Warm accent glow behind the CTA block, ties the photo back to brand amber */
-.tk-hero__inner::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -15%;
-  width: 55%;
-  height: 65%;
-  background: radial-gradient(closest-side, rgba(245, 179, 1, 0.16), transparent 72%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.tk-hero__grain {
-  position: absolute; inset: 0;
-  opacity: 0.06;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.9'/></svg>");
-}
-
-/* Slide position dots, bottom-center of the hero */
-.tk-hero__dots {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(16px, 3vw, 28px);
-  transform: translateX(-50%);
-  z-index: 3;
-  display: flex;
-  gap: 8px;
-}
-
-.tk-hero__dot {
-  appearance: none;
-  width: 6px;
-  height: 6px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  cursor: pointer;
-  transition: all 0.4s ease;
-}
-
-.tk-hero__dot--active {
-  width: 20px;
-  background: var(--tk-amber);
-}
-
-@media (max-width: 768px) {
-  .tk-hero__dots { display: none; } /* keep mobile hero uncluttered */
-}
-
 /* ============================================================
    FLOATING TRUST STATS — top-right, fills the empty sky/skyline
    area of the photo and backs the headline with real numbers.
@@ -190,97 +117,7 @@
 }
 
 /* ============================================================
-   SERVICE TICKER — a two-slot sliding window over the same four
-   services the typing title cycles through: the left slot always shows
-   whichever one matches the title (active/amber), the right slot
-   previews what's coming up next (default style). A fixed-width track
-   holding all four pills slides left by exactly one pill+gap whenever
-   the cycle advances, clipped by the viewport around it — CSS handles
-   the whole animation off one custom property (--tk-index), no JS
-   measuring or per-pair markup needed. Clicking either visible pill
-   still jumps straight to it via selectIndex (LandingPage.jsx).
-   prefers-reduced-motion drops the slide to an instant cut.
-   ============================================================ */
-.tk-service-track-viewport {
-  --tk-pill-w: 176px;
-  --tk-pill-gap: 8px;
-  overflow: hidden;
-  width: calc(2 * var(--tk-pill-w) + var(--tk-pill-gap));
-  margin-top: 22px;
-  margin-bottom: 26px;
-}
-
-.tk-service-track {
-  display: flex;
-  gap: var(--tk-pill-gap);
-  transform: translateX(calc(-1 * var(--tk-index, 0) * (var(--tk-pill-w) + var(--tk-pill-gap))));
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tk-service-track { transition: none; }
-}
-
-.tk-service-pill {
-  appearance: none;
-  font: inherit;
-  flex: 0 0 var(--tk-pill-w);
-  width: var(--tk-pill-w);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding-block: 6px;
-  padding-inline: 6px 14px;
-  border-radius: var(--tk-radius-pill);
-  border: 1px solid var(--tk-line-strong);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--tk-text-soft);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease;
-}
-
-.tk-service-pill:hover {
-  border-color: rgba(255, 255, 255, 0.32);
-  color: #fff;
-}
-
-.tk-service-pill--active {
-  border-color: transparent;
-  background: rgba(245, 179, 1, 0.16);
-  color: var(--tk-amber-2);
-}
-
-.tk-service-pill__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.08);
-  color: inherit;
-  flex-shrink: 0;
-}
-
-/* Guards against a longer label (a translation, a future service name)
-   growing the fixed-width pill taller instead of just clipping — never
-   should hit in practice at these widths, but it's a one-line safety net. */
-.tk-service-pill__label {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
-
-.tk-service-pill--active .tk-service-pill__icon {
-  background: var(--tk-amber);
-  color: #111;
-}
-
-/* ============================================================
-   CONTENT — bottom-left anchored block
+   CONTENT — left-anchored, vertically centered block
    ============================================================ */
 .tk-hero__inner {
   position: relative;
@@ -289,15 +126,23 @@
   margin: 0 auto;
   height: 100%;
   min-height: inherit;
-  padding: clamp(28px, 6vw, 80px) clamp(20px, 4vw, 56px) clamp(48px, 8vw, 88px);
+  /* Top padding bumped a bit past the trust-stat cards' own offset
+     (clamp(20px,5vh,40px), see .tk-hero__trust) — flush with them read
+     too tight against the navbar; this settles a little below. */
+  padding: clamp(64px, 10vw, 130px) clamp(20px, 4vw, 56px) clamp(48px, 8vw, 88px);
   display: flex;
-  align-items: flex-end;
+  /* Top-anchored rather than bottom-anchored — landingpage_mobile.png's
+     service-tags column starts right near the top of the hero ("Car
+     Recovery" sits level with the trust-stat cards), so the text block
+     needs to start near that same height to read as one aligned
+     composition instead of sinking toward mid-hero, below the first tag. */
+  align-items: flex-start;
   justify-content: flex-start;
 }
 
 .tk-hero__content {
   position: relative;
-  z-index: 1; /* paints above .tk-hero__inner::before's accent glow */
+  z-index: 1;
   max-width: 620px;
   text-align: left;
 }
@@ -526,10 +371,6 @@
   .tk-store-badges {
     justify-content: center;
   }
-
-  /* Fixed-width now (see .tk-service-track-viewport), so centering it
-     within the centered hero content needs margin, not justify-content. */
-  .tk-service-track-viewport { margin-inline: auto; }
 }
 
 @media (max-width: 640px) {
@@ -592,16 +433,22 @@
 }
 
 /* ============================================================
-   MOBILE HERO PHOTO — hero_mobile.png is a tall portrait render with a
-   deliberate solid-black upper band (~34% of the image) so the truck/
-   robot artwork reads as emerging from the page's own dark background
-   rather than sitting inside a visible photo rectangle — keep it
-   full-bleed, don't crop it away. The job here is fitting the text
-   stack inside that band, not shrinking the band to fit the text.
-   Content is top-anchored so it sits inside the black band instead of
-   over the artwork below, clearing the fixed navbar (h-16, 64px) first.
-   Portrait only — a landscape phone at this width still shows the wide
-   banner (below), which has no black band to anchor to.
+   MOBILE HERO PHOTO — landingpage_banner.png is a tall portrait render
+   with a solid-black upper band so the truck/robot/service-tag artwork
+   reads as emerging from the page's own dark background rather than
+   sitting inside a visible photo rectangle — keep it full-bleed, don't
+   crop it away. The job here is fitting the text stack inside that band,
+   not shrinking the band to fit the text. The Download/Call CTA row is
+   dropped entirely at this breakpoint (two backdrop-blur/card treatments
+   were tried instead — a big rounded card hid the "Car Recovery"/
+   "Battery Jump Start" tags it sat near, and dropping the subtitle
+   instead still left the buttons landing on the tags) — the app-store
+   badges further down still carry the download path, and dropping the
+   row is what actually clears the stack instead of fighting it inch by
+   inch. Content is top-anchored so it sits inside the black band instead
+   of over the artwork below, clearing the fixed navbar (h-16, 64px)
+   first. Portrait only — a landscape phone at this width still shows
+   the wide banner (below), which has no black band to anchor to.
    ============================================================ */
 @media (max-width: 767px) and (orientation: portrait) {
   .tk-hero {
@@ -615,32 +462,15 @@
     padding-bottom: clamp(20px, 5vw, 28px);
   }
 
-  /* Decorative glow was tuned for the old bottom-anchored CTA block —
-     with content at the top now it would just float free near the
-     bottom of the hero, disconnected from anything it's meant to light. */
-  .tk-hero__inner::before { display: none; }
-
   /* Phone aspect ratios run very slightly wider than the image's own
      (~0.53), so object-fit: cover has a little vertical overflow to crop.
      Anchoring to the bottom spends that crop on the image's plain black
      top band instead of the truck/plate detail at the very bottom. */
   .tk-hero__bg-img { object-position: center bottom; }
 
-  /* The image's own black band already gives full contrast up top;
-     this only guards the lower content that spills past the band onto
-     the lit truck/skyline artwork. */
-  .tk-hero__veil {
-    background: linear-gradient(180deg,
-      rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0) 40%,
-      rgba(11,13,16,0.45) 62%,
-      rgba(11,13,16,0.75) 100%);
-  }
-
   /* Every size/gap here is deliberately tight — the whole stack (badge,
-     title, subtitle, pill, CTAs) has to clear the black band before the
-     flying-robot artwork starts (~38% down the hero) without touching
-     it, not just fit "roughly one viewport". */
+     title, subtitle) has to clear the black band before the first
+     service tag without touching it. */
   .tk-eyebrow { font-size: 11px; padding-block: 5px; margin-bottom: 12px; }
 
   .tk-hero__title { margin-bottom: 10px; font-size: 26px; }
@@ -648,109 +478,29 @@
 
   /* Full text, no line clamp — was truncating mid-sentence with "…" at
      2 lines. The extra height this costs vs. a clamp is exactly why
-     every other size/gap in this block is trimmed as tight as it is;
-     the stack overall still clears the robot artwork below (verify
-     against your device — the exact line count depends on the string
-     length, which varies by locale). */
+     every other size/gap in this block is trimmed as tight as it is,
+     and why the CTA row below is dropped rather than shrunk further. */
   .tk-hero__subtitle {
     margin-bottom: 14px;
     font-size: 12.5px;
     line-height: 1.5;
   }
 
-  /* Narrower pills so the 2-up ticker (active + next, see the SERVICE
-     TICKER block above) fits inside the black band's tight width budget
-     here instead of the wider desktop slot size. */
-  .tk-service-track-viewport {
-    --tk-pill-w: 158px;
-    --tk-pill-gap: 6px;
-    margin-bottom: 12px;
-    margin-inline: auto;
-  }
-
-  .tk-service-pill { padding-block: 7px; padding-inline: 6px 10px; font-size: 11.5px; gap: 6px; }
-
-  .tk-service-pill__icon { width: 20px; height: 20px; }
-  .tk-service-pill__icon svg { width: 11px; height: 11px; }
-
-  .tk-btn {
-    padding-block: 10px;
-    padding-inline: 16px 7px;
-    font-size: 13.5px;
-    gap: 8px;
-  }
-
-  .tk-btn__arrow { width: 30px; height: 30px; }
+  /* Download/Call CTA row removed here — see block comment above.
+     The app-store badges just below still give mobile visitors a
+     download path without the row's extra height. */
+  .tk-cta-row { display: none; }
 }
 
 /* ============================================================
-   TABLET HERO PHOTO — hero_tab.png is a near-square (1:1) render with
-   the same black-band-on-top composition as the mobile crop above, sized
-   for iPad-class portrait viewports where neither the wide desktop
-   banner nor the tall phone crop fits well (cover would crop the wide
-   banner's sides down to a sliver). Same structural treatment as the
-   mobile block — top-anchored content, bottom-anchored image crop,
-   darkened veil — but sizes stay close to desktop scale since there's
-   much more width here than on a phone; at these viewport heights the
-   image's own aspect ratio means the full black band shows uncropped.
-   ============================================================ */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  /* Restores the pre-fix height — this block's crop math ("the image's
-     own aspect ratio means the full black band shows uncropped") was
-     tuned against it. See .tk-hero comment for why desktop shrank. */
-  .tk-hero {
-    min-height: clamp(560px, 88vh, 880px);
-    min-height: clamp(560px, 88dvh, 880px);
-  }
-
-  .tk-hero__content {
-    max-width: 640px;
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  .tk-hero__title { max-width: none; }
-
-  .tk-cta-row,
-  .tk-store-badges {
-    justify-content: center;
-  }
-
-  .tk-service-track-viewport { margin-inline: auto; }
-
-  .tk-hero__inner {
-    align-items: flex-start;
-    padding-top: clamp(110px, 12vw, 150px);
-  }
-
-  /* Tuned for the old bottom-anchored layout — with content at the top
-     it would just float free near the bottom of the hero. */
-  .tk-hero__inner::before { display: none; }
-
-  /* Cover crops this square image's width slightly on these narrower-
-     than-1:1 viewports; anchoring bottom keeps the full black band (and
-     the truck detail below it) in frame regardless. */
-  .tk-hero__bg-img { object-position: center bottom; }
-
-  .tk-hero__veil {
-    background: linear-gradient(180deg,
-      rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0) 50%,
-      rgba(11,13,16,0.35) 72%,
-      rgba(11,13,16,0.65) 100%);
-  }
-}
-
-/* ============================================================
-   LANDSCAPE BACKGROUND — hero_image.png is a ~2.33:1 banner (7000×3000)
-   with its subject (truck/car/robot) sitting right-of-center and the
-   "DUBAI" skyline signage in the bottom-left corner. object-fit: cover
-   crops its *width* on any landscape viewport narrower than that ratio
-   (basically everything short of an ultrawide monitor), and the crop
-   gets more aggressive the closer the viewport gets to square — so the
-   horizontal focus shifts further right, step by step, to keep the
-   truck fully framed. The "DUBAI" corner gives way first since it's
-   decorative background flavor, not the hero's actual text content.
+   LANDSCAPE BACKGROUND — landingpage_mobile.png is a ~2.33:1 banner
+   (7000×3000) with its subject (service tags + truck/car/robot) sitting
+   right-of-center, same as the previous desktop render this replaced.
+   object-fit: cover crops its *width* on any landscape viewport narrower
+   than that ratio (basically everything short of an ultrawide monitor),
+   and the crop gets more aggressive the closer the viewport gets to
+   square — so the horizontal focus shifts further right, step by step,
+   to keep the subject fully framed instead of cropping into it.
    ============================================================ */
 @media (orientation: landscape) {
   .tk-hero__bg-img { object-position: 56% 45%; }
@@ -771,59 +521,22 @@
   .tk-hero__inner { padding-bottom: 24px; }
 }
 
-/* RTL Support */
-[dir="rtl"] .tk-hero__title    { text-align: right; }
-[dir="rtl"] .tk-hero__subtitle { text-align: right; margin-left: auto; }
-
-/* Content flips to the right edge in RTL (flex row respects dir), so the
-   veil's horizontal shading must mirror. Flat dark wash removed to match
-   the LTR version above — gradients don't support logical directions,
-   so this is a manual flip. */
-[dir="rtl"] .tk-hero__veil {
-  background:
-    linear-gradient(180deg,
-      rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0) 50%,
-      rgba(11,13,16,0.25) 78%,
-      rgba(11,13,16,0.55) 100%),
-    linear-gradient(270deg,
-      rgba(11,13,16,0.25) 0%,
-      rgba(11,13,16,0.1) 40%,
-      rgba(11,13,16,0) 64%);
-}
-/* Mirror the hero photo horizontally in RTL, matching the veil flip above */
-[dir="rtl"] .tk-hero__bg-img {
-  transform: scaleX(-1);
+/* RTL Support — the photo and the overall hero layout (content block,
+   buttons, badges) stay in their LTR positions in every language; only
+   the actual prose (title/subtitle) switches to right-to-left reading
+   and alignment. Forcing `direction: ltr` back onto the flex container
+   undoes flexbox's automatic dir-awareness (a plain `justify-content:
+   flex-start` flips to the opposite physical edge under dir="rtl" on
+   its own), which is what was pulling the whole content block — and,
+   via the veil-mirror/image-flip below, the photo too — over to the
+   right edge before. */
+[dir="rtl"] .tk-hero__inner {
+  direction: ltr;
 }
 
-/* Mobile content is centered rather than side-anchored (see the 768px
-   breakpoint above), so there's no left/right flow for the mirror to
-   match — and mirroring would flip the readable "TAREEQK" truck livery
-   backwards on the portrait crop. Skip the RTL flip for that image only
-   (portrait phones — landscape phones at this width still get the wide
-   banner and should keep the flip). */
-@media (max-width: 767px) and (orientation: portrait) {
-  [dir="rtl"] .tk-hero__bg-img { transform: none; }
-  /* Overrides the desktop-oriented horizontal RTL gradient above (it's
-     more specific than the plain mobile rule, so it would otherwise win)
-     with the same vertical gradient the LTR mobile hero uses. */
-  [dir="rtl"] .tk-hero__veil {
-    background: linear-gradient(180deg,
-      rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0) 46%,
-      rgba(11,13,16,0.4) 68%,
-      rgba(11,13,16,0.72) 100%);
-  }
+[dir="rtl"] .tk-hero__title,
+[dir="rtl"] .tk-hero__subtitle {
+  direction: rtl;
+  text-align: right;
 }
-
-/* Same reasoning as the mobile override above, for the tablet crop. */
-@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  [dir="rtl"] .tk-hero__bg-img { transform: none; }
-  [dir="rtl"] .tk-hero__veil {
-    background: linear-gradient(180deg,
-      rgba(11,13,16,0) 0%,
-      rgba(11,13,16,0) 50%,
-      rgba(11,13,16,0.35) 72%,
-      rgba(11,13,16,0.65) 100%);
-  }
-}
+[dir="rtl"] .tk-hero__subtitle { margin-right: auto; margin-left: 0; }

@@ -3,6 +3,16 @@ import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
 import { useParams } from "react-router-dom"
+import { ChevronDown } from "lucide-react"
+import HreflangTags from "../Components/HreflangTags"
+import FAQSchema from "../schemas/FAQSchema"
+
+// FAQSchema needs plain text; faq.answer is CMS-sourced innerHTML.
+function stripHtml(html) {
+  if (!html) return ""
+  const doc = new DOMParser().parseFromString(html, "text/html")
+  return doc.body.textContent?.trim() || ""
+}
 
 export default function FAQs() {
   const { t, i18n } = useTranslation()
@@ -49,7 +59,18 @@ export default function FAQs() {
         <title>{t("meta.faqs.title")}</title>
         <meta name="description" content={t("meta.faqs.description")} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/faq`} />
+        <meta property="og:title" content={t("meta.faqs.title")} />
+        <meta property="og:description" content={t("meta.faqs.description")} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/faq`} />
+        <meta property="og:image" content="https://tareeqk.ae/new/second_img.webp" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={t("meta.faqs.title")} />
+        <meta name="twitter:description" content={t("meta.faqs.description")} />
+        <meta name="twitter:image" content="https://tareeqk.ae/new/second_img.webp" />
       </Helmet>
+      <HreflangTags path="faq" />
+      <FAQSchema faqs={faqs.map((f) => ({ question: f.question, answer: stripHtml(f.answer) }))} />
       <section
         style={{
           position: "relative",
@@ -112,29 +133,41 @@ export default function FAQs() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          faqs.map((faq, idx) => (
-            <div
-              data-aos="fade-up"
-              key={idx}
-              className="border border-gray-400 rounded-md overflow-hidden"
-            >
-              <button
-                onClick={() => toggleAccordion(idx)}
-                className="w-full text-left px-4 py-3.5 bg-gray-100 hover:bg-gray-200 flex justify-between items-center gap-3 cursor-pointer"
-              >
-                <span className="text-[14.5px] sm:text-base font-medium">{faq.question}</span>
-                <span className="flex-shrink-0">{openIndexs.includes(idx) ? "-" : "+"}</span>
-              </button>
+          faqs.map((faq, idx) => {
+            const open = openIndexs.includes(idx)
+            return (
               <div
-                className={`transition-max-h duration-400 overflow-hidden ${openIndexs.includes(idx) ? "max-h-96" : "max-h-0"}`}
+                data-aos="fade-up"
+                key={idx}
+                className="border rounded-xl overflow-hidden bg-white transition-colors"
+                style={{ borderColor: open ? "var(--primary-yellow)" : "rgba(0,0,0,0.1)" }}
               >
+                <button
+                  onClick={() => toggleAccordion(idx)}
+                  aria-expanded={open}
+                  className="w-full text-left px-4 py-3.5 hover:bg-gray-50 flex justify-between items-center gap-3 cursor-pointer"
+                >
+                  <span className="text-[14.5px] sm:text-base font-medium">{faq.question}</span>
+                  <ChevronDown
+                    size={18}
+                    className="flex-shrink-0 transition-transform duration-200"
+                    style={{
+                      color: "var(--primary-yellow)",
+                      transform: open ? "rotate(180deg)" : "none",
+                    }}
+                  />
+                </button>
                 <div
-                  className="px-4 py-3 text-[13.5px] sm:text-base"
-                  dangerouslySetInnerHTML={{ __html: faq.answer }}
-                />
+                  className={`transition-max-h duration-400 overflow-hidden ${open ? "max-h-96" : "max-h-0"}`}
+                >
+                  <div
+                    className="px-4 py-3 text-[13.5px] sm:text-base text-gray-600"
+                    dangerouslySetInnerHTML={{ __html: faq.answer }}
+                  />
+                </div>
               </div>
-            </div>
-          ))
+            )
+          })
         )}
       </div>
     </>

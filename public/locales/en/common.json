@@ -2580,5 +2580,14 @@
         "a": "Yes. Tareeqk is an RTA-licensed operator, and all recovery trucks and technicians are fully insured."
       }
     ]
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "heading": "Oops! Page Not Found",
+    "body": "The page you're looking for seems to have taken a wrong turn. Don't worry, let's get you back on track.",
+    "goHome": "Go Home",
+    "callNow": "Call Now:",
+    "needHelp": "Need help?",
+    "contactSupport": "Contact Support"
   }
 }

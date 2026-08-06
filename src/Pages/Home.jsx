@@ -12,11 +12,10 @@ import AboutAccordion from "../Components/AboutAccordion";
 import CJI from "../Components/CJI";
 import HomeFAQ from "../Components/HomeFAQ";
 import ContactForm from "../Components/ContactForm";
-import PriceGroup from "../Components/PriceGroup";
-import Registration from "./Registration";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import LocalBusinessSchema from "../schemas/LocalBusinessSchema";
+import HreflangTags from "../Components/HreflangTags";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -46,6 +45,7 @@ export default function Home() {
         <meta name="description" content={t("meta.home.description")} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}`} />
       </Helmet>
+      <HreflangTags path="" />
       <LocalBusinessSchema />
       <div>
         <LandingPage />

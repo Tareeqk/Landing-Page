@@ -4,9 +4,6 @@ import App from "./App";
 import "./index.css";
 import "./i18n.js";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import "@fontsource/manrope";
-import "@fontsource/manrope/500.css";
-import "@fontsource/manrope/700.css";
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 

@@ -12,6 +12,7 @@ import {
 import howItWorksIllustration from '/how-it-works-illustration.png';
 import useLangLink from '../hooks/useLangLink';
 import { useParams } from 'react-router-dom';
+import HreflangTags from '../Components/HreflangTags';
 
 // ── Schemas ────────────────────────────────────────────────────────────────
 function ServicesPageSchema() {
@@ -802,12 +803,24 @@ export default function Service({ isSection = false }) {
   return (
     <div className="svc-page-root" dir={isRTL ? 'rtl' : 'ltr'}>
       {!isSection && (
-        <Helmet>
-          <title>{t('meta.service.title')}</title>
-          <meta name="description" content={t('meta.service.description')} />
-          <meta name="robots" content="index, follow" />
-          <link rel="canonical" href={`https://tareeqk.ae/${lang}/service`} />
-        </Helmet>
+        <>
+          <Helmet>
+            <title>{t('meta.service.title')}</title>
+            <meta name="description" content={t('meta.service.description')} />
+            <meta name="robots" content="index, follow" />
+            <link rel="canonical" href={`https://tareeqk.ae/${lang}/service`} />
+            <meta property="og:title" content={t('meta.service.title')} />
+            <meta property="og:description" content={t('meta.service.description')} />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={`https://tareeqk.ae/${lang}/service`} />
+            <meta property="og:image" content="https://tareeqk.ae/new/service_banner_hero.webp" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={t('meta.service.title')} />
+            <meta name="twitter:description" content={t('meta.service.description')} />
+            <meta name="twitter:image" content="https://tareeqk.ae/new/service_banner_hero.webp" />
+          </Helmet>
+          <HreflangTags path="service" />
+        </>
       )}
 
       <ServicesPageSchema />

@@ -6,7 +6,7 @@ function usePageViews() {
 
   useEffect(() => {
     if (window.gtag) {
-      window.gtag("config", "G-0M5F1V93NJ", {
+      window.gtag("config", "G-N8F28JJFW1", {
         page_path: location.pathname,
       });
     }

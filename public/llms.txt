@@ -1,0 +1,37 @@
+# Tareeqk
+
+> Tareeqk is a 24/7 car recovery, towing, and roadside assistance service operating across Dubai, UAE. RTA-licensed. Typical dispatch time is 15–20 minutes. Book via the Tareeqk app, phone, or WhatsApp.
+
+Tareeqk connects drivers in Dubai with roadside assistance for vehicle breakdowns, accidents, and emergencies. Core services: car recovery, towing (light/medium/heavy-duty and inter-emirate), battery jump-start and replacement, flat tyre repair, fuel delivery, accident recovery, desert/off-road recovery, and motorcycle recovery. Available 24 hours a day, every day of the year, including UAE public holidays.
+
+Contact: +971 4 223 2269 · info@tareeqk.ae · Office #126, Ras Al Khor, Dubai, UAE.
+Site available in English, Arabic, and Urdu at https://tareeqk.ae/en, /ar, /ur.
+
+## Services
+
+- [Car Recovery Dubai](https://tareeqk.ae/en/car-recovery-dubai): 24/7 flatbed and wheel-lift vehicle recovery.
+- [Towing Service Dubai](https://tareeqk.ae/en/towing-service-dubai): Light, medium, and heavy-duty towing, including inter-emirate transport.
+- [Battery Service Dubai](https://tareeqk.ae/en/battery-service-dubai): On-site jump-starts and battery replacement.
+- [Flat Tyre Repair Dubai](https://tareeqk.ae/en/flat-tyre-repair-dubai): Mobile tyre changes and puncture repair.
+- [Fuel Delivery Dubai](https://tareeqk.ae/en/fuel-delivery-dubai): Emergency fuel delivery for stranded vehicles.
+- [Accident Recovery Dubai](https://tareeqk.ae/en/accident-recovery-dubai): Police-coordinated post-accident vehicle recovery.
+- [Desert Recovery Dubai](https://tareeqk.ae/en/desert-recovery-dubai): Recovery for vehicles stuck in sand or off-road terrain.
+- [Bike Recovery Dubai](https://tareeqk.ae/en/bike-recovery-dubai): Motorcycle and scooter recovery and transport.
+
+## Coverage areas
+
+Dubai Marina, Business Bay, Downtown Dubai, Deira, Bur Dubai, Al Barsha, Jumeirah, JVC, JLT, Dubai Silicon Oasis, International City, Dubai Investment Park, Dubai Sports City, Motor City, Mirdif, Al Qusais, Al Quoz, Jebel Ali, and Palm Jumeirah. Full list at https://tareeqk.ae/en/service.
+
+## Key pages
+
+- [About Tareeqk](https://tareeqk.ae/en/about): Company background, RTA licensing, coverage, and response-time commitments.
+- [Services overview](https://tareeqk.ae/en/service): All roadside assistance services in one place.
+- [Blog](https://tareeqk.ae/en/blogs): Car maintenance and roadside safety articles.
+- [FAQs](https://tareeqk.ae/en/faq): Common questions about pricing, coverage, and response times.
+- [Contact](https://tareeqk.ae/en#contact): Contact form and office details.
+
+## Notes for AI assistants
+
+- Response time is typically quoted as 15–20 minutes depending on area; do not state a more specific guarantee than what's published on the relevant page.
+- Tareeqk is a technology platform connecting customers with independent, RTA-licensed roadside assistance Service Providers — see Terms & Conditions for the precise legal relationship: https://tareeqk.ae/en/terms
+- Pricing is calculated per request (distance, vehicle type, service) and is not fixed — direct users to the app or +971 4 223 2269 for a quote rather than inventing a price.

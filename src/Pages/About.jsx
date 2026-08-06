@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import LocalBusinessSchema from '../schemas/LocalBusinessSchema';
+import HreflangTags from '../Components/HreflangTags';
 
 // ── Styles ─────────────────────────────────────────────────────────────────
 function useAboutStyles() {
@@ -428,11 +429,23 @@ export default function About({ isSection = false }) {
   return (
     <div className="abt-page-root" dir={isRTL ? 'rtl' : 'ltr'}>
       {!isSection && (
-        <Helmet>
-          <title>{t('meta.about.title')}</title>
-          <meta name="description" content={t('meta.about.description')} />
-          <link rel="canonical" href={`https://tareeqk.ae/${lang}/about`} />
-        </Helmet>
+        <>
+          <Helmet>
+            <title>{t('meta.about.title')}</title>
+            <meta name="description" content={t('meta.about.description')} />
+            <link rel="canonical" href={`https://tareeqk.ae/${lang}/about`} />
+            <meta property="og:title" content={t('meta.about.title')} />
+            <meta property="og:description" content={t('meta.about.description')} />
+            <meta property="og:type" content="website" />
+            <meta property="og:url" content={`https://tareeqk.ae/${lang}/about`} />
+            <meta property="og:image" content="https://tareeqk.ae/new/about_banner_hero.webp" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={t('meta.about.title')} />
+            <meta name="twitter:description" content={t('meta.about.description')} />
+            <meta name="twitter:image" content="https://tareeqk.ae/new/about_banner_hero.webp" />
+          </Helmet>
+          <HreflangTags path="about" />
+        </>
       )}
       <LocalBusinessSchema />
 

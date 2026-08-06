@@ -6,20 +6,28 @@ import { writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { LANGS, STATIC_PAGES, SERVICE_PAGES, LOCATION_PAGES, BLOG_POST_SLUGS, urlFor } from './site-routes.mjs';
+import { BLOGS } from '../src/data/blogs.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Blog posts carry their own publish date; everything else doesn't track
+// per-page edit dates, so it gets stamped with today (the sitemap's own
+// generation date) — the standard fallback when no real per-page history
+// exists.
+const BUILD_DATE = new Date().toISOString().slice(0, 10);
+const blogDateBySlug = new Map(BLOGS.map((post) => [post.slug, post.date]));
 
 // Each STATIC_PAGES/SERVICE_PAGES/LOCATION_PAGES/BLOG_POST_SLUGS entry gets
 // one <url> block per language (block() itself lists all 3 as alternates,
 // so we still need 3 <loc> entries — one per language variant).
-function blocksFor(slug, priority) {
+function blocksFor(slug, priority, lastmod = BUILD_DATE) {
   return LANGS.map((lang) => {
     const lines = ['  <url>', `    <loc>${urlFor(lang, slug)}</loc>`];
     for (const hl of LANGS) {
       lines.push(`    <xhtml:link rel="alternate" hreflang="${hl}"        href="${urlFor(hl, slug)}"/>`);
     }
     lines.push(`    <xhtml:link rel="alternate" hreflang="x-default" href="${urlFor('en', slug)}"/>`);
-    lines.push(`    <priority>${priority}</priority>`, '  </url>');
+    lines.push(`    <lastmod>${lastmod}</lastmod>`, `    <priority>${priority}</priority>`, '  </url>');
     return lines.join('\n');
   }).join('\n');
 }
@@ -42,7 +50,9 @@ out.push('  <!-- Location pages -->');
 for (const slug of LOCATION_PAGES) out.push(blocksFor(slug, '0.8'), '');
 
 out.push('  <!-- Blog posts -->');
-for (const slug of BLOG_POST_SLUGS) out.push(blocksFor(`page/${slug}`, '0.6'), '');
+for (const slug of BLOG_POST_SLUGS) {
+  out.push(blocksFor(`page/${slug}`, '0.6', blogDateBySlug.get(slug) || BUILD_DATE), '');
+}
 
 out.push('</urlset>');
 

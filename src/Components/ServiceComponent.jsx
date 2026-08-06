@@ -871,7 +871,7 @@ export default function WhatWeOffer() {
           <div className="s4-hero-img-wrap">
             <img
               className="s4-hero-img"
-              src="/new/offer.jpg"
+              src="/new/offer_image.png"
               alt={t("offer.heroImageAlt")}
             />
           </div>
