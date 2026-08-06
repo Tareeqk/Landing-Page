@@ -517,26 +517,6 @@ export default function Navbar({ isDark, setIsDark }) {
                   className={classNames(
                     "transition-all duration-400 ease-out",
                     open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
-                    "mt-2 pt-3 border-t flex items-center justify-between px-4 py-3 rounded-xl",
-                    isDark ? "border-white/[0.08] bg-white/5" : "border-black/5 bg-black/5",
-                  )}
-                >
-                  <span
-                    className={classNames(
-                      "text-sm font-medium",
-                      isDark ? "text-white/80" : "text-gray-700",
-                    )}
-                  >
-                    {t("navbar.darkMode", "Dark Mode")}
-                  </span>
-                  <DarkMode isDark={isDark} setIsDark={setIsDark} />
-                </div>
-
-                <div
-                  style={{ transitionDelay: open ? `${180 + (navigation.length + 1) * 70}ms` : "0ms" }}
-                  className={classNames(
-                    "transition-all duration-400 ease-out",
-                    open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
                   )}
                 >
                   <Link
