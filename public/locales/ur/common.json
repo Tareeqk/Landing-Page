@@ -32,6 +32,14 @@
       "availabilityLabel": "چوبیس گھنٹے",
       "ratingValue": "4.9★",
       "ratingLabel": "1,200+ جائزے"
+    },
+    "heroTags": {
+      "carRecovery": "کار ریکوری",
+      "batteryJumpStart": "بیٹری جمپ اسٹارٹ",
+      "tirePuncture": "ٹائر مرمت",
+      "desertRecovery": "ڈیزرٹ ریکوری",
+      "bikeRecovery": "بائیک ریکوری",
+      "accidentRecovery": "ایکسیڈنٹ ریکوری"
     }
   },
   "blogs": {

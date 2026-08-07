@@ -7,26 +7,25 @@ import './landing.css';
 // Keys map to `landing.services.<key>` in each locale file.
 const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 
-// New renders with the full service list (Car Recovery, Battery Jump Start,
-// Flat Tyre Repair, Desert Recovery, Bike Recovery, Accident Recovery)
-// baked directly into the artwork as icon+label tags, replacing the old
-// JSX-driven service pill ticker/dots below — the image itself is now the
-// service list, so that UI was removed rather than doubling up on it.
-//
-// NOTE: mapped by actual composition, not by the literal filenames as
-// supplied — "landingpage_banner.png" is a tall 1600×3009 (~0.53:1)
-// portrait render with a solid black upper band for text, i.e. built for
-// the narrow mobile crop; "landingpage_mobile.png" is a wide 7000×3000
-// (2.33:1) landscape render, i.e. built for the desktop banner. Using them
-// by filename instead of composition would stretch/crop each into the
-// wrong shape.
-const HERO_PHOTO = '/new/landingpage_mobile.webp';
+// The service tags (icon + label) used to be baked as pixels directly into
+// one flattened hero photo — which meant a separate hand-composed image per
+// breakpoint, no way to reflow for narrow/RTL layouts, and unreadable/
+// untranslatable label text. Now each layer is its own asset (see
+// public/hero/, sourced from public/WEBSITE IMAGE AND ICONS ASSET/) and the
+// tags render as real, translated HTML — CSS handles the reflow and RTL
+// mirroring instead of a second hand-drawn image.
+const HERO_SKYLINE = '/hero/dubai-bg.webp';
+const HERO_TRUCK = '/hero/truck-nasir.webp';
 
-// Portrait crop for phones — tall render with the same black-band-on-top
-// composition as before (see .tk-hero__inner's mobile top-alignment below),
-// now with the service tags and truck/car/robot artwork filling the lower
-// two-thirds instead of just the truck.
-const HERO_PHOTO_MOBILE = '/new/landingpage_banner.webp';
+// Keys map to `landing.heroTags.<key>` in each locale file.
+const HERO_SERVICE_TAGS = [
+  { key: 'carRecovery', icon: '/hero/icon-car-recovery.webp' },
+  { key: 'batteryJumpStart', icon: '/hero/icon-battery-jumpstart.webp' },
+  { key: 'tirePuncture', icon: '/hero/icon-tire-puncture.webp' },
+  { key: 'desertRecovery', icon: '/hero/icon-desert-recovery.webp' },
+  { key: 'bikeRecovery', icon: '/hero/icon-bike-recovery.webp' },
+  { key: 'accidentRecovery', icon: '/hero/icon-accident-recovery.webp' },
+];
 
 /* ── Typing cycle ──
    Drives the hero title's type/delete loop only — the background photo
@@ -88,29 +87,60 @@ function useTypingSlideCycle(phrases) {
 function HeroBackground() {
   return (
     <div className="tk-hero__bg" aria-hidden="true">
-      <picture>
-        {/* Any portrait-oriented viewport, not just phones — a desktop
-            window dragged narrower than it is tall hits this just as much
-            as a phone does, and needs the same tall crop + compact
-            top-anchored content (see landing.css) instead of the wide
-            desktop banner's right-side content colliding with the left
-            text column. No width cap: a portrait window wider than the
-            old 1200px cutoff (e.g. a tall, wide browser pane) reproduces
-            the exact same collision, since it's the shape that causes it,
-            not the absolute size. A landscape phone/window at the same
-            width still gets the wide banner (see the orientation:landscape
-            rules in landing.css), not the tall portrait crop stretched
-            sideways. */}
-        <source media="(orientation: portrait)" srcSet={HERO_PHOTO_MOBILE} />
-        <img
-          src={HERO_PHOTO}
-          alt=""
-          className="tk-hero__bg-img"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </picture>
+      <img
+        src={HERO_SKYLINE}
+        alt=""
+        className="tk-hero__skyline"
+        loading="eager"
+        decoding="async"
+      />
+    </div>
+  );
+}
+
+// Truck artwork + service tags move and reflow together as one unit (flex
+// sibling of .tk-hero__content, see .tk-hero__visual in landing.css) —
+// unlike the skyline, which is pure background ambiance and stays
+// full-bleed behind everything regardless of language or breakpoint.
+function HeroVisual() {
+  const { t } = useTranslation();
+  return (
+    <div className="tk-hero__visual">
+      {/* Radial glow behind the truck — was a hand-drawn gradient PNG
+          (WEBSITE IMAGE AND ICONS ASSET/CIRCLE DESIGN.png); reproduced in
+          CSS instead since it's just two flat radial gradients, so it
+          scales to any size/position with zero extra bytes and flips for
+          free under [dir="rtl"]. Lives in this column (not .tk-hero__bg)
+          so it shares .tk-hero__truck's own containing block — the two
+          were previously positioned against different boxes (full hero
+          width vs this narrower column), so no percentage could ever
+          land the truck centered on the glow; sharing --sphere-x/-y here
+          (see .tk-hero__visual in landing.css) makes that centering
+          actually hold. */}
+      <div className="tk-hero__glow" />
+      <img
+        src={HERO_TRUCK}
+        alt=""
+        className="tk-hero__truck"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+      <div className="tk-hero__tags" data-testid="landing-hero-tags">
+        {HERO_SERVICE_TAGS.map((tag) => (
+          <div key={tag.key} className="tk-hero__tag">
+            {/* Label before icon in DOM: justify-content: flex-end packs
+                this row's LAST child flush against the sphere-side edge,
+                so the icon (small, meant to sit on/near the glow) ends up
+                closest to it and the label (needs to stay readable over
+                the truck artwork) stays further away — reversed order
+                put the label closest instead, which is how it ended up
+                overlapping the truck. */}
+            <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
+            <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -274,6 +304,8 @@ export default function LandingPage() {
               </a>
             </div>
           </div>
+
+          <HeroVisual />
         </div>
 
       </section>

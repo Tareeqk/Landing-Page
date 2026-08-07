@@ -32,6 +32,14 @@
       "availabilityLabel": "على مدار الساعة",
       "ratingValue": "📡",
       "ratingLabel": "تتبع مباشر"
+    },
+    "heroTags": {
+      "carRecovery": "استعادة السيارات",
+      "batteryJumpStart": "شحن البطارية",
+      "tirePuncture": "إصلاح الإطارات",
+      "desertRecovery": "الإنقاذ الصحراوي",
+      "bikeRecovery": "استعادة الدراجات",
+      "accidentRecovery": "استعادة الحوادث"
     }
   },
   "blogs": {

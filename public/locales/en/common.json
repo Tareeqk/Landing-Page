@@ -32,6 +32,14 @@
       "availabilityLabel": "Around The Clock",
       "ratingValue": "📡 ",
       "ratingLabel": "Live tracking"
+    },
+    "heroTags": {
+      "carRecovery": "Car Recovery",
+      "batteryJumpStart": "Battery Jump Start",
+      "tirePuncture": "Flat Tyre Repair",
+      "desertRecovery": "Desert Recovery",
+      "bikeRecovery": "Bike Recovery",
+      "accidentRecovery": "Accident Recovery"
     }
   },
   "blogs": {
