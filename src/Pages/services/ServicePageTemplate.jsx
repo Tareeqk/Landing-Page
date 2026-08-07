@@ -3,6 +3,7 @@
 
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import {
   FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock, FaStar,
@@ -49,10 +50,10 @@ const getAreaHref = (area, serviceSlug = 'car-recovery') => {
 // Generic, index-based icon sets reused across every service page
 const WHY_ICONS = [FaBolt, FaTruck, FaShieldAlt, FaUserCheck];
 const TRUST_CHECKLIST = [
-  { Icon: FaClock, label: '24/7 Dispatch' },
-  { Icon: FaUserShield, label: 'Certified Operators' },
-  { Icon: FaMapMarkerAlt, label: 'Live GPS Tracking' },
-  { Icon: FaWhatsapp, label: 'Instant WhatsApp Booking' },
+  { key: 'dispatch', Icon: FaClock, label: '24/7 Dispatch' },
+  { key: 'certified', Icon: FaUserShield, label: 'Certified Operators' },
+  { key: 'gpsTracking', Icon: FaMapMarkerAlt, label: 'Live GPS Tracking' },
+  { key: 'whatsappBooking', Icon: FaWhatsapp, label: 'Instant WhatsApp Booking' },
 ];
 
 // Short taglines shown under each area card — falls back to a generic line
@@ -479,7 +480,30 @@ const MOBILE_CSS = `
 export default function ServicePageTemplate({ config }) {
   const { lang } = useParams();
   const langLink = useLangLink();
-  const schemaFaqs = config.faqs.map(f => ({ question: f.q, answer: f.a }));
+  const { t } = useTranslation();
+
+  // Ar/ur copy lives in common.json under servicePages.<slug>.* — config's
+  // own English strings are passed as the defaultValue, so an untranslated
+  // field (or a slug missing from common.json entirely) quietly falls back
+  // to English instead of rendering a raw i18next key on the page.
+  const sp = key => t(`servicePages.${config.slug}.${key}`, config[key]);
+  const spList = key => t(`servicePages.${config.slug}.${key}`, { returnObjects: true, defaultValue: config[key] });
+  const tc = {
+    metaTitle: sp('metaTitle'),
+    metaDesc: sp('metaDesc'),
+    title: sp('title'),
+    intro: sp('intro'),
+    responseTime: sp('responseTime'),
+    responseDesc: sp('responseDesc'),
+    whatIsService: sp('whatIsService'),
+    whyUs: spList('whyUs'),
+    faqs: spList('faqs'),
+    serviceType: sp('serviceType'),
+    schemaName: sp('schemaName'),
+    schemaDesc: sp('schemaDesc'),
+  };
+
+  const schemaFaqs = tc.faqs.map(f => ({ question: f.q, answer: f.a }));
   const [openFaq, setOpenFaq] = React.useState(null);
   const [showAllAreas, setShowAllAreas] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(
@@ -509,17 +533,17 @@ export default function ServicePageTemplate({ config }) {
     : config.areas;
 
   const heroMetrics = [
-    { Icon: FaBolt, value: config.responseTime, label: 'Avg Response' },
+    { Icon: FaBolt, value: tc.responseTime, label: 'Avg Response' },
     { Icon: FaClock, value: '24/7', label: 'Available' },
     { Icon: FaStar, value: '4.9', label: 'Rating' },
     { Icon: FaShieldAlt, value: 'RTA', label: 'Licensed' },
   ];
 
   const processSteps = [
-    { Icon: FaPhoneAlt, label: 'Call, WhatsApp, or open the Tareeqk app' },
-    { Icon: FaTruck, label: 'Nearest certified unit dispatched immediately' },
-    { Icon: FaMapMarkerAlt, label: `Technician on-site in ~${config.responseTime}` },
-    { Icon: FaCheckCircle, label: 'Vehicle recovered or issue resolved' },
+    { Icon: FaPhoneAlt, label: t('servicePageTemplate.process.step1', 'Call, WhatsApp, or open the Tareeqk app') },
+    { Icon: FaTruck, label: t('servicePageTemplate.process.step2', 'Nearest certified unit dispatched immediately') },
+    { Icon: FaMapMarkerAlt, label: t('servicePageTemplate.process.step3', 'Technician on-site in ~{{time}}', { time: tc.responseTime }) },
+    { Icon: FaCheckCircle, label: t('servicePageTemplate.process.step4', 'Vehicle recovered or issue resolved') },
   ];
 
   const lift = (e, on) => {
@@ -532,38 +556,38 @@ export default function ServicePageTemplate({ config }) {
     <>
       {/* ── SEO HEAD ── */}
       <Helmet>
-        <title>{config.metaTitle}</title>
-        <meta name="description" content={config.metaDesc} />
+        <title>{tc.metaTitle}</title>
+        <meta name="description" content={tc.metaDesc} />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}`} />
-        <meta property="og:title" content={config.metaTitle} />
-        <meta property="og:description" content={config.metaDesc} />
+        <meta property="og:title" content={tc.metaTitle} />
+        <meta property="og:description" content={tc.metaDesc} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
         <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={config.metaTitle} />
-        <meta name="twitter:description" content={config.metaDesc} />
+        <meta name="twitter:title" content={tc.metaTitle} />
+        <meta name="twitter:description" content={tc.metaDesc} />
         <meta name="twitter:image" content={`https://tareeqk.ae${config.heroImage}`} />
       </Helmet>
       <HreflangTags path={config.slug} />
       <BreadcrumbSchema
         items={[
-          { name: 'Home', url: `https://tareeqk.ae/${lang}` },
-          { name: 'Services', url: `https://tareeqk.ae/${lang}/service` },
-          { name: config.title },
+          { name: t('servicePageTemplate.breadcrumbHome', 'Home'), url: `https://tareeqk.ae/${lang}` },
+          { name: t('servicePageTemplate.breadcrumbServices', 'Services'), url: `https://tareeqk.ae/${lang}/service` },
+          { name: tc.title },
         ]}
       />
 
       {/* ── SCHEMAS ── */}
       <ServiceSchema
         service={{
-          name: config.schemaName,
+          name: tc.schemaName,
           url: `https://tareeqk.ae/${lang}/${config.slug}`,
-          description: config.schemaDesc,
+          description: tc.schemaDesc,
           image: `https://tareeqk.ae${config.heroImage}`,
           areas: config.areas,
-          serviceType: config.serviceType,
+          serviceType: tc.serviceType,
         }}
       />
       <FAQSchema faqs={schemaFaqs} />
@@ -580,19 +604,13 @@ export default function ServicePageTemplate({ config }) {
             {/* Each hero element gets its own entrance beat instead of the
                 tag/heading/subtitle/buttons all sharing one data-aos. */}
             <span style={styles.heroTag} className="svc-hero-tag" data-aos="fade-up" data-aos-delay="0">
-              <FaShieldAlt size={11} /> 24/7 · Fast Response · Dubai
+              <FaShieldAlt size={11} /> {t('servicePageTemplate.heroTag', '24/7 · Fast Response · Dubai')}
             </span>
-            <h1 style={styles.heroH1} className="svc-hero-h1" data-aos="fade-up" data-aos-delay="140">{config.title}</h1>
-            <p style={styles.heroSubtitle} className="svc-hero-subtitle" data-aos="fade-up" data-aos-delay="300">{config.intro}</p>
+            <h1 style={styles.heroH1} className="svc-hero-h1" data-aos="fade-up" data-aos-delay="140">{tc.title}</h1>
+            <p style={styles.heroSubtitle} className="svc-hero-subtitle" data-aos="fade-up" data-aos-delay="300">{tc.intro}</p>
             <div style={styles.heroCtas} className="svc-hero-ctas" data-aos="fade-up" data-aos-delay="440">
-              <button onClick={handleCall} style={styles.btnPrimary} aria-label="Call Tareeqk">
-                <FaPhoneAlt size={13} /> Call Now
-              </button>
-              <button onClick={handleWhatsApp} style={styles.btnGreen} aria-label="WhatsApp Tareeqk">
-                <FaWhatsapp size={16} /> WhatsApp
-              </button>
-              <button onClick={handleDownload} style={styles.btnOutline} aria-label="Download Tareeqk App">
-                <FaMobileAlt size={13} /> App
+              <button onClick={handleDownload} style={styles.btnPrimary} aria-label={t('servicePageTemplate.downloadAppAria', 'Download Tareeqk App')}>
+                <FaMobileAlt size={13} /> {t('servicePageTemplate.downloadApp', 'Download The App')}
               </button>
             </div>
 
@@ -605,15 +623,15 @@ export default function ServicePageTemplate({ config }) {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '56px', alignItems: 'center' }} className="svc-grid2">
               <div>
                 <div data-aos="fade-right">
-                  <span style={styles.eyebrow}>Our Service</span>
-                  <h2 style={styles.sectionH2} className="svc-section-h2">Why Drivers Trust Tareeqk</h2>
-                  <p style={styles.sectionP}>{config.whatIsService}</p>
+                  <span style={styles.eyebrow}>{t('servicePageTemplate.ourService', 'Our Service')}</span>
+                  <h2 style={styles.sectionH2} className="svc-section-h2">{t('servicePageTemplate.whyTrustHeading', 'Why Drivers Trust Tareeqk')}</h2>
+                  <p style={styles.sectionP}>{tc.whatIsService}</p>
                 </div>
                 <div style={styles.checklist}>
                   {TRUST_CHECKLIST.map((item, i) => (
                     <div key={i} data-aos="fade-up" data-aos-delay={200 + i * 90} style={styles.checklistItem}>
                       <span style={styles.checklistIconWrap}><item.Icon size={13} /></span>
-                      <span style={styles.checklistLabel}>{item.label}</span>
+                      <span style={styles.checklistLabel}>{t(`servicePageTemplate.trust.${item.key}`, item.label)}</span>
                     </div>
                   ))}
                 </div>
@@ -622,8 +640,8 @@ export default function ServicePageTemplate({ config }) {
                   data-aos-delay={200 + TRUST_CHECKLIST.length * 90 + 80}
                   style={{ marginTop: '28px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}
                 >
-                  <a href={langLink('/about')} style={styles.linkPill}>About Us <FaArrowRight size={10} /></a>
-                  <a href={langLink("/#contact")} style={styles.linkPill}>Contact <FaArrowRight size={10} /></a>
+                  <a href={langLink('/about')} style={styles.linkPill}>{t('servicePageTemplate.aboutUs', 'About Us')} <FaArrowRight size={10} /></a>
+                  <a href={langLink("/#contact")} style={styles.linkPill}>{t('servicePageTemplate.contact', 'Contact')} <FaArrowRight size={10} /></a>
                 </div>
               </div>
               <div data-aos="fade-left">
@@ -633,24 +651,24 @@ export default function ServicePageTemplate({ config }) {
                   backgroundSize: 'cover', backgroundPosition: 'center',
                 }}>
                   <div style={styles.trustCardRating}>24/7</div>
-                  <div style={styles.trustCardSub}>Available every</div>
+                  <div style={styles.trustCardSub}>{t('servicePageTemplate.availableEvery', 'Available every')}</div>
                   <div style={styles.trustCardDivider} />
                   <div style={styles.trustCardRow}>
                     <span style={styles.trustCardRowIcon}><FaShieldAlt size={14} /></span>
-                    RTA-Licensed Operators
+                    {t('servicePageTemplate.rtaLicensed', 'RTA-Licensed Operators')}
                   </div>
                   <div style={styles.trustCardRow}>
                     <span style={styles.trustCardRowIcon}><FaBolt size={14} /></span>
-                    {config.responseTime} Avg. Response
+                    {t('servicePageTemplate.avgResponseSuffix', '{{time}} Avg. Response', { time: tc.responseTime })}
                   </div>
                   <div style={styles.trustCardRow}>
                     <span style={styles.trustCardRowIcon}><FaMapMarkerAlt size={14} /></span>
-                    Live GPS-Tracked Recovery
+                    {t('servicePageTemplate.gpsTrackedRecovery', 'Live GPS-Tracked Recovery')}
                   </div>
                   <div style={styles.trustCardAccent}>
-                    <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>Service Type</div>
+                    <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: 600 }}>{t('servicePageTemplate.serviceType', 'Service Type')}</div>
                     <div style={{ fontSize: '18px', fontWeight: 800, fontFamily: "'Poppins', sans-serif", marginTop: '4px' }}>
-                      {config.schemaName}
+                      {tc.schemaName}
                     </div>
                   </div>
                 </div>
@@ -663,9 +681,9 @@ export default function ServicePageTemplate({ config }) {
         <section style={{ ...styles.section, background: COLORS.bgAlt, borderTop: `1px solid ${COLORS.line}` }} className="svc-section">
           <div style={styles.sectionInner} className="svc-section-inner">
             <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 52px' }} data-aos="fade-up">
-              <span style={styles.eyebrow}>How It Works</span>
-              <h2 style={styles.sectionH2} className="svc-section-h2">From Call to Resolution in {config.responseTime}</h2>
-              <p style={{ ...styles.sectionP, margin: '0 auto' }}>{config.responseDesc}</p>
+              <span style={styles.eyebrow}>{t('servicePageTemplate.howItWorks', 'How It Works')}</span>
+              <h2 style={styles.sectionH2} className="svc-section-h2">{t('servicePageTemplate.callToResolution', 'From Call to Resolution in {{time}}', { time: tc.responseTime })}</h2>
+              <p style={{ ...styles.sectionP, margin: '0 auto' }}>{tc.responseDesc}</p>
             </div>
             <div style={{ position: 'relative' }}>
               <div style={styles.processConnector} className="svc-process-connector" />
@@ -688,11 +706,11 @@ export default function ServicePageTemplate({ config }) {
         <section style={{ ...styles.section, background: '#fff' }} className="svc-section">
           <div style={styles.sectionInner} className="svc-section-inner">
             <div style={{ marginBottom: '40px' }} data-aos="fade-up">
-              <span style={styles.eyebrow}>Why Us</span>
-              <h2 style={styles.sectionH2} className="svc-section-h2">Why Choose Tareeqk?</h2>
+              <span style={styles.eyebrow}>{t('servicePageTemplate.whyUsEyebrow', 'Why Us')}</span>
+              <h2 style={styles.sectionH2} className="svc-section-h2">{t('servicePageTemplate.whyChooseHeading', 'Why Choose Tareeqk?')}</h2>
             </div>
             <div style={styles.whyStrip} className="svc-why-strip">
-              {config.whyUs.map((reason, i) => {
+              {tc.whyUs.map((reason, i) => {
                 const Icon = WHY_ICONS[i % WHY_ICONS.length];
                 return (
                   <div
@@ -721,38 +739,38 @@ export default function ServicePageTemplate({ config }) {
                   than fading in as one flat column. */}
               <div>
                 <div data-aos="fade-right" data-aos-delay="0">
-                  <span style={styles.eyebrow}>Coverage</span>
-                  <h2 style={styles.areasH2} className="svc-areas-h2">Areas We Serve</h2>
+                  <span style={styles.eyebrow}>{t('servicePageTemplate.coverage', 'Coverage')}</span>
+                  <h2 style={styles.areasH2} className="svc-areas-h2">{t('servicePageTemplate.areasWeServe', 'Areas We Serve')}</h2>
                   <p style={styles.sectionP}>
-                    Tareeqk covers all major Dubai districts. Need service in a specific area?
+                    {t('servicePageTemplate.areasIntro', 'Tareeqk covers all major Dubai districts. Need service in a specific area?')}
                   </p>
                 </div>
                 <a href={langLink("/#contact")} style={styles.contactPill} data-aos="fade-right" data-aos-delay="140">
-                  Contact us <FaArrowRight size={11} />
+                  {t('servicePageTemplate.contactUs', 'Contact us')} <FaArrowRight size={11} />
                 </a>
 
                 <div style={styles.quickAccessCard} data-aos="fade-right" data-aos-delay="260">
                   <div style={styles.quickAccessHeader}>
-                    <span style={styles.quickAccessTitle}>Our Coverage</span>
+                    <span style={styles.quickAccessTitle}>{t('servicePageTemplate.ourCoverage', 'Our Coverage')}</span>
                     <span style={styles.quickAccessIconChip}><FaTh size={13} /></span>
                   </div>
                   <p style={styles.quickAccessDesc}>
-                    Tareeqk operates across {config.areas.length} areas in Dubai — from bustling downtown districts to quieter residential communities. Wherever you are, help is always close by. Click any area on the right to learn more about coverage in that location.
+                    {t('servicePageTemplate.coverageDesc', 'Tareeqk operates across {{count}} areas in Dubai — from bustling downtown districts to quieter residential communities. Wherever you are, help is always close by. Click any area on the right to learn more about coverage in that location.', { count: config.areas.length })}
                   </p>
                 </div>
 
                 <div style={styles.areasImageWrap} data-aos="fade-right" data-aos-delay="380">
                   <img
                     src={config.areasImage || config.heroImage}
-                    alt={`${config.schemaName} coverage across Dubai`}
+                    alt={`${tc.schemaName} coverage across Dubai`}
                     style={styles.areasImage}
                     loading="lazy"
                   />
                   <div style={styles.areasImageCaption}>
                     <span style={styles.areasImageCaptionIcon}><FaShieldAlt size={15} /></span>
                     <div>
-                      <div style={styles.areasImageCaptionTitle}>Reliable. Local. Always Here.</div>
-                      <div style={styles.areasImageCaptionSub}>Serving Dubai with trust and care.</div>
+                      <div style={styles.areasImageCaptionTitle}>{t('servicePageTemplate.reliableLocal', 'Reliable. Local. Always Here.')}</div>
+                      <div style={styles.areasImageCaptionSub}>{t('servicePageTemplate.servingDubai', 'Serving Dubai with trust and care.')}</div>
                     </div>
                   </div>
                 </div>
@@ -761,7 +779,7 @@ export default function ServicePageTemplate({ config }) {
               {/* Right: full area grid with taglines */}
               <div>
                 <div data-aos="fade-left" style={styles.allAreasHeader}>
-                  <span style={styles.allAreasTitle}>All Areas</span>
+                  <span style={styles.allAreasTitle}>{t('servicePageTemplate.allAreas', 'All Areas')}</span>
                 </div>
                 <div style={styles.allAreasDivider} />
                 <div style={styles.allAreasGrid} className="svc-all-areas-grid">
@@ -778,8 +796,15 @@ export default function ServicePageTemplate({ config }) {
                     >
                       <span style={styles.allAreaIconWrap}><FaMapMarkerAlt size={14} /></span>
                       <div>
-                        <div style={styles.allAreaName}>{area}</div>
-                        <div style={styles.allAreaTagline}>{AREA_TAGLINES[area] || AREA_TAGLINES.default}</div>
+                        <div style={styles.allAreaName}>{t(`servicePageTemplate.areaNames.${slugify(area)}`, area)}</div>
+                        <div style={styles.allAreaTagline}>
+                          {t(
+                            AREA_TAGLINES[area]
+                              ? `servicePageTemplate.areaTaglines.${slugify(area)}`
+                              : 'servicePageTemplate.areaTaglines.default',
+                            AREA_TAGLINES[area] || AREA_TAGLINES.default,
+                          )}
+                        </div>
                       </div>
                     </a>
                   ))}
@@ -787,7 +812,9 @@ export default function ServicePageTemplate({ config }) {
 
                 {showAreaToggle && (
                   <button onClick={() => setShowAllAreas(v => !v)} style={styles.showMoreBtn}>
-                    {showAllAreas ? 'Show Less' : `Show All ${config.areas.length} Areas`}
+                    {showAllAreas
+                      ? t('servicePageTemplate.showLess', 'Show Less')
+                      : t('servicePageTemplate.showAllAreas', 'Show All {{count}} Areas', { count: config.areas.length })}
                     <FaChevronDown
                       size={11}
                       style={{ transform: showAllAreas ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s' }}
@@ -823,10 +850,10 @@ export default function ServicePageTemplate({ config }) {
               <circle cx="900" cy="150" r="10" fill="none" stroke={COLORS.gold} strokeWidth="1.5" opacity="0.5" />
             </svg>
             <div style={{ position: 'relative', zIndex: 1 }} data-aos="fade-up" data-aos-delay="0">
-              <div style={styles.ctaEyebrow}><FaHeadset size={13} /> 24/7 Emergency Line</div>
-              <h2 style={styles.ctaH2}>Need {config.schemaName} Right Now?</h2>
+              <div style={styles.ctaEyebrow}><FaHeadset size={13} /> {t('servicePageTemplate.emergencyLine', '24/7 Emergency Line')}</div>
+              <h2 style={styles.ctaH2}>{t('servicePageTemplate.needRightNow', 'Need {{service}} Right Now?', { service: tc.schemaName })}</h2>
               <p style={styles.ctaP}>
-                Our team is on standby across Dubai. One tap or call is all it takes — we're already on our way.
+                {t('servicePageTemplate.ctaBody', "Our team is on standby across Dubai. One tap or call is all it takes — we're already on our way.")}
               </p>
             </div>
             <div
@@ -835,8 +862,8 @@ export default function ServicePageTemplate({ config }) {
               data-aos="fade-up"
               data-aos-delay="180"
             >
-              <button onClick={handleCall} style={styles.btnPrimary}><FaPhoneAlt size={13} /> Call Now</button>
-              <button onClick={handleWhatsApp} style={styles.btnGreen}><FaWhatsapp size={16} /> WhatsApp</button>
+              <button onClick={handleCall} style={styles.btnPrimary}><FaPhoneAlt size={13} /> {t('servicePageTemplate.callNow', 'Call Now')}</button>
+              <button onClick={handleWhatsApp} style={styles.btnGreen}><FaWhatsapp size={16} /> {t('servicePageTemplate.whatsapp', 'WhatsApp')}</button>
             </div>
           </div>
         </div>
@@ -844,10 +871,10 @@ export default function ServicePageTemplate({ config }) {
         {/* ── FAQ ── */}
         <section style={{ ...styles.section, background: '#fff', paddingTop: '32px' }} className="svc-section">
           <div style={{ ...styles.sectionInner, maxWidth: '780px' }} className="svc-section-inner">
-            <span style={styles.eyebrow}>FAQ</span>
-            <h2 style={styles.sectionH2} className="svc-section-h2">Frequently Asked Questions</h2>
+            <span style={styles.eyebrow}>{t('servicePageTemplate.faqEyebrow', 'FAQ')}</span>
+            <h2 style={styles.sectionH2} className="svc-section-h2">{t('servicePageTemplate.faqHeading', 'Frequently Asked Questions')}</h2>
             <div style={{ marginTop: '32px' }}>
-              {config.faqs.map((faq, i) => (
+              {tc.faqs.map((faq, i) => (
                 <div key={i} style={styles.faqItem} className="svc-faq-item">
                   <button
                     style={styles.faqQ}
@@ -880,8 +907,8 @@ export default function ServicePageTemplate({ config }) {
         {/* ── RELATED SERVICES ── */}
         <section style={{ ...styles.section, background: COLORS.bgAlt, borderTop: `1px solid ${COLORS.line}` }} className="svc-section">
           <div style={styles.sectionInner} className="svc-section-inner">
-            <span style={styles.eyebrow}>Explore More</span>
-            <h2 style={{ ...styles.sectionH2, marginBottom: '32px' }} className="svc-section-h2">Our Other Services in Dubai</h2>
+            <span style={styles.eyebrow}>{t('servicePageTemplate.exploreMore', 'Explore More')}</span>
+            <h2 style={{ ...styles.sectionH2, marginBottom: '32px' }} className="svc-section-h2">{t('servicePageTemplate.otherServices', 'Our Other Services in Dubai')}</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }} className="svc-grid4">
               {relatedServices.map(svc => (
                 <a
@@ -900,16 +927,18 @@ export default function ServicePageTemplate({ config }) {
                   }}
                 >
                   <div style={styles.svcCardIconWrap}><svc.Icon size={20} /></div>
-                  <p style={{ fontSize: '14px', fontWeight: 700, color: COLORS.ink, margin: 0 }}>{svc.label}</p>
-                  <span style={styles.svcCardLink}>Learn More <FaArrowRight size={10} /></span>
+                  <p style={{ fontSize: '14px', fontWeight: 700, color: COLORS.ink, margin: 0 }}>
+                    {t(`servicePages.${svc.href.slice(1)}.schemaName`, svc.label)}
+                  </p>
+                  <span style={styles.svcCardLink}>{t('servicePageTemplate.learnMore', 'Learn More')} <FaArrowRight size={10} /></span>
                 </a>
               ))}
             </div>
             <div style={{ marginTop: '36px', paddingTop: '28px', borderTop: `1px solid ${COLORS.line}` }}>
-              <span style={{ fontWeight: 700, fontSize: '13px', color: COLORS.ink, marginRight: '12px' }}>Service Areas:</span>
+              <span style={{ fontWeight: 700, fontSize: '13px', color: COLORS.ink, marginRight: '12px' }}>{t('servicePageTemplate.serviceAreasLabel', 'Service Areas:')}</span>
               {ALL_LOCATIONS.map(loc => (
                 <a key={loc.href} href={langLink(loc.href)} style={{ ...styles.linkPill, marginRight: '8px', marginBottom: '8px' }}>
-                  {loc.label}
+                  {t(`servicePageTemplate.areaNames.${slugify(loc.label)}`, loc.label)}
                 </a>
               ))}
             </div>

@@ -133,7 +133,24 @@
       "Bash(export CHROME_PATH=\"/Users/tareeqk-01/.cache/puppeteer/chrome/mac_arm-151.0.7922.47/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing\")",
       "Bash(pkill -f \"vite preview\")",
       "Skill(mobile-ux-optimizer)",
-      "Skill(mobile-ux-optimizer:*)"
+      "Skill(mobile-ux-optimizer:*)",
+      "Bash(awk '{print $5, $9}')",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/ar/common.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/ur/common.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/en/common.json','utf8'\\)\\); console.log\\('all valid JSON'\\)\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ar-services.mjs\")",
+      "Bash(node -e \"const en = require\\('./public/locales/en/common.json'\\); console.log\\('home.title:', en.meta && en.meta.home && en.meta.home.title\\);\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ar-services-2.mjs\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ar-services-3.mjs\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ar-services-4.mjs\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/ar/common.json','utf8'\\)\\); console.log\\('valid JSON'\\)\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ur-services-1.mjs\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ur-services-2.mjs\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ur-services-3.mjs\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-ur-services-4.mjs\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/ur/common.json','utf8'\\)\\); console.log\\('valid JSON'\\)\")",
+      "Bash(perl -pi -e 's/\\\\bconfig\\\\.\\(metaTitle|metaDesc|title|intro|responseTime|responseDesc|whatIsService|whyUs|faqs|serviceType|schemaName|schemaDesc\\)\\\\b/tc.$1/g' src/Pages/services/ServicePageTemplate.jsx)",
+      "Bash(echo \"=== EXIT: $? ===\")",
+      "Bash(node \"/private/tmp/claude-501/-Users-tareeqk-01-Desktop-Tareeqk-Portal-Landing-Page/4ba8778d-95ac-4a64-a805-cb7873fa14b3/scratchpad/merge-template-labels.mjs\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/ar/common.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/ur/common.json','utf8'\\)\\); console.log\\('both valid JSON'\\)\")"
     ]
   }
 }

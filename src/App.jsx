@@ -9,15 +9,24 @@ import MainLayout from './Components/MainLayout';
 import usePageViews from './hooks/usePageViews';
 
 // Existing Pages
+// Home stays a static import — it's the entry route on first load, and
+// lazy-loading it would add an extra async round-trip before the
+// homepage itself can render, which is the opposite of what we want.
+// Every other page was previously static too, which meant a first-time
+// visitor's homepage load downloaded About/FAQs/Blogs/Terms/Privacy/
+// NotFound/Service *and* all 19 location pages' JS before React could
+// paint anything — none of that is needed until the visitor actually
+// navigates there. Matches the lazy pattern already used for the SEO
+// service pages below.
 import Home from './Pages/Home';
-import Service from './Pages/Service';
-import About from './Pages/About';
-import FAQs from './Pages/FAQs';
-import TermsAndConditions from './Pages/TermsAndConditions';
-import PrivacyAndPolicy from './Pages/PrivacyAndPolicy';
-import Blogs from './Pages/Blogs';
-import BlogPage from './Pages/BlogPage';
-import NotFound from './Pages/NotFound';
+const Service           = lazy(() => import('./Pages/Service'));
+const About              = lazy(() => import('./Pages/About'));
+const FAQs               = lazy(() => import('./Pages/FAQs'));
+const TermsAndConditions = lazy(() => import('./Pages/TermsAndConditions'));
+const PrivacyAndPolicy   = lazy(() => import('./Pages/PrivacyAndPolicy'));
+const Blogs              = lazy(() => import('./Pages/Blogs'));
+const BlogPage           = lazy(() => import('./Pages/BlogPage'));
+const NotFound           = lazy(() => import('./Pages/NotFound'));
 
 // ── SEO SERVICE PAGES (Lazy Loaded) ──────────────────────────────
 const CarRecoveryDubai      = lazy(() => import('./Pages/services/CarRecoveryDubai'));
@@ -30,10 +39,13 @@ const DesertRecoveryDubai   = lazy(() => import('./Pages/services/DesertRecovery
 const BikeRecoveryDubai     = lazy(() => import('./Pages/services/BikeRecoveryDubai'));
 
 // ── LOCATION PAGES ────────────────────────────────────────────────
-// locationComponents is a { ComponentName: Component } map built from
-// the slugs in index.jsx, which reads all data from common.json via
-// useTranslation — no separate data file needed.
-import locationComponents from './Pages/locations';
+// All 19 location pages render the same heavy LocationPageTemplate and
+// only differ by which common.json slug they read, so this was
+// previously one static import pulling all 19 (plus the template) into
+// the main bundle. Every `import('./Pages/locations')` below points at
+// the same module specifier, so the bundler dedupes them into a single
+// shared chunk — loaded once, on first location-page visit, instead of
+// on every homepage load.
 
 // Slugs must match the top-level keys in common.json and the route
 // paths already in use. Order doesn't matter.
@@ -65,6 +77,22 @@ function slugToComponentName(slug) {
     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
     .join('');
 }
+
+// One lazy component per slug, all pointing at the same dynamic import
+// specifier — see the LOCATION PAGES comment above for why that collapses
+// into a single shared chunk rather than 19 separate ones. Built once at
+// module scope (not inside App()) since React.lazy requires a stable
+// component reference across renders.
+const locationLazyComponents = Object.fromEntries(
+  LOCATION_SLUGS.map(slug => [
+    slug,
+    lazy(() =>
+      import('./Pages/locations').then(mod => ({
+        default: mod.default[slugToComponentName(slug)],
+      })),
+    ),
+  ]),
+);
 
 // Loading Fallback
 const PageLoader = () => (
@@ -128,7 +156,7 @@ function App() {
 
           {/* Location pages — driven by common.json via useTranslation */}
           {LOCATION_SLUGS.map(slug => {
-            const Component = locationComponents[slugToComponentName(slug)];
+            const Component = locationLazyComponents[slug];
             return Component
               ? <Route key={slug} path={slug} element={<Component />} />
               : null;

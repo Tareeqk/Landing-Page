@@ -45,10 +45,32 @@
     <meta name="robots" content="index, follow" />
 
 
+    <!-- Noto Kufi Arabic / Noto Nastaliq Urdu are only needed for ar/ur
+         visitors, but a plain <link rel="stylesheet"> here blocks first
+         paint for EVERY visitor — the browser has to open a new
+         connection to fonts.googleapis.com (then fonts.gstatic.com for
+         the actual font files) and download that CSS before it can
+         render anything, on every page load, in every language. On
+         Lighthouse's throttled mobile profile that round-trip chain was
+         costing seconds of FCP/LCP for English visitors who never even
+         use these fonts. preconnect warms both connections early; the
+         media="print" swapped to "all" onload is the standard non-
+         blocking stylesheet pattern (loadCSS) — it still loads and
+         applies the fonts, just without holding up the first paint. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Noto+Nastaliq+Urdu&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Noto+Nastaliq+Urdu&display=swap"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Noto+Nastaliq+Urdu&display=swap"
+      />
+    </noscript>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Car Recovery in Dubai | 24/7 Towing & Roadside Assistance</title>

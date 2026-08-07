@@ -195,8 +195,8 @@ body.dark button {
   color: white;
 }
 
-body[lang="ur"] .terms-content p,
-body[lang="ur"] .terms-content span {
+html[lang="ur"] .terms-content p,
+html[lang="ur"] .terms-content span {
   margin: 8px 0; /* avoids spaghetti effect */
   display: block; /* force block layout for readability */
 }
@@ -232,19 +232,32 @@ body.dark button.submit {
 }
 
 /* Language-specific fonts */
-body[lang="en"] {
+html[lang="en"] {
   font-family: "Poppins", sans-serif;
   direction: ltr;
 }
 
-body[lang="ar"] {
+html[lang="ar"] {
   font-family: "Noto Kufi Arabic", sans-serif;
   direction: rtl;
 }
 
-body[lang="ur"] {
+html[lang="ur"] {
   font-family: "Noto Nastaliq Urdu", serif;
   direction: rtl;
+}
+
+/* Letter-spacing ("tracking") breaks Arabic/Urdu's required letter-joining —
+   components throughout the site add positive tracking (0.02em–0.28em) to
+   uppercase eyebrows/labels/badges as a Latin-type effect (see .tk-eyebrow,
+   .s4-eyebrow, .bl-hero-eyebrow, HomeFAQ, etc.), and that same tracking
+   forces gaps inside/between Arabic and Urdu words, reading as broken text.
+   !important because those rules are injected at runtime via per-component
+   <style> tags mounted after this stylesheet, at equal class specificity —
+   without it, load order (not intent) decides which one wins. */
+html[lang="ar"] *,
+html[lang="ur"] * {
+  letter-spacing: normal !important;
 }
 
 /* Smooth scrolling */
@@ -261,7 +274,7 @@ body {
   overflow-y: auto; 
 } */
 
-body[lang="ur"] h1 {
+html[lang="ur"] h1 {
   line-height: 1.3; /* prevent tall Urdu Nastaliq line height */
 }
 

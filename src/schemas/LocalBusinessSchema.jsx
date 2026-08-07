@@ -27,16 +27,15 @@ const schema = {
   "email": "support@tareeqk.ae",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Dubai",
+    "streetAddress": "Tareeqk Office #126, Ras Al Khor",
     "addressLocality": "Dubai",
     "addressRegion": "Dubai",
-    "postalCode": "00000",
     "addressCountry": "AE"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": 25.2048,
-    "longitude": 55.2708
+    "latitude": 25.1857,
+    "longitude": 55.3312
   },
   "areaServed": [
     {
