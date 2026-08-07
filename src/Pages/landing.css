@@ -448,15 +448,17 @@
    fighting it inch by inch. Content is top-anchored so it sits inside
    the black band instead of over the artwork below, clearing the fixed
    navbar (h-16, 64px) first.
-   Cap raised from 767px to 1200px, and this is no longer phone-only:
-   any portrait-oriented viewport in that range — a resized desktop
-   window included, not just phones/tablets — gets this same tall image
-   and compact layout, because the wide desktop banner's right-side tag
-   content collides with the left text column once the window is
-   narrower than it is tall, regardless of absolute pixel width. A
+   Width cap dropped entirely (previously 767px, then 1200px) — this is
+   not phone-only: any portrait-oriented viewport gets this same tall
+   image and compact layout, because the wide desktop banner's right-side
+   tag content collides with the left text column once the window is
+   narrower than it is tall, regardless of absolute pixel width. A wide-
+   but-portrait window (e.g. a tall, wide browser pane past the old
+   1200px cap) reproduced the exact same collision, since orientation is
+   what causes it, not size — hence no width condition left to cap. A
    landscape phone/window at the same width still shows the wide banner
    (below), which has no black band to anchor to. */
-@media (max-width: 1200px) and (orientation: portrait) {
+@media (orientation: portrait) {
   .tk-hero {
     min-height: clamp(560px, 88vh, 880px);
     min-height: clamp(560px, 88dvh, 880px);
@@ -469,12 +471,12 @@
   }
 
   /* Content width/centering and the top-right trust cards are otherwise
-     only handled by separate width-only breakpoints (768px / 900px) —
-     both stop short of this block's 1200px cap, which left a gap where
-     a portrait window between ~769–1200px kept the desktop's left-
-     aligned 620px-wide text column and visible trust cards, both of
-     which collide with this tall image's tag column. Restated here so
-     the whole 0–1200px portrait range behaves consistently. */
+     only handled by separate width-only breakpoints (768px / 900px),
+     which left a gap where a wide portrait window (e.g. >900px) kept
+     the desktop's left-aligned 620px-wide text column and visible trust
+     cards, both of which collide with this tall image's tag column.
+     Restated here so the whole portrait range behaves consistently,
+     regardless of width. */
   .tk-hero__content {
     max-width: 100%;
     text-align: center;
@@ -532,6 +534,17 @@
    ============================================================ */
 @media (orientation: landscape) {
   .tk-hero__bg-img { object-position: 56% 45%; }
+
+  /* As the window gets less wide relative to its height, the buckets
+     below crop the image progressively harder to keep its baked-in tag
+     column ("Battery Jump Start", "Flat Tyre Repair", …) in frame — which
+     also pulls that column further left, into the space the fixed 620px/
+     46ch text column assumes is clear. min() with a vw share shrinks the
+     column exactly as fast as the crop below eats into it, and is a
+     no-op on wide 16:9-and-up monitors where 46vw alone already clears
+     620px and the fixed caps win. */
+  .tk-hero__content { max-width: min(620px, 46vw); }
+  .tk-hero__subtitle { max-width: min(46ch, 44vw); }
 }
 
 @media (orientation: landscape) and (max-aspect-ratio: 16/9) {

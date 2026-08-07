@@ -89,16 +89,19 @@ function HeroBackground() {
   return (
     <div className="tk-hero__bg" aria-hidden="true">
       <picture>
-        {/* Any portrait-oriented viewport up to 1200px, not just phones —
-            a desktop window dragged narrower than it is tall hits this
-            just as much as a phone does, and needs the same tall crop +
-            compact top-anchored content (see landing.css) instead of the
-            wide desktop banner's right-side content colliding with the
-            left text column. A landscape phone/window at the same width
-            still gets the wide banner (see the orientation:landscape
+        {/* Any portrait-oriented viewport, not just phones — a desktop
+            window dragged narrower than it is tall hits this just as much
+            as a phone does, and needs the same tall crop + compact
+            top-anchored content (see landing.css) instead of the wide
+            desktop banner's right-side content colliding with the left
+            text column. No width cap: a portrait window wider than the
+            old 1200px cutoff (e.g. a tall, wide browser pane) reproduces
+            the exact same collision, since it's the shape that causes it,
+            not the absolute size. A landscape phone/window at the same
+            width still gets the wide banner (see the orientation:landscape
             rules in landing.css), not the tall portrait crop stretched
             sideways. */}
-        <source media="(max-width: 1200px) and (orientation: portrait)" srcSet={HERO_PHOTO_MOBILE} />
+        <source media="(orientation: portrait)" srcSet={HERO_PHOTO_MOBILE} />
         <img
           src={HERO_PHOTO}
           alt=""
