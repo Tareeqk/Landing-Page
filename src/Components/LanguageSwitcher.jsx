@@ -79,12 +79,12 @@ function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-24 sm:w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
+        <div className="absolute end-0 mt-2 w-24 sm:w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
           {languages.map((lang) => (
             <button
               key={lang.code}
               onClick={() => changeLang(lang.code)}
-              className={`block w-full text-left px-3 py-1 text-xs sm:text-sm
+              className={`block w-full text-start px-3 py-1 text-xs sm:text-sm
                 ${
                   i18n.language === lang.code
                     ? "bg-[var(--primary-yellow)] text-[var(--primary-dark-bg)]"
