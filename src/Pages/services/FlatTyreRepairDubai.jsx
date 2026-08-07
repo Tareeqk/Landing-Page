@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'A flat tyre stops you instantly. Our mobile tyre technicians are stationed across Dubai and dispatch to your GPS pin within 20 minutes on average — handling puncture repairs and full tyre swaps on-site.',
   whatIsService: 'Flat tyre repair service in Dubai means a certified technician comes to your exact location with the tools to patch a puncture or fit a replacement tyre on the spot. Tareeqk\'s mobile units carry tyre repair kits and a selection of common tyre sizes suitable for the most popular cars in the UAE, saving you the risk and damage of driving on a flat.',
   areas: [
-    'Dubai Marina', 'JVC', 'Business Bay', 'Deira', 'Al Quoz',
-    'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'Mirdif', 'JBR',
-    'Al Nahda', 'Dubai Hills', 'Motor City', 'DIFC', 'Sheikh Zayed Rd',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 mobile tyre service — we come to your car, wherever it is.',

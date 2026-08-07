@@ -76,7 +76,19 @@ for (const { path: route } of pages) {
       { timeout: 15_000 }
     );
 
-    const html = await page.content();
+    // page.content() serializes the LIVE DOM — by this point Chrome has
+    // already loaded the Google Fonts stylesheet and fired its onload
+    // handler, which flips that <link>'s media from "print" to "all" (see
+    // the loadCSS pattern in index.html). Serializing that post-load state
+    // bakes a permanently render-blocking media="all" into the static file
+    // every real visitor gets, silently undoing the whole point of the
+    // non-blocking font trick. Reset it back to the pre-load state before
+    // writing to disk — this is the one <head> tag that must stay exactly
+    // as authored rather than reflect the rendered-page snapshot.
+    const html = (await page.content()).replace(
+      /(<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com\/css2\?family=Noto\+Kufi\+Arabic[^"]*")\s+media="all"(\s+onload=)/,
+      '$1 media="print"$2',
+    );
     const outDir = route === '/' ? distDir : path.join(distDir, route);
     await mkdir(outDir, { recursive: true });
     await writeFile(path.join(outDir, 'index.html'), html);

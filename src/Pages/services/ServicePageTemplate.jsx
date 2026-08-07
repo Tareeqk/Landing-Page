@@ -27,13 +27,30 @@ const ALL_SERVICES = [
   { label: 'Bike Recovery Dubai', href: '/bike-recovery-dubai', Icon: FaMotorcycle },
 ];
 
+// Matches the Footer's own AREAS list and App.jsx's LOCATION_SLUGS exactly —
+// these are the only areas with real, dedicated location pages behind them.
+// Service pages must draw from this same set so every area card links to a
+// page that actually exists instead of a generated href that 404s.
 const ALL_LOCATIONS = [
   { label: 'Dubai Marina', href: '/car-recovery-dubai-marina' },
-  { label: 'JVC', href: '/car-recovery-jvc' },
   { label: 'Business Bay', href: '/car-recovery-business-bay' },
+  { label: 'Downtown Dubai', href: '/car-recovery-downtown-dubai' },
   { label: 'Deira', href: '/car-recovery-deira' },
-  { label: 'Al Quoz', href: '/car-recovery-al-quoz' },
+  { label: 'Bur Dubai', href: '/car-recovery-bur-dubai' },
+  { label: 'Al Barsha', href: '/car-recovery-al-barsha' },
   { label: 'Jumeirah', href: '/car-recovery-jumeirah' },
+  { label: 'JVC', href: '/car-recovery-jvc' },
+  { label: 'JLT', href: '/car-recovery-jlt' },
+  { label: 'Dubai Silicon Oasis', href: '/car-recovery-dubai-silicon-oasis' },
+  { label: 'International City', href: '/car-recovery-international-city' },
+  { label: 'Dubai Investment Park', href: '/car-recovery-dubai-investment-park' },
+  { label: 'Dubai Sports City', href: '/car-recovery-dubai-sports-city' },
+  { label: 'Motor City', href: '/car-recovery-motor-city' },
+  { label: 'Mirdif', href: '/car-recovery-mirdif' },
+  { label: 'Al Qusais', href: '/car-recovery-al-qusais' },
+  { label: 'Al Quoz', href: '/car-recovery-al-quoz' },
+  { label: 'Jebel Ali', href: '/car-recovery-jebel-ali' },
+  { label: 'Palm Jumeirah', href: '/car-recovery-palm-jumeirah' },
 ];
 
 // Converts an area name to a URL slug, e.g. "Dubai Marina" → "dubai-marina"

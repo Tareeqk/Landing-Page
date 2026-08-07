@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'Running out of fuel in the middle of Dubai traffic is stressful. Our team delivers an emergency supply of petrol to your exact location within 20 minutes on average — enough to get you safely to the nearest ENOC, ADNOC, or EPPCO station.',
   whatIsService: 'Emergency fuel delivery in Dubai is a roadside assistance service where a Tareeqk technician brings a measured amount of petrol directly to your stalled vehicle. This service covers all areas of Dubai and is available 24/7. We deliver enough fuel to restart your car and reach the nearest petrol station — no towing required.',
   areas: [
-    'Dubai Marina', 'JVC', 'Business Bay', 'Deira', 'Al Quoz',
-    'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'Mirdif', 'JBR',
-    'DIFC', 'Dubai Hills', 'Motor City', 'Al Nahda', 'Palm Jumeirah',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 emergency fuel delivery — we never close.',

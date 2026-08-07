@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'A battery failure can happen anytime — especially in Dubai\'s extreme summer heat. Our technicians reach you within 15 minutes on average and handle the battery test, jump-start, or replacement right where your car is parked.',
   whatIsService: 'Car battery service in Dubai includes on-site jump starts (battery boost) and full battery replacement. Dubai\'s intense summer heat accelerates battery degradation — making battery failures the #1 cause of breakdowns in the UAE. Tareeqk\'s mobile technicians arrive equipped with battery testers, jump-start packs, and a stock of compatible replacement batteries for most vehicle makes and models.',
   areas: [
-    'Dubai Marina', 'JVC', 'Business Bay', 'Deira', 'Al Quoz',
-    'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'Mirdif', 'JBR',
-    'Al Nahda', 'Dubai Hills', 'Motor City', 'DIFC', 'Palm Jumeirah',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 mobile battery service — we come to your exact location.',

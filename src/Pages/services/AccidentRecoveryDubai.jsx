@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'Accident scenes require speed and precision. Tareeqk\'s accident recovery units are equipped with heavy-duty flatbed trucks and wheel-lift rigs to safely recover damaged vehicles from any position — on the road, in a ditch, or against a barrier.',
   whatIsService: 'Accident recovery in Dubai is an emergency service that safely removes and transports your damaged vehicle from an accident site. Tareeqk\'s certified recovery team handles all vehicle types — from sedans to SUVs and light commercial vehicles — and can transport your car to a police-approved garage, your insurance company\'s preferred repairer, or any location you choose.',
   areas: [
-    'Dubai Marina', 'Business Bay', 'Sheikh Zayed Road', 'Deira',
-    'Al Quoz', 'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'JVC',
-    'Mirdif', 'Al Nahda', 'Dubai Hills', 'Motor City', 'DIFC', 'JBR',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 emergency accident recovery with RTA-licensed operators.',

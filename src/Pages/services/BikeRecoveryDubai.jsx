@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'Bike trouble can happen anywhere, from busy roads to parking areas. Once you contact us, our recovery team reaches your location quickly and handles the pickup and transport of your bike safely.',
   whatIsService: 'Our bike recovery service in Dubai is designed for motorcycles, scooters, and other two-wheelers that need safe transport after a breakdown, accident, or mechanical issue. We arrive with the right equipment to load and move your bike carefully, helping protect it from further damage. With fast response across Dubai, riders can count on reliable recovery when they need it most.',
   areas: [
-    'Dubai Marina', 'JVC', 'Business Bay', 'Deira', 'Al Quoz',
-    'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'Mirdif', 'Dubai Hills',
-    'Motor City', 'DIFC', 'JBR', 'Al Nahda',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 bike recovery in Dubai, including nights, weekends, and public holidays.',

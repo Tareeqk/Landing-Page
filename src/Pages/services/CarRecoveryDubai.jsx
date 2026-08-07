@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'Our dispatch team monitors Dubai 24/7. Once you place a request via the app or call, a certified recovery truck is en route within minutes. Average on-scene time is 20 minutes across Dubai.',
   whatIsService: 'Car recovery Dubai is an emergency roadside service that safely transports your broken-down or damaged vehicle to a garage, dealer, or location of your choice. Tareeqk operates a fleet of flatbed and wheel-lift recovery trucks manned by certified technicians — ready around the clock across all Dubai districts.',
   areas: [
-    'Dubai Marina', 'JVC', 'Business Bay', 'Deira', 'Al Quoz',
-    'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'Mirdif', 'Dubai Hills',
-    'Motor City', 'DIFC', 'JBR', 'Al Nahda', 'Sharjah (border)',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 availability — we never close, even on public holidays.',

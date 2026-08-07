@@ -14,9 +14,10 @@ const config = {
   responseDesc: 'Tareeqk\'s towing fleet covers everything from compact sedans to SUVs and light commercial vehicles. Our flatbed and wheel-lift trucks load your car without contact damage, whether it\'s parked, broken down, or stuck after a mechanical fault.',
   whatIsService: 'Car towing in Dubai is an on-demand service that moves your vehicle from one location to another — a breakdown spot, a no-parking zone, your home, a garage, or a dealership. Tareeqk\'s certified drivers use flatbed and wheel-lift tow trucks suited to your vehicle type, so it arrives at its destination exactly as it left.',
   areas: [
-    'Dubai Marina', 'Business Bay', 'Sheikh Zayed Road', 'Deira',
-    'Al Quoz', 'Jumeirah', 'Downtown Dubai', 'Al Barsha', 'JVC',
-    'Mirdif', 'Al Nahda', 'Dubai Hills', 'Motor City', 'DIFC', 'JBR',
+    'Dubai Marina', 'Business Bay', 'Downtown Dubai', 'Deira', 'Bur Dubai',
+    'Al Barsha', 'Jumeirah', 'JVC', 'JLT', 'Dubai Silicon Oasis',
+    'International City', 'Dubai Investment Park', 'Dubai Sports City', 'Motor City', 'Mirdif',
+    'Al Qusais', 'Al Quoz', 'Jebel Ali', 'Palm Jumeirah',
   ],
   whyUs: [
     '24/7 towing with RTA-licensed drivers and flatbed trucks.',
