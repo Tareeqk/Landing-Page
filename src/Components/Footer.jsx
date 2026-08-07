@@ -470,6 +470,7 @@ const Footer = () => {
                 src="/new/LogoW.webp"
                 alt="Tareeqk"
                 className="tk-brand-logo"
+                loading="lazy"
               />
 
               <p className="tk-brand-desc">

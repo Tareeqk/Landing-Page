@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 // wallet + active rides) on a transparent canvas, at the same 4:3 ratio —
 // object-fit:contain on both keeps every phone in the group fully visible
 // instead of cropping into the composition.
-const CUSTOMER_APP_BG = "/new/MOBILE MOCKUP TAREEQK CUSTOMER.png";
-const DRIVER_APP_BG = "/new/MOBILE MOCKUP TAREEQK DRIVER.png";
+const CUSTOMER_APP_BG = "/new/MOBILE MOCKUP TAREEQK CUSTOMER.webp";
+const DRIVER_APP_BG = "/new/MOBILE MOCKUP TAREEQK DRIVER.webp";
 
 // Each banner shows 4 cards with a real title + sentence to read — 6s gave
 // people almost no time to get through them before it auto-advanced.
@@ -35,10 +35,10 @@ export default function HowItWorks() {
       description: t("howItWorks.description"),
       bg: CUSTOMER_APP_BG,
       steps: [
-        { num: "01", iconSrc: "/icons/request_tow.png", title: t("howItWorks.step1Title"), desc: t("howItWorks.step1Desc") },
-        { num: "02", iconSrc: "/icons/best_fit.png", title: t("howItWorks.step2Title"), desc: t("howItWorks.step2Desc") },
-        { num: "03", iconSrc: "/icons/track_time.png", title: t("howItWorks.step3Title"), desc: t("howItWorks.step3Desc") },
-        { num: "04", iconSrc: "/icons/safe_hassle.png", title: t("howItWorks.step4Title"), desc: t("howItWorks.step4Desc") },
+        { num: "01", iconSrc: "/icons/request_tow.webp", title: t("howItWorks.step1Title"), desc: t("howItWorks.step1Desc") },
+        { num: "02", iconSrc: "/icons/best_fit.webp", title: t("howItWorks.step2Title"), desc: t("howItWorks.step2Desc") },
+        { num: "03", iconSrc: "/icons/track_time.webp", title: t("howItWorks.step3Title"), desc: t("howItWorks.step3Desc") },
+        { num: "04", iconSrc: "/icons/safe_hassle.webp", title: t("howItWorks.step4Title"), desc: t("howItWorks.step4Desc") },
       ],
     },
     {
@@ -51,20 +51,20 @@ export default function HowItWorks() {
       description: t("howItWorks.driverDescription"),
       bg: DRIVER_APP_BG,
       steps: [
-        { num: "01", iconSrc: "/icons/request_tow.png", title: t("howItWorks.driverStep1Title"), desc: t("howItWorks.driverStep1Desc") },
-        { num: "02", iconSrc: "/icons/verified.png", title: t("howItWorks.driverStep2Title"), desc: t("howItWorks.driverStep2Desc") },
-        { num: "03", iconSrc: "/icons/best_fit.png", title: t("howItWorks.driverStep3Title"), desc: t("howItWorks.driverStep3Desc") },
-        { num: "04", iconSrc: "/icons/location_icon.png", title: t("howItWorks.driverStep4Title"), desc: t("howItWorks.driverStep4Desc") },
+        { num: "01", iconSrc: "/icons/request_tow.webp", title: t("howItWorks.driverStep1Title"), desc: t("howItWorks.driverStep1Desc") },
+        { num: "02", iconSrc: "/icons/verified.webp", title: t("howItWorks.driverStep2Title"), desc: t("howItWorks.driverStep2Desc") },
+        { num: "03", iconSrc: "/icons/best_fit.webp", title: t("howItWorks.driverStep3Title"), desc: t("howItWorks.driverStep3Desc") },
+        { num: "04", iconSrc: "/icons/location_icon.webp", title: t("howItWorks.driverStep4Title"), desc: t("howItWorks.driverStep4Desc") },
       ],
     },
   ];
 
   const perks = [
-    { iconSrc: "/icons/verified.png", label: t("howItWorks.perkVerified") },
-    { iconSrc: "/icons/fast_response.png", label: t("howItWorks.perkFast") },
-    { iconSrc: "/icons/secure_payments.png", label: t("howItWorks.perkSecure") },
-    { iconSrc: "/icons/all_service.png", label: t("howItWorks.perkSupport") },
-    { iconSrc: "/icons/TopRated.png", label: t("howItWorks.perkRated") },
+    { iconSrc: "/icons/verified.webp", label: t("howItWorks.perkVerified") },
+    { iconSrc: "/icons/fast_response.webp", label: t("howItWorks.perkFast") },
+    { iconSrc: "/icons/secure_payments.webp", label: t("howItWorks.perkSecure") },
+    { iconSrc: "/icons/all_service.webp", label: t("howItWorks.perkSupport") },
+    { iconSrc: "/icons/TopRated.webp", label: t("howItWorks.perkRated") },
   ];
   // Doubled so the marquee can loop seamlessly (translateX(-50%) lands
   // exactly back on the first copy) — same trick as the offer section's
@@ -665,6 +665,7 @@ export default function HowItWorks() {
                         className="hiw-device-img"
                         src={banner.bg}
                         alt=""
+                        loading="lazy"
                         style={{ objectFit: "contain", objectPosition: "center" }}
                       />
                       <span className="hiw-device-badge">
@@ -685,7 +686,7 @@ export default function HowItWorks() {
                     >
                       <span className="hiw-step-num">{step.num}</span>
                       <div className="hiw-step-icon">
-                        <img src={step.iconSrc} alt="" aria-hidden="true" />
+                        <img src={step.iconSrc} alt="" aria-hidden="true" loading="lazy" />
                       </div>
                       <div className="hiw-step-text">
                         <h3 className="hiw-step-title">{step.title}</h3>
@@ -708,7 +709,7 @@ export default function HowItWorks() {
             {perks.map((p) => (
               <div className="hiw-perk" key={p.label}>
                 <div className="hiw-perk-icon-wrap">
-                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" />
+                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" loading="lazy" />
                 </div>
                 <span className="hiw-perk-label">{p.label}</span>
               </div>
@@ -725,7 +726,7 @@ export default function HowItWorks() {
             {tickerPerks.map((p, i) => (
               <div className="hiw-ticker-perk" key={`${p.label}-${i}`}>
                 <div className="hiw-perk-icon-wrap">
-                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" />
+                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" loading="lazy" />
                 </div>
                 <span className="hiw-perk-label">{p.label}</span>
               </div>

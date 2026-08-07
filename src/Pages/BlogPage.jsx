@@ -14,9 +14,9 @@ import BreadcrumbSchema from '../schemas/BreadcrumbSchema';
 // breaks — generic/reusable for any article this template renders, not
 // tied to one specific post's content.
 const SECTION_IMAGES = [
-  { src: '/towing.jpg', alt: 'Tareeqk tow truck on a Dubai street' },
-  { src: '/tareeqktow.jpg', alt: 'Tareeqk truck loading a vehicle' },
-  { src: '/newTruck.jpg', alt: 'Tareeqk flatbed recovery truck' },
+  { src: '/towing.webp', alt: 'Tareeqk tow truck on a Dubai street' },
+  { src: '/tareeqktow.webp', alt: 'Tareeqk truck loading a vehicle' },
+  { src: '/newTruck.webp', alt: 'Tareeqk flatbed recovery truck' },
 ];
 
 function useBlogPageStyles() {
@@ -464,7 +464,7 @@ export default function BlogPage() {
             </div>
           </div>
           <div className="bp-cta-media">
-            <img src="/tareeqktow.jpg" alt="Tareeqk tow truck loading a car" />
+            <img src="/tareeqktow.webp" alt="Tareeqk tow truck loading a car" loading="lazy" />
           </div>
         </div>
       </div>

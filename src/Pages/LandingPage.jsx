@@ -20,13 +20,13 @@ const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 // (2.33:1) landscape render, i.e. built for the desktop banner. Using them
 // by filename instead of composition would stretch/crop each into the
 // wrong shape.
-const HERO_PHOTO = '/new/landingpage_mobile.png';
+const HERO_PHOTO = '/new/landingpage_mobile.webp';
 
 // Portrait crop for phones — tall render with the same black-band-on-top
 // composition as before (see .tk-hero__inner's mobile top-alignment below),
 // now with the service tags and truck/car/robot artwork filling the lower
 // two-thirds instead of just the truck.
-const HERO_PHOTO_MOBILE = '/new/landingpage_banner.png';
+const HERO_PHOTO_MOBILE = '/new/landingpage_banner.webp';
 
 /* ── Typing cycle ──
    Drives the hero title's type/delete loop only — the background photo
@@ -249,7 +249,7 @@ export default function LandingPage() {
                 aria-label="Download on the App Store"
               >
                 <img
-                  src="/applestore.png"
+                  src="/applestore.webp"
                   alt="Download on the App Store"
                   className="tk-store-badge__img"
                   loading="lazy"
@@ -265,7 +265,7 @@ export default function LandingPage() {
                 aria-label="Get it on Google Play"
               >
                 <img
-                  src="/playstore.png"
+                  src="/playstore.webp"
                   alt="Get it on Google Play"
                   className="tk-store-badge__img"
                   loading="lazy"
@@ -296,7 +296,7 @@ export default function LandingPage() {
           aria-label="Download on the App Store"
         >
           <img
-            src="/applestore.png"
+            src="/applestore.webp"
             alt="Download on the App Store"
             className="tk-store-badge__img"
             loading="lazy"
@@ -312,7 +312,7 @@ export default function LandingPage() {
           aria-label="Get it on Google Play"
         >
           <img
-            src="/playstore.png"
+            src="/playstore.webp"
             alt="Get it on Google Play"
             className="tk-store-badge__img"
             loading="lazy"

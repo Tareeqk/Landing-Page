@@ -89,6 +89,7 @@ export default function FAQs() {
         <img
           src="/new/second_img.webp"
           alt="FAQs"
+          loading="eager"
           style={{
             position: "absolute",
             top: 0,

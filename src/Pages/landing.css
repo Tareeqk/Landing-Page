@@ -131,7 +131,7 @@
      too tight against the navbar; this settles a little below. */
   padding: clamp(64px, 10vw, 130px) clamp(20px, 4vw, 56px) clamp(48px, 8vw, 88px);
   display: flex;
-  /* Top-anchored rather than bottom-anchored — landingpage_mobile.png's
+  /* Top-anchored rather than bottom-anchored — landingpage_mobile.webp's
      service-tags column starts right near the top of the hero ("Car
      Recovery" sits level with the trust-stat cards), so the text block
      needs to start near that same height to read as one aligned
@@ -433,7 +433,7 @@
 }
 
 /* ============================================================
-   MOBILE/PORTRAIT HERO PHOTO — landingpage_banner.png is a tall portrait
+   MOBILE/PORTRAIT HERO PHOTO — landingpage_banner.webp is a tall portrait
    render with a solid-black upper band so the truck/robot/service-tag
    artwork reads as emerging from the page's own dark background rather
    than sitting inside a visible photo rectangle — keep it full-bleed,
@@ -523,7 +523,7 @@
 }
 
 /* ============================================================
-   LANDSCAPE BACKGROUND — landingpage_mobile.png is a ~2.33:1 banner
+   LANDSCAPE BACKGROUND — landingpage_mobile.webp is a ~2.33:1 banner
    (7000×3000) with its subject (service tags + truck/car/robot) sitting
    right-of-center, same as the previous desktop render this replaced.
    object-fit: cover crops its *width* on any landscape viewport narrower

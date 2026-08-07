@@ -524,7 +524,7 @@ export default function AboutPreview() {
             style={{ order: isRTL ? 2 : 1 }}
           >
             <div className="abt-preview-media-main">
-              <img src="/new/about_component.png" alt="Tareeqk recovery truck on a Dubai highway" />
+              <img src="/new/about_component.webp" alt="Tareeqk recovery truck on a Dubai highway" loading="lazy" />
             </div>
 
             {/* <div className="abt-preview-float">

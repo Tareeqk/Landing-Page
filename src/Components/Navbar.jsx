@@ -170,10 +170,11 @@ export default function Navbar({ isDark, setIsDark }) {
                         )}
                       >
                         <img
-                          src="/TAREEQK LOGO.png"
+                          src="/TAREEQK LOGO.webp"
                           alt="Tareeqk"
                           className="h-8 sm:h-9 w-auto"
-                          loading="lazy"
+                          loading="eager"
+                          fetchpriority="high"
                         />
                       </span>
                      

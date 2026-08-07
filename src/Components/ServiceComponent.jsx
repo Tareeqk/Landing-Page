@@ -26,8 +26,8 @@ export default function WhatWeOffer() {
         t("offer.recovery5ton"),
         t("offer.recovery10ton"),
       ],
-      iconSrc: "/icons/TRUCK_ICON.png",
-      photoSrc: "/icons/car_recovery.png",
+      iconSrc: "/icons/TRUCK_ICON.webp",
+      photoSrc: "/icons/car_recovery.webp",
       photoPosition: "right bottom",
     },
     {
@@ -41,8 +41,8 @@ export default function WhatWeOffer() {
         t("offer.batteryJump"),
         t("offer.batteryTesting"),
       ],
-      iconSrc: "/icons/BATTERY_ICON.png",
-      photoSrc: "/icons/battery_jumpstart.png",
+      iconSrc: "/icons/BATTERY_ICON.webp",
+      photoSrc: "/icons/battery_jumpstart.webp",
       photoPosition: "right bottom",
     },
     {
@@ -56,17 +56,17 @@ export default function WhatWeOffer() {
         t("offer.tyreReplacement"),
         t("offer.tyreEmergency"),
       ],
-      iconSrc: "/icons/TIRE_ICON.png",
-      photoSrc: "/icons/tire_puncture.png",
+      iconSrc: "/icons/TIRE_ICON.webp",
+      photoSrc: "/icons/tire_puncture.webp",
       photoPosition: "right bottom",
     },
   ];
 
   const stats = [
-    { iconSrc: "/icons/support.png",        value: t("offer.appBookingTop"),  label: t("offer.appBooking")  },
-    { iconSrc: "/icons/clock.png",           value: t("offer.appServiceTop"), label: t("offer.appService")  },
-    { iconSrc: "/icons/check.png",           value: t("offer.appTrackingTop"),label: t("offer.appTracking") },
-    { iconSrc: "/icons/location_icon.png",   value: t("offer.appRecoveryTop"),label: t("offer.appRecovery") },
+    { iconSrc: "/icons/support.webp",        value: t("offer.appBookingTop"),  label: t("offer.appBooking")  },
+    { iconSrc: "/icons/clock.webp",           value: t("offer.appServiceTop"), label: t("offer.appService")  },
+    { iconSrc: "/icons/check.webp",           value: t("offer.appTrackingTop"),label: t("offer.appTracking") },
+    { iconSrc: "/icons/location_icon.webp",   value: t("offer.appRecoveryTop"),label: t("offer.appRecovery") },
   ];
 
   // ── Scroll to card by index
@@ -871,8 +871,9 @@ export default function WhatWeOffer() {
           <div className="s4-hero-img-wrap">
             <img
               className="s4-hero-img"
-              src="/new/offer_image.png"
+              src="/new/offer_image.webp"
               alt={t("offer.heroImageAlt")}
+              loading="lazy"
             />
           </div>
         </div>
@@ -886,7 +887,7 @@ export default function WhatWeOffer() {
               key={s.value}
             >
               <div className="s4-stat-icon">
-                <img src={s.iconSrc} alt="" aria-hidden="true" />
+                <img src={s.iconSrc} alt="" aria-hidden="true" loading="lazy" />
               </div>
               <div>
                 <div className="s4-stat-value">{s.value}</div>
@@ -903,7 +904,7 @@ export default function WhatWeOffer() {
               <>
                 <div className="s4-ticker-item" key={`${s.value}-${i}`}>
                   <div className="s4-ticker-icon">
-                    <img src={s.iconSrc} alt="" />
+                    <img src={s.iconSrc} alt="" loading="lazy" />
                   </div>
                   <div>
                     <div className="s4-ticker-value">{s.value}</div>
@@ -932,14 +933,14 @@ export default function WhatWeOffer() {
             >
               {service.featured && (
                 <span className="s4-badge">
-                  <img src="/icons/star_icon.png" alt="" aria-hidden="true" />
+                  <img src="/icons/star_icon.webp" alt="" aria-hidden="true" loading="lazy" />
                   <span>{t("offer.mostRequested")}</span>
                 </span>
               )}
 
               <div className="s4-card-header">
                 <div className="s4-icon-circle">
-                  <img src={service.iconSrc} alt="" aria-hidden="true" />
+                  <img src={service.iconSrc} alt="" aria-hidden="true" loading="lazy" />
                 </div>
                 <h3 className="s4-card-title">{service.title}</h3>
               </div>
@@ -950,7 +951,7 @@ export default function WhatWeOffer() {
                 {service.features.map((feat) => (
                   <li key={feat} className="s4-feature">
                     <span className="s4-check">
-                      <img src="/icons/check.png" alt="" aria-hidden="true" />
+                      <img src="/icons/check.webp" alt="" aria-hidden="true" loading="lazy" />
                     </span>
                     {feat}
                   </li>
@@ -964,6 +965,7 @@ export default function WhatWeOffer() {
                   src={service.photoSrc}
                   alt=""
                   aria-hidden="true"
+                  loading="lazy"
                   style={{ objectPosition: service.photoPosition }}
                 />
               </div>

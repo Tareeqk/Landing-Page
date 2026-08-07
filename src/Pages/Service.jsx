@@ -9,7 +9,6 @@ import {
   CheckCircle2, Trophy, DollarSign, HardHat, Download, Mountain, Bike,
 } from 'lucide-react';
 
-import howItWorksIllustration from '/how-it-works-illustration.png';
 import useLangLink from '../hooks/useLangLink';
 import { useParams } from 'react-router-dom';
 import HreflangTags from '../Components/HreflangTags';
@@ -580,7 +579,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Car size={18} />,
       href: '/car-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1728117190970-2583f89dfa15?auto=format&fit=crop&w=800&q=60',
+      img: '/services/car-recovery.webp',
       tag: t('service.svc1Tag'),
       tagBg: 'rgba(255,244,214,0.95)',
       tagColor: '#b07c00',
@@ -591,7 +590,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Truck size={18} />,
       href: '/towing-service-dubai',
-      img: 'https://images.unsplash.com/photo-1730514784243-f0e7f09c9f50?auto=format&fit=crop&w=800&q=60',
+      img: '/services/towing-service.webp',
       tag: null,
       title: t('service.svc2Title'),
       desc: t('service.svc2Desc'),
@@ -600,7 +599,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Battery size={18} />,
       href: '/battery-service-dubai',
-      img: 'https://images.unsplash.com/photo-1676337167752-2062c6ca7366?auto=format&fit=crop&w=800&q=60',
+      img: '/services/battery-service.webp',
       tag: t('service.svc3Tag'),
       tagBg: 'rgba(254,226,226,0.95)',
       tagColor: '#c93030',
@@ -611,7 +610,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Wrench size={18} />,
       href: '/flat-tyre-repair-dubai',
-      img: 'https://images.unsplash.com/photo-1664820578859-2a1eddb69bd5?auto=format&fit=crop&w=800&q=60',
+      img: '/services/flat-tyre-repair.webp',
       tag: null,
       title: t('service.svc4Title'),
       desc: t('service.svc4Desc'),
@@ -620,7 +619,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <AlertTriangle size={18} />,
       href: '/accident-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1713623311317-d3c43a4be4cf?auto=format&fit=crop&w=800&q=60',
+      img: '/services/accident-recovery.webp',
       tag: t('service.svc5Tag'),
       tagBg: 'rgba(255,231,213,0.95)',
       tagColor: '#c04f00',
@@ -631,7 +630,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Mountain size={18} />,
       href: '/desert-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1763535834153-22c340883793?auto=format&fit=crop&w=800&q=60',
+      img: '/services/desert-recovery.webp',
       tag: null,
       title: t('service.svc6Title'),
       desc: t('service.svc6Desc'),
@@ -640,7 +639,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Bike size={18} />,
       href: '/bike-recovery-dubai',
-      img: 'https://images.unsplash.com/photo-1624535460536-4d3631ccea9c?auto=format&fit=crop&w=800&q=60',
+      img: '/services/bike-recovery.webp',
       tag: null,
       title: t('service.svc7Title'),
       desc: t('service.svc7Desc'),

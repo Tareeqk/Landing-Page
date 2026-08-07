@@ -14,7 +14,7 @@ export const BLOGS = [
   {
     id: 1,
     slug: 'how-to-choose-a-trusted-car-recovery-service-in-dubai',
-    image: '/tareeqktow.jpg',
+    image: '/tareeqktow.webp',
     date: '2026-07-11',
     mins: 6,
     translations: {
