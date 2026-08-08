@@ -110,13 +110,6 @@ function useAboutStyles() {
         left: -14px !important;
       }
 
-      /* ── Gold accent line RTL ── */
-      [dir="rtl"] .abt-hero-accent {
-        left: auto !important;
-        right: 0 !important;
-        background: linear-gradient(270deg, var(--primary-yellow), transparent) !important;
-      }
-
       /* ── Mobile story photo — single image, matching the one desktop
          shows, instead of a 4-photo scroll strip ── */
       .abt-photo-strip {
@@ -474,6 +467,7 @@ export default function About({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       {!isSection && (
         <section
+          dir="ltr"
           style={{
             position: 'relative',
             overflow: 'hidden',
@@ -510,28 +504,25 @@ export default function About({ isSection = false }) {
             }}
           />
 
-          {/* Overlay */}
+          {/* Overlay — kept LTR-anchored regardless of language; the
+              header's layout stays fixed to the English arrangement,
+              only the copy translates (see dir="ltr" on the section). */}
           <div
             style={{
               position: 'absolute', inset: 0, zIndex: 1,
-              background: isRTL
-                ? `linear-gradient(260deg,rgba(10,10,10,0.90) 0%,rgba(10,10,10,0.68) 42%,rgba(10,10,10,0.22) 100%),
-                   linear-gradient(0deg,rgba(10,10,10,0.55) 0%,transparent 48%)`
-                : `linear-gradient(100deg,rgba(10,10,10,0.90) 0%,rgba(10,10,10,0.68) 42%,rgba(10,10,10,0.22) 100%),
+              background: `linear-gradient(100deg,rgba(10,10,10,0.90) 0%,rgba(10,10,10,0.68) 42%,rgba(10,10,10,0.22) 100%),
                    linear-gradient(0deg,rgba(10,10,10,0.55) 0%,transparent 48%)`,
             }}
           />
 
-          {/* Gold accent line */}
+          {/* Gold accent line — always left, matching the English layout */}
           <div
             className="abt-hero-accent"
             style={{
               position: 'absolute', top: 0,
-              left: isRTL ? 'auto' : 0, right: isRTL ? 0 : 'auto',
+              left: 0, right: 'auto',
               width: '32%', height: '3px', zIndex: 2,
-              background: isRTL
-                ? 'linear-gradient(270deg, var(--primary-yellow), transparent)'
-                : 'linear-gradient(90deg, var(--primary-yellow), transparent)',
+              background: 'linear-gradient(90deg, var(--primary-yellow), transparent)',
             }}
           />
 
@@ -540,7 +531,7 @@ export default function About({ isSection = false }) {
             className="abt-inner"
             style={{ ...inner, position: 'relative', zIndex: 3, paddingTop: '80px', paddingBottom: '80px' }}
           >
-            <div style={{ maxWidth: '600px', marginInlineStart: 0 }}>
+            <div style={{ maxWidth: '600px', marginInlineStart: 0, textAlign: isRTL ? 'right' : 'left' }}>
               <span className="abt-reveal" data-delay="0" style={eyebrow}>
                 {t('about.heroTag')}
               </span>
@@ -630,7 +621,7 @@ export default function About({ isSection = false }) {
                   }}
                 >
                   {t('about.heroInquire')}
-                  {isRTL ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
+                  <ChevronRight size={16} />
                 </a>
               </div>
 

@@ -358,22 +358,20 @@ const S = {
     justifyContent: 'center', margin: '0 auto 12px',
   },
 
-  // ── Gallery ──
-  galleryGrid: {
+  // ── Equipment / readiness ──
+  equipGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
     gap: '16px',
   },
-  galleryItem: {
-    position: 'relative', borderRadius: '18px', overflow: 'hidden',
-    aspectRatio: '4 / 3', background: '#f3f4f6',
-    boxShadow: '0 6px 24px rgba(0,0,0,0.09)',
+  equipCard: {
+    border: '1.5px solid #e5e7eb', borderRadius: '18px',
+    padding: '26px 22px', background: '#fff',
   },
-  galleryImg: { width: '100%', height: '100%', objectFit: 'cover', display: 'block' },
-  galleryCaption: {
-    position: 'absolute', bottom: 0, left: 0, right: 0,
-    padding: '20px 16px 14px', color: '#fff', fontSize: '13px', fontWeight: 700,
-    background: 'linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 100%)',
+  equipIconWrap: {
+    width: '48px', height: '48px', borderRadius: '13px',
+    background: '#fef3c7', display: 'flex', alignItems: 'center',
+    justifyContent: 'center', marginBottom: '16px',
   },
 
   // ── Response process steps ──
@@ -529,32 +527,27 @@ export default function LocationPageTemplate({ config }) {
   const currentHref = `/${config.slug}`;
   const otherLocations = ALL_LOCATIONS.filter(l => l.href !== currentHref);
 
-  const hasRealGallery = config.gallery && config.gallery.length === 3;
-  // No distinct per-location photography yet — real Tareeqk truck photos
-  // (already in /public, unbranded stock kept missing the mark) instead
-  // of the same hero image tiled three times under three captions.
-  const galleryImages = hasRealGallery
-    ? config.gallery
-    : [
-      {
-        src: '/new/gallery_dispatched.webp',
-        alt: t('locationPageTemplate.gallery.altDispatched', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — recovery truck dispatched' }),
-        caption: t('locationPageTemplate.gallery.captionDispatched', { area: config.area, defaultValue: 'Recovery dispatched in {{area}}' }),
-        pos: 'center',
-      },
-      {
-        src: '/new/gallery_arriving.webp',
-        alt: t('locationPageTemplate.gallery.altArriving', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — technician arriving on site' }),
-        caption: t('locationPageTemplate.gallery.captionArriving', { defaultValue: 'Technician arriving on-site' }),
-        pos: 'top',
-      },
-      {
-        src: '/new/gallery_standby.webp',
-        alt: t('locationPageTemplate.gallery.altStandby', { heroAlt: config.heroAlt, defaultValue: '{{heroAlt}} — unit on standby' }),
-        caption: t('locationPageTemplate.gallery.captionStandby', { defaultValue: 'Standing by, 24/7' }),
-        pos: 'bottom',
-      },
-    ];
+  // No distinct per-location photography yet — rather than stock photos
+  // that don't actually depict this area, show what's true everywhere:
+  // the equipment and process behind every dispatch.
+  const equipmentFeatures = [
+    {
+      Icon: IconTruck, key: 'units',
+      title: 'Flatbed Recovery Units', desc: 'Hydraulic flatbeds carry your car — no drag-tow damage.',
+    },
+    {
+      Icon: IconBolt, key: 'dispatch',
+      title: 'GPS-Dispatched Fleet', desc: 'The nearest unit is auto-assigned the moment you call.',
+    },
+    {
+      Icon: IconShield, key: 'technicians',
+      title: 'Certified Technicians', desc: 'Trained, background-checked recovery specialists.',
+    },
+    {
+      Icon: IconClock, key: 'availability',
+      title: '24/7, Every Day', desc: 'Round-the-clock dispatch — weekends and holidays included.',
+    },
+  ];
 
   return (
     <>
@@ -616,7 +609,7 @@ export default function LocationPageTemplate({ config }) {
           .tk-hero-cta-row a { width: 100% !important; justify-content: center; }
           .tk-stat-grid { grid-template-columns: 1fr 1fr !important; }
           .tk-svc-grid { grid-template-columns: 1fr 1fr !important; }
-          .tk-gallery-grid { grid-template-columns: 1fr !important; }
+          .tk-equip-grid { grid-template-columns: 1fr 1fr !important; }
           .tk-process-grid { grid-template-columns: 1fr !important; }
           .tk-footer-grid { grid-template-columns: 1fr !important; }
           .tk-cta2-btn-row { flex-direction: column !important; align-items: stretch !important; }
@@ -812,7 +805,7 @@ export default function LocationPageTemplate({ config }) {
       </section>
 
       {/* ══════════════════════════════════
-              GALLERY
+              EQUIPMENT / READINESS
       ══════════════════════════════════ */}
       <section style={{ ...S.section, background: '#fafafa', borderTop: '1px solid #f0f0f0' }}>
         <div style={S.inner}>
@@ -822,22 +815,18 @@ export default function LocationPageTemplate({ config }) {
             <p style={S.p}>{t('locationPageTemplate.gallery.subtitle', { defaultValue: 'Real units, real equipment, real coverage — every time you call.' })}</p>
           </Reveal>
 
-          <div style={S.galleryGrid} className="tk-gallery-grid">
-            {galleryImages.map((img, i) => (
-              <Reveal key={i} as="div" direction="up" delay={stagger(i, 110)} style={S.galleryItem}>
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  loading="lazy"
-                  style={{ ...S.galleryImg, objectPosition: img.pos || 'center' }}
-                />
-                {/* Gradient + caption */}
-                <div style={S.galleryCaption}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <IconCheckCircle size={14} color="var(--primary-yellow)" />
-                    {img.caption}
-                  </div>
+          <div style={S.equipGrid} className="tk-equip-grid">
+            {equipmentFeatures.map((f, i) => (
+              <Reveal key={f.key} as="div" direction="up" delay={stagger(i, 90)} style={S.equipCard}>
+                <div style={S.equipIconWrap}>
+                  <f.Icon size={22} color="#92400e" />
                 </div>
+                <h3 style={{ fontSize: '15px', fontWeight: 700, color: 'var(--primary-dark-bg)', margin: '0 0 6px' }}>
+                  {t(`locationPageTemplate.gallery.features.${f.key}.title`, { defaultValue: f.title })}
+                </h3>
+                <p style={{ fontSize: '13.5px', color: '#6b7280', margin: 0, lineHeight: 1.5 }}>
+                  {t(`locationPageTemplate.gallery.features.${f.key}.desc`, { defaultValue: f.desc })}
+                </p>
               </Reveal>
             ))}
           </div>

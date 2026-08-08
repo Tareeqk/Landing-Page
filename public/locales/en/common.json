@@ -1656,12 +1656,24 @@
       "eyebrow": "On The Ground",
       "title": "Tareeqk Working in {{area}}",
       "subtitle": "Real units, real equipment, real coverage — every time you call.",
-      "captionDispatched": "Recovery dispatched in {{area}}",
-      "captionArriving": "Technician arriving on-site",
-      "captionStandby": "Standing by, 24/7",
-      "altDispatched": "{{heroAlt}} — recovery truck dispatched",
-      "altArriving": "{{heroAlt}} — technician arriving on site",
-      "altStandby": "{{heroAlt}} — unit on standby"
+      "features": {
+        "units": {
+          "title": "Flatbed Recovery Units",
+          "desc": "Hydraulic flatbeds carry your car — no drag-tow damage."
+        },
+        "dispatch": {
+          "title": "GPS-Dispatched Fleet",
+          "desc": "The nearest unit is auto-assigned the moment you call."
+        },
+        "technicians": {
+          "title": "Certified Technicians",
+          "desc": "Trained, background-checked recovery specialists."
+        },
+        "availability": {
+          "title": "24/7, Every Day",
+          "desc": "Round-the-clock dispatch — weekends and holidays included."
+        }
+      }
     },
     "services": {
       "eyebrow": "What We Offer",
