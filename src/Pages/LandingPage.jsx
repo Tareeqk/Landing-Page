@@ -102,6 +102,74 @@ function HeroBackground() {
   );
 }
 
+// Cycles through HERO_SERVICE_TAGS three at a time, icon-only — the mobile
+// (≤860px) replacement for the arc below (see .tk-hero__tags in
+// LandingPage.jsx/landing.css, still used as-is on desktop/tablet and
+// hidden here via CSS). The arc's position depended on --sphere-x/-y
+// trigonometry sharing a box with the circle+truck, which real phones kept
+// rendering differently than any emulator this was tested against
+// (address-bar states, in-app browser chrome). A plain row that just
+// renders as a normal-flow sibling of .tk-hero__visual (see the Fragment
+// below) can't be pulled out of place by any of that. Hidden entirely on
+// desktop/landscape via CSS, so it never touches those layouts.
+//
+// The 3 tile slots (keyed by position 0/1/2, not by tag) stay mounted the
+// whole time — only their icon `src` and a `--fading` class change. That's
+// what makes the swap an actual crossfade (old icon opacity 1→0, src
+// swaps while invisible, new icon opacity 0→1 on the SAME element) rather
+// than one icon vanishing instantly while an unrelated new one fades in,
+// which is what remounting a new element per tag would produce.
+function MobileServiceCarousel({ tags }) {
+  const { t } = useTranslation();
+  const reduceMotion =
+    typeof window !== 'undefined' &&
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const [offset, setOffset] = useState(0);
+  const [fading, setFading] = useState(false);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const FADE_MS = 350;
+    const HOLD_MS = 2200;
+    let fadeTimeout;
+    const id = setInterval(() => {
+      setFading(true);
+      fadeTimeout = setTimeout(() => {
+        setOffset((o) => (o + 1) % tags.length);
+        setFading(false);
+      }, FADE_MS);
+    }, HOLD_MS);
+    return () => {
+      clearInterval(id);
+      clearTimeout(fadeTimeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tags.length, reduceMotion]);
+
+  const visible = [0, 1, 2].map((i) => tags[(offset + i) % tags.length]);
+
+  return (
+    <div className="tk-hero__mobile-tags" data-testid="landing-hero-tags-mobile">
+      {/* Icon-only by request, but the service names stay available to
+          screen readers/crawlers instead of disappearing entirely. */}
+      <span className="tk-visually-hidden">
+        {tags.map((tag) => t(`landing.heroTags.${tag.key}`)).join(', ')}
+      </span>
+      {visible.map((tag, i) => (
+        <div
+          key={i}
+          className={`tk-hero__mobile-tag${fading ? ' tk-hero__mobile-tag--fading' : ''}`}
+          aria-hidden="true"
+        >
+          <img src={tag.icon} alt="" className="tk-hero__mobile-tag-icon" loading="lazy" width="30" height="30" />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 // Truck artwork + service tags move and reflow together as one unit (flex
 // sibling of .tk-hero__content, see .tk-hero__visual in landing.css) —
 // unlike the skyline, which is pure background ambiance and stays
@@ -110,43 +178,48 @@ function HeroVisual() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === 'rtl';
   return (
-    <div className="tk-hero__visual">
-      {/* Radial glow behind the truck — was a hand-drawn gradient PNG
-          (WEBSITE IMAGE AND ICONS ASSET/CIRCLE DESIGN.png); reproduced in
-          CSS instead since it's just two flat radial gradients, so it
-          scales to any size/position with zero extra bytes and flips for
-          free under [dir="rtl"]. Lives in this column (not .tk-hero__bg)
-          so it shares .tk-hero__truck's own containing block — the two
-          were previously positioned against different boxes (full hero
-          width vs this narrower column), so no percentage could ever
-          land the truck centered on the glow; sharing --sphere-x/-y here
-          (see .tk-hero__visual in landing.css) makes that centering
-          actually hold. Under RTL the CSS reproduction is swapped for the
-          dedicated CIRCLE LEFT SIDE_rtl.png artwork instead (see
-          [dir="rtl"] .tk-hero__glow in landing.css). */}
-      <div className="tk-hero__glow" />
-      <img
-        src={isRtl ? HERO_TRUCK_RTL : HERO_TRUCK}
-        alt=""
-        className="tk-hero__truck"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-      />
-      <div className="tk-hero__tags" data-testid="landing-hero-tags">
-        {HERO_SERVICE_TAGS.map((tag) => (
-          <div key={tag.key} className="tk-hero__tag">
-            {/* Visible on desktop (see .tk-hero__tag-label — sits beside
-                the icon, on the side facing the text column) and reduced
-                to sr-only/SEO text below 861px, where there isn't enough
-                spare width beside the icon without crowding the sphere
-                or truck. */}
-            <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
-            <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
-          </div>
-        ))}
+    <>
+      {/* Sibling of .tk-hero__visual, not a child of it — renders before it
+          in normal flow, so on mobile (.tk-hero__inner: flex-direction:
+          column) it always lands above the circle, no matter how tall
+          .tk-hero__visual itself ends up being. Hidden entirely above
+          860px (see .tk-hero__mobile-tags in landing.css). */}
+      <MobileServiceCarousel tags={HERO_SERVICE_TAGS} />
+      <div className="tk-hero__visual">
+        {/* Radial glow behind the truck — was a hand-drawn gradient PNG
+            (WEBSITE IMAGE AND ICONS ASSET/CIRCLE DESIGN.png); reproduced in
+            CSS instead since it's just two flat radial gradients, so it
+            scales to any size/position with zero extra bytes and flips for
+            free under [dir="rtl"]. Lives in this column (not .tk-hero__bg)
+            so it shares .tk-hero__truck's own containing block — the two
+            were previously positioned against different boxes (full hero
+            width vs this narrower column), so no percentage could ever
+            land the truck centered on the glow; sharing --sphere-x/-y here
+            (see .tk-hero__visual in landing.css) makes that centering
+            actually hold. Under RTL the CSS reproduction is swapped for the
+            dedicated CIRCLE LEFT SIDE_rtl.png artwork instead (see
+            [dir="rtl"] .tk-hero__glow in landing.css). */}
+        <div className="tk-hero__glow" />
+        <img
+          src={isRtl ? HERO_TRUCK_RTL : HERO_TRUCK}
+          alt=""
+          className="tk-hero__truck"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+        {/* Arc — desktop/tablet only below 861px (see .tk-hero__tags in
+            landing.css); replaced by <MobileServiceCarousel> on mobile. */}
+        <div className="tk-hero__tags" data-testid="landing-hero-tags">
+          {HERO_SERVICE_TAGS.map((tag) => (
+            <div key={tag.key} className="tk-hero__tag">
+              <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
+              <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
