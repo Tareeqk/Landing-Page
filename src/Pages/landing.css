@@ -828,7 +828,16 @@
   .tk-hero__visual {
     width: 100%;
     max-width: 460px;
+    /* vh is defined against the browser's "large" viewport (as if its
+       chrome were collapsed) — on a real phone with the address bar
+       still showing (or an in-app browser's own toolbar), the actually
+       visible height is smaller than 62vh says, which is what let the
+       arc below overflow this box in the first place. dvh tracks the
+       real, current viewport instead; vh stays first as the fallback
+       for browsers without dvh support (same pattern as .tk-hero's own
+       min-height above). */
     min-height: 62vh;
+    min-height: 62dvh;
     margin: 0 auto;
     align-self: center;
     /* Keep the sphere vertically centered like desktop (see the tag
@@ -860,8 +869,12 @@
        the widest vertical reach of a tag is arc-r * sin(58°) ≈ 0.848,
        plus the icon's own half-size (20px); that must fit within half
        of the 62vh box (minus a small safety margin), which inverts to
-       arc-r <= ~36.5vh - 24px. */
+       arc-r <= ~36.5vh - 24px. Same vh→dvh progressive enhancement as
+       min-height above, since this cap only does its job if it's
+       measuring the same (real, current) viewport the box itself is
+       actually sized against. */
     --tk-arc-r: min(calc(min(66vw, 300px) / 2 + 50px), calc(36vh - 24px));
+    --tk-arc-r: min(calc(min(66vw, 300px) / 2 + 50px), calc(36dvh - 24px));
   }
 
   .tk-hero__glow {
