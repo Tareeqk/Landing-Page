@@ -16,6 +16,10 @@ const SERVICE_KEYS = ['carRecovery', 'towing', 'battery', 'tire'];
 // mirroring instead of a second hand-drawn image.
 const HERO_SKYLINE = '/hero/dubai-bg.webp';
 const HERO_TRUCK = '/hero/truck-nasir.webp';
+// Dedicated artwork for RTL — the truck is re-composited (not just CSS-
+// mirrored) so the cab still faces the text column and its livery text/
+// logos read correctly, instead of coming out backwards under scaleX(-1).
+const HERO_TRUCK_RTL = '/hero/truck-nasir-rtl.webp';
 
 // Keys map to `landing.heroTags.<key>` in each locale file.
 const HERO_SERVICE_TAGS = [
@@ -103,7 +107,8 @@ function HeroBackground() {
 // unlike the skyline, which is pure background ambiance and stays
 // full-bleed behind everything regardless of language or breakpoint.
 function HeroVisual() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.dir() === 'rtl';
   return (
     <div className="tk-hero__visual">
       {/* Radial glow behind the truck — was a hand-drawn gradient PNG
@@ -116,10 +121,12 @@ function HeroVisual() {
           width vs this narrower column), so no percentage could ever
           land the truck centered on the glow; sharing --sphere-x/-y here
           (see .tk-hero__visual in landing.css) makes that centering
-          actually hold. */}
+          actually hold. Under RTL the CSS reproduction is swapped for the
+          dedicated CIRCLE LEFT SIDE_rtl.png artwork instead (see
+          [dir="rtl"] .tk-hero__glow in landing.css). */}
       <div className="tk-hero__glow" />
       <img
-        src={HERO_TRUCK}
+        src={isRtl ? HERO_TRUCK_RTL : HERO_TRUCK}
         alt=""
         className="tk-hero__truck"
         loading="eager"
@@ -129,13 +136,11 @@ function HeroVisual() {
       <div className="tk-hero__tags" data-testid="landing-hero-tags">
         {HERO_SERVICE_TAGS.map((tag) => (
           <div key={tag.key} className="tk-hero__tag">
-            {/* Label before icon in DOM: justify-content: flex-end packs
-                this row's LAST child flush against the sphere-side edge,
-                so the icon (small, meant to sit on/near the glow) ends up
-                closest to it and the label (needs to stay readable over
-                the truck artwork) stays further away — reversed order
-                put the label closest instead, which is how it ended up
-                overlapping the truck. */}
+            {/* Visible on desktop (see .tk-hero__tag-label — sits beside
+                the icon, on the side facing the text column) and reduced
+                to sr-only/SEO text below 861px, where there isn't enough
+                spare width beside the icon without crowding the sphere
+                or truck. */}
             <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
             <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
           </div>
@@ -209,31 +214,15 @@ export default function LandingPage() {
       >
         <HeroBackground />
 
-        {/* Floating trust stats — real numbers we already translate but
-            weren't rendering anywhere; fills the empty top-right corner
-            of the photo and backs up the headline with proof. */}
-        <div className="tk-hero__trust" data-testid="landing-trust-cards">
-          {trustStats.map((stat) => (
-            <div key={stat.label} className="tk-hero__trust-card">
-              <span className="tk-hero__trust-value">{stat.value}</span>
-              <span className="tk-hero__trust-label">{stat.label}</span>
-            </div>
-          ))}
-        </div>
-
         <div className="tk-hero__inner">
           <div
             data-aos="fade-up"
             className="tk-hero__content"
             data-testid="landing-hero-text"
           >
-            <span className="tk-eyebrow" data-testid="landing-eyebrow">
-              <span className="tk-eyebrow__badge">{t('landing.badge', '')}</span>
-              <span className="tk-eyebrow__divider" aria-hidden="true" />
+            <span className="tk-dispatch-chip" data-testid="landing-eyebrow">
+              <span className="tk-dispatch-chip__dot" aria-hidden="true" />
               {t('landing.eyebrow')}
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
             </span>
             <br/>
             <TypingTitle text={text} reduceMotion={reduceMotion} phrases={phrases} />
@@ -268,6 +257,19 @@ export default function LandingPage() {
                   </svg>
                 </span>
               </a>
+            </div>
+
+            {/* Was floating in the top-right corner of the photo (absolute
+                positioned, hidden below 900px) — moved inline here so the
+                proof points sit right where a visitor's eye already is
+                after the CTAs, and so mobile visitors see them too. */}
+            <div className="tk-hero__stats" data-testid="landing-trust-cards">
+              {trustStats.map((stat) => (
+                <div key={stat.label} className="tk-hero__stat">
+                  <span className="tk-hero__stat-value">{stat.value}</span>
+                  <span className="tk-hero__stat-label">{stat.label}</span>
+                </div>
+              ))}
             </div>
 
             <div className="tk-store-badges" data-testid="landing-store-badges">
