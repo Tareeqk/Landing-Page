@@ -64,12 +64,17 @@ body.dark .nasir-badge {
   box-shadow: 0 10px 28px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);
 }
 
-.nasir-group:hover .nasir-badge {
-  transform: scale(1.06);
-  box-shadow: 0 14px 34px rgba(0,0,0,0.22), 0 3px 10px rgba(0,0,0,0.1);
-}
-body.dark .nasir-group:hover .nasir-badge {
-  box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 3px 10px rgba(0,0,0,0.35);
+/* hover: hover excludes touchscreens — without it, tapping the bubble on a
+   real phone leaves it "hovered" (scaled up) until the visitor taps
+   elsewhere, since there's no pointer to move away and clear the state. */
+@media (hover: hover) and (pointer: fine) {
+  .nasir-group:hover .nasir-badge {
+    transform: scale(1.06);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.22), 0 3px 10px rgba(0,0,0,0.1);
+  }
+  body.dark .nasir-group:hover .nasir-badge {
+    box-shadow: 0 14px 34px rgba(0,0,0,0.6), 0 3px 10px rgba(0,0,0,0.35);
+  }
 }
 
 /* "Chat with us" label — hidden until hover, so the corner stays compact
@@ -91,9 +96,11 @@ body.dark .nasir-group:hover .nasir-badge {
 }
 [dir="ltr"] .nasir-tooltip { left: calc(100% + 12px); }
 [dir="rtl"] .nasir-tooltip { right: calc(100% + 12px); transform: translateY(50%) translateX(6px); }
-.nasir-group:hover .nasir-tooltip {
-  opacity: 1;
-  transform: translateY(50%) translateX(0);
+@media (hover: hover) and (pointer: fine) {
+  .nasir-group:hover .nasir-tooltip {
+    opacity: 1;
+    transform: translateY(50%) translateX(0);
+  }
 }
 @media (max-width: 640px) {
   .nasir-tooltip { display: none; }

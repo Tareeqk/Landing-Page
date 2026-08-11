@@ -381,12 +381,12 @@
   height: 100%;
 }
 
-/* Mobile-only replacement for the arc (see .tk-hero__tags above) — hidden
-   by default, shown by the max-width:860px block below. Rendered as a
-   sibling of .tk-hero__visual, not a child, so it's positioned by normal
-   document flow (always after, i.e. below, the circle) instead of by any
-   percentage/viewport-unit math the circle's own box depends on. */
-.tk-hero__mobile-tags {
+/* Mobile-only replacement for the arc (see .tk-hero__tags above and the
+   max-width:860px block below) — hidden by default, shown there instead.
+   Rendered as a sibling of .tk-hero__visual, not a child, so it lands by
+   normal document flow (always above the circle) rather than depending
+   on any box the circle's own geometry is sized against. */
+.tk-hero__mobile-pill-row {
   display: none;
 }
 
@@ -434,9 +434,19 @@
   transition: transform 0.2s ease;
 }
 
-.tk-hero__tag:hover .tk-hero__tag-icon,
 .tk-hero__tag:focus-within .tk-hero__tag-icon {
   transform: scale(1.08);
+}
+
+/* hover: hover excludes touchscreens — without it a real tap leaves this
+   "hovered" (scaled up) until the visitor taps elsewhere, since there's
+   no pointer to move away and clear the state. Desktop mouse users still
+   get the effect; DevTools' touch emulation never surfaces this bug
+   because it resolves :hover from your desktop cursor either way. */
+@media (hover: hover) and (pointer: fine) {
+  .tk-hero__tag:hover .tk-hero__tag-icon {
+    transform: scale(1.08);
+  }
 }
 
 /* Hidden-but-accessible by default (see the ≥861px override below) —
@@ -608,7 +618,8 @@
   .tk-hero__truck { animation: none; }
   .tk-hero__glow { animation: none; }
   .tk-dispatch-chip__dot::after { animation: none; opacity: 0.4; }
-  .tk-hero__mobile-tag { transition: none; }
+  .tk-hero__tag-icon { transition: none; }
+  .tk-hero__mobile-pill { transition: none; }
 }
 
 /* Visually hidden but still readable to screen readers / crawlers */
@@ -661,7 +672,9 @@
   -webkit-backdrop-filter: blur(8px);
 }
 
-.tk-btn:hover { transform: translateY(-2px); }
+@media (hover: hover) and (pointer: fine) {
+  .tk-btn:hover { transform: translateY(-2px); }
+}
 
 /* Circular arrow chip, matches the reference pill+circle CTA pattern */
 .tk-btn__arrow {
@@ -706,9 +719,11 @@
   display: block;
 }
 
-.tk-store-badge:hover {
-  transform: translateY(-2px);
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .tk-store-badge:hover {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
 }
 
 /* ============================================================
@@ -766,7 +781,23 @@
    Pulled out of the content stack entirely so it costs no height in the
    hero column and stays reachable for the rest of the scroll. Opposite
    corner from Nasir's WhatsApp bubble (src/Components/Nasir.jsx) so the
-   two floating elements never meet. */
+   two floating elements never meet.
+
+   bottom:16px is correctly anchored to the real viewport edge on every
+   browser — the bug this fixes wasn't a mispositioned fixed element, it
+   was a false assumption about how much vertical room existed above that
+   edge. Chrome DevTools' mobile emulation gives the page the FULL device
+   height as content viewport (no browser chrome simulated), so the arc
+   below always had headroom to clear this badge there. A real phone's
+   own address bar + bottom toolbar eat a large chunk of that same height
+   (confirmed on a real iOS Safari screenshot, not an emulator — see PR
+   discussion), so the identical CSS left no such headroom and the badges
+   sat on top of the arc's lower tags on first paint. Same fix Nasir's
+   WhatsApp bubble already uses for this exact class of problem (see its
+   own comment): stay invisible/non-interactive while the hero is still
+   substantially on screen, so there is no viewport height this can
+   collide at, on any device, instead of chasing a pixel margin that only
+   happens to work for the chrome height of whichever phone was tested. */
 .tk-store-badges--floating {
   display: none;
 }
@@ -782,6 +813,13 @@
     align-items: flex-end;
     gap: 6px;
     filter: drop-shadow(0 6px 16px rgba(0,0,0,0.35));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .tk-store-badges--floating.is-visible {
+    opacity: 1;
+    pointer-events: auto;
   }
   [dir="rtl"] .tk-store-badges--floating {
     right: auto;
@@ -815,6 +853,11 @@
     align-items: center;
     text-align: center;
     padding-top: clamp(68px, 12vw, 88px);
+    /* Overrides the base row layout's clamp(24px, 4vw, 64px) — that was
+       sized for the desktop two-column row; stacked as a column here it
+       read as too much empty space between the text block and the
+       circle below it. */
+    gap: 20px;
   }
 
   .tk-hero__content {
@@ -831,25 +874,17 @@
   }
 
   /* Below the text on mobile, the truck+glow illustration stays centered
-     the same way it does on desktop; the six service tags, though, stop
-     being an absolutely-positioned arc wrapped around it (too fragile
-     across real phones/in-app browsers — see git history) and are
-     replaced by .tk-hero__mobile-tags below: a plain row, icon-only,
-     auto-cycling through 3 at a time, rendered as a normal-flow SIBLING
-     before .tk-hero__visual (see HeroVisual in LandingPage.jsx) so it
-     always lands above the circle regardless of this box's height. */
+     the same way it does on desktop. The six service tags drop the
+     circular arc here — a position:absolute composition whose
+     radius/anchor math depends on this column's own width — in favor of
+     a single pill (icon + title) that cycles through all six, in normal
+     document flow (see .tk-hero__mobile-pill-row below). Nothing here is
+     positioned relative to the viewport or this column's size, so there
+     is no geometry that can come out wrong on a given device. */
   .tk-hero__visual {
     width: 100%;
     max-width: 460px;
-    /* Used to be a generous 62vh/62dvh — that was sized to give the old
-       arc's radius room to clear the circle without overflowing this
-       box (see git history). Now that the tags are a separate row above
-       this box instead of wrapped around the circle, this box only
-       needs to fit the circle itself, so its height is tied directly to
-       .tk-hero__glow's own width formula (a circle, so width = height)
-       plus a little breathing room — no more leftover empty space above/
-       below the circle than that. */
-    min-height: calc(min(66vw, 300px) + 48px);
+    min-height: calc(min(58vw, 260px) + 24px);
     margin: 0 auto;
     align-self: center;
     --sphere-x: 38%;
@@ -857,55 +892,59 @@
   }
 
   .tk-hero__glow {
-    width: min(66vw, 300px);
+    width: min(58vw, 260px);
   }
 
   .tk-hero__truck {
-    width: min(46vw, 195px);
+    width: min(40vw, 165px);
   }
 
-  /* The arc itself is desktop/tablet-only below 861px. */
+  /* The arc itself is desktop/tablet only below 861px — see
+     .tk-hero__mobile-pill-row below for the mobile replacement. */
   .tk-hero__tags {
     display: none;
   }
 
-  .tk-hero__mobile-tags {
+  .tk-hero__mobile-pill-row {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 28px;
+    margin: 0 auto;
   }
 
-  .tk-hero__mobile-tag {
-    width: 56px;
-    height: 56px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    display: flex;
+  .tk-hero__mobile-pill {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.04);
+    gap: 10px;
+    padding: 10px 20px;
+    border-radius: var(--tk-radius-pill);
+    background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--tk-line);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     opacity: 1;
-    transform: scale(1);
-    /* The 3 tiles stay mounted permanently (see MobileServiceCarousel) —
-       only the icon `src` and this class change, so toggling
-       --fading is a real crossfade on the SAME element (old icon fades
-       out, src swaps while invisible, new icon fades back in), not one
-       element vanishing while an unrelated new one fades in. */
-    transition: opacity 0.35s ease, transform 0.35s ease;
+    /* Crossfade only — no size/position transition needed, since the
+       icon+label swap happens in the JS while this is at opacity 0 (see
+       MobileServicePill in LandingPage.jsx), the same technique the old
+       carousel used. */
+    transition: opacity 0.35s ease;
   }
 
-  .tk-hero__mobile-tag--fading {
+  .tk-hero__mobile-pill--fading {
     opacity: 0;
-    transform: scale(0.85);
   }
 
-  .tk-hero__mobile-tag-icon {
-    width: 30px;
-    height: 30px;
+  .tk-hero__mobile-pill-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
     object-fit: contain;
+  }
+
+  .tk-hero__mobile-pill-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
   }
 }
 

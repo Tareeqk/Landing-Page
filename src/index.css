@@ -267,6 +267,12 @@ body {
   scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
+  /* iOS/Android auto-boost body text size in ways no desktop emulator
+     reproduces (most visibly after an orientation change) — that fights
+     the clamp()-sized type throughout this file/landing.css, which is
+     already fluid on its own. Locks rendered size to the CSS value. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 /* html[dir="rtl"], body[dir="rtl"] {

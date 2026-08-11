@@ -32,13 +32,15 @@
   transition: all 250ms;
 }
 
-.animated-btn:hover {
-  color: var(--dark-text-main, #000);
-  transform: translateY(-2px);
-}
+@media (hover: hover) and (pointer: fine) {
+  .animated-btn:hover {
+    color: var(--dark-text-main, #000);
+    transform: translateY(-2px);
+  }
 
-.animated-btn:hover::before {
-  width: 100%;
+  .animated-btn:hover::before {
+    width: 100%;
+  }
 }
 
 /* Size variations */
