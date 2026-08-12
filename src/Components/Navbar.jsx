@@ -329,14 +329,14 @@ export default function Navbar({ isDark, setIsDark }) {
                         <DarkMode isDark={isDark} setIsDark={setIsDark} />
                       </span>
                     </div>
-                    <Link
-                      to={langLink("/login")}
+                    <a
+                      href="https://booking.tareeqk.ae/login"
                       className="hidden lg:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(247,178,5,0.5)]"
                       style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                     >
                       <ArrowRightOnRectangleIcon className="h-4 w-4" />
-                      {t("navbar.login", "Login")}
-                    </Link>
+                      {t("landing.book", "Book Now")}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -520,15 +520,15 @@ export default function Navbar({ isDark, setIsDark }) {
                     open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
                   )}
                 >
-                  <Link
-                    to={langLink("/login")}
+                  <a
+                    href="https://booking.tareeqk.ae/login"
                     onClick={() => close()}
                     className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]"
                     style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                   >
                     <ArrowRightOnRectangleIcon className="h-4 w-4" />
-                    {t("navbar.login", "Login")}
-                  </Link>
+                    {t("landing.book", "Book Now")}
+                  </a>
                 </div>
               </div>
             </DisclosurePanel>
