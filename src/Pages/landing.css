@@ -434,8 +434,25 @@
   transition: transform 0.2s ease;
 }
 
+/* These icons (tow truck, crash, etc.) are drawn facing left — correct
+   for LTR, where the arc/pill sits to the right of the truck and the
+   icons read toward it. Under RTL the whole composition mirrors (arc/
+   pill moves to the left column — see --tk-flip elsewhere in this file)
+   so the icons need to face the other way too, or they'd visually point
+   away from the truck instead of toward it. Plain scaleX(-1) is safe
+   here (unlike .tk-hero__truck, which needed a dedicated re-composited
+   RTL asset) because these icons have no baked-in text/logo to come out
+   backwards. */
+[dir="rtl"] .tk-hero__tag-icon {
+  transform: scaleX(-1);
+}
+
 .tk-hero__tag:focus-within .tk-hero__tag-icon {
   transform: scale(1.08);
+}
+
+[dir="rtl"] .tk-hero__tag:focus-within .tk-hero__tag-icon {
+  transform: scaleX(-1) scale(1.08);
 }
 
 /* hover: hover excludes touchscreens — without it a real tap leaves this
@@ -446,6 +463,10 @@
 @media (hover: hover) and (pointer: fine) {
   .tk-hero__tag:hover .tk-hero__tag-icon {
     transform: scale(1.08);
+  }
+
+  [dir="rtl"] .tk-hero__tag:hover .tk-hero__tag-icon {
+    transform: scaleX(-1) scale(1.08);
   }
 }
 
@@ -938,6 +959,12 @@
     height: 22px;
     flex-shrink: 0;
     object-fit: contain;
+  }
+
+  /* Same mirroring as the desktop arc's .tk-hero__tag-icon — these icons
+     are drawn facing left, correct for LTR only. */
+  [dir="rtl"] .tk-hero__mobile-pill-icon {
+    transform: scaleX(-1);
   }
 
   .tk-hero__mobile-pill-label {
