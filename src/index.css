@@ -108,6 +108,30 @@
   font-display: swap;
 }
 
+/* Metric-matched fallback for Poppins — even with the woff2 shrink and the
+   preload hints, the swap from the fallback sans-serif to Poppins was
+   still the single biggest CLS contributor in Lighthouse (0.124 of a
+   0.126 total), because the fallback's line-box height didn't match
+   Poppins' and the swap itself reflows text regardless of how fast the
+   font loads. This face is Arial rescaled (via size-adjust) and given
+   Poppins' own ascent/descent/line-gap, so it occupies the exact box
+   Poppins will — the swap becomes invisible (no reflow) instead of just
+   fast. Values derived from each font's OS/2 table (sTypoAscender/
+   Descender/LineGap, xAvgCharWidth) using the standard capsize/Fontaine
+   formula. Targets Arial specifically because Android's font substitution
+   maps "Arial" to Roboto — the actual fallback on the Chrome/Android
+   device PSI's mobile test emulates — so one face covers both platforms.
+   Poppins Bold shares Regular's vertical metrics (only avgWidth differs,
+   negligibly), so a single fallback face covers every weight. */
+@font-face {
+  font-family: "Poppins Fallback";
+  src: local("Arial");
+  size-adjust: 193.93%;
+  ascent-override: 54.14%;
+  descent-override: 18.05%;
+  line-gap-override: 5.16%;
+}
+
 /* Root color variables */
 :root {
   --primary-yellow: #f7b205;
@@ -248,7 +272,7 @@ body.dark button.submit {
 
 /* Language-specific fonts */
 html[lang="en"] {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", "Poppins Fallback", sans-serif;
   direction: ltr;
 }
 

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
   FiMail,
@@ -110,12 +109,13 @@ export default function ContactSection() {
       params.append("dial_code", "+971");
       params.append("submit", "true");
 
-      const response = await axios.post(
-        `${baseUrl}/contact-us`,
-        params
-      );
+      const response = await fetch(`${baseUrl}/contact-us`, {
+        method: "POST",
+        body: params,
+      });
+      const data = await response.json();
 
-      if (response.data.status === 200) {
+      if (data.status === 200) {
         alert(t("contact.successAlert"));
 
         setFormData({
@@ -126,7 +126,7 @@ export default function ContactSection() {
           message: "",
         });
       } else {
-        alert(response.data.message || t("contact.genericErrorAlert"));
+        alert(data.message || t("contact.genericErrorAlert"));
       }
     } catch (error) {
       console.error(error);

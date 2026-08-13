@@ -1,4 +1,3 @@
-import axios from "axios"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
@@ -24,10 +23,11 @@ export default function FAQs() {
 
   useEffect(() => {
     async function fetchFAQs() {
-      const response = await axios.get(
+      const response = await fetch(
         `${baseUrl}/pages?slug=faqs&lang=${i18n.language}`,
       )
-      const htmlString = response.data.html
+      const data = await response.json()
+      const htmlString = data.html
 
       // Convert the HTML into question/answer pairs
       const parser = new DOMParser()

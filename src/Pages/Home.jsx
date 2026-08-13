@@ -1,21 +1,22 @@
-import {React, useEffect }from "react";
+import { React, useEffect, lazy, Suspense } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import Navbar from "./../Components/Navbar";
-import Footer from "./../Components/Footer";
 import LandingPage from "./LandingPage";
-import AboutPreview from "../Components/AboutComponent";
-import ServiceComponent from "../Components/ServiceComponent";
-import HowItWorks from "../Components/Howitworks";
- 
-import AboutAccordion from "../Components/AboutAccordion";
-// import HowItWorks from "./Service";
-import CJI from "../Components/CJI";
-import HomeFAQ from "../Components/HomeFAQ";
-import ContactForm from "../Components/ContactForm";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import LocalBusinessSchema from "../schemas/LocalBusinessSchema";
 import HreflangTags from "../Components/HreflangTags";
+
+// Everything below the hero is off-screen on first paint and the page is
+// prerendered (see scripts/prerender.mjs) — the static HTML for these
+// sections is already on screen before React ever loads, so lazy-loading
+// their component code costs no visible flash but keeps it out of the
+// bundle that has to be parsed/executed before the page is interactive.
+const AboutPreview = lazy(() => import("../Components/AboutComponent"));
+const CJI = lazy(() => import("../Components/CJI"));
+const ServiceComponent = lazy(() => import("../Components/ServiceComponent"));
+const HowItWorks = lazy(() => import("../Components/Howitworks"));
+const HomeFAQ = lazy(() => import("../Components/HomeFAQ"));
+const ContactForm = lazy(() => import("../Components/ContactForm"));
 
 export default function Home() {
   const { t } = useTranslation();
@@ -49,17 +50,14 @@ export default function Home() {
       <LocalBusinessSchema />
       <div>
         <LandingPage />
-         <AboutPreview />
-        <CJI />
-       
-        {/* <AboutAccordion /> */}
-        <ServiceComponent /> 
-        <HowItWorks />
-        {/* <HowItWorks isSection /> */}
-        {/* <Registration />
-        <PriceGroup /> */}
-        <HomeFAQ />
-        <ContactForm />
+        <Suspense fallback={null}>
+          <AboutPreview />
+          <CJI />
+          <ServiceComponent />
+          <HowItWorks />
+          <HomeFAQ />
+          <ContactForm />
+        </Suspense>
       </div>
     </>
   )
