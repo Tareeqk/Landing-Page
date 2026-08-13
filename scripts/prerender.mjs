@@ -10,8 +10,8 @@
 // those routes are served as plain static files — no JS execution needed.
 //
 // Real users are unaffected: the same JS bundle still loads and hydrates
-// on top of this markup (see src/main.jsx — createRoot().render(), not
-// hydrateRoot(), so it simply replaces the prerendered DOM on mount).
+// on top of this markup (see src/main.jsx — hydrateRoot() reuses this
+// exact DOM instead of throwing it away and rebuilding from scratch).
 
 import { preview } from 'vite';
 import { mkdir, writeFile } from 'node:fs/promises';

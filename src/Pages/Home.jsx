@@ -45,6 +45,15 @@ export default function Home() {
         <title>{t("meta.home.title")}</title>
         <meta name="description" content={t("meta.home.description")} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}`} />
+        {/* The hero skyline background (LandingPage's HeroBackground) is
+            the measured LCP element on this page — Lighthouse's LCP
+            discovery check flagged it as not getting priority-hinted.
+            This gets the browser fetching it before it even reaches the
+            <img> tag while parsing the (prerendered, so already-present)
+            HTML. Scoped to just the homepage via Helmet rather than a
+            static index.html link — every other route would preload an
+            image it never uses. */}
+        <link rel="preload" as="image" href="/hero/dubai-bg.webp" fetchpriority="high" />
       </Helmet>
       <HreflangTags path="" />
       <LocalBusinessSchema />

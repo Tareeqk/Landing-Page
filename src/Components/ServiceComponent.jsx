@@ -873,7 +873,7 @@ export default function WhatWeOffer() {
               className="s4-hero-img"
               src="/new/offer_image-800w.webp"
               srcSet="/new/offer_image-480w.webp 480w, /new/offer_image-800w.webp 800w, /new/offer_image-1200w.webp 1200w, /new/offer_image.webp 1600w"
-              sizes="(max-width: 700px) 100vw, 600px"
+              sizes="(max-width: 700px) 420px, 600px"
               alt={t("offer.heroImageAlt")}
               loading="lazy"
             />

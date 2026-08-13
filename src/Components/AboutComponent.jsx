@@ -527,7 +527,7 @@ export default function AboutPreview() {
               <img
                 src="/new/about_component-800w.webp"
                 srcSet="/new/about_component-480w.webp 480w, /new/about_component-800w.webp 800w, /new/about_component-1200w.webp 1200w, /new/about_component.webp 1400w"
-                sizes="(max-width: 960px) 100vw, 600px"
+                sizes="(max-width: 960px) 400px, 600px"
                 alt="Tareeqk recovery truck on a Dubai highway"
                 loading="lazy"
               />

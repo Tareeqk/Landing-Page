@@ -97,6 +97,7 @@ function HeroBackground() {
         className="tk-hero__skyline"
         loading="eager"
         decoding="async"
+        fetchpriority="high"
       />
     </div>
   );
@@ -192,6 +193,12 @@ function HeroVisual() {
       <div className="tk-hero__glow" />
       <img
         src={isRtl ? HERO_TRUCK_RTL : HERO_TRUCK}
+        srcSet={
+          isRtl
+            ? "/hero/truck-nasir-rtl-480w.webp 480w, /hero/truck-nasir-rtl.webp 719w"
+            : "/hero/truck-nasir-480w.webp 480w, /hero/truck-nasir.webp 719w"
+        }
+        sizes="240px"
         alt=""
         className="tk-hero__truck"
         loading="eager"
