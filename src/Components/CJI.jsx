@@ -1,6 +1,8 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Sparkles, Zap, Globe2, Truck, MapPin, Play } from "lucide-react"
+
+const YOUTUBE_VIDEO_ID = "dIX_NmPE2rs"
 
 // This component was built with plain Tailwind utility classes only
 // (bg-white, text-gray-900, etc.) with no dark-mode handling at all, so it
@@ -88,6 +90,41 @@ function useCjiStyles() {
         border-color: var(--dark-border, #2a2a2a) !important;
       }
 
+      /* Click-to-load facade: a static thumbnail + play button stand in
+         for the YouTube iframe until the visitor actually wants to watch.
+         An eagerly-mounted embed pulls ~850KB of YouTube's own JS on
+         every page load even though the video is never played by most
+         visitors — this defers that cost until it's actually wanted. */
+      .cji-video-facade {
+        position: absolute;
+        inset: 0;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        background-position: center;
+        background-size: cover;
+      }
+      .cji-video-facade-play {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 64px;
+        height: 64px;
+        border-radius: 50%;
+        background: rgba(10, 10, 10, 0.72);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        transition: transform 0.2s ease, background 0.2s ease;
+      }
+      .cji-video-facade:hover .cji-video-facade-play {
+        background: var(--primary-yellow, #f5a623);
+        color: #000;
+        transform: translate(-50%, -50%) scale(1.08);
+      }
+
       .cji-video-badge {
         position: absolute;
         top: 14px;
@@ -163,6 +200,7 @@ export default function CJI() {
   const { t, i18n } = useTranslation()
   const isUrdu = i18n.language === "ur"
   const isRTL = i18n.dir() === "rtl"
+  const [videoActive, setVideoActive] = useState(false)
   useCjiStyles()
 
   const FEATURES = [
@@ -231,14 +269,30 @@ export default function CJI() {
                 {t("cji.videoBadge")}
               </span>
 
-              <div className="aspect-video w-full h-full">
-                <iframe
-                  className="w-full h-full"
-                  src="https://www.youtube.com/embed/dIX_NmPE2rs"
-                  title={t("cji.videoTitle")}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
+              <div className="aspect-video w-full h-full relative">
+                {videoActive ? (
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1`}
+                    title={t("cji.videoTitle")}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    className="cji-video-facade"
+                    onClick={() => setVideoActive(true)}
+                    aria-label={t("cji.videoTitle")}
+                    style={{
+                      backgroundImage: `url(https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg)`,
+                    }}
+                  >
+                    <span className="cji-video-facade-play" aria-hidden="true">
+                      <Play className="w-6 h-6 fill-current" />
+                    </span>
+                  </button>
+                )}
               </div>
             </div>
           </div>
