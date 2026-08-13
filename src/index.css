@@ -108,23 +108,38 @@
   font-display: swap;
 }
 
-/* Metric-matched fallback for Poppins — even with the woff2 shrink and the
+/* Metric-matched fallbacks for Poppins — even with the woff2 shrink and the
    preload hints, the swap from the fallback sans-serif to Poppins was
    still the single biggest CLS contributor in Lighthouse (0.124 of a
    0.126 total), because the fallback's line-box height didn't match
    Poppins' and the swap itself reflows text regardless of how fast the
-   font loads. This face is Arial rescaled (via size-adjust) and given
-   Poppins' own ascent/descent/line-gap, so it occupies the exact box
-   Poppins will — the swap becomes invisible (no reflow) instead of just
-   fast. Values derived from each font's OS/2 table (sTypoAscender/
-   Descender/LineGap, xAvgCharWidth) using the standard capsize/Fontaine
-   formula. Targets Arial specifically because Android's font substitution
-   maps "Arial" to Roboto — the actual fallback on the Chrome/Android
-   device PSI's mobile test emulates — so one face covers both platforms.
-   Poppins Bold shares Regular's vertical metrics (only avgWidth differs,
-   negligibly), so a single fallback face covers every weight. */
+   font loads. Each face below rescales a real local system font (via
+   size-adjust) and gives it Poppins' own ascent/descent/line-gap, so it
+   occupies the exact box Poppins will — the swap becomes invisible (no
+   reflow) instead of just fast. Values derived from each font's OS/2
+   table (sTypoAscender/Descender/LineGap, xAvgCharWidth) using the
+   standard capsize/Fontaine formula. Poppins Bold shares Regular's
+   vertical metrics (only avgWidth differs, negligibly), so one pair of
+   faces covers every weight.
+
+   Two faces, not one: `local()` only resolves against a font that's
+   ACTUALLY installed under that exact name — it does not follow OS-level
+   substitution rules. Android has no font named "Arial" at all (its
+   system sans is Roboto), so a single Arial-targeted face silently failed
+   to resolve on the Android/Chrome device PSI's mobile test emulates,
+   leaving the swap uncorrected there even though desktop (where Arial is
+   real) improved. Roboto is tried first since PSI's mobile score is the
+   one this is fixing; Arial covers Windows/Mac if Roboto isn't found. */
 @font-face {
   font-family: "Poppins Fallback";
+  src: local("Roboto");
+  size-adjust: 151.26%;
+  ascent-override: 69.42%;
+  descent-override: 23.14%;
+  line-gap-override: 6.61%;
+}
+@font-face {
+  font-family: "Poppins Fallback Arial";
   src: local("Arial");
   size-adjust: 193.93%;
   ascent-override: 54.14%;
@@ -272,7 +287,7 @@ body.dark button.submit {
 
 /* Language-specific fonts */
 html[lang="en"] {
-  font-family: "Poppins", "Poppins Fallback", sans-serif;
+  font-family: "Poppins", "Poppins Fallback", "Poppins Fallback Arial", sans-serif;
   direction: ltr;
 }
 
