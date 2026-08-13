@@ -4,12 +4,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react"
-import {
-  Bars3Icon,
-  XMarkIcon,
-  ChevronDownIcon,
-  ArrowRightOnRectangleIcon,
-} from "@heroicons/react/24/outline"
+import { Menu, X, ChevronDown, LogOut } from "lucide-react"
 import { useLocation, Link, useParams } from "react-router-dom"
 import DarkMode from "./DarkMode"
 import LanguageSwitcher from "./LanguageSwitcher"
@@ -148,9 +143,9 @@ export default function Navbar({ isDark, setIsDark }) {
                           {open ? t("navbar.closeMenu", "Close main menu") : t("navbar.openMenu", "Open main menu")}
                         </span>
                         {open ? (
-                          <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                          <X className="h-6 w-6" aria-hidden="true" />
                         ) : (
-                          <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                          <Menu className="h-6 w-6" aria-hidden="true" />
                         )}
                       </DisclosureButton>
                     </div>
@@ -238,7 +233,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                 className={linkClasses}
                               >
                                 {item.name}
-                                <ChevronDownIcon className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" />
+                                <ChevronDown className="h-3.5 w-3.5 transition-transform duration-300 group-hover:rotate-180" />
                                 {underline}
                               </Link>
 
@@ -334,7 +329,7 @@ export default function Navbar({ isDark, setIsDark }) {
                       className="hidden lg:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(247,178,5,0.5)]"
                       style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                     >
-                      <ArrowRightOnRectangleIcon className="h-4 w-4" />
+                      <LogOut className="h-4 w-4" />
                       {t("landing.book", "Book Now")}
                     </a>
                   </div>
@@ -451,7 +446,7 @@ export default function Navbar({ isDark, setIsDark }) {
                             aria-expanded={mobileServicesOpen}
                             className="-mr-1 rounded-full p-1.5 transition-colors hover:bg-black/10"
                           >
-                            <ChevronDownIcon
+                            <ChevronDown
                               className={classNames(
                                 "h-4 w-4 transition-transform duration-300",
                                 mobileServicesOpen && "rotate-180",
@@ -526,7 +521,7 @@ export default function Navbar({ isDark, setIsDark }) {
                     className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]"
                     style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                   >
-                    <ArrowRightOnRectangleIcon className="h-4 w-4" />
+                    <LogOut className="h-4 w-4" />
                     {t("landing.book", "Book Now")}
                   </a>
                 </div>

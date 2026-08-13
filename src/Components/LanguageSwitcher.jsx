@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
+import { ChevronDown } from "lucide-react"
 import { useNavigate, useLocation } from "react-router-dom"
 
 const LANG_PREFIXES = ["ar", "ur"] // English has no prefix
@@ -71,7 +71,7 @@ function LanguageSwitcher() {
                    cursor-pointer"
       >
         <span className="font-medium">{currentLanguage?.label}</span>
-        <ChevronDownIcon
+        <ChevronDown
           className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${
             isOpen ? "rotate-180" : ""
           }`}
