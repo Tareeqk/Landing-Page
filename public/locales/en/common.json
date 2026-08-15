@@ -1618,7 +1618,9 @@
       "liveTracking": "Live Tracking"
     },
     "videoBadge": "Watch Nasir in Action",
-    "videoTitle": "Meet Nasir"
+    "videoTitle": "Meet Nasir",
+    "unmuteButton": "Tap for sound",
+    "muteButton": "Mute video"
   },
   "locationPageTemplate": {
     "hero": {

@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { Sparkles, Zap, Globe2, Truck, MapPin, Play } from "lucide-react"
+import { Sparkles, Zap, Globe2, Truck, MapPin, Play, Volume2, VolumeX } from "lucide-react"
 
-const YOUTUBE_VIDEO_ID = "dIX_NmPE2rs"
+const CJI_VIDEO_SRC = {
+  ar: "/new/BATTERY_JUMPSTART_CGI_ARABIC.mp4",
+  en: "/new/BATTERY_JUMPSTART_CGI_ENGLISH.mp4",
+}
 
 // This component was built with plain Tailwind utility classes only
 // (bg-white, text-gray-900, etc.) with no dark-mode handling at all, so it
@@ -90,40 +93,42 @@ function useCjiStyles() {
         border-color: var(--dark-border, #2a2a2a) !important;
       }
 
-      /* Click-to-load facade: a static thumbnail + play button stand in
-         for the YouTube iframe until the visitor actually wants to watch.
-         An eagerly-mounted embed pulls ~850KB of YouTube's own JS on
-         every page load even though the video is never played by most
-         visitors — this defers that cost until it's actually wanted. */
-      .cji-video-facade {
+      .cji-video-el {
         position: absolute;
         inset: 0;
-        border: 0;
-        padding: 0;
-        cursor: pointer;
-        background-position: center;
-        background-size: cover;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
-      .cji-video-facade-play {
+
+      /* Sound stays off by default (autoplaying audio is disruptive and
+         gets blocked by browsers anyway); this button is the one way to
+         opt in, so it needs to be easy to spot without covering the clip. */
+      .cji-sound-toggle {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 64px;
-        height: 64px;
+        bottom: 14px;
+        z-index: 2;
+        width: 40px;
+        height: 40px;
+        border: 0;
         border-radius: 50%;
         background: rgba(10, 10, 10, 0.72);
+        color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #fff;
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
         transition: transform 0.2s ease, background 0.2s ease;
       }
-      .cji-video-facade:hover .cji-video-facade-play {
+      .cji-sound-toggle:hover {
         background: var(--primary-yellow, #f5a623);
         color: #000;
-        transform: translate(-50%, -50%) scale(1.08);
+        transform: scale(1.08);
       }
+      [dir="ltr"] .cji-sound-toggle { right: 14px; }
+      [dir="rtl"] .cji-sound-toggle { left: 14px; }
 
       .cji-video-badge {
         position: absolute;
@@ -200,8 +205,28 @@ export default function CJI() {
   const { t, i18n } = useTranslation()
   const isUrdu = i18n.language === "ur"
   const isRTL = i18n.dir() === "rtl"
-  const [videoActive, setVideoActive] = useState(false)
+  const [soundOn, setSoundOn] = useState(false)
+  const videoRef = useRef(null)
   useCjiStyles()
+
+  // Arabic gets its own dubbed clip; English and Urdu (no Urdu dub yet)
+  // both fall back to the English version.
+  const videoSrc = i18n.language === "ar" ? CJI_VIDEO_SRC.ar : CJI_VIDEO_SRC.en
+
+  const toggleSound = () => {
+    setSoundOn((prev) => {
+      const next = !prev
+      if (videoRef.current) videoRef.current.muted = !next
+      return next
+    })
+  }
+
+  // Switching language swaps the underlying clip — start it back at silent
+  // rather than carrying "sound on" over to a video the visitor didn't
+  // explicitly unmute.
+  useEffect(() => {
+    setSoundOn(false)
+  }, [videoSrc])
 
   const FEATURES = [
     { icon: Zap, label: t("cji.features.instantResponses") },
@@ -270,29 +295,31 @@ export default function CJI() {
               </span>
 
               <div className="aspect-video w-full h-full relative">
-                {videoActive ? (
-                  <iframe
-                    className="w-full h-full"
-                    src={`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1`}
-                    title={t("cji.videoTitle")}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  />
-                ) : (
-                  <button
-                    type="button"
-                    className="cji-video-facade"
-                    onClick={() => setVideoActive(true)}
-                    aria-label={t("cji.videoTitle")}
-                    style={{
-                      backgroundImage: `url(https://i.ytimg.com/vi/${YOUTUBE_VIDEO_ID}/hqdefault.jpg)`,
-                    }}
-                  >
-                    <span className="cji-video-facade-play" aria-hidden="true">
-                      <Play className="w-6 h-6 fill-current" />
-                    </span>
-                  </button>
-                )}
+                <video
+                  key={videoSrc}
+                  ref={videoRef}
+                  className="cji-video-el"
+                  src={videoSrc}
+                  title={t("cji.videoTitle")}
+                  autoPlay
+                  muted={!soundOn}
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+                <button
+                  type="button"
+                  className="cji-sound-toggle"
+                  onClick={toggleSound}
+                  aria-label={t(soundOn ? "cji.muteButton" : "cji.unmuteButton")}
+                  aria-pressed={soundOn}
+                >
+                  {soundOn ? (
+                    <Volume2 className="w-4 h-4" />
+                  ) : (
+                    <VolumeX className="w-4 h-4" />
+                  )}
+                </button>
               </div>
             </div>
           </div>

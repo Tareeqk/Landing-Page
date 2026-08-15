@@ -1653,7 +1653,9 @@
       "liveTracking": "تتبع مباشر"
     },
     "videoBadge": "شاهد ناصر أثناء العمل",
-    "videoTitle": "تعرف على ناصر"
+    "videoTitle": "تعرف على ناصر",
+    "unmuteButton": "اضغط لتشغيل الصوت",
+    "muteButton": "كتم صوت الفيديو"
   },
   "cookieConsent": {
     "title": "نحن نقدّر خصوصيتك",

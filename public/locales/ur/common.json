@@ -1774,7 +1774,9 @@
       "liveTracking": "لائیو ٹریکنگ"
     },
     "videoBadge": "ناصر کو عمل میں دیکھیں",
-    "videoTitle": "ناصر سے ملیں"
+    "videoTitle": "ناصر سے ملیں",
+    "unmuteButton": "آواز کے لیے ٹیپ کریں",
+    "muteButton": "ویڈیو خاموش کریں"
   },
   "car-recovery-business-bay": {
     "area": "Business Bay",
