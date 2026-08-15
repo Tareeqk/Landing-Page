@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useState } from "react"
 import {
   Phone,
   Mail,
   MapPin,
   ArrowRight,
+  ChevronDown,
   Clock,
   ShieldCheck,
   Star,
@@ -119,6 +120,14 @@ const Footer = () => {
   const { t } = useTranslation()
   const langLink = useLangLink()
 
+  // Services/Areas collapse to accordions on mobile only — CSS forces them
+  // open at desktop widths regardless of this state, so it only matters
+  // below the 640px breakpoint where all four columns stack and the full
+  // list of links otherwise makes the footer very long.
+  const [openSections, setOpenSections] = useState({ services: false, areas: false })
+  const toggleSection = (key) =>
+    setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }))
+
   const trustLabels = t("footer.trust", { returnObjects: true, defaultValue: [] })
   const serviceLabels = t("footer.services", { returnObjects: true, defaultValue: [] })
 
@@ -223,6 +232,11 @@ const Footer = () => {
           font-size: 13px;
         }
 
+        .tk-trust-icon svg {
+          width: 16px;
+          height: 16px;
+        }
+
         /* Socials */
         .tk-socials {
           display: flex;
@@ -243,6 +257,11 @@ const Footer = () => {
           text-decoration: none;
           font-size: 14px;
           transition: background 0.22s, border-color 0.22s, transform 0.22s, color 0.22s;
+        }
+
+        .tk-social-btn svg {
+          width: 16px;
+          height: 16px;
         }
 
         .tk-social-btn:hover {
@@ -301,6 +320,64 @@ const Footer = () => {
 
         .footer-nav-link:hover .footer-link-dot {
           opacity: 1;
+        }
+
+        /* ─── ACCORDION (Services/Areas headings become toggles below
+           640px; forced open above it so desktop is unaffected) ─── */
+        .tk-accordion-toggle {
+          width: 100%;
+          background: none;
+          border: 0;
+          padding: 0;
+          font-family: inherit;
+          text-align: left;
+          cursor: pointer;
+        }
+
+        html[dir="rtl"] .tk-accordion-toggle {
+          text-align: right;
+        }
+
+        .tk-accordion-chevron {
+          display: none;
+          flex-shrink: 0;
+          transition: transform 0.25s ease;
+        }
+
+        .tk-accordion-toggle[aria-expanded="true"] .tk-accordion-chevron {
+          transform: rotate(180deg);
+        }
+
+        .tk-accordion-content {
+          display: grid;
+          grid-template-rows: 0fr;
+          transition: grid-template-rows 0.3s ease;
+        }
+
+        .tk-accordion-content.is-open {
+          grid-template-rows: 1fr;
+        }
+
+        .tk-accordion-inner {
+          overflow: hidden;
+          min-height: 0;
+        }
+
+        @media (max-width: 640px) {
+          .tk-accordion-toggle {
+            cursor: pointer;
+          }
+
+          .tk-accordion-chevron {
+            display: block;
+          }
+        }
+
+        @media (min-width: 641px) {
+          .tk-accordion-content {
+            grid-template-rows: 1fr !important;
+            transition: none;
+          }
         }
 
         /* ─── AREA LINKS ─── */
@@ -516,24 +593,56 @@ const Footer = () => {
 
             {/* SERVICES */}
             <div>
-              <h3 className="tk-col-heading">{t("footer.servicesTitle")}</h3>
-              {SERVICES.map((service, i) => (
-                <FooterLink key={service.href} href={langLink(service.href)}>
-                  {serviceLabels[i] || service.title}
-                </FooterLink>
-              ))}
+              <button
+                type="button"
+                className="tk-col-heading tk-accordion-toggle"
+                aria-expanded={openSections.services}
+                aria-controls="footer-services-list"
+                onClick={() => toggleSection("services")}
+              >
+                {t("footer.servicesTitle")}
+                <ChevronDown className="tk-accordion-chevron" size={14} aria-hidden="true" />
+              </button>
+              <div
+                id="footer-services-list"
+                className={`tk-accordion-content${openSections.services ? " is-open" : ""}`}
+              >
+                <div className="tk-accordion-inner">
+                  {SERVICES.map((service, i) => (
+                    <FooterLink key={service.href} href={langLink(service.href)}>
+                      {serviceLabels[i] || service.title}
+                    </FooterLink>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* LOCATIONS — area/city names stay in English (proper nouns),
                 only the column heading is translated. */}
             <div>
-              <h3 className="tk-col-heading">{t("footer.areasTitle")}</h3>
-              <div className="area-grid">
-                {AREAS.map(area => (
-                  <AreaLink key={area.href} href={langLink(area.href)}>
-                    {area.label}
-                  </AreaLink>
-                ))}
+              <button
+                type="button"
+                className="tk-col-heading tk-accordion-toggle"
+                aria-expanded={openSections.areas}
+                aria-controls="footer-areas-list"
+                onClick={() => toggleSection("areas")}
+              >
+                {t("footer.areasTitle")}
+                <ChevronDown className="tk-accordion-chevron" size={14} aria-hidden="true" />
+              </button>
+              <div
+                id="footer-areas-list"
+                className={`tk-accordion-content${openSections.areas ? " is-open" : ""}`}
+              >
+                <div className="tk-accordion-inner">
+                  <div className="area-grid">
+                    {AREAS.map(area => (
+                      <AreaLink key={area.href} href={langLink(area.href)}>
+                        {area.label}
+                      </AreaLink>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
 
