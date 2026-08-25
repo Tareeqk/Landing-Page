@@ -12,10 +12,20 @@ function LanguageSwitcher() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  // Each label needs its own script's font explicitly, not the ambient
+  // `html[lang]` one -- index.css swaps the *entire* document's
+  // font-family per active language (Poppins/Noto Kufi Arabic/Noto
+  // Nastaliq Urdu), so without this every label here -- including
+  // "English" -- silently renders in whichever font the currently
+  // active language happens to use, not its own. Nastaliq Urdu also has
+  // a visibly larger x-height than the other two at the same declared
+  // size, hence the smaller compensating fontSize on "ur" below --
+  // without it "اردو" reads noticeably larger than "English"/"العربية"
+  // even once each is in its correct font.
   const languages = [
-    { code: "en", label: "English" },
-    { code: "ar", label: "العربية" },
-    { code: "ur", label: "اردو" },
+    { code: "en", label: "English", fontFamily: '"Poppins", "Poppins Fallback", sans-serif', fontSize: undefined },
+    { code: "ar", label: "العربية", fontFamily: '"Noto Kufi Arabic", sans-serif', fontSize: undefined },
+    { code: "ur", label: "اردو", fontFamily: '"Noto Nastaliq Urdu", serif', fontSize: "0.85em" },
   ]
 
   const currentLanguage = languages.find((lang) => lang.code === i18n.language)
@@ -70,7 +80,13 @@ function LanguageSwitcher() {
                    transition-colors border-2 border-gray-500 
                    cursor-pointer"
       >
-        <span className="font-medium">{currentLanguage?.label}</span>
+        <span
+          className="font-medium"
+          lang={currentLanguage?.code}
+          style={{ fontFamily: currentLanguage?.fontFamily, fontSize: currentLanguage?.fontSize }}
+        >
+          {currentLanguage?.label}
+        </span>
         <ChevronDown
           className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${
             isOpen ? "rotate-180" : ""
@@ -83,7 +99,9 @@ function LanguageSwitcher() {
           {languages.map((lang) => (
             <button
               key={lang.code}
+              lang={lang.code}
               onClick={() => changeLang(lang.code)}
+              style={{ fontFamily: lang.fontFamily, fontSize: lang.fontSize }}
               className={`block w-full text-start px-3 py-1 text-xs sm:text-sm
                 ${
                   i18n.language === lang.code

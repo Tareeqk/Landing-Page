@@ -476,7 +476,15 @@ const Footer = () => {
           background: none;
           border: 0;
           padding: 0;
-          font: inherit;
+          /* font-family only, not the font shorthand -- that shorthand
+             also resets font-size/weight/line-height to this button's own
+             inherited value (its container's, not .tk-legal-link's own
+             12px), which is what made "Cookie Settings" render visibly
+             larger than the Privacy Policy/Terms links beside it despite
+             sharing the same .tk-legal-link class. font-family alone still
+             replaces the browser's default button font (the reason this
+             rule exists) without touching size/weight. */
+          font-family: inherit;
           cursor: pointer;
         }
 

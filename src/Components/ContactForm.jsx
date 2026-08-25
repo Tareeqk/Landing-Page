@@ -99,23 +99,26 @@ export default function ContactSection() {
     try {
       setLoading(true);
 
-      const params = new URLSearchParams();
-
-      params.append("name", formData.name);
-      params.append("email", formData.email);
-      params.append("phone", formData.mobile);
-      params.append("subject", formData.subject);
-      params.append("message", formData.message);
-      params.append("dial_code", "+971");
-      params.append("submit", "true");
-
-      const response = await fetch(`${baseUrl}/contact-us`, {
+      // POST /api/v1/contact-us -- App\Http\Controllers\Api\ContactSubmissionController
+      // (tareeqk-v2-be), same {success, data}/{success, error} envelope
+      // every other api/v1 endpoint uses. Previously posted to a bare
+      // `/contact-us` with a made-up {status, message} response shape --
+      // that endpoint never existed on the backend at all, so submitting
+      // this form has always silently failed.
+      const response = await fetch(`${baseUrl}/api/v1/contact-us`, {
         method: "POST",
-        body: params,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.mobile ? `+971${formData.mobile}` : null,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
       const data = await response.json();
 
-      if (data.status === 200) {
+      if (data.success) {
         alert(t("contact.successAlert"));
 
         setFormData({
@@ -126,7 +129,7 @@ export default function ContactSection() {
           message: "",
         });
       } else {
-        alert(data.message || t("contact.genericErrorAlert"));
+        alert(data.error?.message || t("contact.genericErrorAlert"));
       }
     } catch (error) {
       console.error(error);

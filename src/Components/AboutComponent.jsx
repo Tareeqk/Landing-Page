@@ -471,6 +471,24 @@ export default function AboutPreview() {
   // same effect, it would never run and .abtprev-visible would never get
   // added, leaving the whole section permanently invisible. This effect has
   // no such guard, so it sets up a fresh observer on every mount regardless.
+  // Reported bug: this section sometimes never appears at all. Root cause
+  // isn't fully pinned down (couldn't reproduce interactively), but the
+  // structural weakness is clear: visibility depends entirely on this
+  // one-shot IntersectionObserver firing while the element crosses INTO
+  // the viewport from below. If that moment is missed for any reason --
+  // observer setup delayed past it (e.g. slow hydration on the prerendered
+  // page while a user is already fast-scrolling), or a remount (Suspense
+  // re-suspending, navigating away and back) happens while the section
+  // sits scrolled-past above the viewport -- nothing ever re-triggers it,
+  // since the element won't cross into the viewport again on a normal
+  // forward scroll. revealIfPast below is the fix: it doesn't try to
+  // guess the exact failure moment, it just guarantees the section can
+  // never stay permanently invisible -- any element that's already
+  // scrolled past (bottom edge above the viewport) gets force-revealed
+  // immediately, since there's no legitimate "wait for it to enter from
+  // below" case left once it's already past. Below-the-fold elements a
+  // user hasn't reached yet are untouched, so the intended reveal-on-
+  // scroll animation still plays normally for the common case.
   useEffect(() => {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
       document.querySelectorAll(".abtprev-reveal").forEach((el) => el.classList.add("abtprev-visible"));
@@ -490,12 +508,28 @@ export default function AboutPreview() {
       },
       { threshold: 0.08, rootMargin: "0px 0px -32px 0px" }
     );
+
+    const revealIfPast = () => {
+      document.querySelectorAll(".abtprev-reveal:not(.abtprev-visible)").forEach((el) => {
+        if (el.getBoundingClientRect().bottom < 0) {
+          el.classList.add("abtprev-visible");
+          observer.unobserve(el);
+        }
+      });
+    };
+
     const timeout = setTimeout(() => {
       document.querySelectorAll(".abtprev-reveal").forEach((el) => observer.observe(el));
+      // Covers the case where an element is already scrolled past by the
+      // time observation starts -- the observer alone would never fire
+      // for it (it never crosses into the viewport again going forward).
+      revealIfPast();
     }, 50);
+    window.addEventListener("scroll", revealIfPast, { passive: true });
 
     return () => {
       clearTimeout(timeout);
+      window.removeEventListener("scroll", revealIfPast);
       observer.disconnect();
     };
   }, []);
