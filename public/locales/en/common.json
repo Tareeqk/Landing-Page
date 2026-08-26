@@ -4,6 +4,7 @@
     "about": "About Us",
     "service": "Service",
     "blogs": "Blogs",
+    "partners": "Partners",
     "terms": "Terms and Conditions",
     "contact": "Contact",
     "call": "CALL NOW",
@@ -409,6 +410,114 @@
     "perkSecure": "Secure Payments",
     "perkSupport": "24/7 Support",
     "perkRated": "Top Rated Service"
+  },
+  "becomeDriverPartner": {
+    "eyebrow": "Join Tareeqk",
+    "heading": "Drive With Us Or Grow Your Fleet",
+    "description": "Whether you're behind the wheel or running a fleet, there's a place for you in Tareeqk's roadside assistance network across the UAE.",
+    "driver": {
+      "tabLabel": "Driver",
+      "title": "Become a Driver",
+      "description": "Download the Tareeqk Driver app, complete your sign-up, and start accepting recovery jobs near you — no registration fees, no waiting around.",
+      "bullets": [
+        "Flexible hours, drive on your own schedule",
+        "Instant job notifications nearby",
+        "Fast, transparent payouts"
+      ],
+      "imageAlt": "Tareeqk Driver app live tracking screen",
+      "downloadLabel": "Get the Driver App"
+    },
+    "partner": {
+      "tabLabel": "Partner",
+      "title": "Become a Partner",
+      "description": "Register your fleet, garage, or towing company with Tareeqk's dispatch network to receive a consistent stream of nearby service requests, backed by dedicated support to help your business grow.",
+      "bullets": [
+        "Steady stream of dispatched jobs",
+        "Add your whole fleet under one company",
+        "Dedicated onboarding support"
+      ],
+      "imageAlt": "A warm handshake representing a Tareeqk fleet partnership",
+      "cta": "Apply as a Partner"
+    }
+  },
+  "partnerForm": {
+    "hero": {
+      "eyebrow": "Fleet & Vendor Partnerships",
+      "title": "Grow Your Fleet With Tareeqk",
+      "description": "Join Tareeqk's network of vetted recovery and towing partners. Submit your company details below and our team will review your application within days.",
+      "applyCta": "Apply Now",
+      "driverCta": "Looking to drive instead?",
+      "stat1": "Dispatch",
+      "stat2": "Coverage",
+      "stat3": "Registration Fees",
+      "badgeLabel": "Verified Network",
+      "badgeValue": "RTA-Aligned Recovery Fleet",
+      "imageAlt": "Team members joining hands in partnership"
+    },
+    "benefits": {
+      "items": [
+        {
+          "title": "More Jobs, Steadily",
+          "desc": "Get matched with recovery and towing jobs dispatched directly from the Tareeqk platform."
+        },
+        {
+          "title": "Vetted Network",
+          "desc": "Join a trusted, RTA-aligned network that customers already recognize and rely on."
+        },
+        {
+          "title": "Whole-Fleet Onboarding",
+          "desc": "Register once as a company and bring your full fleet of vehicles and drivers along."
+        },
+        {
+          "title": "Fast Review",
+          "desc": "Our team reviews every application quickly so you can start receiving jobs sooner."
+        }
+      ]
+    },
+    "steps": {
+      "eyebrow": "How It Works",
+      "heading": "What Happens After You Apply",
+      "description": "A straightforward path from application to your first dispatched job.",
+      "items": [
+        {
+          "title": "Submit Your Application",
+          "desc": "Fill in your contact and company details in the form — takes less than two minutes."
+        },
+        {
+          "title": "Our Team Reviews It",
+          "desc": "A Tareeqk admin verifies your company and trade license details."
+        },
+        {
+          "title": "Get Your Partner Code",
+          "desc": "Once approved, your company is activated with a unique partner code."
+        },
+        {
+          "title": "Start Receiving Jobs",
+          "desc": "Add your fleet and drivers, and start accepting dispatched recovery jobs."
+        }
+      ]
+    },
+    "form": {
+      "eyebrow": "Partner Application",
+      "heading": "Tell Us About Your Company",
+      "description": "Share a few details and our team will get back to you shortly.",
+      "contactNameLabel": "Contact Name *",
+      "contactNamePlaceholder": "Ahmed Ali",
+      "companyNameLabel": "Company / Fleet Name *",
+      "companyNamePlaceholder": "Ahmed Fleet Services",
+      "emailLabel": "Email Address *",
+      "emailPlaceholder": "ahmed@example.com",
+      "phoneLabel": "Phone Number *",
+      "phonePlaceholder": "+971 50 123 4567",
+      "licenseLabel": "Trade License Number",
+      "licensePlaceholder": "DED-12345",
+      "optionalTag": "Optional",
+      "submitButton": "Submit Application",
+      "submittingButton": "Submitting...",
+      "successAlert": "Application submitted! Our team will review it and get back to you shortly.",
+      "genericErrorAlert": "Something went wrong.",
+      "errorAlert": "Something went wrong. Please try again."
+    }
   },
   "price": {
     "price": "Pricing",
@@ -1559,6 +1668,10 @@
     "home": {
       "title": "Car Recovery in Dubai | 24/7 Towing & Roadside Assistance",
       "description": "Fast, reliable towing and roadside assistance in Dubai. Available 24/7 for car recovery, battery jump start, tire change and more."
+    },
+    "becomePartner": {
+      "title": "Become a Partner - Fleet & Vendor Registration | Tareeqk",
+      "description": "Register your fleet, garage, or towing company with Tareeqk and join our vetted roadside assistance and recovery network across the UAE."
     },
     "about": {
       "title": "About Us - Tareeqk Dubai",

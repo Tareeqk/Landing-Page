@@ -301,6 +301,23 @@ html[lang="ur"] {
   direction: rtl;
 }
 
+/* Noto Nastaliq Urdu's diagonal stacking and tall loops/diacritics need far
+   more vertical room than Latin or Arabic Kufic text -- at a typical
+   Latin-tuned line-height (~1.2-1.5, or whatever a component's own
+   `leading-*` utility sets), wrapped lines' loops collide with the line
+   above/below. One component (CJI.jsx) already worked around this locally
+   with a conditional `leading-loose` class; this makes that the default
+   everywhere prose actually wraps (`p`, `li`) instead of something every
+   new component has to remember to opt into. `!important` because it needs
+   to win over components' own `leading-*` utility classes (e.g. `leading-6`,
+   `leading-tight`) at equal specificity. Headings are deliberately excluded
+   -- see the `h1` rule below, which is short/non-wrapping text tuned
+   separately. */
+html[lang="ur"] p,
+html[lang="ur"] li {
+  line-height: 2 !important;
+}
+
 /* Letter-spacing ("tracking") breaks Arabic/Urdu's required letter-joining —
    components throughout the site add positive tracking (0.02em–0.28em) to
    uppercase eyebrows/labels/badges as a Latin-type effect (see .tk-eyebrow,

@@ -84,6 +84,11 @@ export default function Navbar({ isDark, setIsDark }) {
       href: langLink("/blogs"),
       current: barePath === "/blogs",
     },
+    {
+      name: t("navbar.partners"),
+      href: langLink("/become-a-partner"),
+      current: barePath === "/become-a-partner",
+    },
     { name: t("navbar.contact"), href: langLink("/#contact") },
   ]
 

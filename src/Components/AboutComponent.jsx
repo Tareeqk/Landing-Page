@@ -1,12 +1,36 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import useLangLink from "../hooks/useLangLink";
+
+// Delay (ms) per reveal element, keyed by data-reveal-key in the JSX below.
+const REVEAL_DELAYS = {
+  eyebrow: 0,
+  media: 80,
+  content: 140,
+  stat1: 220,
+  stat2: 290,
+  stat3: 360,
+};
 
 export default function AboutPreview() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
   const langLink = useLangLink();
+
+  // Which reveal elements have played their entrance animation, tracked in
+  // React state rather than by mutating classList directly. This section's
+  // language-switch route (path="/:lang", no key) re-renders in place
+  // rather than remounting, and several elements below compute their
+  // className from `isRTL` -- any re-render was overwriting the whole
+  // class attribute from JSX and silently discarding a classList.add()
+  // done outside React, permanently stranding the section at opacity:0
+  // after the first language switch post-reveal. State survives re-renders
+  // regardless of what else in the className changes, so it can't happen.
+  const [revealed, setRevealed] = useState(() => new Set());
+  const reveal = (key) =>
+    setRevealed((prev) => (prev.has(key) ? prev : new Set(prev).add(key)));
+  const revealClass = (key) => (revealed.has(key) ? "abtprev-visible" : "");
 
   const TAGS = [
     t("aboutPreview.tags.flatbed", "Flatbed recovery"),
@@ -463,35 +487,15 @@ export default function AboutPreview() {
   }, []);
 
   // Scroll-reveal observer — deliberately its own effect, not bundled into
-  // the style-injection one above. That effect skips its body (via the
-  // "already injected" guard) on any mount after the first, but this
-  // section's prerendered HTML (see scripts/prerender.mjs) already has the
-  // style tag baked in from the snapshot — so on a real page load the style
-  // guard trips immediately, and if the observer setup lived inside that
-  // same effect, it would never run and .abtprev-visible would never get
-  // added, leaving the whole section permanently invisible. This effect has
-  // no such guard, so it sets up a fresh observer on every mount regardless.
-  // Reported bug: this section sometimes never appears at all. Root cause
-  // isn't fully pinned down (couldn't reproduce interactively), but the
-  // structural weakness is clear: visibility depends entirely on this
-  // one-shot IntersectionObserver firing while the element crosses INTO
-  // the viewport from below. If that moment is missed for any reason --
-  // observer setup delayed past it (e.g. slow hydration on the prerendered
-  // page while a user is already fast-scrolling), or a remount (Suspense
-  // re-suspending, navigating away and back) happens while the section
-  // sits scrolled-past above the viewport -- nothing ever re-triggers it,
-  // since the element won't cross into the viewport again on a normal
-  // forward scroll. revealIfPast below is the fix: it doesn't try to
-  // guess the exact failure moment, it just guarantees the section can
-  // never stay permanently invisible -- any element that's already
-  // scrolled past (bottom edge above the viewport) gets force-revealed
-  // immediately, since there's no legitimate "wait for it to enter from
-  // below" case left once it's already past. Below-the-fold elements a
-  // user hasn't reached yet are untouched, so the intended reveal-on-
-  // scroll animation still plays normally for the common case.
+  // the style-injection one above (same reasoning as before: the style
+  // guard trips immediately once the prerendered snapshot already has the
+  // tag, so observer setup can't live behind that same guard or it would
+  // never run). Writes to `revealed` state (see above) instead of touching
+  // classList directly, so the revealed set can't be lost to an unrelated
+  // re-render.
   useEffect(() => {
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
-      document.querySelectorAll(".abtprev-reveal").forEach((el) => el.classList.add("abtprev-visible"));
+      setRevealed(new Set(Object.keys(REVEAL_DELAYS)));
       return;
     }
 
@@ -500,8 +504,9 @@ export default function AboutPreview() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const el = entry.target;
-            const delay = parseInt(el.dataset.delay || 0);
-            setTimeout(() => el.classList.add("abtprev-visible"), delay);
+            const key = el.dataset.revealKey;
+            const delay = REVEAL_DELAYS[key] ?? 0;
+            setTimeout(() => reveal(key), delay);
             observer.unobserve(el);
           }
         });
@@ -510,16 +515,16 @@ export default function AboutPreview() {
     );
 
     const revealIfPast = () => {
-      document.querySelectorAll(".abtprev-reveal:not(.abtprev-visible)").forEach((el) => {
+      document.querySelectorAll(".abtprev-reveal[data-reveal-key]").forEach((el) => {
         if (el.getBoundingClientRect().bottom < 0) {
-          el.classList.add("abtprev-visible");
+          reveal(el.dataset.revealKey);
           observer.unobserve(el);
         }
       });
     };
 
     const timeout = setTimeout(() => {
-      document.querySelectorAll(".abtprev-reveal").forEach((el) => observer.observe(el));
+      document.querySelectorAll(".abtprev-reveal[data-reveal-key]").forEach((el) => observer.observe(el));
       // Covers the case where an element is already scrolled past by the
       // time observation starts -- the observer alone would never fire
       // for it (it never crosses into the viewport again going forward).
@@ -543,7 +548,7 @@ export default function AboutPreview() {
           margin: "0 auto",
         }}
       >
-        <div className="abt-preview-eyebrow abtprev-reveal" data-delay="0">
+        <div className={`abt-preview-eyebrow abtprev-reveal ${revealClass("eyebrow")}`} data-reveal-key="eyebrow">
           <span className="abt-preview-eyebrow-pill">
             <span className="abt-preview-eyebrow-dot" />
             {t("aboutPreview.eyebrow", "About Us")}
@@ -553,8 +558,8 @@ export default function AboutPreview() {
         <div className="abt-preview-grid">
           {/* Image side */}
           <div
-            className={`abt-preview-media abtprev-reveal ${isRTL ? "abtprev-right" : "abtprev-left"}`}
-            data-delay="80"
+            className={`abt-preview-media abtprev-reveal ${isRTL ? "abtprev-right" : "abtprev-left"} ${revealClass("media")}`}
+            data-reveal-key="media"
             style={{ order: isRTL ? 2 : 1 }}
           >
             <div className="abt-preview-media-main">
@@ -583,8 +588,8 @@ export default function AboutPreview() {
 
           {/* Content side */}
           <div
-            className={`abt-preview-content abtprev-reveal ${isRTL ? "abtprev-left" : "abtprev-right"}`}
-            data-delay="140"
+            className={`abt-preview-content abtprev-reveal ${isRTL ? "abtprev-left" : "abtprev-right"} ${revealClass("content")}`}
+            data-reveal-key="content"
             style={{
               order: isRTL ? 1 : 2,
               textAlign: isRTL ? "right" : "left",
@@ -601,7 +606,7 @@ export default function AboutPreview() {
                 two truck photos (main + floating card); stacking three more
                 differently-styled photos here read as visual clutter. */}
             <div className="abt-preview-proof">
-              <div className="abt-preview-stat abtprev-reveal" data-delay="220">
+              <div className={`abt-preview-stat abtprev-reveal ${revealClass("stat1")}`} data-reveal-key="stat1">
                 <span className="abt-preview-stat-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
@@ -612,7 +617,7 @@ export default function AboutPreview() {
                 <span className="abt-preview-stat-label">{t("aboutPreview.response")}</span>
               </div>
 
-              <div className="abt-preview-stat abtprev-reveal" data-delay="290">
+              <div className={`abt-preview-stat abtprev-reveal ${revealClass("stat2")}`} data-reveal-key="stat2">
                 <span className="abt-preview-stat-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M12 3l7 3v6c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6l7-3z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
@@ -623,7 +628,7 @@ export default function AboutPreview() {
                 <span className="abt-preview-stat-label">{t("aboutPreview.badgeText")}</span>
               </div>
 
-              <div className="abt-preview-stat abtprev-reveal" data-delay="360">
+              <div className={`abt-preview-stat abtprev-reveal ${revealClass("stat3")}`} data-reveal-key="stat3">
                 <span className="abt-preview-stat-icon" aria-hidden="true">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M12 21s-7-6.5-7-11.5A7 7 0 0112 2a7 7 0 017 7.5C19 14.5 12 21 12 21z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />

@@ -15,6 +15,7 @@ const AboutPreview = lazy(() => import("../Components/AboutComponent"));
 const CJI = lazy(() => import("../Components/CJI"));
 const ServiceComponent = lazy(() => import("../Components/ServiceComponent"));
 const HowItWorks = lazy(() => import("../Components/Howitworks"));
+const BecomeDriverPartner = lazy(() => import("../Components/BecomeDriverPartner"));
 const HomeFAQ = lazy(() => import("../Components/HomeFAQ"));
 const ContactForm = lazy(() => import("../Components/ContactForm"));
 
@@ -64,6 +65,7 @@ export default function Home() {
           <CJI />
           <ServiceComponent />
           <HowItWorks />
+          <BecomeDriverPartner />
           <HomeFAQ />
           <ContactForm />
         </Suspense>
