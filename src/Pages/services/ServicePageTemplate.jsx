@@ -786,7 +786,7 @@ export default function ServicePageTemplate({ config }) {
                   <div style={styles.areasImageCaption}>
                     <span style={styles.areasImageCaptionIcon}><FaShieldAlt size={15} /></span>
                     <div>
-                      <div style={styles.areasImageCaptionTitle}>{t('servicePageTemplate.reliableLocal', 'Reliable. Local. Always Here.')}</div>
+                      <div className="urdu-loose-line" style={styles.areasImageCaptionTitle}>{t('servicePageTemplate.reliableLocal', 'Reliable. Local. Always Here.')}</div>
                       <div style={styles.areasImageCaptionSub}>{t('servicePageTemplate.servingDubai', 'Serving Dubai with trust and care.')}</div>
                     </div>
                   </div>
@@ -814,7 +814,7 @@ export default function ServicePageTemplate({ config }) {
                       <span style={styles.allAreaIconWrap}><FaMapMarkerAlt size={14} /></span>
                       <div>
                         <div style={styles.allAreaName}>{t(`servicePageTemplate.areaNames.${slugify(area)}`, area)}</div>
-                        <div style={styles.allAreaTagline}>
+                        <div className="urdu-loose-line" style={styles.allAreaTagline}>
                           {t(
                             AREA_TAGLINES[area]
                               ? `servicePageTemplate.areaTaglines.${slugify(area)}`

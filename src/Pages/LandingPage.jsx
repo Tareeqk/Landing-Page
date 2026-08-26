@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
+import useLangLink from '../hooks/useLangLink';
 import './landing.css';
 
 // Keys map to `landing.services.<key>` in each locale file.
@@ -21,14 +22,17 @@ const HERO_TRUCK = '/hero/truck-nasir.webp';
 // logos read correctly, instead of coming out backwards under scaleX(-1).
 const HERO_TRUCK_RTL = '/hero/truck-nasir-rtl.webp';
 
-// Keys map to `landing.heroTags.<key>` in each locale file.
+// Keys map to `landing.heroTags.<key>` in each locale file. `link` is the
+// route (post-/:lang) for that service, matching the paths in App.jsx --
+// used by <MobileServiceGrid> below so each tag is a real link, not just
+// a label.
 const HERO_SERVICE_TAGS = [
-  { key: 'carRecovery', icon: '/hero/icon-car-recovery.webp' },
-  { key: 'batteryJumpStart', icon: '/hero/icon-battery-jumpstart.webp' },
-  { key: 'tirePuncture', icon: '/hero/icon-tire-puncture.webp' },
-  { key: 'desertRecovery', icon: '/hero/icon-desert-recovery.webp' },
-  { key: 'bikeRecovery', icon: '/hero/icon-bike-recovery.webp' },
-  { key: 'accidentRecovery', icon: '/hero/icon-accident-recovery.webp' },
+  { key: 'carRecovery', icon: '/hero/icon-car-recovery.webp', link: '/car-recovery-dubai' },
+  { key: 'batteryJumpStart', icon: '/hero/icon-battery-jumpstart.webp', link: '/battery-service-dubai' },
+  { key: 'tirePuncture', icon: '/hero/icon-tire-puncture.webp', link: '/flat-tyre-repair-dubai' },
+  { key: 'desertRecovery', icon: '/hero/icon-desert-recovery.webp', link: '/desert-recovery-dubai' },
+  { key: 'bikeRecovery', icon: '/hero/icon-bike-recovery.webp', link: '/bike-recovery-dubai' },
+  { key: 'accidentRecovery', icon: '/hero/icon-accident-recovery.webp', link: '/accident-recovery-dubai' },
 ];
 
 /* ── Typing cycle ──
@@ -103,59 +107,37 @@ function HeroBackground() {
   );
 }
 
-// Mobile (≤860px) replacement for the arc — a single pill (icon + title)
-// that cycles through all six tags, in normal document flow (see
-// .tk-hero__mobile-pill-row in landing.css). Hidden entirely above
-// 860px, where the arc (below) renders instead.
-//
-// Swaps the icon/label mid-fade, at opacity 0, on the SAME element —
-// same crossfade technique the old icon-only carousel used — rather than
-// remounting a new element per tag, so it reads as one tile fading
-// between states instead of one vanishing while an unrelated one appears.
-function MobileServicePill({ tags }) {
+// Mobile (≤860px) replacement for the arc — used to be a single pill
+// (icon + title) that crossfaded through all six tags one at a time; now
+// a static grid showing three tags per row (all six visible across two
+// rows, no cycling/waiting), each a real link to that service's page
+// instead of a decorative label.
+function MobileServiceGrid({ tags }) {
   const { t } = useTranslation();
-  const reduceMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const [index, setIndex] = useState(0);
-  const [fading, setFading] = useState(false);
-
-  useEffect(() => {
-    if (reduceMotion) return;
-    const FADE_MS = 350;
-    const HOLD_MS = 2200;
-    let fadeTimeout;
-    const id = setInterval(() => {
-      setFading(true);
-      fadeTimeout = setTimeout(() => {
-        setIndex((i) => (i + 1) % tags.length);
-        setFading(false);
-      }, FADE_MS);
-    }, HOLD_MS);
-    return () => {
-      clearInterval(id);
-      clearTimeout(fadeTimeout);
-    };
-  }, [tags.length, reduceMotion]);
-
-  const tag = tags[index];
+  const langLink = useLangLink();
 
   return (
-    <div className="tk-hero__mobile-pill-row" data-testid="landing-hero-tags-mobile">
-      {/* Icon+title cycle visually, but the full list stays available to
-          screen readers/crawlers instead of only ever announcing one. */}
-      <span className="tk-visually-hidden">
-        {tags.map((t2) => t(`landing.heroTags.${t2.key}`)).join(', ')}
-      </span>
-      <div
-        className={`tk-hero__mobile-pill${fading ? ' tk-hero__mobile-pill--fading' : ''}`}
-        aria-hidden="true"
-      >
-        <img src={tag.icon} alt="" className="tk-hero__mobile-pill-icon" loading="lazy" width="22" height="22" />
-        <span className="tk-hero__mobile-pill-label">{t(`landing.heroTags.${tag.key}`)}</span>
-      </div>
+    <div className="tk-hero__mobile-tag-grid" data-testid="landing-hero-tags-mobile">
+      {tags.map((tag) => (
+        <Link
+          key={tag.key}
+          to={langLink(tag.link)}
+          onClick={() => window.scrollTo(0, 0)}
+          className="tk-hero__mobile-tag"
+          // The visible label is a short, one-word version ("Battery") for
+          // layout reasons -- aria-label gives screen readers the full
+          // "Battery Jump Start"-style name instead, since a link
+          // announced out of context just as "Battery" is a lot less
+          // clear than what a sighted visitor gets from the surrounding
+          // hero (truck illustration, "services" grouping, etc.).
+          aria-label={t(`landing.heroTags.${tag.key}`)}
+        >
+          <img src={tag.icon} alt="" className="tk-hero__mobile-tag-icon" loading="lazy" width="22" height="22" />
+          <span className="tk-hero__mobile-tag-label" aria-hidden="true">
+            {t(`landing.heroTagsShort.${tag.key}`)}
+          </span>
+        </Link>
+      ))}
     </div>
   );
 }
@@ -165,17 +147,21 @@ function MobileServicePill({ tags }) {
 // unlike the skyline, which is pure background ambiance and stays
 // full-bleed behind everything regardless of language or breakpoint. The
 // six tags render as a real circular arc above 860px (see .tk-hero__tag
-// in landing.css); below that, <MobileServicePill> replaces it.
+// in landing.css); below that, <MobileServiceGrid> replaces it.
 function HeroVisual() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === 'rtl';
+  const langLink = useLangLink();
   return (
     <>
       {/* Sibling of .tk-hero__visual, not a child of it — renders before it
           in normal flow, so on mobile (.tk-hero__inner: flex-direction:
-          column) it always lands above the circle. Hidden entirely above
-          860px (see .tk-hero__mobile-pill-row in landing.css). */}
-      <MobileServicePill tags={HERO_SERVICE_TAGS} />
+          column) three tags land above the circle and the other three
+          below it (see the second <MobileServiceGrid> after
+          .tk-hero__visual), rather than all six stacked above it.
+          Hidden entirely above 860px (see .tk-hero__mobile-tag-grid in
+          landing.css). */}
+      <MobileServiceGrid tags={HERO_SERVICE_TAGS.slice(0, 3)} />
       <div className="tk-hero__visual">
       {/* Radial glow behind the truck — was a hand-drawn gradient PNG
           (WEBSITE IMAGE AND ICONS ASSET/CIRCLE DESIGN.png); reproduced in
@@ -207,13 +193,23 @@ function HeroVisual() {
       />
       <div className="tk-hero__tags" data-testid="landing-hero-tags">
         {HERO_SERVICE_TAGS.map((tag) => (
-          <div key={tag.key} className="tk-hero__tag">
+          <Link
+            key={tag.key}
+            to={langLink(tag.link)}
+            onClick={() => window.scrollTo(0, 0)}
+            className="tk-hero__tag"
+          >
             <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
             <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
-          </div>
+          </Link>
         ))}
       </div>
     </div>
+    {/* Second row, mobile-only (see .tk-hero__mobile-tag-grid's 860px
+        media query) -- sibling AFTER .tk-hero__visual so it lands below
+        the circle in document flow, sandwiching the truck/glow between
+        the two rows of tags. */}
+    <MobileServiceGrid tags={HERO_SERVICE_TAGS.slice(3, 6)} />
     </>
   );
 }

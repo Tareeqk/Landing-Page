@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiBriefcase, FiFileText, FiMail, FiPhone, FiSend, FiUser } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import FormStatusBanner from "./FormStatusBanner";
 
 // Same "inject a <style> tag keyed off body.dark" convention ContactForm.jsx
 // uses -- Tailwind's dark: variant isn't configured in this project.
@@ -29,6 +30,14 @@ function usePartnerFormStyles() {
         color: var(--dark-text-main, #e4e7eb) !important;
       }
       body.dark .pf-input::placeholder { color: var(--dark-text-disabled, #777) !important; }
+      .pf-input--error { border-color: #fca5a5; }
+      .pf-input--error:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.12); }
+      /* .pf-input's own dark-mode border-color is !important (see above),
+         which would otherwise beat this non-important rule even with the
+         extra class -- needs its own !important to actually show the
+         error state once dark mode ships. */
+      body.dark .pf-input--error { border-color: #ef4444 !important; }
+      body.dark .pf-field-error { color: #fca5a5 !important; }
       body.dark .pf-optional-tag { background-color: var(--dark-bg-main, #121212) !important; color: var(--dark-text-disabled, #888) !important; }
       body.dark .pf-submit-btn {
         background-color: var(--dark-bg-muted, #2a2a2a) !important;
@@ -38,6 +47,17 @@ function usePartnerFormStyles() {
       body.dark .pf-submit-btn:hover {
         background-color: var(--primary-yellow, #f7b205) !important;
         color: #0a0a0a !important;
+      }
+
+      body.dark .form-status-banner--success {
+        background-color: rgba(16,185,129,0.12) !important;
+        border-color: rgba(16,185,129,0.3) !important;
+        color: #6ee7b7 !important;
+      }
+      body.dark .form-status-banner--error {
+        background-color: rgba(239,68,68,0.12) !important;
+        border-color: rgba(239,68,68,0.3) !important;
+        color: #fca5a5 !important;
       }
     `;
     document.head.appendChild(style);
@@ -50,12 +70,26 @@ function usePartnerFormStyles() {
 
 const FIELD_ICON_CLASS = "pf-icon pointer-events-none absolute start-3.5 top-1/2 -translate-y-1/2 text-amber-500";
 
+// The backend's 422 response ({"error":{"fields":{"email":["..."]}}}, per
+// NEXT_STEPS.md's API contract) keys errors by the snake_case request
+// field, not this form's camelCase state keys -- this maps one to the
+// other so a field-level message can be looked up by input name.
+const API_FIELD_NAME = {
+  contactName: "contact_name",
+  companyName: "company_name",
+  email: "email",
+  phone: "phone",
+  tradeLicenseNumber: "trade_license_number",
+};
+
 export default function PartnerForm({ id = "apply" }) {
   const { t } = useTranslation();
   const baseUrl = import.meta.env.VITE_BASE_URL;
   usePartnerFormStyles();
 
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
   const [formData, setFormData] = useState({
     contactName: "",
     companyName: "",
@@ -67,6 +101,18 @@ export default function PartnerForm({ id = "apply" }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    // A stale success/error banner (or a specific field's error) from a
+    // previous attempt shouldn't linger once the visitor starts editing
+    // again -- clear the whole-form banner, and just that one field's
+    // message so the others stay visible until also corrected.
+    if (status) setStatus(null);
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -74,6 +120,8 @@ export default function PartnerForm({ id = "apply" }) {
 
     try {
       setLoading(true);
+      setStatus(null);
+      setFieldErrors({});
 
       // POST /api/v1/partner-applications -- same {success, data}/{success,
       // error} envelope as /api/v1/contact-us (see ContactForm.jsx). Phone
@@ -94,7 +142,7 @@ export default function PartnerForm({ id = "apply" }) {
       const data = await response.json();
 
       if (data.success) {
-        alert(t("partnerForm.form.successAlert"));
+        setStatus({ type: "success", message: t("partnerForm.form.successAlert") });
         setFormData({
           contactName: "",
           companyName: "",
@@ -102,16 +150,32 @@ export default function PartnerForm({ id = "apply" }) {
           phone: "",
           tradeLicenseNumber: "",
         });
+      } else if (data.error?.fields) {
+        const nextFieldErrors = {};
+        for (const [formKey, apiKey] of Object.entries(API_FIELD_NAME)) {
+          const messages = data.error.fields[apiKey];
+          if (messages?.length) nextFieldErrors[formKey] = messages[0];
+        }
+        setFieldErrors(nextFieldErrors);
+        setStatus({ type: "error", message: data.error.message || t("partnerForm.form.validationErrorAlert") });
       } else {
-        alert(data.error?.message || t("partnerForm.form.genericErrorAlert"));
+        setStatus({ type: "error", message: data.error?.message || t("partnerForm.form.genericErrorAlert") });
       }
     } catch (error) {
       console.error(error);
-      alert(t("partnerForm.form.errorAlert"));
+      setStatus({ type: "error", message: t("partnerForm.form.errorAlert") });
     } finally {
       setLoading(false);
     }
   };
+
+  // Merged into each input's className below so a field with a
+  // server-side error gets a red border/ring instead of the usual amber
+  // one, matching how :invalid states are styled elsewhere on the site.
+  const fieldClass = (name) =>
+    fieldErrors[name]
+      ? "pf-input pf-input--error w-full h-12 rounded-xl border ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300"
+      : "pf-input w-full h-12 rounded-xl border border-gray-100 bg-white ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60";
 
   return (
     <div
@@ -168,6 +232,8 @@ export default function PartnerForm({ id = "apply" }) {
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+          <FormStatusBanner status={status} onDismiss={() => setStatus(null)} />
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Contact name */}
             <div>
@@ -183,9 +249,12 @@ export default function PartnerForm({ id = "apply" }) {
                   onChange={handleChange}
                   required
                   placeholder={t("partnerForm.form.contactNamePlaceholder")}
-                  className="pf-input w-full h-12 rounded-xl border border-gray-100 bg-white ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60"
+                  className={fieldClass("contactName")}
                 />
               </div>
+              {fieldErrors.contactName && (
+                <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.contactName}</p>
+              )}
             </div>
 
             {/* Company name */}
@@ -202,9 +271,12 @@ export default function PartnerForm({ id = "apply" }) {
                   onChange={handleChange}
                   required
                   placeholder={t("partnerForm.form.companyNamePlaceholder")}
-                  className="pf-input w-full h-12 rounded-xl border border-gray-100 bg-white ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60"
+                  className={fieldClass("companyName")}
                 />
               </div>
+              {fieldErrors.companyName && (
+                <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.companyName}</p>
+              )}
             </div>
           </div>
 
@@ -223,9 +295,12 @@ export default function PartnerForm({ id = "apply" }) {
                   onChange={handleChange}
                   required
                   placeholder={t("partnerForm.form.emailPlaceholder")}
-                  className="pf-input w-full h-12 rounded-xl border border-gray-100 bg-white ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60"
+                  className={fieldClass("email")}
                 />
               </div>
+              {fieldErrors.email && (
+                <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.email}</p>
+              )}
             </div>
 
             {/* Phone -- full international number, no +971 auto-prefix,
@@ -244,9 +319,12 @@ export default function PartnerForm({ id = "apply" }) {
                   required
                   minLength={8}
                   placeholder={t("partnerForm.form.phonePlaceholder")}
-                  className="pf-input w-full h-12 rounded-xl border border-gray-100 bg-white ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60"
+                  className={fieldClass("phone")}
                 />
               </div>
+              {fieldErrors.phone && (
+                <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.phone}</p>
+              )}
             </div>
           </div>
 
@@ -266,9 +344,12 @@ export default function PartnerForm({ id = "apply" }) {
                 value={formData.tradeLicenseNumber}
                 onChange={handleChange}
                 placeholder={t("partnerForm.form.licensePlaceholder")}
-                className="pf-input w-full h-12 rounded-xl border border-gray-100 bg-white ps-10 pe-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60"
+                className={fieldClass("tradeLicenseNumber")}
               />
             </div>
+            {fieldErrors.tradeLicenseNumber && (
+              <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.tradeLicenseNumber}</p>
+            )}
           </div>
 
           <div className="pt-2">

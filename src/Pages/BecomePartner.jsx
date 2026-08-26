@@ -189,7 +189,7 @@ export default function BecomePartner() {
                   </p>
                 </div>
                 <div>
-                  <p className="text-lg font-black text-white sm:text-xl">0</p>
+                  <p className="text-lg font-black text-white sm:text-xl">{t("partnerForm.hero.stat3Value")}</p>
                   <p className="mt-0.5 text-[10px] uppercase tracking-wide text-white/50">
                     {t("partnerForm.hero.stat3")}
                   </p>

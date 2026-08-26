@@ -16,7 +16,7 @@
     "title": "CAR RECOVERY & TOWING SERVICES IN DUBAI",
     "subtitle": "Tareeqk provides 24/7 care recovery, towing services,roadside assistance, battery jump start, flat tire repair and punture repair across Dubai.",
     "book": "Book Now",
-    "download": "Download The App",
+    "download": "Download",
     "vehicle": "Towing Services for All Kinds of Vehicles",
     "services": {
       "carRecovery": "Car Recovery",
@@ -41,6 +41,14 @@
       "desertRecovery": "Desert Recovery",
       "bikeRecovery": "Bike Recovery",
       "accidentRecovery": "Accident Recovery"
+    },
+    "heroTagsShort": {
+      "carRecovery": "Car",
+      "batteryJumpStart": "Battery",
+      "tirePuncture": "Flat Tyre",
+      "desertRecovery": "Desert",
+      "bikeRecovery": "Bike",
+      "accidentRecovery": "Accident"
     }
   },
   "blogs": {
@@ -449,10 +457,11 @@
       "driverCta": "Looking to drive instead?",
       "stat1": "Dispatch",
       "stat2": "Coverage",
-      "stat3": "Registration Fees",
+      "stat3": "No Registration Fees",
       "badgeLabel": "Verified Network",
       "badgeValue": "RTA-Aligned Recovery Fleet",
-      "imageAlt": "Team members joining hands in partnership"
+      "imageAlt": "Team members joining hands in partnership",
+      "stat3Value": "Free"
     },
     "benefits": {
       "items": [
@@ -516,6 +525,7 @@
       "submittingButton": "Submitting...",
       "successAlert": "Application submitted! Our team will review it and get back to you shortly.",
       "genericErrorAlert": "Something went wrong.",
+      "validationErrorAlert": "Please fix the highlighted fields and try again.",
       "errorAlert": "Something went wrong. Please try again."
     }
   },
@@ -1718,6 +1728,7 @@
     "sendingButton": "Sending...",
     "successAlert": "Message sent successfully!",
     "genericErrorAlert": "Something went wrong.",
+    "validationErrorAlert": "Please fix the highlighted fields and try again.",
     "errorAlert": "Something went wrong. Please try again."
   },
   "cji": {

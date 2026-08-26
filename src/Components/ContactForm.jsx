@@ -6,6 +6,7 @@ import {
   FiSend,
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import FormStatusBanner from "./FormStatusBanner";
 
 // Built entirely with Tailwind utility classes (bg-white, text-black, etc.)
 // with no dark-mode handling, so it stayed a bright card regardless of the
@@ -50,6 +51,14 @@ function useContactFormStyles() {
         color: var(--dark-text-main, #f0f0f0) !important;
       }
       body.dark .cf-input::placeholder { color: var(--dark-text-disabled, #777) !important; }
+      .cf-input--error { border-color: #fca5a5; }
+      .cf-input--error:focus { border-color: #ef4444; box-shadow: 0 0 0 4px rgba(239,68,68,0.12); }
+      /* .cf-input's own dark-mode border-color is !important (below),
+         which would otherwise beat this non-important rule even with the
+         extra class -- needs its own !important to actually show once
+         dark mode ships. */
+      body.dark .cf-input--error { border-color: #ef4444 !important; }
+      body.dark .cf-field-error { color: #fca5a5 !important; }
 
       body.dark .cf-submit-btn {
         background-color: var(--dark-bg-muted, #2a2a2a) !important;
@@ -60,6 +69,17 @@ function useContactFormStyles() {
         background-color: var(--primary-yellow, #f5a623) !important;
         color: #0a0a0a !important;
       }
+
+      body.dark .form-status-banner--success {
+        background-color: rgba(16,185,129,0.12) !important;
+        border-color: rgba(16,185,129,0.3) !important;
+        color: #6ee7b7 !important;
+      }
+      body.dark .form-status-banner--error {
+        background-color: rgba(239,68,68,0.12) !important;
+        border-color: rgba(239,68,68,0.3) !important;
+        color: #fca5a5 !important;
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -69,12 +89,26 @@ function useContactFormStyles() {
   }, []);
 }
 
+// The backend's 422 response ({"error":{"fields":{"email":["..."]}}}, per
+// NEXT_STEPS.md's API contract) keys errors by the request field name --
+// only "mobile" differs from its own state key (sent to the API as
+// "phone").
+const API_FIELD_NAME = {
+  name: "name",
+  mobile: "phone",
+  email: "email",
+  subject: "subject",
+  message: "message",
+};
+
 export default function ContactSection() {
   const { t } = useTranslation();
   const baseUrl = import.meta.env.VITE_BASE_URL;
   useContactFormStyles();
 
   const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const [formData, setFormData] = useState({
     name: "",
@@ -91,6 +125,18 @@ export default function ContactSection() {
       ...prev,
       [name]: value,
     }));
+    // A stale success/error banner (or a specific field's error) from a
+    // previous attempt shouldn't linger once the visitor starts editing
+    // again -- clear the whole-form banner, and just that one field's
+    // message so the others stay visible until also corrected.
+    if (status) setStatus(null);
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => {
+        const next = { ...prev };
+        delete next[name];
+        return next;
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -98,6 +144,8 @@ export default function ContactSection() {
 
     try {
       setLoading(true);
+      setStatus(null);
+      setFieldErrors({});
 
       // POST /api/v1/contact-us -- App\Http\Controllers\Api\ContactSubmissionController
       // (tareeqk-v2-be), same {success, data}/{success, error} envelope
@@ -119,7 +167,7 @@ export default function ContactSection() {
       const data = await response.json();
 
       if (data.success) {
-        alert(t("contact.successAlert"));
+        setStatus({ type: "success", message: t("contact.successAlert") });
 
         setFormData({
           name: "",
@@ -128,16 +176,38 @@ export default function ContactSection() {
           subject: "",
           message: "",
         });
+      } else if (data.error?.fields) {
+        const nextFieldErrors = {};
+        for (const [formKey, apiKey] of Object.entries(API_FIELD_NAME)) {
+          const messages = data.error.fields[apiKey];
+          if (messages?.length) nextFieldErrors[formKey] = messages[0];
+        }
+        setFieldErrors(nextFieldErrors);
+        setStatus({ type: "error", message: data.error.message || t("contact.validationErrorAlert") });
       } else {
-        alert(data.error?.message || t("contact.genericErrorAlert"));
+        setStatus({ type: "error", message: data.error?.message || t("contact.genericErrorAlert") });
       }
     } catch (error) {
       console.error(error);
-      alert(t("contact.errorAlert"));
+      setStatus({ type: "error", message: t("contact.errorAlert") });
     } finally {
       setLoading(false);
     }
   };
+
+  // Merged into each input's className below so a field with a
+  // server-side error gets a red border/ring instead of the usual amber
+  // one, matching PartnerForm.jsx's equivalent.
+  // Height is intentionally not baked in here -- the single-line inputs
+  // all want h-11, but the message textarea sizes itself off `rows`
+  // instead, and mixing two conflicting height utilities in one
+  // className string is a wash (Tailwind's own generated order decides
+  // the winner, not the order they're written in) rather than an
+  // override.
+  const fieldClass = (name) =>
+    fieldErrors[name]
+      ? "cf-input cf-input--error w-full rounded-xl border px-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300"
+      : "cf-input w-full rounded-xl border border-gray-100 bg-white px-3 text-sm text-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)] outline-none transition-all duration-300 focus:border-amber-400 focus:ring-4 focus:ring-amber-100/60";
 
   return (
     <section
@@ -468,7 +538,8 @@ export default function ContactSection() {
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-3">
-                
+                <FormStatusBanner status={status} onDismiss={() => setStatus(null)} />
+
                 {/* Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   
@@ -494,22 +565,11 @@ export default function ContactSection() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder={t("contact.namePlaceholder")}
-                      className="
-                        cf-input
-                        w-full h-11
-                        rounded-xl
-                        border border-gray-100
-                        bg-white
-                        px-3
-                        text-sm text-black
-                        shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]
-                        outline-none
-                        transition-all duration-300
-                        focus:border-amber-400
-                        focus:ring-4
-                        focus:ring-amber-100/60
-                      "
+                      className={`${fieldClass("name")} h-11`}
                     />
+                    {fieldErrors.name && (
+                      <p className="cf-field-error mt-1 text-xs text-red-600">{fieldErrors.name}</p>
+                    )}
                   </div>
 
                   {/* Mobile */}
@@ -536,22 +596,11 @@ export default function ContactSection() {
                       required
                       minLength={8}
                       placeholder={t("contact.mobilePlaceholder")}
-                      className="
-                        cf-input
-                        w-full h-11
-                        rounded-xl
-                        border border-gray-100
-                        bg-white
-                        px-3
-                        text-sm text-black
-                        shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]
-                        outline-none
-                        transition-all duration-300
-                        focus:border-amber-400
-                        focus:ring-4
-                        focus:ring-amber-100/60
-                      "
+                      className={`${fieldClass("mobile")} h-11`}
                     />
+                    {fieldErrors.mobile && (
+                      <p className="cf-field-error mt-1 text-xs text-red-600">{fieldErrors.mobile}</p>
+                    )}
                   </div>
                 </div>
 
@@ -578,22 +627,11 @@ export default function ContactSection() {
                     onChange={handleChange}
                     required
                     placeholder={t("contact.emailPlaceholder")}
-                    className="
-                      cf-input
-                      w-full h-11
-                      rounded-xl
-                      border border-gray-100
-                      bg-white
-                      px-3
-                      text-sm text-black
-                      shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]
-                      outline-none
-                      transition-all duration-300
-                      focus:border-amber-400
-                      focus:ring-4
-                      focus:ring-amber-100/60
-                    "
+                    className={`${fieldClass("email")} h-11`}
                   />
+                  {fieldErrors.email && (
+                    <p className="cf-field-error mt-1 text-xs text-red-600">{fieldErrors.email}</p>
+                  )}
                 </div>
 
                 {/* Subject */}
@@ -619,22 +657,11 @@ export default function ContactSection() {
                     onChange={handleChange}
                     required
                     placeholder={t("contact.subjectPlaceholder")}
-                    className="
-                      cf-input
-                      w-full h-11
-                      rounded-xl
-                      border border-gray-100
-                      bg-white
-                      px-3
-                      text-sm text-black
-                      shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]
-                      outline-none
-                      transition-all duration-300
-                      focus:border-amber-400
-                      focus:ring-4
-                      focus:ring-amber-100/60
-                    "
+                    className={`${fieldClass("subject")} h-11`}
                   />
+                  {fieldErrors.subject && (
+                    <p className="cf-field-error mt-1 text-xs text-red-600">{fieldErrors.subject}</p>
+                  )}
                 </div>
 
                 {/* Message */}
@@ -660,23 +687,11 @@ export default function ContactSection() {
                     onChange={handleChange}
                     required
                     placeholder={t("contact.messagePlaceholder")}
-                    className="
-                      cf-input
-                      w-full
-                      rounded-xl
-                      border border-gray-100
-                      bg-white
-                      px-3 py-3
-                      text-sm text-black
-                      resize-none
-                      shadow-[inset_0_1px_2px_rgba(0,0,0,0.03)]
-                      outline-none
-                      transition-all duration-300
-                      focus:border-amber-400
-                      focus:ring-4
-                      focus:ring-amber-100/60
-                    "
+                    className={`${fieldClass("message")} h-auto resize-none py-3`}
                   />
+                  {fieldErrors.message && (
+                    <p className="cf-field-error mt-1 text-xs text-red-600">{fieldErrors.message}</p>
+                  )}
                 </div>
 
                 {/* CTA */}

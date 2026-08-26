@@ -31,10 +31,15 @@ function useBdpStyles() {
          id, so every other DownloadApps placement on the site is
          untouched. */
       .bdp-card #download-buttons { flex-direction: column; align-items: stretch; gap: 0.5rem; }
-      .bdp-card #download-buttons img { width: 100%; }
+      /* width:100% alone scales with the column, which is fine on a
+         narrow phone but ballooned into an oversized badge once the
+         window was widened into tablet range while still under the
+         1024px row breakpoint -- capping it keeps the badge a sensible
+         size at every width in between, not just the two ends. */
+      .bdp-card #download-buttons img { width: 100%; max-width: 180px; }
       @media (min-width: 1024px) {
         .bdp-card #download-buttons { flex-direction: row; align-items: center; gap: 0.75rem; }
-        .bdp-card #download-buttons img { width: 148px; }
+        .bdp-card #download-buttons img { width: 148px; max-width: none; }
       }
 
       body.dark .bdp-section { background-color: var(--dark-bg-muted, #1a1a1a) !important; }

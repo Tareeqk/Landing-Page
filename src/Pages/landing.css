@@ -386,7 +386,7 @@
    Rendered as a sibling of .tk-hero__visual, not a child, so it lands by
    normal document flow (always above the circle) rather than depending
    on any box the circle's own geometry is sized against. */
-.tk-hero__mobile-pill-row {
+.tk-hero__mobile-tag-grid {
   display: none;
 }
 
@@ -640,7 +640,7 @@
   .tk-hero__glow { animation: none; }
   .tk-dispatch-chip__dot::after { animation: none; opacity: 0.4; }
   .tk-hero__tag-icon { transition: none; }
-  .tk-hero__mobile-pill { transition: none; }
+  .tk-hero__mobile-tag { transition: none; }
 }
 
 /* Visually hidden but still readable to screen readers / crawlers */
@@ -898,18 +898,34 @@
      the same way it does on desktop. The six service tags drop the
      circular arc here — a position:absolute composition whose
      radius/anchor math depends on this column's own width — in favor of
-     a single pill (icon + title) that cycles through all six, in normal
-     document flow (see .tk-hero__mobile-pill-row below). Nothing here is
-     positioned relative to the viewport or this column's size, so there
-     is no geometry that can come out wrong on a given device. */
+     a static 3-per-row grid of real links, in normal document flow (see
+     .tk-hero__mobile-tag-grid below). Nothing here is positioned relative
+     to the viewport or this column's size, so there is no geometry that
+     can come out wrong on a given device. */
   .tk-hero__visual {
     width: 100%;
     max-width: 460px;
     min-height: calc(min(58vw, 260px) + 24px);
     margin: 0 auto;
     align-self: center;
-    --sphere-x: 38%;
+    /* 38% (a desktop leftover, tuned so the arc's tag labels had room to
+       clear the sphere) left the glow+truck visibly off-center once the
+       arc is replaced by the mobile pill row below -- 50% centers the
+       sphere/truck composition itself within this now-centered column. */
+    --sphere-x: 50%;
     --sphere-y: 50%;
+    /* This box's own layout height (~380px, driven by min-height's
+       formula plus how flex sizes it here) is taller than the visible
+       circle graphic inside it, and the mobile pill rows are pulled up
+       to overlap it (see .tk-hero__mobile-tag-grid's negative margin) --
+       so its transparent, "empty-looking" edges were sitting on top of
+       and intercepting clicks on the pills underneath, even though
+       nothing was visible there. Nothing inside this box needs to be
+       clickable at this breakpoint (.tk-hero__tags, the only
+       interactive content it can contain, is display:none here), so
+       this is safe to disable outright rather than needing to punch a
+       hole for specific children. */
+    pointer-events: none;
   }
 
   .tk-hero__glow {
@@ -921,57 +937,116 @@
   }
 
   /* The arc itself is desktop/tablet only below 861px — see
-     .tk-hero__mobile-pill-row below for the mobile replacement. */
+     .tk-hero__mobile-tag-grid below for the mobile replacement. */
   .tk-hero__tags {
     display: none;
   }
 
-  .tk-hero__mobile-pill-row {
-    display: flex;
-    justify-content: center;
+  /* Three pill tags per row (all six visible across two rows) instead of
+     one pill cycling through them — each is a real link to that
+     service's page, not a decorative label. Equal 1fr columns rather
+     than content-sized ones: sizing a 3-column-times-2-row grid to each
+     COLUMN's widest item (max-content) coupled the two rows' widths
+     together and overflowed narrow phones for the longer labels
+     ("Battery Jump Start") — 1fr always divides the available width
+     exactly, so it can wrap a label to a second line on narrow screens
+     but can never overflow it. */
+  .tk-hero__mobile-tag-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 8px;
+    row-gap: 16px;
+    width: 100%;
+    max-width: 420px;
     margin: 0 auto;
+    /* .tk-hero__inner's flex `gap: 20px` already spaces every child from
+       its neighbor -- fine between the hero text and the first row, but
+       stacked with the arc's own upward curve (see --tag-y above) it
+       left a noticeably bigger gap between the pills and the truck
+       circle than intended. Pulling just this edge in (not the whole
+       flex gap, which would also shrink the text-to-pills spacing)
+       tightens that one gap specifically. */
+    margin-bottom: -75px;
   }
 
-  .tk-hero__mobile-pill {
-    display: inline-flex;
+  /* Bottom row (after .tk-hero__visual): same tightening, opposite edge. */
+  .tk-hero__visual ~ .tk-hero__mobile-tag-grid {
+    margin-bottom: 0;
+    margin-top: -75px;
+  }
+
+  .tk-hero__mobile-tag {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
+    justify-content: center;
+    gap: 5px;
+    /* Explicit, not relying on grid's default stretch -- this <Link> is
+       itself the pill (background/border/radius all live here), so its
+       own box needs to fill the whole grid cell for the whole visible
+       pill to be tappable, not just a content-sized area in the middle
+       of it. */
+    width: 100%;
+    height: 100%;
+    /* Keeps the tap target close to the 44px touch-target minimum even
+       though the pill itself is visually shorter. */
+    min-height: 44px;
+    padding: 9px 8px;
     border-radius: var(--tk-radius-pill);
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--tk-line);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    opacity: 1;
-    /* Crossfade only — no size/position transition needed, since the
-       icon+label swap happens in the JS while this is at opacity 0 (see
-       MobileServicePill in LandingPage.jsx), the same technique the old
-       carousel used. */
-    transition: opacity 0.35s ease;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    /* Set per-position below; read here so :active only ever adds a
+       scale on top of whatever curve offset is already in place. */
+    --tag-y: 0px;
+    transform: translateY(var(--tag-y));
   }
 
-  .tk-hero__mobile-pill--fading {
-    opacity: 0;
+  .tk-hero__mobile-tag:active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--tk-line-strong);
+    transform: translateY(var(--tag-y)) scale(0.97);
   }
 
-  .tk-hero__mobile-pill-icon {
-    width: 22px;
-    height: 22px;
+  /* Curved, not a flat row — a single clean dome/cup shape (middle pill
+     is the only one that moves; the flanking two stay put) reads as an
+     arch much more clearly than also rotating the flanking pills did —
+     tilted pill text looked like it was crooked rather than curved, so
+     that's dropped. Purely vertical, so it's symmetric left/right and
+     needs no RTL mirroring. The top row (rendered before
+     .tk-hero__visual) arcs like the cap of the circle: middle pill
+     highest. The bottom row (after .tk-hero__visual — selected via the
+     general sibling combinator, since both rows share the same classes)
+     mirrors that for the circle's underside: middle pill lowest. */
+  .tk-hero__mobile-tag-grid .tk-hero__mobile-tag:nth-child(2) {
+    --tag-y: -18px;
+  }
+  .tk-hero__visual ~ .tk-hero__mobile-tag-grid .tk-hero__mobile-tag:nth-child(2) {
+    --tag-y: 18px;
+  }
+
+  .tk-hero__mobile-tag-icon {
+    width: 18px;
+    height: 18px;
     flex-shrink: 0;
     object-fit: contain;
   }
 
   /* Same mirroring as the desktop arc's .tk-hero__tag-icon — these icons
      are drawn facing left, correct for LTR only. */
-  [dir="rtl"] .tk-hero__mobile-pill-icon {
+  [dir="rtl"] .tk-hero__mobile-tag-icon {
     transform: scaleX(-1);
   }
 
-  .tk-hero__mobile-pill-label {
-    font-size: 13px;
+  .tk-hero__mobile-tag-label {
+    font-size: 10px;
+    line-height: 1.2;
     font-weight: 600;
     color: #fff;
-    white-space: nowrap;
+    text-align: center;
   }
 }
 
@@ -981,7 +1056,14 @@
   [dir="rtl"] .tk-hero__title { font-size: 22px; }
   .tk-dispatch-chip { font-size: 11px; margin-bottom: 16px; }
   .tk-hero__subtitle { margin-bottom: 22px; font-size: 14px; }
-  .tk-cta-row { gap: 10px; margin-bottom: 18px; }
+  /* Download + Call Now stay side by side even on the narrowest phones
+     (~320px) instead of wrapping to two stacked rows -- flex-wrap:wrap
+     on the base .tk-cta-row rule was letting that happen once "Download
+     The App" (now just "Download") plus "Call Now" ran out of room.
+     Tightened button padding/font/gap here claws back just enough width
+     that nowrap doesn't overflow instead. */
+  .tk-cta-row { gap: 8px; margin-bottom: 18px; flex-wrap: nowrap; }
+  .tk-btn { padding-inline: 16px 6px; font-size: 13.5px; gap: 8px; }
   .tk-hero__stats { gap: 8px; margin-bottom: 18px; }
   .tk-hero__stat { min-width: 66px; padding: 7px 9px; }
 }

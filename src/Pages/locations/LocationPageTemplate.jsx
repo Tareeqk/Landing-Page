@@ -901,7 +901,7 @@ export default function LocationPageTemplate({ config }) {
                     <ProcessStepIcon step={i} />
                   </div>
                   <div style={{ paddingTop: '8px' }}>
-                    <div style={{ fontWeight: 600, color: 'var(--primary-dark-bg)', fontSize: '15px', lineHeight: 1.4 }}>
+                    <div className="urdu-loose-line" style={{ fontWeight: 600, color: 'var(--primary-dark-bg)', fontSize: '15px', lineHeight: 1.4 }}>
                       {step.label}
                     </div>
                   </div>

@@ -162,7 +162,7 @@ export default function FAQs() {
                   className={`transition-max-h duration-400 overflow-hidden ${open ? "max-h-96" : "max-h-0"}`}
                 >
                   <div
-                    className="px-4 py-3 text-[13.5px] sm:text-base text-gray-600"
+                    className="urdu-loose-line px-4 py-3 text-[13.5px] sm:text-base text-gray-600"
                     dangerouslySetInnerHTML={{ __html: faq.answer }}
                   />
                 </div>

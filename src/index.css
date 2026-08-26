@@ -314,8 +314,28 @@ html[lang="ur"] {
    -- see the `h1` rule below, which is short/non-wrapping text tuned
    separately. */
 html[lang="ur"] p,
-html[lang="ur"] li {
+html[lang="ur"] li,
+/* Same problem, different tags: these are all wrapping body/caption copy
+   rendered as `div`/`span` (a step description, a FAQ answer, a stat
+   chip caption, a service card feature bullet, an area-card tagline) --
+   the `p`/`li` rule above never reaches them since it's tag-scoped, so
+   each needs to be named here explicitly. `.urdu-loose-line` is a shared
+   marker class for one-off inline-styled elements with no other class to
+   hook onto (see LocationPageTemplate.jsx / ServicePageTemplate.jsx). */
+html[lang="ur"] .hfaq-a-inner,
+html[lang="ur"] .abt-preview-stat-label,
+html[lang="ur"] .svc-feat-label,
+html[lang="ur"] .urdu-loose-line {
   line-height: 2 !important;
+}
+
+/* Same gap, but for short headings/titles (not wrapping prose) that also
+   sit outside the `p`/`li` rule -- tuned like the `h1` rule below (1.3),
+   not the full 2 used for body copy above, since a heading-weight title
+   reads odd that loose even on the rare wrap. */
+html[lang="ur"] .abt-stat-hero-title,
+html[lang="ur"] .svc-card-title {
+  line-height: 1.3 !important;
 }
 
 /* Letter-spacing ("tracking") breaks Arabic/Urdu's required letter-joining —
@@ -344,6 +364,20 @@ body {
      already fluid on its own. Locks rendered size to the CSS value. */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+}
+
+/* Without this, touch browsers (most visibly iOS Safari) wait roughly
+   300ms after every tap on a link/button before firing the click --
+   they're giving a double-tap-to-zoom gesture time to happen first. The
+   viewport meta tag here still allows pinch/double-tap zoom generally
+   (no user-scalable=no), so that wait is live on every tap target
+   site-wide. `manipulation` tells the browser this element only cares
+   about panning/tap, not zoom gestures, so it can fire click
+   immediately instead of waiting -- this is what actually made taps
+   (e.g. the mobile hero's service pills) feel laggy, not app logic. */
+a,
+button {
+  touch-action: manipulation;
 }
 
 /* html[dir="rtl"], body[dir="rtl"] {
