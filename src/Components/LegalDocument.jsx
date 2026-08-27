@@ -287,7 +287,21 @@ function MobileJumpNav({ sections, tocLabel }) {
   }, [fixed])
 
   return (
-    <div className="lgl-mnav-slot" ref={slotRef} style={{ height: barHeight || undefined }}>
+    <div
+      className="lgl-mnav-slot"
+      ref={slotRef}
+      // The fixed height only needs to reserve space while the real bar
+      // has left the flow (position: fixed) -- while it's still in flow,
+      // this slot IS the bar (and, when open, the dropdown panel below
+      // it), so it must size to its actual content or an expanded panel
+      // overflows this box's bottom edge and overlaps whatever section
+      // comes after it instead of pushing it down. Was previously locked
+      // to the closed bar's height unconditionally, which only happened
+      // to look right because opening was assumed to only ever happen
+      // once already fixed -- nothing actually enforced that, so opening
+      // it before scrolling (i.e. right after page load) hit this.
+      style={{ height: fixed ? barHeight || undefined : undefined }}
+    >
       <div
         ref={barRef}
         className={`lgl-mnav${fixed ? " is-fixed" : ""}`}
