@@ -9,9 +9,12 @@ import {
   Target, Eye, Heart, CheckCircle2, Truck, AlertTriangle,
   Mountain, Bike,
 } from 'lucide-react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import LocalBusinessSchema from '../schemas/LocalBusinessSchema';
 import HreflangTags from '../Components/HreflangTags';
+import useLangLink from '../hooks/useLangLink';
+import { prefetchRoute } from '../routePrefetch';
 
 // ── Styles ─────────────────────────────────────────────────────────────────
 function useAboutStyles() {
@@ -390,6 +393,7 @@ const eyebrow = {
 export default function About({ isSection = false }) {
   const { t, i18n } = useTranslation();
   const { lang } = useParams();
+  const langLink = useLangLink();
   const isRTL = i18n.dir() === 'rtl';
   useAboutStyles();
   const HeadingTag = isSection ? 'h2' : 'h1';
@@ -433,6 +437,7 @@ export default function About({ isSection = false }) {
     { label: t('about.svc6'), href: '/accident-recovery-dubai', icon: <AlertTriangle size={17} /> },
     { label: t('about.svc7'), href: '/desert-recovery-dubai',   icon: <Mountain size={17} /> },
     { label: t('about.svc8'), href: '/bike-recovery-dubai',     icon: <Bike size={17} /> },
+    { label: t('about.svc9'), href: '/roadside-assistance-dubai', icon: <Shield size={17} /> },
   ];
 
   // Mobile story photo — a single real Tareeqk photo, matching what
@@ -446,7 +451,7 @@ export default function About({ isSection = false }) {
           <Helmet>
             <title>{t('meta.about.title')}</title>
             <meta name="description" content={t('meta.about.description')} />
-            <link rel="canonical" href={`https://tareeqk.ae/${lang}/about`} />
+            <link rel="canonical" href={`https://tareeqk.ae/${lang}/about/`} />
             <meta property="og:title" content={t('meta.about.title')} />
             <meta property="og:description" content={t('meta.about.description')} />
             <meta property="og:type" content="website" />
@@ -603,8 +608,12 @@ export default function About({ isSection = false }) {
                   <Phone size={16} />
                   {t('about.heroCta')}
                 </a>
-                <a
-                  href="/contact"
+                {/* Was href="/contact" -- not a real route (no /contact page
+                    exists; the contact section lives on the homepage at
+                    #contact), so this link 404'd. HashLink so the
+                    scroll-to-anchor still works navigating in from here. */}
+                <HashLink
+                  to={langLink("/#contact")}
                   className="abt-btn-ghost"
                   style={{
                     background: 'rgba(255,255,255,0.08)',
@@ -622,7 +631,7 @@ export default function About({ isSection = false }) {
                 >
                   {t('about.heroInquire')}
                   <ChevronRight size={16} />
-                </a>
+                </HashLink>
               </div>
 
             </div>
@@ -1056,9 +1065,11 @@ export default function About({ isSection = false }) {
              
               <div className="abt-svc-grid" style={{ display: 'grid', gap: '10px' }}>
                 {SERVICES_LIST.map((svc, i) => (
-                  <a
+                  <Link
                     key={i}
-                    href={svc.href}
+                    to={langLink(svc.href)}
+                    onMouseEnter={() => prefetchRoute(langLink(svc.href))}
+                    viewTransition
                     className="abt-svc-link"
                     style={{
                       padding: '15px 16px',
@@ -1074,7 +1085,7 @@ export default function About({ isSection = false }) {
                   >
                     <span style={{ color: 'var(--primary-yellow)', flexShrink: 0 }}>{svc.icon}</span>
                     <span style={{ fontWeight: 600, fontSize: '13px' }}>{svc.label}</span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

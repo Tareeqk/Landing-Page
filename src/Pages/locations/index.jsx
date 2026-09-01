@@ -23,6 +23,11 @@ const LOCATION_SLUGS = [
   'car-recovery-al-quoz',
   'car-recovery-jebel-ali',
   'car-recovery-palm-jumeirah',
+  'car-recovery-difc',
+  'car-recovery-dubai-hills-estate',
+  'car-recovery-discovery-gardens',
+  'car-recovery-al-nahda',
+  'car-recovery-barsha-heights',
 ];
 
 // Single reusable component — reads its data from common.json via useTranslation

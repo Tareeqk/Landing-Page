@@ -17,6 +17,7 @@ export const STATIC_PAGES = [
   { slug: null, priority: '1.0' },
   { slug: 'about', priority: '0.8' },
   { slug: 'service', priority: '0.8' },
+  { slug: 'areas', priority: '0.8' },
   { slug: 'blogs', priority: '0.7' },
   { slug: 'faq', priority: '0.7' },
   { slug: 'terms', priority: '0.6' },
@@ -33,6 +34,7 @@ export const SERVICE_PAGES = [
   'towing-service-dubai',
   'desert-recovery-dubai',
   'bike-recovery-dubai',
+  'roadside-assistance-dubai',
 ];
 
 // Must match LOCATION_SLUGS in src/App.jsx.
@@ -56,6 +58,11 @@ export const LOCATION_PAGES = [
   'car-recovery-al-quoz',
   'car-recovery-jebel-ali',
   'car-recovery-palm-jumeirah',
+  'car-recovery-difc',
+  'car-recovery-dubai-hills-estate',
+  'car-recovery-discovery-gardens',
+  'car-recovery-al-nahda',
+  'car-recovery-barsha-heights',
 ];
 
 // Must match the slugs in src/data/blogs.js.
@@ -63,8 +70,14 @@ export const BLOG_POST_SLUGS = [
   'how-to-choose-a-trusted-car-recovery-service-in-dubai',
 ];
 
+// Trailing slash on every URL -- the live host (LiteSpeed/cPanel) 301s any
+// of these directory-backed routes without one to the slashed form (e.g.
+// /en/about -> /en/about/), since dist/en/about/ is a real directory. Every
+// sitemap <loc>/hreflang entry pointed at the non-slashed form, so Google
+// was hopping a redirect on every single crawled URL instead of landing
+// directly on the canonical target.
 function urlFor(lang, slug) {
-  return slug ? `${DOMAIN}/${lang}/${slug}` : `${DOMAIN}/${lang}`;
+  return slug ? `${DOMAIN}/${lang}/${slug}/` : `${DOMAIN}/${lang}/`;
 }
 
 // Every renderable page as { path, priority } where `path` is the

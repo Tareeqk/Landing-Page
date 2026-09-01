@@ -2,23 +2,31 @@
 // Premium redesign — editorial SaaS aesthetic for the Tareeqk brand
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import {
   FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock, FaStar,
   FaTruck, FaMapMarkerAlt, FaCheckCircle, FaUserShield, FaUserCheck,
-  FaCar, FaCarBattery, FaTools, FaCarCrash, FaChevronDown, FaArrowRight, FaHeadset, FaTh,
+  FaCar, FaCarBattery, FaTools, FaCarCrash, FaChevronDown, FaHeadset, FaTh,
   FaMountain, FaMotorcycle,
 } from 'react-icons/fa';
+// ArrowRight specifically comes from lucide, not react-icons/fa, to match
+// the one arrow style used site-wide (BecomeDriverPartner.jsx's "Apply as a
+// Partner" button) -- react-icons' FaArrowRight is a visibly different,
+// heavier glyph than every other CTA arrow on the site.
+import { ArrowRight } from 'lucide-react';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
 import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
 import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
+import { prefetchRoute } from '../../routePrefetch';
 
 const ALL_SERVICES = [
   { label: 'Car Recovery Dubai', href: '/car-recovery-dubai', Icon: FaCar },
+  { label: 'Roadside Assistance Dubai', href: '/roadside-assistance-dubai', Icon: FaHeadset },
   { label: 'Battery Service Dubai', href: '/battery-service-dubai', Icon: FaCarBattery },
   { label: 'Flat Tyre Repair Dubai', href: '/flat-tyre-repair-dubai', Icon: FaTools },
   { label: 'Accident Recovery Dubai', href: '/accident-recovery-dubai', Icon: FaCarCrash },
@@ -51,6 +59,11 @@ const ALL_LOCATIONS = [
   { label: 'Al Quoz', href: '/car-recovery-al-quoz' },
   { label: 'Jebel Ali', href: '/car-recovery-jebel-ali' },
   { label: 'Palm Jumeirah', href: '/car-recovery-palm-jumeirah' },
+  { label: 'DIFC', href: '/car-recovery-difc' },
+  { label: 'Dubai Hills Estate', href: '/car-recovery-dubai-hills-estate' },
+  { label: 'Discovery Gardens', href: '/car-recovery-discovery-gardens' },
+  { label: 'Al Nahda', href: '/car-recovery-al-nahda' },
+  { label: 'Barsha Heights', href: '/car-recovery-barsha-heights' },
 ];
 
 // Converts an area name to a URL slug, e.g. "Dubai Marina" → "dubai-marina"
@@ -92,6 +105,9 @@ const AREA_TAGLINES = {
   'DIFC': 'Finance & business district',
   'JBR': 'Beachfront excitement',
   'Palm Jumeirah': 'World-class island living',
+  'Dubai Hills Estate': 'Green. Modern. Serene.',
+  'Discovery Gardens': 'Themed garden clusters',
+  'Barsha Heights': 'Media & internet city hub',
   default: 'Covered by Tareeqk, 24/7',
 };
 
@@ -576,7 +592,7 @@ export default function ServicePageTemplate({ config }) {
         <title>{tc.metaTitle}</title>
         <meta name="description" content={tc.metaDesc} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}/`} />
         <meta property="og:title" content={tc.metaTitle} />
         <meta property="og:description" content={tc.metaDesc} />
         <meta property="og:type" content="website" />
@@ -657,8 +673,8 @@ export default function ServicePageTemplate({ config }) {
                   data-aos-delay={200 + TRUST_CHECKLIST.length * 90 + 80}
                   style={{ marginTop: '28px', display: 'flex', gap: '12px', flexWrap: 'wrap' }}
                 >
-                  <a href={langLink('/about')} style={styles.linkPill}>{t('servicePageTemplate.aboutUs', 'About Us')} <FaArrowRight size={10} /></a>
-                  <a href={langLink("/#contact")} style={styles.linkPill}>{t('servicePageTemplate.contact', 'Contact')} <FaArrowRight size={10} /></a>
+                  <Link to={langLink('/about')} onMouseEnter={() => prefetchRoute(langLink('/about'))} viewTransition style={styles.linkPill}>{t('servicePageTemplate.aboutUs', 'About Us')} <ArrowRight size={10} /></Link>
+                  <HashLink to={langLink("/#contact")} style={styles.linkPill}>{t('servicePageTemplate.contact', 'Contact')} <ArrowRight size={10} /></HashLink>
                 </div>
               </div>
               <div data-aos="fade-left">
@@ -762,9 +778,9 @@ export default function ServicePageTemplate({ config }) {
                     {t('servicePageTemplate.areasIntro', 'Tareeqk covers all major Dubai districts. Need service in a specific area?')}
                   </p>
                 </div>
-                <a href={langLink("/#contact")} style={styles.contactPill} data-aos="fade-right" data-aos-delay="140">
-                  {t('servicePageTemplate.contactUs', 'Contact us')} <FaArrowRight size={11} />
-                </a>
+                <HashLink to={langLink("/#contact")} style={styles.contactPill} data-aos="fade-right" data-aos-delay="140">
+                  {t('servicePageTemplate.contactUs', 'Contact us')} <ArrowRight size={11} />
+                </HashLink>
 
                 <div style={styles.quickAccessCard} data-aos="fade-right" data-aos-delay="260">
                   <div style={styles.quickAccessHeader}>
@@ -801,14 +817,15 @@ export default function ServicePageTemplate({ config }) {
                 <div style={styles.allAreasDivider} />
                 <div style={styles.allAreasGrid} className="svc-all-areas-grid">
                   {visibleAreas.map((area, i) => (
-                    <a
+                    <Link
                       key={area}
-                      href={langLink(getAreaHref(area, config.slug))}
+                      to={langLink(getAreaHref(area, config.slug))}
+                      viewTransition
                       className="svc-all-area-card"
                       data-aos="fade-up"
                       data-aos-delay={Math.min(i * 45, 400)}
                       style={styles.allAreaCard}
-                      onMouseEnter={e => lift(e, true)}
+                      onMouseEnter={e => { lift(e, true); prefetchRoute(langLink(getAreaHref(area, config.slug))); }}
                       onMouseLeave={e => lift(e, false)}
                     >
                       <span style={styles.allAreaIconWrap}><FaMapMarkerAlt size={14} /></span>
@@ -823,7 +840,7 @@ export default function ServicePageTemplate({ config }) {
                           )}
                         </div>
                       </div>
-                    </a>
+                    </Link>
                   ))}
                 </div>
 
@@ -928,14 +945,16 @@ export default function ServicePageTemplate({ config }) {
             <h2 style={{ ...styles.sectionH2, marginBottom: '32px' }} className="svc-section-h2">{t('servicePageTemplate.otherServices', 'Our Other Services in Dubai')}</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '16px' }} className="svc-grid4">
               {relatedServices.map(svc => (
-                <a
+                <Link
                   key={svc.href}
-                  href={langLink(svc.href)}
+                  to={langLink(svc.href)}
+                  viewTransition
                   style={styles.svcCard}
                   onMouseEnter={e => {
                     e.currentTarget.style.borderColor = COLORS.gold;
                     e.currentTarget.style.boxShadow = '0 18px 40px rgba(0,0,0,0.08)';
                     e.currentTarget.style.transform = 'translateY(-6px)';
+                    prefetchRoute(langLink(svc.href));
                   }}
                   onMouseLeave={e => {
                     e.currentTarget.style.borderColor = COLORS.line;
@@ -947,16 +966,16 @@ export default function ServicePageTemplate({ config }) {
                   <p style={{ fontSize: '14px', fontWeight: 700, color: COLORS.ink, margin: 0 }}>
                     {t(`servicePages.${svc.href.slice(1)}.schemaName`, svc.label)}
                   </p>
-                  <span style={styles.svcCardLink}>{t('servicePageTemplate.learnMore', 'Learn More')} <FaArrowRight size={10} /></span>
-                </a>
+                  <span style={styles.svcCardLink}>{t('servicePageTemplate.learnMore', 'Learn More')} <ArrowRight size={10} /></span>
+                </Link>
               ))}
             </div>
             <div style={{ marginTop: '36px', paddingTop: '28px', borderTop: `1px solid ${COLORS.line}` }}>
               <span style={{ fontWeight: 700, fontSize: '13px', color: COLORS.ink, marginRight: '12px' }}>{t('servicePageTemplate.serviceAreasLabel', 'Service Areas:')}</span>
               {ALL_LOCATIONS.map(loc => (
-                <a key={loc.href} href={langLink(loc.href)} style={{ ...styles.linkPill, marginRight: '8px', marginBottom: '8px' }}>
+                <Link key={loc.href} to={langLink(loc.href)} onMouseEnter={() => prefetchRoute(langLink(loc.href))} viewTransition style={{ ...styles.linkPill, marginRight: '8px', marginBottom: '8px' }}>
                   {t(`servicePageTemplate.areaNames.${slugify(loc.label)}`, loc.label)}
-                </a>
+                </Link>
               ))}
             </div>
           </div>

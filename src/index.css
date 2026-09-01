@@ -434,3 +434,32 @@ html[lang="ur"] h1 {
     max-width: 1600px;
   }
 }
+
+/* View Transitions -- smooth cross-fade on client-side route changes
+   instead of the previous hard cut (see `viewTransition` on the <Link>
+   elements throughout the app, e.g. Navbar.jsx, Footer.jsx). Native
+   browser API, no library. Browsers without support (older Safari/
+   Firefox) just keep today's instant swap -- this is purely additive,
+   nothing to feature-detect. Timing reuses the same easing curve already
+   used for AOS/Reveal entrances elsewhere in this codebase, so route
+   transitions feel like part of the same motion language rather than a
+   bolted-on effect. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.32s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  ::view-transition-old(root) {
+    animation-name: tk-page-out;
+  }
+  ::view-transition-new(root) {
+    animation-name: tk-page-in;
+  }
+}
+@keyframes tk-page-out {
+  to { opacity: 0; }
+}
+@keyframes tk-page-in {
+  from { opacity: 0; }
+}

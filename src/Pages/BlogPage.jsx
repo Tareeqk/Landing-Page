@@ -327,7 +327,7 @@ export default function BlogPage() {
       <Helmet>
         <title>{blog?.title || 'Article'}</title>
         <meta name="description" content={blog?.description || 'Read our latest article'} />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}/page/${blogSlug}`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/page/${blogSlug}/`} />
         <meta property="og:title" content={blog?.title || 'Article'} />
         <meta property="og:description" content={blog?.description || 'Read our latest article'} />
         <meta property="og:type" content="article" />

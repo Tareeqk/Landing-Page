@@ -6,7 +6,14 @@
       name="google-site-verification"
       content="SHcEJ1cQid9Mxm2IEY5P1DeiSnVaz5T6BWokuH_I9Gw"
     />
-    <link rel="icon" href="Logo_White.png" type="image/x-icon" />
+    <!-- Absolute path -- a relative href here resolves against the
+         *current* document path, so on any nested prerendered route (e.g.
+         /en/car-recovery-dubai/) the browser was requesting
+         /en/car-recovery-dubai/Logo_White.png, which doesn't exist and
+         fell through to the SPA's index.html (176KB fetched for a
+         favicon, on every one of the 104 non-root pages). type is
+         image/png to match the actual file -- image/x-icon is for .ico. -->
+    <link rel="icon" href="/Logo_White.png" type="image/png" />
 
     <!-- Preload the Poppins weights used above the fold (body copy +
          headings). Without this the browser doesn't discover these fonts
@@ -71,9 +78,6 @@
         window.addEventListener("load", loadGtagScript)
       }
     </script>
-    <meta name="robots" content="index, follow" />
-
-
     <!-- Noto Kufi Arabic / Noto Nastaliq Urdu are only needed for ar/ur
          visitors, but a plain <link rel="stylesheet"> here blocks first
          paint for EVERY visitor — the browser has to open a new
@@ -102,28 +106,18 @@
     </noscript>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
+    <!-- Fallback title only -- every route sets its own title, description,
+         robots, and og:*/twitter:* tags via react-helmet-async (see
+         src/Pages/*.jsx). A static description/robots/og/twitter block used
+         to live here too; react-helmet-async doesn't remove tags it didn't
+         render, so those static ones stayed in the DOM after Helmet added
+         its per-page versions, and crawlers were reading whichever set
+         happened to be first in document order (the static, wrong one) --
+         same homepage title/description/og:image on all 105 prerendered
+         pages regardless of route. The bare <title> stays because Helmet
+         manages the single <title> element specially (replaces it, never
+         duplicates it), so it's safe as a pre-hydration fallback. -->
     <title>Car Recovery in Dubai | 24/7 Towing & Roadside Assistance</title>
-    <meta
-      name="description"
-      content="Tareeqk offers a fast and reliable car recovery service in Dubai with 24/7 towing, roadside assistance, and quick response across Dubai."
-    />
-
-    <meta property="og:title" content="Car Recovery in Dubai" />
-    <meta
-      property="og:description"
-      content="Tareeqk provides fast and professional car recovery in Dubai, offering roadside assistance and reliable vehicle recovery across the city."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tareeqk.ae" />
-    <meta property="og:image" content="https://tareeqk.ae/new/Recovery_Van.webp" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Car Recovery in Dubai" />
-    <meta
-      name="twitter:description"
-      content="Tareeqk delivers reliable car recovery service in Dubai, offering fast vehicle recovery and 24/7 towing services across the city."
-    />
-    <meta name="twitter:image" content="https://tareeqk.ae/new/Recovery_Van.webp" />
   </head>
 
   <body>

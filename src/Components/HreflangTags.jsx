@@ -12,7 +12,11 @@ const DOMAIN = "https://tareeqk.ae"
 // `path` is the route segment AFTER the language prefix, no leading slash
 // (e.g. "" for the homepage, "about", "car-recovery-dubai-marina").
 export default function HreflangTags({ path = "" }) {
-  const suffix = path ? `/${path}` : ""
+  // Trailing slash -- matches the live host's redirect behavior (every
+  // route is a real directory, and a request without the trailing slash
+  // gets 301'd to the slashed form). See the matching comment in
+  // scripts/site-routes.mjs.
+  const suffix = path ? `/${path}/` : "/"
 
   return (
     <Helmet>

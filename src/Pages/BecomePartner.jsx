@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import {
   BadgeCheck,
   Building2,
@@ -119,7 +120,7 @@ export default function BecomePartner() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.becomePartner.title")}</title>
         <meta name="description" content={t("meta.becomePartner.description")} />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}/become-a-partner`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/become-a-partner/`} />
       </Helmet>
       <HreflangTags path="become-a-partner" />
 
@@ -166,12 +167,12 @@ export default function BecomePartner() {
                 >
                   {t("partnerForm.hero.applyCta")}
                 </a>
-                <a
-                  href={`${langLink("/")}#become-driver-partner`}
+                <HashLink
+                  to={`${langLink("/")}#become-driver-partner`}
                   className="inline-flex h-11 items-center justify-center gap-2 rounded-full border border-white/20 px-5 text-sm font-semibold text-white/85 backdrop-blur-sm transition-all duration-300 hover:border-white/40 hover:bg-white/10 hover:text-white"
                 >
                   {t("partnerForm.hero.driverCta")}
-                </a>
+                </HashLink>
               </div>
 
               {/* Quick stats */}

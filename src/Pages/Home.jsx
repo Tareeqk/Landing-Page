@@ -45,7 +45,7 @@ export default function Home() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.home.title")}</title>
         <meta name="description" content={t("meta.home.description")} />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/`} />
         {/* The hero skyline background (LandingPage's HeroBackground) is
             the measured LCP element on this page — Lighthouse's LCP
             discovery check flagged it as not getting priority-hinted.

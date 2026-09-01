@@ -58,7 +58,7 @@ export default function FAQs() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.faqs.title")}</title>
         <meta name="description" content={t("meta.faqs.description")} />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}/faq`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/faq/`} />
         <meta property="og:title" content={t("meta.faqs.title")} />
         <meta property="og:description" content={t("meta.faqs.description")} />
         <meta property="og:type" content="website" />

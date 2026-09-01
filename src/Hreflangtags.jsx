@@ -11,9 +11,17 @@ export default function HreflangTags() {
 
   // Remove current lang prefix from path to get the "canonical" resource path
   // e.g., /en/about or /ar/about -> /about
-  const barePath = lang
+  const rawBarePath = lang
     ? location.pathname.replace(`/${lang}`, "")
     : location.pathname
+
+  // Trailing slash -- matches the live host's redirect behavior (every
+  // route is a real directory). Normalized here (rather than trusting
+  // location.pathname's current slash state) so the emitted hreflang URLs
+  // are always in canonical form regardless of how this page was reached.
+  // Always starts with "/", so it can be appended directly below.
+  const trimmed = rawBarePath.replace(/\/+$/, "")
+  const barePath = trimmed ? `${trimmed}/` : "/"
 
   return (
     <Helmet>
@@ -23,7 +31,7 @@ export default function HreflangTags() {
           key={l}
           rel="alternate"
           hrefLang={l}
-          href={`${BASE_URL}/${l}${barePath === "/" ? "" : barePath}`}
+          href={`${BASE_URL}/${l}${barePath}`}
         />
       ))}
 
@@ -31,7 +39,7 @@ export default function HreflangTags() {
       <link
         rel="alternate"
         hrefLang="x-default"
-        href={`${BASE_URL}/en${barePath === "/" ? "" : barePath}`}
+        href={`${BASE_URL}/en${barePath}`}
       />
     </Helmet>
   )

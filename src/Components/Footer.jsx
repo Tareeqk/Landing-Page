@@ -15,6 +15,7 @@ import { Link, useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import useLangLink from "../hooks/useLangLink"
 import { openCookieSettings } from "../utils/cookieConsent"
+import { prefetchRoute } from "../routePrefetch"
 
 // Social brand marks are inlined instead of pulled from react-icons — this
 // component renders on every page via MainLayout, so it's always in the
@@ -44,10 +45,17 @@ export const SERVICES = [
   { title: "Bike Recovery Dubai", href: "/bike-recovery-dubai" },
   { title: "Towing Service Dubai", href: "/towing-service-dubai" },
   { title: "Accident Recovery", href: "/accident-recovery-dubai" },
+  { title: "Roadside Assistance Dubai", href: "/roadside-assistance-dubai" },
 ]
 
 // Area/city names are intentionally not translated — proper nouns stay
 // in English across all locales.
+//
+// Capped at 10 on purpose — this used to list all 19 (and was already
+// getting long before more areas get added on top of that). The full,
+// ever-growing list lives at /areas (Pages/AllAreas.jsx) instead; this
+// footer column just surfaces the highest-traffic areas plus a link to
+// that page, so it doesn't need editing every time a new area ships.
 const AREAS = [
   { label: "Dubai Marina", href: "/car-recovery-dubai-marina" },
   { label: "Business Bay", href: "/car-recovery-business-bay" },
@@ -59,25 +67,24 @@ const AREAS = [
   { label: "JVC", href: "/car-recovery-jvc" },
   { label: "JLT", href: "/car-recovery-jlt" },
   { label: "Dubai Silicon Oasis", href: "/car-recovery-dubai-silicon-oasis" },
-  { label: "International City", href: "/car-recovery-international-city" },
-  { label: "Dubai Investment Park", href: "/car-recovery-dubai-investment-park" },
-  { label: "Dubai Sports City", href: "/car-recovery-dubai-sports-city" },
-  { label: "Motor City", href: "/car-recovery-motor-city" },
-  { label: "Mirdif", href: "/car-recovery-mirdif" },
-  { label: "Al Qusais", href: "/car-recovery-al-qusais" },
-  { label: "Al Quoz", href: "/car-recovery-al-quoz" },
-  { label: "Jebel Ali", href: "/car-recovery-jebel-ali" },
-  { label: "Palm Jumeirah", href: "/car-recovery-palm-jumeirah" },
 ]
 
-const AreaLink = ({ href, children }) => (
-  <a
-    href={href}
-    className="area-link"
+// Was rendering as a plain <a href> -- every one of these (10 areas + "View
+// All Areas") forced a full browser page reload on click instead of a
+// client-side route change, since this component is exclusively used for
+// internal navigation. Switched to <Link> so it actually routes through
+// React Router (and can pick up viewTransition/prefetch below).
+const AreaLink = ({ href, children, className = "" }) => (
+  <Link
+    to={href}
+    onClick={() => window.scrollTo(0, 0)}
+    onMouseEnter={() => prefetchRoute(href)}
+    viewTransition
+    className={`area-link ${className}`.trim()}
   >
     <ArrowRight size={8} style={{ flexShrink: 0, opacity: 0.5 }} />
     <span>{children}</span>
-  </a>
+  </Link>
 )
 
 const FooterLink = ({ to, href, external, children }) => {
@@ -98,7 +105,13 @@ const FooterLink = ({ to, href, external, children }) => {
   }
 
   return (
-    <Link to={to} onClick={() => window.scrollTo(0, 0)} {...sharedProps}>
+    <Link
+      to={to}
+      onClick={() => window.scrollTo(0, 0)}
+      onMouseEnter={() => prefetchRoute(to)}
+      viewTransition
+      {...sharedProps}
+    >
       <span className="footer-link-dot" />
       {children}
     </Link>
@@ -404,6 +417,17 @@ const Footer = () => {
           transform: translateX(3px);
         }
 
+        .area-link-viewall {
+          grid-column: 1 / -1;
+          color: var(--primary-yellow, #f5a623);
+          font-weight: 700;
+          margin-top: 2px;
+        }
+
+        .area-link-viewall:hover {
+          color: var(--primary-yellow, #f5a623);
+        }
+
         /* ─── CONTACT COL ─── */
         .tk-contact-list {
           display: flex;
@@ -617,7 +641,7 @@ const Footer = () => {
               >
                 <div className="tk-accordion-inner">
                   {SERVICES.map((service, i) => (
-                    <FooterLink key={service.href} href={langLink(service.href)}>
+                    <FooterLink key={service.href} to={langLink(service.href)}>
                       {serviceLabels[i] || service.title}
                     </FooterLink>
                   ))}
@@ -649,6 +673,9 @@ const Footer = () => {
                         {area.label}
                       </AreaLink>
                     ))}
+                    <AreaLink href={langLink("/areas")} className="area-link-viewall">
+                      {t("footer.viewAllAreas")}
+                    </AreaLink>
                   </div>
                 </div>
               </div>
@@ -686,10 +713,10 @@ const Footer = () => {
               </a>
 
               <div className="tk-legal-links">
-                <Link to={langLink("/privacy-policy")} className="tk-legal-link">
+                <Link to={langLink("/privacy-policy")} onMouseEnter={() => prefetchRoute(langLink("/privacy-policy"))} viewTransition className="tk-legal-link">
                   {t("footer.policies.links.privacy")}
                 </Link>
-                <Link to={langLink("/terms")} className="tk-legal-link">
+                <Link to={langLink("/terms")} onMouseEnter={() => prefetchRoute(langLink("/terms"))} viewTransition className="tk-legal-link">
                   {t("footer.policies.links.terms")}
                 </Link>
                 <button type="button" className="tk-legal-link tk-legal-link-btn" onClick={openCookieSettings}>

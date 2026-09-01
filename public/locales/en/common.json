@@ -147,7 +147,8 @@
     "svc5": "Fuel Delivery",
     "svc6": "Accident Recovery",
     "svc7": "Desert Recovery",
-    "svc8": "Bike Recovery"
+    "svc8": "Bike Recovery",
+    "svc9": "Roadside Assistance"
   },
   "service": {
     "heroTag": "Premium Roadside Care",
@@ -222,6 +223,13 @@
     "svc7b2": "Safe pickup & transport",
     "svc7b3": "Accident & breakdown recovery",
     "svc7b4": "Clear, upfront pricing",
+    "svc8Tag": "All-In-One",
+    "svc8Title": "Roadside Assistance Dubai",
+    "svc8Desc": "One number for every roadside problem — battery, tyre, fuel, lockout, or full recovery, dispatched 24/7 anywhere in Dubai.",
+    "svc8b1": "Battery, tyre, fuel & lockout help",
+    "svc8b2": "Full recovery if it can't be fixed on-site",
+    "svc8b3": "Certified technicians, 24/7 dispatch",
+    "svc8b4": "One call covers every breakdown type",
     "stepsTag": "How It Works",
     "stepsTitle": "Help arrives in",
     "stepsHighlight": "4 simple steps.",
@@ -630,9 +638,11 @@
       "Desert Recovery Dubai",
       "Bike Recovery Dubai",
       "Towing Service Dubai",
-      "Accident Recovery"
+      "Accident Recovery",
+      "Roadside Assistance Dubai"
     ],
     "areasTitle": "Areas We Cover",
+    "viewAllAreas": "View All Areas",
     "trust": [
       "24/7 Support",
       "RTA Licensed",
@@ -1698,6 +1708,10 @@
     "faqs": {
       "title": "FAQs - Towing & Roadside Assistance Dubai | Tareeqk",
       "description": "Got questions? Find answers about Tareeqk's towing and roadside assistance services, pricing, and coverage areas in Dubai."
+    },
+    "areas": {
+      "title": "Areas We Cover - Car Recovery Across Dubai | Tareeqk",
+      "description": "Tareeqk's 24/7 car recovery and roadside assistance covers every major district in Dubai. Find your area and get help in minutes."
     }
   },
   "contact": {
@@ -1745,6 +1759,13 @@
     "videoTitle": "Meet Nasir",
     "unmuteButton": "Tap for sound",
     "muteButton": "Mute video"
+  },
+  "areasPage": {
+    "eyebrow": "Coverage Areas",
+    "title": "Car Recovery in Every Corner of Dubai",
+    "subtitle": "Pick your area to see local response times and get help in minutes — Tareeqk covers all of Dubai, 24/7.",
+    "cardCta": "View Details",
+    "respondsIn": "Responds in {{responseTime}}"
   },
   "locationPageTemplate": {
     "hero": {
@@ -2676,6 +2697,176 @@
       {
         "question": "Do you provide recovery for cars with a dead battery at a Palm Jumeirah villa?",
         "answer": "Yes, this is common for second homes or vacation villas left parked for extended periods. We can jump-start on the spot or tow the car if the battery needs replacement."
+      }
+    ]
+  },
+  "car-recovery-difc": {
+    "area": "DIFC",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery DIFC Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery DIFC Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in DIFC Dubai. 15-minute response, 24/7 availability. Call or WhatsApp Tareeqk now."
+    },
+    "areaDescription": "DIFC (Dubai International Financial Centre) is Dubai's global finance and business hub, home to major banks, law firms, and the Gate Building's cluster of corporate towers. With valet stands, underground parking levels, and constant traffic along Al Mustaqbal Street and Sheikh Zayed Road, vehicle breakdowns can strand professionals during business hours. Tareeqk provides fast, discreet car recovery and roadside assistance throughout DIFC and its surrounding towers.",
+    "responseDescription": "DIFC sits centrally between Downtown Dubai and Trade Centre, so our nearest unit is rarely far away. We're equipped to handle valet areas and underground parking levels, targeting a 15-minute response time.",
+    "faqs": [
+      {
+        "question": "Can you recover a car from DIFC's underground or valet parking?",
+        "answer": "Yes. Our team is experienced with basement and valet-level recoveries in DIFC's towers and has the right equipment for tight ramps and low clearances."
+      },
+      {
+        "question": "How fast is car recovery in DIFC?",
+        "answer": "Average response time is 15 minutes. DIFC's central location between Downtown Dubai and Trade Centre means we're usually close by."
+      },
+      {
+        "question": "Do you cover Downtown Dubai and Trade Centre nearby?",
+        "answer": "Yes. Our DIFC coverage extends to Downtown Dubai, Trade Centre, and the surrounding Sheikh Zayed Road towers."
+      },
+      {
+        "question": "Can you help if my car won't start before an important meeting in DIFC?",
+        "answer": "Yes. Our battery jump-start and boost service is available 24/7, so a dead battery doesn't have to cost you a meeting."
+      },
+      {
+        "question": "Is roadside assistance in DIFC available on weekends?",
+        "answer": "Yes. Tareeqk operates 24/7, including weekends, evenings, and public holidays, throughout DIFC."
+      }
+    ]
+  },
+  "car-recovery-dubai-hills-estate": {
+    "area": "Dubai Hills Estate",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Dubai Hills Estate",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Dubai Hills Estate – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Dubai Hills Estate. 15-minute response, 24/7 availability. Call or WhatsApp Tareeqk now."
+    },
+    "areaDescription": "Dubai Hills Estate is one of Dubai's largest master-planned communities, spanning villas, townhouses, and apartment clusters around Dubai Hills Golf Club and Dubai Hills Mall. Its low-density layout means longer distances between homes and main roads, and residents rely on Al Khail Road and Umm Suqeim Road for access. Tareeqk provides reliable car recovery and roadside assistance across every villa cluster and apartment tower in Dubai Hills Estate.",
+    "responseDescription": "Because Dubai Hills Estate is spread across a large area, we position units near its main access roads so we can reach any villa cluster or tower quickly, targeting a 15-minute response time.",
+    "faqs": [
+      {
+        "question": "Do you cover villa communities inside Dubai Hills Estate, not just the towers?",
+        "answer": "Yes. We reach every villa cluster and apartment building across Dubai Hills Estate, including areas set back from the main roads."
+      },
+      {
+        "question": "How fast is car recovery in Dubai Hills Estate?",
+        "answer": "Average response time is 15 minutes, though it can vary slightly depending on which part of the community you're in."
+      },
+      {
+        "question": "Do you cover the area near Dubai Hills Mall and the golf course?",
+        "answer": "Yes. Our coverage includes Dubai Hills Mall, Dubai Hills Golf Club, and all surrounding residential clusters."
+      },
+      {
+        "question": "Can you tow a car stuck in a Dubai Hills Estate villa driveway?",
+        "answer": "Yes. Our recovery trucks are equipped to safely access villa driveways and gated community entrances."
+      },
+      {
+        "question": "Is roadside assistance available late at night in Dubai Hills Estate?",
+        "answer": "Yes. Tareeqk operates 24 hours a day, 7 days a week, across Dubai Hills Estate."
+      }
+    ]
+  },
+  "car-recovery-discovery-gardens": {
+    "area": "Discovery Gardens",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Discovery Gardens Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Discovery Gardens Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Discovery Gardens Dubai. 15-minute response, 24/7 availability. Call or WhatsApp Tareeqk now."
+    },
+    "areaDescription": "Discovery Gardens is a dense residential community of themed mid-rise apartment clusters near Ibn Battuta Mall and the Gardens Metro Station. Tight internal roads, shared parking basements, and heavy traffic on nearby Sheikh Zayed Road make breakdowns especially disruptive here. Tareeqk provides fast car recovery and roadside assistance throughout Discovery Gardens' clusters and surrounding car parks.",
+    "responseDescription": "Discovery Gardens' internal roads can be tricky to navigate, so our drivers know the cluster layout well. We target a 15-minute response time from request to arrival.",
+    "faqs": [
+      {
+        "question": "Can you navigate Discovery Gardens' internal cluster roads?",
+        "answer": "Yes. Our drivers are familiar with the cluster layout and shared parking basements throughout Discovery Gardens."
+      },
+      {
+        "question": "How fast is car recovery in Discovery Gardens?",
+        "answer": "Average response time is 15 minutes, with units positioned near Ibn Battuta and Sheikh Zayed Road for quick access."
+      },
+      {
+        "question": "Do you cover Ibn Battuta Mall and the area near the Metro station?",
+        "answer": "Yes. Our Discovery Gardens coverage includes Ibn Battuta Mall, the Gardens Metro Station, and all surrounding clusters."
+      },
+      {
+        "question": "Is flat tyre assistance available in Discovery Gardens?",
+        "answer": "Yes. All services — flat tyre repair, battery boost, fuel delivery, and full recovery — are available in Discovery Gardens."
+      },
+      {
+        "question": "Can you recover a car from a Discovery Gardens basement car park?",
+        "answer": "Yes. Our team is equipped to handle shared basement and podium-level car park recoveries."
+      }
+    ]
+  },
+  "car-recovery-al-nahda": {
+    "area": "Al Nahda",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Al Nahda Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Al Nahda Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Al Nahda Dubai. 15-minute response, 24/7 availability. Call or WhatsApp Tareeqk now."
+    },
+    "areaDescription": "Al Nahda is a densely populated residential and commercial district on Dubai's border with Sharjah, connected by Al Ittihad Road and Dubai's Al Nahda Metro Station. Cross-border commuter traffic makes this one of the busiest corridors in the city, and breakdowns here can back up traffic quickly. Tareeqk provides fast car recovery and roadside assistance throughout Al Nahda, on both sides of Al Ittihad Road.",
+    "responseDescription": "Al Nahda's traffic can be heavy, especially near the Sharjah border, so we prioritise getting a unit to you fast to clear the road safely. We target a 15-minute response time.",
+    "faqs": [
+      {
+        "question": "Do you cover Al Nahda near the Sharjah border?",
+        "answer": "Yes. Our Al Nahda coverage includes both the Dubai and Sharjah sides of Al Ittihad Road."
+      },
+      {
+        "question": "How fast is car recovery in Al Nahda?",
+        "answer": "Average response time is 15 minutes, though heavy border traffic can occasionally add a few minutes."
+      },
+      {
+        "question": "Can you help if my car breaks down in traffic on Al Ittihad Road?",
+        "answer": "Yes. We prioritise breakdowns that are blocking traffic and dispatch the nearest available unit immediately."
+      },
+      {
+        "question": "Is battery boost service available in Al Nahda?",
+        "answer": "Yes. All roadside services — battery boost, flat tyre repair, fuel delivery, and full recovery — are available in Al Nahda."
+      },
+      {
+        "question": "Is roadside assistance in Al Nahda available 24/7?",
+        "answer": "Yes. Tareeqk operates 24 hours a day, 7 days a week, throughout Al Nahda."
+      }
+    ]
+  },
+  "car-recovery-barsha-heights": {
+    "area": "Barsha Heights",
+    "heroImage": "/new/Recovery_Van.webp",
+    "heroAlt": "Car Recovery Barsha Heights Dubai",
+    "responseTime": "15 minutes",
+    "meta": {
+      "title": "Car Recovery Barsha Heights Dubai – 24/7 | Tareeqk",
+      "description": "Car recovery and roadside assistance in Barsha Heights Dubai. 15-minute response, 24/7 availability. Call or WhatsApp Tareeqk now."
+    },
+    "areaDescription": "Barsha Heights (formerly TECOM) is a mid- and high-rise residential district popular with young professionals, sitting between Dubai Internet City and Sheikh Zayed Road, close to Mall of the Emirates. Dense towers with shared basement parking mean vehicle issues are common here. Tareeqk provides fast car recovery and roadside assistance throughout Barsha Heights and the neighbouring media and internet free zones.",
+    "responseDescription": "Barsha Heights sits right on Sheikh Zayed Road, so our units can reach most towers quickly. We target a 15-minute response time across the district.",
+    "faqs": [
+      {
+        "question": "Is Barsha Heights the same as TECOM?",
+        "answer": "Yes — Barsha Heights was formerly known as TECOM, and both names refer to the same area."
+      },
+      {
+        "question": "How fast is car recovery in Barsha Heights?",
+        "answer": "Average response time is 15 minutes, with units positioned along Sheikh Zayed Road for fast access."
+      },
+      {
+        "question": "Do you cover Dubai Internet City and Media City nearby?",
+        "answer": "Yes. Our Barsha Heights coverage extends into Dubai Internet City and Dubai Media City."
+      },
+      {
+        "question": "Can you recover a car from a Barsha Heights basement car park?",
+        "answer": "Yes. Our team is experienced with shared basement parking recoveries in Barsha Heights towers."
+      },
+      {
+        "question": "Is roadside assistance available late at night in Barsha Heights?",
+        "answer": "Yes. Tareeqk operates 24/7, including nights, weekends, and public holidays, in Barsha Heights."
       }
     ]
   },

@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next"
 import { HashLink } from "react-router-hash-link"
 import useLangLink from "../hooks/useLangLink"
 import { SERVICES } from "./Footer"
+import { prefetchRoute } from "../routePrefetch"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -158,7 +159,7 @@ export default function Navbar({ isDark, setIsDark }) {
                     {/* Logo + live-dispatch pulse, echoes the "24/7 ·
                         Dispatching now" badge on the hero so the brand's
                         urgency signal follows you as you scroll */}
-                    <Link to={langLink("/")} className="flex items-center gap-2.5">
+                    <Link to={langLink("/")} viewTransition className="flex items-center gap-2.5">
                       {/* This mark is dark-on-transparent with no white
                           variant, so on the dark navbar it disappears into
                           the near-black background without a light backing
@@ -235,6 +236,8 @@ export default function Navbar({ isDark, setIsDark }) {
                               <Link
                                 to={item.href}
                                 onClick={() => window.scrollTo(0, 0)}
+                                onMouseEnter={() => prefetchRoute(item.href)}
+                                viewTransition
                                 className={linkClasses}
                               >
                                 {item.name}
@@ -263,6 +266,8 @@ export default function Navbar({ isDark, setIsDark }) {
                                       key={sub.href}
                                       to={sub.href}
                                       onClick={() => window.scrollTo(0, 0)}
+                                      onMouseEnter={() => prefetchRoute(sub.href)}
+                                      viewTransition
                                       className={classNames(
                                         "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
                                         isDark
@@ -290,6 +295,8 @@ export default function Navbar({ isDark, setIsDark }) {
                             ) : (
                               <Link
                                 onClick={() => window.scrollTo(0, 0)}
+                                onMouseEnter={() => prefetchRoute(item.href)}
+                                viewTransition
                                 to={item.href}
                                 className={linkClasses}
                               >
@@ -438,6 +445,8 @@ export default function Navbar({ isDark, setIsDark }) {
                               window.scrollTo(0, 0)
                               close()
                             }}
+                            onMouseEnter={() => prefetchRoute(item.href)}
+                            viewTransition
                             className="flex-1"
                           >
                             {item.name}
@@ -470,6 +479,8 @@ export default function Navbar({ isDark, setIsDark }) {
                                   window.scrollTo(0, 0)
                                   close()
                                 }}
+                                onMouseEnter={() => prefetchRoute(sub.href)}
+                                viewTransition
                                 className={classNames(
                                   "flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
                                   isDark
@@ -505,6 +516,8 @@ export default function Navbar({ isDark, setIsDark }) {
                         window.scrollTo(0, 0)
                         close()
                       }}
+                      onMouseEnter={() => prefetchRoute(item.href)}
+                      viewTransition
                       style={itemMotion.style}
                       className={classNames(itemMotion.className, itemClasses)}
                     >

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, Link } from "react-router-dom"
 import { Car, Truck, CarFront, BatteryCharging, ArrowRight } from "lucide-react"
 import { getLocalizedBlogs } from "../data/blogs"
 import useLangLink from "../hooks/useLangLink"
 import HreflangTags from "../Components/HreflangTags"
+import { prefetchRoute } from "../routePrefetch"
 
 const EXPLORE_SERVICES = [
   { key: "carRecovery", href: "/car-recovery-dubai", label: "Car Recovery Dubai", Icon: Car },
@@ -407,7 +408,7 @@ export default function Blogs() {
         <meta name="robots" content="index, follow" />
         <title>{t("meta.blogs.title")}</title>
         <meta name="description" content={t("meta.blogs.description")} />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}/blogs`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/blogs/`} />
         <meta property="og:title" content={t("meta.blogs.title")} />
         <meta property="og:description" content={t("meta.blogs.description")} />
         <meta property="og:type" content="website" />
@@ -508,9 +509,11 @@ export default function Blogs() {
                   <h3 className="bl-explore-title">{t("blogs.exploreTitle", "Explore our roadside services")}</h3>
                   <div className="bl-explore-grid">
                     {EXPLORE_SERVICES.map(({ key, href, label, Icon }, i) => (
-                      <a
+                      <Link
                         key={key}
-                        href={langLink(href)}
+                        to={langLink(href)}
+                        onMouseEnter={() => prefetchRoute(langLink(href))}
+                        viewTransition
                         className={`bl-explore-card bl-reveal${revealed ? " bl-visible" : ""}`}
                         style={{ transitionDelay: revealed ? `${220 + i * 70}ms` : "0ms" }}
                       >
@@ -520,7 +523,7 @@ export default function Blogs() {
                           {t("blogs.readMore")}
                           <ArrowRight size={13} />
                         </span>
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>

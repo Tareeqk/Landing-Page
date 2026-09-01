@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
+import { prefetchRoute } from "../routePrefetch";
 import useLangLink from "../hooks/useLangLink";
 
 export default function WhatWeOffer() {
@@ -927,9 +930,11 @@ export default function WhatWeOffer() {
           onTouchEnd={handleTouchEnd}
         >
           {services.map((service, i) => (
-            <a
+            <Link
               key={service.key}
-              href={getLangLink(service.link)}
+              to={getLangLink(service.link)}
+              onMouseEnter={() => prefetchRoute(getLangLink(service.link))}
+              viewTransition
               style={{ transitionDelay: revealed ? `${i * 100}ms` : "0ms" }}
               className={`s4-card s4-reveal${revealed ? " s4-visible" : ""}${service.featured ? " featured" : ""}`}
             >
@@ -974,9 +979,11 @@ export default function WhatWeOffer() {
 
               <span className="s4-learn">
                 {t("offer.learnMore")}
-                <span className="s4-learn-arr">→</span>
+                <span className="s4-learn-arr">
+                  <ArrowRight size={16} strokeWidth={2.25} />
+                </span>
               </span>
-            </a>
+            </Link>
           ))}
         </div>
 

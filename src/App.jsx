@@ -27,6 +27,7 @@ const PrivacyAndPolicy   = lazy(() => import('./Pages/PrivacyAndPolicy'));
 const Blogs              = lazy(() => import('./Pages/Blogs'));
 const BlogPage           = lazy(() => import('./Pages/BlogPage'));
 const BecomePartner      = lazy(() => import('./Pages/BecomePartner'));
+const AllAreas            = lazy(() => import('./Pages/AllAreas'));
 const NotFound           = lazy(() => import('./Pages/NotFound'));
 
 // ── SEO SERVICE PAGES (Lazy Loaded) ──────────────────────────────
@@ -38,6 +39,7 @@ const AccidentRecoveryDubai = lazy(() => import('./Pages/services/AccidentRecove
 const TowingServiceDubai    = lazy(() => import('./Pages/services/Towingservicedubai'));
 const DesertRecoveryDubai   = lazy(() => import('./Pages/services/DesertRecoveryDubai'));
 const BikeRecoveryDubai     = lazy(() => import('./Pages/services/BikeRecoveryDubai'));
+const RoadsideAssistanceDubai = lazy(() => import('./Pages/services/RoadsideAssistanceDubai'));
 
 // ── LOCATION PAGES ────────────────────────────────────────────────
 // All 19 location pages render the same heavy LocationPageTemplate and
@@ -70,6 +72,11 @@ const LOCATION_SLUGS = [
   'car-recovery-al-quoz',
   'car-recovery-jebel-ali',
   'car-recovery-palm-jumeirah',
+  'car-recovery-difc',
+  'car-recovery-dubai-hills-estate',
+  'car-recovery-discovery-gardens',
+  'car-recovery-al-nahda',
+  'car-recovery-barsha-heights',
 ];
 
 function slugToComponentName(slug) {
@@ -117,6 +124,43 @@ function App() {
     setTimeout(() => { AOS.refresh(); }, 100);
   }, []);
 
+  // Fade in lazy-loaded images instead of letting them hard-pop the
+  // instant their bytes arrive. Deliberately scoped to loading="lazy"
+  // only -- eager/fetchpriority="high" hero images (the ones this app's
+  // LCP was specifically tuned around, see index.html) are never touched,
+  // so this can't regress the paint timing already optimized there.
+  //
+  // Also deliberately NOT a blanket CSS "img { opacity: 0 }" rule: that
+  // would hide every image sitewide the instant the stylesheet applies,
+  // including on prerendered pages, until this effect gets around to
+  // marking them loaded -- a real flash-of-invisible-content on a slow
+  // connection. Instead each image starts fully visible (identical to
+  // today) and only gets opacity:0 + a transition once this effect has
+  // confirmed it isn't loaded yet and has a 'load' listener ready to
+  // reveal it -- so if JS is slow or fails, images just render normally.
+  useEffect(() => {
+    const fade = (img) => {
+      if (img.complete || img.dataset.tkFade) return;
+      img.dataset.tkFade = '1';
+      img.style.opacity = '0';
+      img.style.transition = 'opacity 0.4s ease';
+      img.addEventListener('load', () => { img.style.opacity = '1'; }, { once: true });
+    };
+    const scan = (root) => {
+      if (root.nodeType !== 1) return;
+      if (root.tagName === 'IMG' && root.loading === 'lazy') fade(root);
+      root.querySelectorAll?.('img[loading="lazy"]').forEach(fade);
+    };
+    scan(document.body);
+    // Route changes (and any lazy content revealed after scroll) mount new
+    // <img> tags after this effect's initial scan, so keep watching.
+    const mo = new MutationObserver((mutations) => {
+      for (const m of mutations) m.addedNodes.forEach(scan);
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => mo.disconnect();
+  }, []);
+
   // Dark mode is temporarily restricted to light-only — the toggle is
   // hidden in Navbar.jsx, and this always starts light regardless of a
   // previously stored "dark" preference so no one gets stuck without a
@@ -145,6 +189,7 @@ function App() {
           <Route path="terms" element={<TermsAndConditions />} />
           <Route path="privacy-policy" element={<PrivacyAndPolicy />} />
           <Route path="become-a-partner" element={<BecomePartner />} />
+          <Route path="areas" element={<AllAreas />} />
 
           {/* Service pages */}
           <Route path="car-recovery-dubai"      element={<CarRecoveryDubai />} />
@@ -155,6 +200,7 @@ function App() {
           <Route path="towing-service-dubai"    element={<TowingServiceDubai />} />
           <Route path="desert-recovery-dubai"   element={<DesertRecoveryDubai />} />
           <Route path="bike-recovery-dubai"     element={<BikeRecoveryDubai />} />
+          <Route path="roadside-assistance-dubai" element={<RoadsideAssistanceDubai />} />
 
           {/* Location pages — driven by common.json via useTranslation */}
           {LOCATION_SLUGS.map(slug => {

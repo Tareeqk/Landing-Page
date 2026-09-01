@@ -76,6 +76,36 @@ for (const { path: route } of pages) {
       { timeout: 15_000 }
     );
 
+    // The homepage H1 (LandingPage.jsx's TypingTitle) types out one phrase
+    // at a time character-by-character and cycles forever -- whatever
+    // partial string it happens to be mid-typing when Chrome takes this
+    // snapshot gets baked permanently into the static HTML every crawler
+    // and pre-hydration visitor sees (was landing as "Car RCar Recovery,
+    // Towing Service..." -- the partial ".tk-typing-text" content butted
+    // up against the always-complete ".tk-visually-hidden" fallback right
+    // after it, with no separator between them). The hidden span already
+    // carries the full, correct text for screen readers/SEO -- copy it
+    // into the visible span, promote that span to be the sole accessible
+    // copy (it's aria-hidden by default since the animation is normally
+    // decorative), and drop both the cursor and the now-redundant hidden
+    // span. Removing the hidden span matters: a naive text-only scraper
+    // doesn't respect aria-hidden/visually-hidden CSS, so leaving both
+    // spans populated produced the phrase twice back-to-back in the
+    // static H1 text instead of once.
+    await page.evaluate(() => {
+      document.querySelectorAll('.tk-hero__title--typing').forEach((h1) => {
+        const full = h1.querySelector('.tk-visually-hidden');
+        const typing = h1.querySelector('.tk-typing-text');
+        const cursor = h1.querySelector('.tk-typing-cursor');
+        if (full && typing) {
+          typing.textContent = full.textContent;
+          typing.removeAttribute('aria-hidden');
+          full.remove();
+        }
+        if (cursor) cursor.remove();
+      });
+    });
+
     // page.content() serializes the LIVE DOM — by this point Chrome has
     // already loaded the Google Fonts stylesheet and fired its onload
     // handler, which flips that <link>'s media from "print" to "all" (see
@@ -96,6 +126,37 @@ for (const { path: route } of pages) {
   } catch (err) {
     failed.push({ route, error: err.message });
   }
+}
+
+// Soft-404 fix: an unmatched URL was returning a 200 with the *homepage's*
+// prerendered HTML and "index, follow" -- NotFound.jsx does set noindex via
+// Helmet, but only after JS runs, so any crawler or curl hitting a dead or
+// misspelled URL saw an indexable homepage duplicate instead of a real 404.
+// Prerender the NotFound page once, from a route guaranteed not to match
+// any real page (see STATIC_PAGES/SERVICE_PAGES/LOCATION_PAGES in
+// site-routes.mjs), and ship it as dist/404.html for public/.htaccess's
+// `ErrorDocument 404` to serve. ErrorDocument keeps the real 404 status
+// code (unlike a redirect), and NotFound.jsx's own Helmet-set noindex tag
+// bakes into this static file the same way every other route's meta does.
+try {
+  const target = new URL('/en/__page-not-found__', baseUrl).toString();
+  await page.goto(target, { waitUntil: 'networkidle0', timeout: 30_000 });
+  await page.waitForFunction(
+    () => {
+      const h1 = document.querySelector('h1');
+      return !!h1 && h1.textContent.trim().length > 0;
+    },
+    { timeout: 15_000 }
+  );
+  const html = (await page.content()).replace(
+    /(<link rel="stylesheet" href="https:\/\/fonts\.googleapis\.com\/css2\?family=Noto\+Kufi\+Arabic[^"]*")\s+media="all"(\s+onload=)/,
+    '$1 media="print"$2',
+  );
+  await writeFile(path.join(distDir, '404.html'), html);
+  console.log('Prerendered dist/404.html');
+} catch (err) {
+  console.error(`404 page prerender failed — ${err.message}`);
+  process.exitCode = 1;
 }
 
 await browser.close();

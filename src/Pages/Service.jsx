@@ -10,8 +10,10 @@ import {
 } from 'lucide-react';
 
 import useLangLink from '../hooks/useLangLink';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import HreflangTags from '../Components/HreflangTags';
+import { prefetchRoute } from '../routePrefetch';
 
 // ── Schemas ────────────────────────────────────────────────────────────────
 function ServicesPageSchema() {
@@ -21,7 +23,7 @@ function ServicesPageSchema() {
     "name": "Tareeqk Roadside Assistance Services Dubai",
     "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery.",
     "url": "https://tareeqk.ae/service",
-    "numberOfItems": 7,
+    "numberOfItems": 8,
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://tareeqk.ae/car-recovery-dubai", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://tareeqk.ae/battery-service-dubai", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
@@ -30,6 +32,7 @@ function ServicesPageSchema() {
       { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://tareeqk.ae/desert-recovery-dubai", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://tareeqk.ae/bike-recovery-dubai", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 8, "item": { "@type": "Service", "name": "Roadside Assistance Dubai", "url": "https://tareeqk.ae/roadside-assistance-dubai", "description": "24/7 roadside assistance in Dubai covering battery jump-starts, flat tyre repair, fuel delivery, lockout help, and full vehicle recovery.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
     ],
   };
   const howToSchema = {
@@ -645,6 +648,17 @@ export default function Service({ isSection = false }) {
       desc: t('service.svc7Desc'),
       bullets: [t('service.svc7b1'), t('service.svc7b2'), t('service.svc7b3'), t('service.svc7b4')],
     },
+    {
+      icon: <ShieldCheck size={18} />,
+      href: '/roadside-assistance-dubai',
+      img: '/new/Recovery_Van.webp',
+      tag: t('service.svc8Tag'),
+      tagBg: 'rgba(214,241,255,0.95)',
+      tagColor: '#0a6ea8',
+      title: t('service.svc8Title'),
+      desc: t('service.svc8Desc'),
+      bullets: [t('service.svc8b1'), t('service.svc8b2'), t('service.svc8b3'), t('service.svc8b4')],
+    },
   ];
 
   const HOW_STEPS = [
@@ -700,8 +714,10 @@ export default function Service({ isSection = false }) {
 
   // ── Render helpers ─────────────────────────────────────────────────────
   const renderServiceCard = (svc, i) => (
-    <a
-      href={langLink(svc.href)}
+    <Link
+      to={langLink(svc.href)}
+      onMouseEnter={() => prefetchRoute(langLink(svc.href))}
+      viewTransition
       className="svc-card svc-card-v2"
       style={{ display: 'block', '--svc-accent': svc.tagColor || undefined }}
     >
@@ -785,7 +801,7 @@ export default function Service({ isSection = false }) {
           {isRTL ? <ArrowLeft size={14} /> : <ArrowRight size={14} />}
         </div>
       </div>
-    </a>
+    </Link>
   );
 
   const renderWhyCard = (point, i) => (
@@ -827,7 +843,7 @@ export default function Service({ isSection = false }) {
             <title>{t('meta.service.title')}</title>
             <meta name="description" content={t('meta.service.description')} />
             <meta name="robots" content="index, follow" />
-            <link rel="canonical" href={`https://tareeqk.ae/${lang}/service`} />
+            <link rel="canonical" href={`https://tareeqk.ae/${lang}/service/`} />
             <meta property="og:title" content={t('meta.service.title')} />
             <meta property="og:description" content={t('meta.service.description')} />
             <meta property="og:type" content="website" />
@@ -1230,9 +1246,11 @@ export default function Service({ isSection = false }) {
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {LOCATIONS.map((loc, i) => (
-                  <a
+                  <Link
                     key={i}
-                    href={langLink(loc.href)}
+                    to={langLink(loc.href)}
+                    onMouseEnter={() => prefetchRoute(langLink(loc.href))}
+                    viewTransition
                     className="svc-loc-pill"
                     style={{
                       display: 'inline-flex', alignItems: 'center', gap: '6px',
@@ -1245,10 +1263,10 @@ export default function Service({ isSection = false }) {
                   >
                     <MapPin size={11} />
                     {loc.label}
-                  </a>
+                  </Link>
                 ))}
-                <a
-                  href={langLink("/#contact")}
+                <HashLink
+                  to={langLink("/#contact")}
                   className="svc-loc-pill"
                   style={{
                     display: 'inline-flex', alignItems: 'center',
@@ -1260,7 +1278,7 @@ export default function Service({ isSection = false }) {
                   }}
                 >
                   {t('service.coverageNotListed')} {isRTL ? <ArrowLeft size={12} /> : <ArrowRight size={12} />}
-                </a>
+                </HashLink>
               </div>
             </div>
 

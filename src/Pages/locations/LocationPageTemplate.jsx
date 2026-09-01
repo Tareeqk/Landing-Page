@@ -6,7 +6,8 @@
 //     inline SVG illustrations, "Read more/less", full responsiveness).
 
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import ServiceSchema from '../../schemas/ServiceSchema';
@@ -14,6 +15,7 @@ import FAQSchema from '../../schemas/FAQSchema';
 import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
 import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
+import { prefetchRoute } from '../../routePrefetch';
 import { Icon } from 'lucide-react';
 
 // ─────────────────────────── ICONS ───────────────────────────
@@ -194,11 +196,14 @@ function ExpandableText({ text, limit = 220, style = {} }) {
 
 const ALL_SERVICES = [
   { name: 'Car Recovery', nameKey: 'carRecovery', href: '/car-recovery-dubai' },
+  { name: 'Roadside Assistance', nameKey: 'roadsideAssistance', href: '/roadside-assistance-dubai' },
   { name: 'Towing Service', nameKey: 'towingService', href: '/towing-service-dubai' },
   { name: 'Battery Boost', nameKey: 'batteryBoost', href: '/battery-service-dubai' },
   { name: 'Flat Tyre Repair', nameKey: 'flatTyreRepair', href: '/flat-tyre-repair-dubai' },
   { name: 'Fuel Delivery', nameKey: 'fuelDelivery', href: '/fuel-delivery-dubai' },
   { name: 'Accident Recovery', nameKey: 'accidentRecovery', href: '/accident-recovery-dubai' },
+  { name: 'Desert Recovery', nameKey: 'desertRecovery', href: '/desert-recovery-dubai' },
+  { name: 'Bike Recovery', nameKey: 'bikeRecovery', href: '/bike-recovery-dubai' },
 ];
 
 const ALL_LOCATIONS = [
@@ -221,6 +226,11 @@ const ALL_LOCATIONS = [
   { label: 'Al Quoz', href: '/car-recovery-al-quoz' },
   { label: 'Jebel Ali', href: '/car-recovery-jebel-ali' },
   { label: 'Palm Jumeirah', href: '/car-recovery-palm-jumeirah' },
+  { label: 'DIFC', href: '/car-recovery-difc' },
+  { label: 'Dubai Hills Estate', href: '/car-recovery-dubai-hills-estate' },
+  { label: 'Discovery Gardens', href: '/car-recovery-discovery-gardens' },
+  { label: 'Al Nahda', href: '/car-recovery-al-nahda' },
+  { label: 'Barsha Heights', href: '/car-recovery-barsha-heights' },
 ];
 
 // ─────────────────────── STYLES ─────────────────────────────────
@@ -556,7 +566,7 @@ export default function LocationPageTemplate({ config }) {
         <title>{config.metaTitle}</title>
         <meta name="description" content={config.metaDesc} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}`} />
+        <link rel="canonical" href={`https://tareeqk.ae/${lang}/${config.slug}/`} />
         <meta property="og:title" content={config.metaTitle} />
         <meta property="og:description" content={config.metaDesc} />
         <meta property="og:type" content="website" />
@@ -660,7 +670,11 @@ export default function LocationPageTemplate({ config }) {
               </Reveal>
 
               <Reveal as="h1" direction="up" delay={140} style={S.heroH1}>
-                {t('locationPageTemplate.hero.titleLine1', { defaultValue: 'Car Recovery in' })}
+                {/* JSX drops the newline between these as pure whitespace,
+                    so without the explicit {' '} this rendered as
+                    "...inDubai Marina" (no space) across all 19 pages and
+                    all 3 languages. */}
+                {t('locationPageTemplate.hero.titleLine1', { defaultValue: 'Car Recovery in' })}{' '}
                 <span style={S.heroH1Accent}>{config.area}</span>
               </Reveal>
               <Reveal as="div" direction="left" delay={260} duration={500} style={S.heroUnderline} />
@@ -719,12 +733,12 @@ export default function LocationPageTemplate({ config }) {
               </h2>
               <ExpandableText text={config.areaDesc} limit={220} />
               <div style={{ marginTop: '24px', display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-                <a href={langLink('/car-recovery-dubai')} className="tk-link-pill" style={S.linkPill}>
+                <Link to={langLink('/car-recovery-dubai')} onMouseEnter={() => prefetchRoute(langLink('/car-recovery-dubai'))} viewTransition className="tk-link-pill" style={S.linkPill}>
                   {t('locationPageTemplate.about.allDubaiServicesLink', { defaultValue: 'All Dubai Services' })} <IconArrowRight size={13} color="#111" />
-                </a>
-                <a href={langLink('/about')} className="tk-link-pill" style={S.linkPill}>
+                </Link>
+                <Link to={langLink('/about')} onMouseEnter={() => prefetchRoute(langLink('/about'))} viewTransition className="tk-link-pill" style={S.linkPill}>
                   {t('locationPageTemplate.about.aboutTareeqkLink', { defaultValue: 'About Tareeqk' })} <IconArrowRight size={13} color="#111" />
-                </a>
+                </Link>
               </div>
             </Reveal>
 
@@ -844,7 +858,7 @@ export default function LocationPageTemplate({ config }) {
           </Reveal>
           <div style={S.svcGrid} className="tk-svc-grid">
             {ALL_SERVICES.map((svc, i) => (
-              <Reveal key={svc.name} as="a" href={langLink(svc.href)} direction="up" delay={stagger(i, 70)}
+              <Reveal key={svc.name} as={Link} to={langLink(svc.href)} onMouseEnter={() => prefetchRoute(langLink(svc.href))} viewTransition direction="up" delay={stagger(i, 70)}
                 className="tk-svc-card" style={S.svcCard}>
                 <div style={S.svcIconWrap}>
                   {SERVICE_ICONS[svc.name] || <IconWrench size={26} color="#92400e" />}
@@ -1099,7 +1113,7 @@ export default function LocationPageTemplate({ config }) {
               </Reveal>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {otherLocations.map((loc, i) => (
-                  <Reveal key={loc.href} as="a" href={langLink(loc.href)} direction="up" delay={120 + Math.min(i * 25, 200)} className="tk-link-pill" style={S.linkPill}>
+                  <Reveal key={loc.href} as={Link} to={langLink(loc.href)} onMouseEnter={() => prefetchRoute(langLink(loc.href))} viewTransition direction="up" delay={120 + Math.min(i * 25, 200)} className="tk-link-pill" style={S.linkPill}>
                     {loc.label}
                   </Reveal>
                 ))}
@@ -1112,7 +1126,7 @@ export default function LocationPageTemplate({ config }) {
               </Reveal>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                 {ALL_SERVICES.map((svc, i) => (
-                  <Reveal key={svc.href} as="a" href={langLink(svc.href)} direction="up" delay={220 + Math.min(i * 30, 180)} className="tk-link-pill" style={S.linkPill}>
+                  <Reveal key={svc.href} as={Link} to={langLink(svc.href)} onMouseEnter={() => prefetchRoute(langLink(svc.href))} viewTransition direction="up" delay={220 + Math.min(i * 30, 180)} className="tk-link-pill" style={S.linkPill}>
                     {t(`locationPageTemplate.services.names.${svc.nameKey}`, { defaultValue: svc.name })}
                   </Reveal>
                 ))}
@@ -1121,13 +1135,17 @@ export default function LocationPageTemplate({ config }) {
           </div>
 
           <Reveal direction="up" delay={160} style={{ marginTop: '28px', paddingTop: '20px', borderTop: '1px solid #eee' }}>
-            <a href={langLink('/about')} className="tk-link-pill"
+            <Link to={langLink('/about')} onMouseEnter={() => prefetchRoute(langLink('/about'))} viewTransition className="tk-link-pill"
               style={{ ...S.linkPill, marginRight: '10px' }}>
               {t('locationPageTemplate.footer.aboutTareeqkLink', { defaultValue: 'About Tareeqk' })}
-            </a>
-            <a href={langLink('/contact')} className="tk-link-pill" style={S.linkPill}>
+            </Link>
+            {/* /contact isn't a real route -- the contact section lives on
+                the homepage at #contact, same as Navbar.jsx's own contact
+                link. HashLink (not plain Link) so the scroll-to-anchor still
+                works when navigating here from a different page. */}
+            <HashLink to={langLink('/#contact')} className="tk-link-pill" style={S.linkPill}>
               {t('locationPageTemplate.footer.contactUsLink', { defaultValue: 'Contact Us' })}
-            </a>
+            </HashLink>
           </Reveal>
         </div>
       </section>

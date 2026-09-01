@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import useLangLink from "../hooks/useLangLink";
 
 // Delay (ms) per reveal element, keyed by data-reveal-key in the JSX below.
@@ -643,7 +644,7 @@ export default function AboutPreview() {
 <Link to={langLink("/about")} className="abt-preview-cta">
   {t("aboutPreview.learnMore")}
   <span className="abt-preview-cta-arrow">
-    {isRTL ? "←" : "→"}
+    <ArrowRight size={16} strokeWidth={2.25} />
   </span>
 </Link>
           </div>

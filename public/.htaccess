@@ -1,0 +1,7 @@
+# Serves the real prerendered 404.html on any unmatched URL, keeping the
+# actual HTTP 404 status (ErrorDocument does not redirect, unlike a normal
+# rewrite/redirect rule) -- every valid route on this site already exists
+# as a real prerendered file (see scripts/prerender.mjs), so an unmatched
+# path is genuinely invalid and should 404, not silently serve the
+# homepage.
+ErrorDocument 404 /404.html
