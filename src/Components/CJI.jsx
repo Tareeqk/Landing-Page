@@ -207,6 +207,8 @@ export default function CJI() {
   const isRTL = i18n.dir() === "rtl"
   const [soundOn, setSoundOn] = useState(false)
   const videoRef = useRef(null)
+  const videoWrapRef = useRef(null)
+  const isInViewRef = useRef(false)
   useCjiStyles()
 
   // Arabic gets its own dubbed clip; English and Urdu (no Urdu dub yet)
@@ -221,11 +223,35 @@ export default function CJI() {
     })
   }
 
-  // Switching language swaps the underlying clip — start it back at silent
-  // rather than carrying "sound on" over to a video the visitor didn't
-  // explicitly unmute.
+  // No `autoPlay` attribute on the <video> -- it only starts once the panel
+  // actually scrolls into view, so visitors who never reach this section
+  // never pay for the download. Runs once; videoRef.current is read fresh
+  // on every callback firing, so it stays correct across the remount below.
+  useEffect(() => {
+    const el = videoWrapRef.current
+    if (!el || typeof IntersectionObserver === "undefined") return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInViewRef.current = entry.isIntersecting
+        const video = videoRef.current
+        if (!video) return
+        if (entry.isIntersecting) video.play().catch(() => {})
+        else video.pause()
+      },
+      { threshold: 0.25 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  // Switching language swaps the underlying clip (key={videoSrc} below
+  // remounts the <video>, dropping any in-progress playback) -- start it
+  // back at silent rather than carrying "sound on" over to a video the
+  // visitor didn't explicitly unmute, and resume autoplay immediately if
+  // the panel is already in view since the fresh element has no autoplay.
   useEffect(() => {
     setSoundOn(false)
+    if (isInViewRef.current) videoRef.current?.play().catch(() => {})
   }, [videoSrc])
 
   const FEATURES = [
@@ -286,6 +312,7 @@ export default function CJI() {
             {/* Video Side */}
             <div
               id="nasir-video"
+              ref={videoWrapRef}
               data-aos="fade-left"
               className="cji-video-wrap relative overflow-hidden rounded-3xl border border-gray-100 shadow-sm bg-white"
             >
@@ -301,7 +328,6 @@ export default function CJI() {
                   className="cji-video-el"
                   src={videoSrc}
                   title={t("cji.videoTitle")}
-                  autoPlay
                   muted={!soundOn}
                   loop
                   playsInline
