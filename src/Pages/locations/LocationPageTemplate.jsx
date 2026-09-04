@@ -83,15 +83,6 @@ const IconWrench = ({ size = 20, color = 'currentColor' }) => (
     <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
   </svg>
 );
-const IconGas = ({ size = 20, color = 'currentColor' }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color}
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 22V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14" />
-    <path d="M2 22h12" />
-    <path d="M13 8h2l2 2v3l-2 1v4" />
-    <path d="M7 10v4" />
-  </svg>
-);
 const IconAlert = ({ size = 20, color = 'currentColor' }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color}
     strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -158,7 +149,6 @@ const SERVICE_ICONS = {
   'Towing Service': <IconTruck size={26} color="#92400e" />,
   'Battery Boost': <IconBolt size={26} color="#92400e" />,
   'Flat Tyre Repair': <IconWrench size={26} color="#92400e" />,
-  'Fuel Delivery': <IconGas size={26} color="#92400e" />,
   'Accident Recovery': <IconAlert size={26} color="#92400e" />,
 };
 
@@ -200,7 +190,6 @@ const ALL_SERVICES = [
   { name: 'Towing Service', nameKey: 'towingService', href: '/towing-service-dubai' },
   { name: 'Battery Boost', nameKey: 'batteryBoost', href: '/battery-service-dubai' },
   { name: 'Flat Tyre Repair', nameKey: 'flatTyreRepair', href: '/flat-tyre-repair-dubai' },
-  { name: 'Fuel Delivery', nameKey: 'fuelDelivery', href: '/fuel-delivery-dubai' },
   { name: 'Accident Recovery', nameKey: 'accidentRecovery', href: '/accident-recovery-dubai' },
   { name: 'Desert Recovery', nameKey: 'desertRecovery', href: '/desert-recovery-dubai' },
   { name: 'Bike Recovery', nameKey: 'bikeRecovery', href: '/bike-recovery-dubai' },

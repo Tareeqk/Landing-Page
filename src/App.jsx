@@ -34,7 +34,6 @@ const NotFound           = lazy(() => import('./Pages/NotFound'));
 const CarRecoveryDubai      = lazy(() => import('./Pages/services/CarRecoveryDubai'));
 const BatteryServiceDubai   = lazy(() => import('./Pages/services/BatteryServiceDubai'));
 const FlatTyreRepairDubai   = lazy(() => import('./Pages/services/FlatTyreRepairDubai'));
-const FuelDeliveryDubai     = lazy(() => import('./Pages/services/FuelDeliveryDubai'));
 const AccidentRecoveryDubai = lazy(() => import('./Pages/services/AccidentRecoveryDubai'));
 const TowingServiceDubai    = lazy(() => import('./Pages/services/Towingservicedubai'));
 const DesertRecoveryDubai   = lazy(() => import('./Pages/services/DesertRecoveryDubai'));
@@ -195,7 +194,11 @@ function App() {
           <Route path="car-recovery-dubai"      element={<CarRecoveryDubai />} />
           <Route path="battery-service-dubai"   element={<BatteryServiceDubai />} />
           <Route path="flat-tyre-repair-dubai"  element={<FlatTyreRepairDubai />} />
-          <Route path="fuel-delivery-dubai"     element={<FuelDeliveryDubai />} />
+          {/* Fuel delivery was folded into Roadside Assistance rather than kept
+              as its own page — .htaccess/vercel.json 301 this URL at the server
+              level for real crawlers/bookmarks; this is just a client-side
+              safety net for anyone who lands here via stale in-app JS routing. */}
+          <Route path="fuel-delivery-dubai" element={<Navigate to="../roadside-assistance-dubai" replace />} />
           <Route path="accident-recovery-dubai" element={<AccidentRecoveryDubai />} />
           <Route path="towing-service-dubai"    element={<TowingServiceDubai />} />
           <Route path="desert-recovery-dubai"   element={<DesertRecoveryDubai />} />

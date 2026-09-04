@@ -144,7 +144,6 @@
     "statLicensed": "Licensed",
     "readMore": "Read More",
     "readLess": "Read Less",
-    "svc5": "Fuel Delivery",
     "svc6": "Accident Recovery",
     "svc7": "Desert Recovery",
     "svc8": "Bike Recovery",
@@ -165,7 +164,7 @@
     "readLess": "Read Less",
     "whoWeAreTag": "Who We Are",
     "whoWeAreTitle": "Roadside support made simple. ",
-    "whoWeAreP1": "From emergency towing and vehicle recovery to battery assistance, flat tire support, and fuel delivery, Tareeqk provides dependable roadside services through one intelligent platform. Request help in seconds, follow your provider in real time, and get back on the road with confidence.",
+    "whoWeAreP1": "From emergency towing and vehicle recovery to battery assistance and flat tire support, Tareeqk provides dependable roadside services through one intelligent platform. Request help in seconds, follow your provider in real time, and get back on the road with confidence.",
     "whoWeAreP2": "From a tyre puncture in Marina to a heavy-duty recovery on E11, our certified technicians arrive prepared, transparent, and ready to move — backed by a digital experience that keeps you informed every minute.",
     "needHelp": "Need help right now?",
     "downloadApp": "Download App",
@@ -225,8 +224,8 @@
     "svc7b4": "Clear, upfront pricing",
     "svc8Tag": "All-In-One",
     "svc8Title": "Roadside Assistance Dubai",
-    "svc8Desc": "One number for every roadside problem — battery, tyre, fuel, lockout, or full recovery, dispatched 24/7 anywhere in Dubai.",
-    "svc8b1": "Battery, tyre, fuel & lockout help",
+    "svc8Desc": "One number for every roadside problem — battery, tyre, lockout, or full recovery, dispatched 24/7 anywhere in Dubai.",
+    "svc8b1": "Battery, tyre & lockout help",
     "svc8b2": "Full recovery if it can't be fixed on-site",
     "svc8b3": "Certified technicians, 24/7 dispatch",
     "svc8b4": "One call covers every breakdown type",
@@ -289,7 +288,7 @@
     "title": "Best Roadside assistance in Dubai",
     "subtitle": "Experience fast, reliable roadside assistance and towing services in Dubai with expert care — anytime, anywhere.",
     "item1title": "Roadside assistance",
-    "item1subtitle": "Expert roadside assistance for vehicle breakdowns, tire changes, fuel delivery, jump starts, and more — wherever you are.",
+    "item1subtitle": "Expert roadside assistance for vehicle breakdowns, tire changes, jump starts, and more — wherever you are.",
     "item2title": "Towing services",
     "item2subtitle": "Safe and efficient towing service in Dubai for all types of vehicles, from motorcycles to heavy trucks, handled by our professional team.",
     "item3title": "Desert recovery",
@@ -1699,7 +1698,7 @@
     },
     "service": {
       "title": "Our Services - Towing, Recovery & Roadside Assistance Dubai",
-      "description": "Explore Tareeqk's full range of services including car towing, desert recovery, battery jump start, tire change and fuel delivery in Dubai."
+      "description": "Explore Tareeqk's full range of services including car towing, desert recovery, battery jump start, and tire change in Dubai."
     },
     "blogs": {
       "title": "Blog - Car Tips & Roadside Assistance Guides | Tareeqk",
@@ -1830,7 +1829,6 @@
         "towingService": "Towing Service",
         "batteryBoost": "Battery Boost",
         "flatTyreRepair": "Flat Tyre Repair",
-        "fuelDelivery": "Fuel Delivery",
         "accidentRecovery": "Accident Recovery"
       }
     },
@@ -1896,7 +1894,7 @@
       },
       {
         "question": "What roadside assistance services are available in Dubai Marina?",
-        "answer": "All services are available: car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery."
+        "answer": "All services are available: car recovery, towing, battery boost, flat tyre repair, and accident recovery."
       },
       {
         "question": "Can you recover a car from a Dubai Marina underground car park?",
@@ -1908,7 +1906,7 @@
       },
       {
         "question": "Where can I find emergency roadside assistance in Dubai Marina?",
-        "answer": "If your car breaks down in Dubai Marina, Tareeqk offers 24/7 emergency roadside assistance, including car recovery, towing, battery jump start, flat tyre assistance, fuel delivery, and vehicle lockout support."
+        "answer": "If your car breaks down in Dubai Marina, Tareeqk offers 24/7 emergency roadside assistance, including car recovery, towing, battery jump start, flat tyre assistance, and vehicle lockout support."
       },
       {
         "question": "Can I book a car recovery service in Dubai Marina online?",
@@ -1954,7 +1952,7 @@
       },
       {
         "question": "Is battery boost service available in Business Bay?",
-        "answer": "Yes. All our roadside services — battery boost, flat tyre, fuel delivery, and full recovery — are available in Business Bay."
+        "answer": "Yes. All our roadside services — battery boost, flat tyre, and full recovery — are available in Business Bay."
       },
       {
         "question": "Are you available on weekdays during business hours in Business Bay?",
@@ -2794,7 +2792,7 @@
       },
       {
         "question": "Is flat tyre assistance available in Discovery Gardens?",
-        "answer": "Yes. All services — flat tyre repair, battery boost, fuel delivery, and full recovery — are available in Discovery Gardens."
+        "answer": "Yes. All services — flat tyre repair, battery boost, and full recovery — are available in Discovery Gardens."
       },
       {
         "question": "Can you recover a car from a Discovery Gardens basement car park?",
@@ -2828,7 +2826,7 @@
       },
       {
         "question": "Is battery boost service available in Al Nahda?",
-        "answer": "Yes. All roadside services — battery boost, flat tyre repair, fuel delivery, and full recovery — are available in Al Nahda."
+        "answer": "Yes. All roadside services — battery boost, flat tyre repair, and full recovery — are available in Al Nahda."
       },
       {
         "question": "Is roadside assistance in Al Nahda available 24/7?",
@@ -2898,7 +2896,7 @@
       },
       {
         "q": "What services does Tareeqk offer?",
-        "a": "Car recovery, towing, battery boost & replacement, flat tyre repair, accident recovery, fuel delivery, desert recovery, and bike recovery — all available across Dubai."
+        "a": "Car recovery, towing, battery boost & replacement, flat tyre repair, accident recovery, desert recovery, and bike recovery — all available across Dubai."
       },
       {
         "q": "Is Tareeqk available 24/7?",

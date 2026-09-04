@@ -87,7 +87,7 @@ const FAQS_FALLBACK = [
   },
   {
     q: "What services does Tareeqk offer?",
-    a: "Car recovery, towing, battery boost & replacement, flat tyre repair, accident recovery, fuel delivery, desert recovery, and bike recovery — all available across Dubai.",
+    a: "Car recovery, towing, battery boost & replacement, flat tyre repair, accident recovery, desert recovery, and bike recovery — all available across Dubai.",
   },
   {
     q: "Is Tareeqk available 24/7?",

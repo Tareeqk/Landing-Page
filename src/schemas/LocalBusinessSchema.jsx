@@ -11,7 +11,7 @@ const schema = {
   "@id": "https://tareeqk.ae/#business",
   "name": "Tareeqk",
   "alternateName": "Tareeqk Roadside Assistance",
-  "description": "24/7 car recovery and towing service in Dubai. Fast response, licensed RTA operator. Services include towing, battery boost, flat tyre, fuel delivery and accident recovery.",
+  "description": "24/7 car recovery and towing service in Dubai. Fast response, licensed RTA operator. Services include towing, battery boost, flat tyre and accident recovery.",
   "url": "https://tareeqk.ae",
   "logo": {
     "@type": "ImageObject",
@@ -120,14 +120,6 @@ const schema = {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Fuel Delivery Dubai",
-          "url": "https://tareeqk.ae/fuel-delivery-dubai"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
           "name": "Accident Recovery Dubai",
           "url": "https://tareeqk.ae/accident-recovery-dubai"
         }
@@ -146,7 +138,7 @@ const schema = {
   "foundingDate": "2024",
   "knowsAbout": [
     "Car Recovery", "Towing Service", "Roadside Assistance",
-    "Battery Boost", "Flat Tyre Repair", "Fuel Delivery",
+    "Battery Boost", "Flat Tyre Repair",
     "Accident Recovery", "Desert Recovery"
   ]
 };

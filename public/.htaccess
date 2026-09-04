@@ -1,3 +1,11 @@
+# Fuel delivery was folded into Roadside Assistance rather than kept as its
+# own page (see scripts/site-routes.mjs) -- 301 the old URL (in all three
+# languages) so any existing Google index entry / backlink consolidates
+# onto the new page instead of hitting a 404.
+Redirect 301 /en/fuel-delivery-dubai /en/roadside-assistance-dubai/
+Redirect 301 /ar/fuel-delivery-dubai /ar/roadside-assistance-dubai/
+Redirect 301 /ur/fuel-delivery-dubai /ur/roadside-assistance-dubai/
+
 # Serves the real prerendered 404.html on any unmatched URL, keeping the
 # actual HTTP 404 status (ErrorDocument does not redirect, unlike a normal
 # rewrite/redirect rule) -- every valid route on this site already exists

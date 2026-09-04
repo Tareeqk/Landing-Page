@@ -25,7 +25,6 @@ const STATIC_IMPORTS = {
   'car-recovery-dubai': () => import('./Pages/services/CarRecoveryDubai'),
   'battery-service-dubai': () => import('./Pages/services/BatteryServiceDubai'),
   'flat-tyre-repair-dubai': () => import('./Pages/services/FlatTyreRepairDubai'),
-  'fuel-delivery-dubai': () => import('./Pages/services/FuelDeliveryDubai'),
   'accident-recovery-dubai': () => import('./Pages/services/AccidentRecoveryDubai'),
   'towing-service-dubai': () => import('./Pages/services/Towingservicedubai'),
   'desert-recovery-dubai': () => import('./Pages/services/DesertRecoveryDubai'),

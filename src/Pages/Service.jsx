@@ -21,7 +21,7 @@ function ServicesPageSchema() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Tareeqk Roadside Assistance Services Dubai",
-    "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, fuel delivery, and accident recovery.",
+    "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, and accident recovery.",
     "url": "https://tareeqk.ae/service",
     "numberOfItems": 8,
     "itemListElement": [
@@ -32,7 +32,7 @@ function ServicesPageSchema() {
       { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://tareeqk.ae/desert-recovery-dubai", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
       { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://tareeqk.ae/bike-recovery-dubai", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 8, "item": { "@type": "Service", "name": "Roadside Assistance Dubai", "url": "https://tareeqk.ae/roadside-assistance-dubai", "description": "24/7 roadside assistance in Dubai covering battery jump-starts, flat tyre repair, fuel delivery, lockout help, and full vehicle recovery.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 8, "item": { "@type": "Service", "name": "Roadside Assistance Dubai", "url": "https://tareeqk.ae/roadside-assistance-dubai", "description": "24/7 roadside assistance in Dubai covering battery jump-starts, flat tyre repair, lockout help, and full vehicle recovery.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
     ],
   };
   const howToSchema = {

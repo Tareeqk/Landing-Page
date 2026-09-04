@@ -1,4 +1,9 @@
 {
+  "redirects": [
+    { "source": "/en/fuel-delivery-dubai/(.*)", "destination": "/en/roadside-assistance-dubai/", "permanent": true },
+    { "source": "/ar/fuel-delivery-dubai/(.*)", "destination": "/ar/roadside-assistance-dubai/", "permanent": true },
+    { "source": "/ur/fuel-delivery-dubai/(.*)", "destination": "/ur/roadside-assistance-dubai/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]

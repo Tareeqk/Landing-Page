@@ -29,7 +29,6 @@ export const SERVICE_PAGES = [
   'car-recovery-dubai',
   'battery-service-dubai',
   'flat-tyre-repair-dubai',
-  'fuel-delivery-dubai',
   'accident-recovery-dubai',
   'towing-service-dubai',
   'desert-recovery-dubai',
