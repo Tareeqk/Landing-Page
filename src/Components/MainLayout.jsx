@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
 import Nasir from "./Nasir"
-import HreflangTags from "../Hreflangtags"
 import CookieConsent from "./CookieConsent"
 
 const SUPPORTED_LANGS = ["en", "ar", "ur"]
@@ -47,7 +46,6 @@ const MainLayout = ({ isDark, setIsDark }) => {
 
   return (
     <div className="pt-16 sm:pt-20">
-      <HreflangTags />
       <Navbar isDark={isDark} setIsDark={setIsDark} />
       <Nasir />
       <main>
