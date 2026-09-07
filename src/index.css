@@ -325,6 +325,8 @@ html[lang="ur"] li,
 html[lang="ur"] .hfaq-a-inner,
 html[lang="ur"] .abt-preview-stat-label,
 html[lang="ur"] .svc-feat-label,
+html[lang="ur"] .s4-stat-value,
+html[lang="ur"] .s4-stat-label,
 html[lang="ur"] .urdu-loose-line {
   line-height: 2 !important;
 }
@@ -385,8 +387,30 @@ button {
   overflow-y: auto; 
 } */
 
-html[lang="ur"] h1 {
-  line-height: 1.3; /* prevent tall Urdu Nastaliq line height */
+/* One global rule for every heading level instead of patching each
+   component's own heading class as the same bug turns up again and
+   again (`.s4-title`, `.tk-hero__title`, LocationPageTemplate's inline
+   h1, etc.) -- Noto Nastaliq Urdu's diagonal strokes routinely swash up
+   well above a Latin-tuned cap-height, tall enough to cut through
+   whatever sits directly above the heading (an eyebrow label, a
+   preceding line) even on a single line that never wraps, not only on
+   a heading that wraps onto two lines.
+   `!important` is required: every heading on the site sets its own
+   line-height, either as an inline style (LocationPageTemplate,
+   ServicePageTemplate, About, Pricing) or via a component-scoped
+   <style> tag (ServiceComponent's `.s4-title`) -- an inline style always
+   beats a plain external rule regardless of specificity, and two
+   same-specificity class rules injected at different times fall back to
+   load order, not intent. Without `!important` this was a no-op either
+   way. 1.6 -- roomier than a single wrapped line needs, but headings
+   are large (30-40px+) so the swash is proportionally taller too; still
+   short of the 2 used for wrapping body copy since these rarely wrap
+   more than once. */
+html[lang="ur"] h1,
+html[lang="ur"] h2,
+html[lang="ur"] h3,
+html[lang="ur"] h4 {
+  line-height: 1.6 !important;
 }
 
 /* Container and responsive layout */

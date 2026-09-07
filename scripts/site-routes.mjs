@@ -18,6 +18,7 @@ export const STATIC_PAGES = [
   { slug: 'about', priority: '0.8' },
   { slug: 'service', priority: '0.8' },
   { slug: 'areas', priority: '0.8' },
+  { slug: 'pricing', priority: '0.8' },
   { slug: 'blogs', priority: '0.7' },
   { slug: 'faq', priority: '0.7' },
   { slug: 'terms', priority: '0.6' },

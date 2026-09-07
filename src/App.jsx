@@ -28,6 +28,7 @@ const Blogs              = lazy(() => import('./Pages/Blogs'));
 const BlogPage           = lazy(() => import('./Pages/BlogPage'));
 const BecomePartner      = lazy(() => import('./Pages/BecomePartner'));
 const AllAreas            = lazy(() => import('./Pages/AllAreas'));
+const Pricing             = lazy(() => import('./Pages/Pricing'));
 const NotFound           = lazy(() => import('./Pages/NotFound'));
 
 // ── SEO SERVICE PAGES (Lazy Loaded) ──────────────────────────────
@@ -189,6 +190,7 @@ function App() {
           <Route path="privacy-policy" element={<PrivacyAndPolicy />} />
           <Route path="become-a-partner" element={<BecomePartner />} />
           <Route path="areas" element={<AllAreas />} />
+          <Route path="pricing" element={<Pricing />} />
 
           {/* Service pages */}
           <Route path="car-recovery-dubai"      element={<CarRecoveryDubai />} />

@@ -7,7 +7,7 @@ import { HashLink } from 'react-router-hash-link';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import {
-  FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock, FaStar,
+  FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock,
   FaTruck, FaMapMarkerAlt, FaCheckCircle, FaUserShield, FaUserCheck,
   FaCar, FaCarBattery, FaTools, FaCarCrash, FaChevronDown, FaHeadset, FaTh,
   FaMountain, FaMotorcycle,
@@ -565,12 +565,6 @@ export default function ServicePageTemplate({ config }) {
     ? config.areas.slice(0, MOBILE_AREA_LIMIT)
     : config.areas;
 
-  const heroMetrics = [
-    { Icon: FaBolt, value: tc.responseTime, label: 'Avg Response' },
-    { Icon: FaClock, value: '24/7', label: 'Available' },
-    { Icon: FaStar, value: '4.9', label: 'Rating' },
-    { Icon: FaShieldAlt, value: 'RTA', label: 'Licensed' },
-  ];
 
   const processSteps = [
     { Icon: FaPhoneAlt, label: t('servicePageTemplate.process.step1', 'Call, WhatsApp, or open the Tareeqk app') },

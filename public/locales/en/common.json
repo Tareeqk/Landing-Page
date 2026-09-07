@@ -10,7 +10,12 @@
     "call": "CALL NOW",
     "viewAllServices": "View all services",
     "closeMenu": "Close main menu",
-    "openMenu": "Open main menu"
+    "openMenu": "Open main menu",
+    "pricing": "Pricing",
+    "locations": "Locations",
+    "company": "Company",
+    "faqs": "FAQs",
+    "viewAllAreas": "View all areas"
   },
   "landing": {
     "title": "CAR RECOVERY & TOWING SERVICES IN DUBAI",
@@ -138,10 +143,6 @@
     "ctaSubtitle": "Fast, professional roadside assistance for battery jump starts, tyre repairs, towing, and vehicle recovery across Dubai—available 24/7.",
     "callNow": "Call Now",
     "whatsapp": "WhatsApp",
-    "statAvgResponse": "Avg Response",
-    "statDriversHelped": "Drivers Helped",
-    "statReviews": "1,200+ Reviews",
-    "statLicensed": "Licensed",
     "readMore": "Read More",
     "readLess": "Read Less",
     "svc6": "Accident Recovery",
@@ -156,10 +157,6 @@
     "heroSubtitle": "Wherever you are in Dubai, Tareeqk delivers dependable roadside assistance with experienced technicians, transparent pricing, and service you can rely on—day or night.",
     "heroCta": "Get Towing Now",
     "heroWhatsapp": "Chat on WhatsApp",
-    "statAvgResponse": "Avg Response",
-    "statServices": "Core Services",
-    "statReviews": "1,200+ Reviews",
-    "statLicensed": "RTA Licensed",
     "readMore": "Read More",
     "readLess": "Read Less",
     "whoWeAreTag": "Who We Are",
@@ -1691,6 +1688,10 @@
     "becomePartner": {
       "title": "Become a Partner - Fleet & Vendor Registration | Tareeqk",
       "description": "Register your fleet, garage, or towing company with Tareeqk and join our vetted roadside assistance and recovery network across the UAE."
+    },
+    "pricing": {
+      "title": "Pricing - How Tareeqk Calculates Your Fare | Tareeqk",
+      "description": "Tareeqk's pricing is calculated per request based on distance and time - not a flat rate. See your fare before you book, with no hidden charges."
     },
     "about": {
       "title": "About Us - Tareeqk Dubai",

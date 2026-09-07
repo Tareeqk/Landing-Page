@@ -705,12 +705,6 @@ export default function Service({ isSection = false }) {
     { icon: <Smartphone size={18} />,  label: t('service.feat6') },
   ];
 
-  const HERO_STATS = [
-    { stat: '20 min', label: t('service.statAvgResponse') },
-    { stat: '7',      label: t('service.statServices') },
-    { stat: '4.9★',  label: t('service.statReviews') },
-    { stat: 'RTA',    label: t('service.statLicensed') },
-  ];
 
   // ── Render helpers ─────────────────────────────────────────────────────
   const renderServiceCard = (svc, i) => (

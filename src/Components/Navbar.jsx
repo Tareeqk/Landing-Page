@@ -11,12 +11,17 @@ import LanguageSwitcher from "./LanguageSwitcher"
 import { useTranslation } from "react-i18next"
 import { HashLink } from "react-router-hash-link"
 import useLangLink from "../hooks/useLangLink"
-import { SERVICES } from "./Footer"
+import { SERVICES, AREAS } from "./Footer"
 import { prefetchRoute } from "../routePrefetch"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
 }
+
+// Shared focus ring for every interactive nav element — on-brand yellow
+// instead of the browser's default blue outline, which clashed with the
+// yellow/black identity on keyboard focus.
+const FOCUS_RING = "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-yellow)]"
 
 export default function Navbar({ isDark, setIsDark }) {
   const location = useLocation()
@@ -54,8 +59,11 @@ export default function Navbar({ isDark, setIsDark }) {
     return () => ro.disconnect()
   }, [])
 
-  // Expand/collapse state for the Services accordion inside the mobile drawer.
-  const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
+  // Expand/collapse state for whichever dropdown accordion is open inside
+  // the mobile drawer — keyed by item.name so Services/Locations/Company
+  // each get independent, mutually-exclusive expansion instead of the old
+  // single boolean that only ever tracked one dropdown.
+  const [openMobileGroup, setOpenMobileGroup] = useState(null)
 
   // Labels come from footer.services (i18n) by index, same as Footer.jsx —
   // SERVICES itself keeps its English .title as the untranslated fallback.
@@ -65,13 +73,23 @@ export default function Navbar({ isDark, setIsDark }) {
     href: langLink(service.href),
   }))
 
+  // Area names are proper nouns and stay in English across all locales
+  // (same convention as Footer.jsx's own AREAS list).
+  const locationLinks = AREAS.map((area) => ({
+    label: area.label,
+    href: langLink(area.href),
+  }))
+
+  const companyLinks = [
+    { label: t("navbar.about"), href: langLink("/about") },
+    { label: t("navbar.blogs"), href: langLink("/blogs") },
+    { label: t("navbar.partners"), href: langLink("/become-a-partner") },
+    { label: t("navbar.faqs"), href: langLink("/faq") },
+  ]
+  const companyPaths = ["/about", "/blogs", "/become-a-partner", "/faq"]
+
   const navigation = [
     { name: t("navbar.home"), href: langLink("/"), current: barePath === "/" },
-    {
-      name: t("navbar.about"),
-      href: langLink("/about"),
-      current: barePath === "/about",
-    },
     {
       name: t("navbar.service"),
       href: langLink("/service"),
@@ -81,14 +99,23 @@ export default function Navbar({ isDark, setIsDark }) {
       dropdown: serviceLinks,
     },
     {
-      name: t("navbar.blogs"),
-      href: langLink("/blogs"),
-      current: barePath === "/blogs",
+      name: t("navbar.locations"),
+      href: langLink("/areas"),
+      current:
+        barePath === "/areas" ||
+        AREAS.some((area) => barePath === area.href),
+      dropdown: locationLinks,
     },
     {
-      name: t("navbar.partners"),
-      href: langLink("/become-a-partner"),
-      current: barePath === "/become-a-partner",
+      name: t("navbar.pricing"),
+      href: langLink("/pricing"),
+      current: barePath === "/pricing",
+    },
+    {
+      name: t("navbar.company"),
+      href: langLink("/about"),
+      current: companyPaths.includes(barePath) || barePath.startsWith("/page/"),
+      dropdown: companyLinks,
     },
     { name: t("navbar.contact"), href: langLink("/#contact") },
   ]
@@ -102,9 +129,9 @@ export default function Navbar({ isDark, setIsDark }) {
     // lives only on the inner bar div, which has no fixed descendants.
     <Disclosure as="nav" className="fixed top-0 left-0 w-full z-50">
       {({ open, close }) => {
-        // Collapse the mobile services accordion whenever the drawer closes.
+        // Collapse the mobile dropdown accordion whenever the drawer closes.
         useEffect(() => {
-          if (!open) setMobileServicesOpen(false)
+          if (!open) setOpenMobileGroup(null)
         }, [open])
 
         // Lock background scroll while the slide-in drawer is open.
@@ -142,7 +169,7 @@ export default function Navbar({ isDark, setIsDark }) {
                           isDark
                             ? "text-white/80 hover:text-white hover:bg-white/10"
                             : "text-gray-700 hover:text-gray-900 hover:bg-black/5",
-                          "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-yellow)]",
+                          FOCUS_RING,
                         )}
                       >
                         <span className="sr-only">
@@ -178,7 +205,7 @@ export default function Navbar({ isDark, setIsDark }) {
                           fetchpriority="high"
                         />
                       </span>
-                     
+
                       <span
                         className={classNames(
                           "hidden md:inline-flex shrink-0 items-center gap-1 lg:gap-1.5 rounded-full border px-2 py-0.5 lg:px-2.5 lg:py-1 whitespace-nowrap",
@@ -207,29 +234,41 @@ export default function Navbar({ isDark, setIsDark }) {
                   <div className="hidden lg:flex mx-4 flex-1 justify-center">
                     <div className="flex items-center gap-1">
                       {navigation.map((item) => {
+                        // Active state is a light brand-yellow tint + bold
+                        // text, never a full solid fill — the solid yellow
+                        // is reserved exclusively for the "Book Now" CTA so
+                        // it stays the one unambiguous thing to click,
+                        // instead of competing visually with "here's the
+                        // page you're on."
                         const linkClasses = classNames(
-                          "relative flex items-center gap-1.5 px-5 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 whitespace-nowrap",
-                          item.current && !item.dropdown
-                            ? "text-black bg-[var(--primary-yellow)] shadow-md"
+                          "relative flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-300 whitespace-nowrap",
+                          FOCUS_RING,
+                          item.current
+                            ? isDark
+                              ? "text-[var(--primary-yellow)] bg-white/10"
+                              : "text-black bg-[rgba(247,178,5,0.16)]"
                             : isDark
                               ? "text-white/75 hover:text-white hover:bg-white/10"
                               : "text-gray-700 hover:text-black hover:bg-black/5",
                         )
 
-                        const underline = (!item.current || item.dropdown) && (
+                        // Always mounted (not conditionally rendered) so
+                        // every item shares the same footprint at rest —
+                        // only its width animates between "current" (on)
+                        // and hover (grows in), instead of some items
+                        // reserving the space and others not.
+                        const underline = (
                           <span
                             className={classNames(
                               "absolute left-1/2 bottom-1 h-0.5 -translate-x-1/2 rounded-full bg-[var(--primary-yellow)] transition-all duration-300",
-                              item.current && item.dropdown
-                                ? "w-8"
-                                : "w-0 group-hover:w-8",
+                              item.current ? "w-8" : "w-0 group-hover:w-8",
                             )}
                             aria-hidden="true"
                           />
                         )
 
-                        // Services gets its own wrapper so hovering the trigger
-                        // OR the panel below it keeps the dropdown open.
+                        // Dropdown items get their own wrapper so hovering
+                        // the trigger OR the panel below it keeps it open.
                         if (item.dropdown) {
                           return (
                             <div key={item.name} className="relative group">
@@ -270,6 +309,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                       viewTransition
                                       className={classNames(
                                         "flex items-center gap-2.5 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors",
+                                        FOCUS_RING,
                                         isDark
                                           ? "text-white/75 hover:bg-white/10 hover:text-white"
                                           : "text-gray-600 hover:bg-black/5 hover:text-black",
@@ -336,9 +376,24 @@ export default function Navbar({ isDark, setIsDark }) {
                         <DarkMode isDark={isDark} setIsDark={setIsDark} />
                       </span>
                     </div>
+
+                    {/* Thin separator so "Book Now" reads as the one
+                        primary action on the bar instead of just another
+                        pill sitting next to the language switcher. */}
+                    <span
+                      className={classNames(
+                        "hidden lg:block h-6 w-px",
+                        isDark ? "bg-white/10" : "bg-black/10",
+                      )}
+                      aria-hidden="true"
+                    />
+
                     <a
                       href="https://booking.tareeqk.ae/login"
-                      className="hidden lg:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(247,178,5,0.5)]"
+                      className={classNames(
+                        "hidden lg:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(247,178,5,0.5)]",
+                        FOCUS_RING,
+                      )}
                       style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                     >
                       <LogOut className="h-4 w-4" />
@@ -409,6 +464,7 @@ export default function Navbar({ isDark, setIsDark }) {
                 {navigation.map((item, i) => {
                   const itemClasses = classNames(
                     "flex items-center justify-between px-4 py-3 rounded-xl text-base font-medium transition-all duration-300",
+                    FOCUS_RING,
                     item.current && !item.dropdown
                       ? "text-black bg-[var(--primary-yellow)]"
                       : item.current && item.dropdown
@@ -432,6 +488,7 @@ export default function Navbar({ isDark, setIsDark }) {
                   }
 
                   if (item.dropdown) {
+                    const isGroupOpen = openMobileGroup === item.name
                     return (
                       <div
                         key={item.name}
@@ -454,22 +511,25 @@ export default function Navbar({ isDark, setIsDark }) {
                           <button
                             type="button"
                             onClick={() =>
-                              setMobileServicesOpen((prev) => !prev)
+                              setOpenMobileGroup((prev) => (prev === item.name ? null : item.name))
                             }
-                            aria-label="Toggle services list"
-                            aria-expanded={mobileServicesOpen}
-                            className="-mr-1 rounded-full p-1.5 transition-colors hover:bg-black/10"
+                            aria-label={`Toggle ${item.name} list`}
+                            aria-expanded={isGroupOpen}
+                            className={classNames(
+                              "-mr-1 rounded-full p-1.5 transition-colors hover:bg-black/10",
+                              FOCUS_RING,
+                            )}
                           >
                             <ChevronDown
                               className={classNames(
                                 "h-4 w-4 transition-transform duration-300",
-                                mobileServicesOpen && "rotate-180",
+                                isGroupOpen && "rotate-180",
                               )}
                             />
                           </button>
                         </div>
 
-                        {mobileServicesOpen && (
+                        {isGroupOpen && (
                           <div className="flex flex-col gap-1 py-1 pl-4">
                             {item.dropdown.map((sub) => (
                               <Link
@@ -483,6 +543,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                 viewTransition
                                 className={classNames(
                                   "flex items-center gap-2.5 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors",
+                                  FOCUS_RING,
                                   isDark
                                     ? "text-white/70 hover:bg-white/10 hover:text-white"
                                     : "text-gray-600 hover:bg-black/5 hover:text-black",
@@ -536,7 +597,10 @@ export default function Navbar({ isDark, setIsDark }) {
                   <a
                     href="https://booking.tareeqk.ae/login"
                     onClick={() => close()}
-                    className="flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]"
+                    className={classNames(
+                      "flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]",
+                      FOCUS_RING,
+                    )}
                     style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                   >
                     <LogOut className="h-4 w-4" />

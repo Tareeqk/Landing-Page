@@ -56,7 +56,7 @@ export const SERVICES = [
 // ever-growing list lives at /areas (Pages/AllAreas.jsx) instead; this
 // footer column just surfaces the highest-traffic areas plus a link to
 // that page, so it doesn't need editing every time a new area ships.
-const AREAS = [
+export const AREAS = [
   { label: "Dubai Marina", href: "/car-recovery-dubai-marina" },
   { label: "Business Bay", href: "/car-recovery-business-bay" },
   { label: "Downtown Dubai", href: "/car-recovery-downtown-dubai" },
