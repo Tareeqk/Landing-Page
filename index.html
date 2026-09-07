@@ -49,10 +49,25 @@
       // "accept" on a previous visit, honor that immediately instead of
       // flashing "denied" for a returning visitor.
       ;(function () {
+        // CONSENT_VERSION and the 6-month max-age here must match
+        // src/utils/cookieConsent.js's CONSENT_VERSION / CONSENT_MAX_AGE_MS
+        // -- this inline script runs before any JS module loads, so it
+        // can't import them and duplicates the values instead (same
+        // reason the storage key itself is duplicated here). A stale or
+        // outdated-version record is treated as no decision at all, same
+        // as getStoredConsent() does, so this default can't grant
+        // analytics based on a choice that's since expired.
+        var CONSENT_VERSION = 1
+        var CONSENT_MAX_AGE_MS = 182 * 24 * 60 * 60 * 1000
         var granted = false
         try {
           var stored = JSON.parse(localStorage.getItem("tk_cookie_consent") || "null")
-          granted = !!(stored && stored.analytics)
+          var isCurrent =
+            stored &&
+            stored.version === CONSENT_VERSION &&
+            typeof stored.timestamp === "number" &&
+            Date.now() - stored.timestamp <= CONSENT_MAX_AGE_MS
+          granted = !!(isCurrent && stored.analytics)
         } catch (e) {}
         gtag("consent", "default", {
           analytics_storage: granted ? "granted" : "denied",
