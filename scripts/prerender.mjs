@@ -104,6 +104,18 @@ for (const { path: route } of pages) {
         }
         if (cursor) cursor.remove();
       });
+
+      // The bare "/" route redirects to "/en" via React Router's
+      // <Navigate>, a client-side route change rather than a real HTTP
+      // redirect -- react-helmet-async is supposed to manage a single
+      // <title> node (replace, never duplicate), but that two-phase
+      // mount (first matching "/", then re-mounting Home after the
+      // redirect) was leaving earlier <title> nodes behind instead of
+      // removing them, baking 2-3 duplicate <title> tags into this one
+      // route's static HTML. Keep only the last one -- it reflects
+      // Helmet's final, fully-settled value after every render pass.
+      const titles = document.head.querySelectorAll('title');
+      for (let i = 0; i < titles.length - 1; i++) titles[i].remove();
     });
 
     // page.content() serializes the LIVE DOM — by this point Chrome has

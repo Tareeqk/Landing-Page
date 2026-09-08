@@ -84,9 +84,8 @@ export default function Navbar({ isDark, setIsDark }) {
     { label: t("navbar.about"), href: langLink("/about") },
     { label: t("navbar.blogs"), href: langLink("/blogs") },
     { label: t("navbar.partners"), href: langLink("/become-a-partner") },
-    { label: t("navbar.faqs"), href: langLink("/faq") },
   ]
-  const companyPaths = ["/about", "/blogs", "/become-a-partner", "/faq"]
+  const companyPaths = ["/about", "/blogs", "/become-a-partner"]
 
   const navigation = [
     { name: t("navbar.home"), href: langLink("/"), current: barePath === "/" },
