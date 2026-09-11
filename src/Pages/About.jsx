@@ -461,7 +461,7 @@ export default function About({ isSection = false }) {
           <HreflangTags path="about" />
         </>
       )}
-      <LocalBusinessSchema />
+      <LocalBusinessSchema lang={lang} />
 
       {/* ══════════════════════════════════════════════════════════════════
           HERO — landscape image desktop, portrait image mobile

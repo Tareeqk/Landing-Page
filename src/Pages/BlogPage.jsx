@@ -16,14 +16,17 @@ import HowToSchema from '../schemas/HowToSchema';
 // post's content. Was almost entirely Tareeqk truck photography (three
 // of four images); mixed in topical stock photography (battery, tyre,
 // a real Dubai road) so a multi-section article doesn't read as the
-// same truck shot repeated down the page.
+// same truck shot repeated down the page. altKey looks up
+// blogs.sectionImageAlts.* (see public/locales/*/common.json) so the
+// alt text is translated instead of always showing English, regardless
+// of which language the article itself is being read in.
 const SECTION_IMAGES = [
-  { src: '/new/Recovery_Van.webp', alt: 'Tareeqk tow truck on a Dubai street' },
-  { src: '/tareeqktow.webp', alt: 'Tareeqk truck loading a vehicle' },
-  { src: '/blog/car-breakdown-hazard-triangle.webp', alt: 'Placing a warning triangle beside a broken-down car' },
-  { src: '/blog/battery-jumpstart-closeup.webp', alt: 'Jumper cables connected to a car battery for a jump start' },
-  { src: '/blog/tire-pressure-check.webp', alt: 'Mechanic checking and adjusting tyre pressure' },
-  { src: '/blog/dubai-sheikh-zayed-road.webp', alt: 'Traffic on Sheikh Zayed Road, Dubai' },
+  { src: '/new/Recovery_Van.webp', altKey: 'blogs.sectionImageAlts.recoveryVan' },
+  { src: '/tareeqktow.webp', altKey: 'blogs.sectionImageAlts.truckLoading' },
+  { src: '/blog/car-breakdown-hazard-triangle.webp', altKey: 'blogs.sectionImageAlts.hazardTriangle' },
+  { src: '/blog/battery-jumpstart-closeup.webp', altKey: 'blogs.sectionImageAlts.batteryJumpstart' },
+  { src: '/blog/tire-pressure-check.webp', altKey: 'blogs.sectionImageAlts.tirePressure' },
+  { src: '/blog/dubai-sheikh-zayed-road.webp', altKey: 'blogs.sectionImageAlts.dubaiHighway' },
 ];
 
 function useBlogPageStyles() {
@@ -421,7 +424,7 @@ export default function BlogPage() {
                 const breakImage = SECTION_IMAGES[Math.floor(i / 2) % SECTION_IMAGES.length];
                 return (
                   <div className="bp-image-break">
-                    <img src={breakImage.src} alt={breakImage.alt} loading="lazy" />
+                    <img src={breakImage.src} alt={t(breakImage.altKey)} loading="lazy" />
                   </div>
                 );
               })()}

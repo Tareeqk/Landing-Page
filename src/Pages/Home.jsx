@@ -57,7 +57,7 @@ export default function Home() {
         <link rel="preload" as="image" href="/hero/dubai-bg.webp" fetchpriority="high" />
       </Helmet>
       <HreflangTags path="" />
-      <LocalBusinessSchema />
+      <LocalBusinessSchema lang={lang} />
       <div>
         <LandingPage />
         <Suspense fallback={null}>

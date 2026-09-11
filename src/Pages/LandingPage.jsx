@@ -186,7 +186,7 @@ function HeroVisual() {
             : "/hero/truck-nasir-480w.webp 480w, /hero/truck-nasir.webp 719w"
         }
         sizes="240px"
-        alt="Tareeqk tow truck"
+        alt={t('landing.heroTruckAlt')}
         className="tk-hero__truck"
         loading="eager"
         decoding="async"

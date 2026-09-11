@@ -31,6 +31,7 @@
     },
     "eyebrow": "24 / 7 · Fast Response  · Dubai",
     "callNow": "Call Now",
+    "heroTruckAlt": "Tareeqk tow truck",
     "trust": {
       "dispatchValue": "15-min",
       "dispatchLabel": "Avg. Dispatch",
@@ -72,7 +73,15 @@
       "battery": "Battery Service Dubai"
     },
     "inThisArticle": "In This Article",
-    "tocCtaDesc": "24/7 dispatch across Dubai — help is closer than you think."
+    "tocCtaDesc": "24/7 dispatch across Dubai — help is closer than you think.",
+    "sectionImageAlts": {
+      "recoveryVan": "Tareeqk tow truck on a Dubai street",
+      "truckLoading": "Tareeqk truck loading a vehicle",
+      "hazardTriangle": "Placing a warning triangle beside a broken-down car",
+      "batteryJumpstart": "Jumper cables connected to a car battery for a jump start",
+      "tirePressure": "Mechanic checking and adjusting tyre pressure",
+      "dubaiHighway": "Traffic on Sheikh Zayed Road, Dubai"
+    }
   },
   "about": {
     "about": "About Us",
