@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
 import useLangLink from '../hooks/useLangLink';
+import ratings from '../data/ratings.json';
 import './landing.css';
 
 // Keys map to `landing.services.<key>` in each locale file.
@@ -132,7 +133,7 @@ function MobileServiceGrid({ tags }) {
           // hero (truck illustration, "services" grouping, etc.).
           aria-label={t(`landing.heroTags.${tag.key}`)}
         >
-          <img src={tag.icon} alt="" className="tk-hero__mobile-tag-icon" loading="lazy" width="22" height="22" />
+          <img src={tag.icon} alt={t(`landing.heroTags.${tag.key}`)} className="tk-hero__mobile-tag-icon" loading="lazy" width="22" height="22" />
           <span className="tk-hero__mobile-tag-label" aria-hidden="true">
             {t(`landing.heroTagsShort.${tag.key}`)}
           </span>
@@ -185,7 +186,7 @@ function HeroVisual() {
             : "/hero/truck-nasir-480w.webp 480w, /hero/truck-nasir.webp 719w"
         }
         sizes="240px"
-        alt=""
+        alt="Tareeqk tow truck"
         className="tk-hero__truck"
         loading="eager"
         decoding="async"
@@ -200,7 +201,7 @@ function HeroVisual() {
             className="tk-hero__tag"
           >
             <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
-            <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
+            <img src={tag.icon} alt={t(`landing.heroTags.${tag.key}`)} className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
           </Link>
         ))}
       </div>
@@ -237,6 +238,22 @@ export default function LandingPage() {
     { value: t('landing.trust.availabilityValue'), label: t('landing.trust.availabilityLabel') },
     { value: t('landing.trust.ratingValue'), label: t('landing.trust.ratingLabel') },
   ];
+
+  // Only added once a real value has been synced from Google (see
+  // scripts/fetch-ratings.mjs) -- this visible stat is what makes the
+  // AggregateRating markup in LocalBusinessSchema legitimate rather than
+  // a schema claim with nothing matching on the page.
+  const googleRating = ratings?.google;
+  if (googleRating?.rating && googleRating?.review_count > 0) {
+    trustStats.push({
+      value: `${googleRating.rating}★`,
+      label: t('landing.trust.googleReviewsLabel', { count: googleRating.review_count }),
+      // Only this stat gets a url -- lets a visitor verify the rating
+      // themselves on Google instead of just trusting a number on the
+      // page, and is the one card of the four actually worth linking out.
+      url: googleRating.url,
+    });
+  }
 
   const handleDownloadRedirect = () => {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -367,12 +384,30 @@ export default function LandingPage() {
                 proof points sit right where a visitor's eye already is
                 after the CTAs, and so mobile visitors see them too. */}
             <div className="tk-hero__stats" data-testid="landing-trust-cards">
-              {trustStats.map((stat) => (
-                <div key={stat.label} className="tk-hero__stat">
-                  <span className="tk-hero__stat-value">{stat.value}</span>
-                  <span className="tk-hero__stat-label">{stat.label}</span>
-                </div>
-              ))}
+              {trustStats.map((stat) => {
+                const content = (
+                  <>
+                    <span className="tk-hero__stat-value">{stat.value}</span>
+                    <span className="tk-hero__stat-label">{stat.label}</span>
+                  </>
+                );
+
+                return stat.url ? (
+                  <a
+                    key={stat.label}
+                    href={stat.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="tk-hero__stat tk-hero__stat--link"
+                  >
+                    {content}
+                  </a>
+                ) : (
+                  <div key={stat.label} className="tk-hero__stat">
+                    {content}
+                  </div>
+                );
+              })}
             </div>
 
             <div className="tk-store-badges" data-testid="landing-store-badges">

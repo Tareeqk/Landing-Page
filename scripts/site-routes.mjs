@@ -68,6 +68,7 @@ export const LOCATION_PAGES = [
 // Must match the slugs in src/data/blogs.js.
 export const BLOG_POST_SLUGS = [
   'how-to-choose-a-trusted-car-recovery-service-in-dubai',
+  'car-breakdown-in-dubai-what-to-do-and-who-to-call',
 ];
 
 // Trailing slash on every URL -- the live host (LiteSpeed/cPanel) 301s any

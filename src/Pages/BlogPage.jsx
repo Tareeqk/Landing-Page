@@ -9,14 +9,21 @@ import useLangLink from '../hooks/useLangLink';
 import HreflangTags from '../Components/HreflangTags';
 import ArticleSchema from '../schemas/ArticleSchema';
 import BreadcrumbSchema from '../schemas/BreadcrumbSchema';
+import HowToSchema from '../schemas/HowToSchema';
 
-// Real Tareeqk photography, cycled between article sections as visual
-// breaks — generic/reusable for any article this template renders, not
-// tied to one specific post's content.
+// Cycled between article sections as visual breaks — generic/reusable
+// for any article this template renders, not tied to one specific
+// post's content. Was almost entirely Tareeqk truck photography (three
+// of four images); mixed in topical stock photography (battery, tyre,
+// a real Dubai road) so a multi-section article doesn't read as the
+// same truck shot repeated down the page.
 const SECTION_IMAGES = [
-  { src: '/towing.webp', alt: 'Tareeqk tow truck on a Dubai street' },
+  { src: '/new/Recovery_Van.webp', alt: 'Tareeqk tow truck on a Dubai street' },
   { src: '/tareeqktow.webp', alt: 'Tareeqk truck loading a vehicle' },
-  { src: '/newTruck.webp', alt: 'Tareeqk flatbed recovery truck' },
+  { src: '/blog/car-breakdown-hazard-triangle.webp', alt: 'Placing a warning triangle beside a broken-down car' },
+  { src: '/blog/battery-jumpstart-closeup.webp', alt: 'Jumper cables connected to a car battery for a jump start' },
+  { src: '/blog/tire-pressure-check.webp', alt: 'Mechanic checking and adjusting tyre pressure' },
+  { src: '/blog/dubai-sheikh-zayed-road.webp', alt: 'Traffic on Sheikh Zayed Road, Dubai' },
 ];
 
 function useBlogPageStyles() {
@@ -354,6 +361,11 @@ export default function BlogPage() {
           { name: blog?.title },
         ]}
       />
+      <HowToSchema
+        name={blog?.title}
+        description={blog?.description}
+        steps={blog?.howToSteps || []}
+      />
 
       <div className="bp-progress-track" aria-hidden="true">
         <div className="bp-progress-bar" style={{ transform: `scaleX(${progress})` }} />
@@ -361,7 +373,7 @@ export default function BlogPage() {
 
       {/* ── Hero ── */}
       <section className="bp-hero">
-        {blog?.image && <img className="bp-hero-img" src={blog.image} alt="" aria-hidden="true" />}
+        {blog?.image && <img className="bp-hero-img" src={blog.image} alt={blog?.title || ''} />}
         <div className="bp-hero-scrim" aria-hidden="true" />
         <div className="bp-hero-inner">
           {blog?.section && <span className="bp-hero-tag">{blog.section}</span>}

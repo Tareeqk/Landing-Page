@@ -664,7 +664,7 @@ export default function HowItWorks() {
                       <img
                         className="hiw-device-img"
                         src={banner.bg}
-                        alt=""
+                        alt={banner.deviceLabel}
                         loading="lazy"
                         style={{ objectFit: "contain", objectPosition: "center" }}
                       />
@@ -686,7 +686,7 @@ export default function HowItWorks() {
                     >
                       <span className="hiw-step-num">{step.num}</span>
                       <div className="hiw-step-icon">
-                        <img src={step.iconSrc} alt="" aria-hidden="true" loading="lazy" />
+                        <img src={step.iconSrc} alt={step.title} aria-hidden="true" loading="lazy" />
                       </div>
                       <div className="hiw-step-text">
                         <h3 className="hiw-step-title">{step.title}</h3>
@@ -709,7 +709,7 @@ export default function HowItWorks() {
             {perks.map((p) => (
               <div className="hiw-perk" key={p.label}>
                 <div className="hiw-perk-icon-wrap">
-                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" aria-hidden="true" loading="lazy" />
+                  <img className="hiw-perk-icon" src={p.iconSrc} alt={p.label} aria-hidden="true" loading="lazy" />
                 </div>
                 <span className="hiw-perk-label">{p.label}</span>
               </div>
@@ -726,7 +726,7 @@ export default function HowItWorks() {
             {tickerPerks.map((p, i) => (
               <div className="hiw-ticker-perk" key={`${p.label}-${i}`}>
                 <div className="hiw-perk-icon-wrap">
-                  <img className="hiw-perk-icon" src={p.iconSrc} alt="" loading="lazy" />
+                  <img className="hiw-perk-icon" src={p.iconSrc} alt={p.label} aria-hidden="true" loading="lazy" />
                 </div>
                 <span className="hiw-perk-label">{p.label}</span>
               </div>

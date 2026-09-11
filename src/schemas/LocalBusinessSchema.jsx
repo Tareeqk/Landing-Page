@@ -4,6 +4,7 @@
 
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import ratings from '../data/ratings.json';
 
 const schema = {
   "@context": "https://schema.org",
@@ -15,7 +16,7 @@ const schema = {
   "url": "https://tareeqk.ae",
   "logo": {
     "@type": "ImageObject",
-    "url": "https://tareeqk.ae/new/logo.webp",
+    "url": "https://tareeqk.ae/new/LogoW.webp",
     "width": 200,
     "height": 60
   },
@@ -142,6 +143,23 @@ const schema = {
     "Accident Recovery", "Desert Recovery"
   ]
 };
+
+// AggregateRating is only added when there's a real synced value (see
+// scripts/fetch-ratings.mjs) -- Google's structured data guidelines
+// require review/rating markup to reflect genuine third-party data with
+// a matching visible rating somewhere on the page (see the trust stat in
+// LandingPage.jsx), not a placeholder. reviewCount must be > 0 or Google
+// ignores the whole block anyway.
+const google = ratings?.google;
+if (google?.rating && google?.review_count > 0) {
+  schema.aggregateRating = {
+    '@type': 'AggregateRating',
+    ratingValue: google.rating,
+    reviewCount: google.review_count,
+    bestRating: 5,
+    worstRating: 1,
+  };
+}
 
 export default function LocalBusinessSchema() {
   return (

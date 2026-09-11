@@ -892,7 +892,7 @@ export default function WhatWeOffer() {
               key={s.value}
             >
               <div className="s4-stat-icon">
-                <img src={s.iconSrc} alt="" aria-hidden="true" loading="lazy" />
+                <img src={s.iconSrc} alt={s.label} aria-hidden="true" loading="lazy" />
               </div>
               <div>
                 <div className="s4-stat-value">{s.value}</div>
@@ -909,7 +909,7 @@ export default function WhatWeOffer() {
               <>
                 <div className="s4-ticker-item" key={`${s.value}-${i}`}>
                   <div className="s4-ticker-icon">
-                    <img src={s.iconSrc} alt="" loading="lazy" />
+                    <img src={s.iconSrc} alt={s.label} aria-hidden="true" loading="lazy" />
                   </div>
                   <div>
                     <div className="s4-ticker-value">{s.value}</div>
@@ -947,7 +947,7 @@ export default function WhatWeOffer() {
 
               <div className="s4-card-header">
                 <div className="s4-icon-circle">
-                  <img src={service.iconSrc} alt="" aria-hidden="true" loading="lazy" />
+                  <img src={service.iconSrc} alt={service.title} aria-hidden="true" loading="lazy" />
                 </div>
                 <h3 className="s4-card-title">{service.title}</h3>
               </div>
@@ -970,7 +970,7 @@ export default function WhatWeOffer() {
                 <img
                   className="s4-card-photo"
                   src={service.photoSrc}
-                  alt=""
+                  alt={service.title}
                   aria-hidden="true"
                   loading="lazy"
                   style={{ objectPosition: service.photoPosition }}

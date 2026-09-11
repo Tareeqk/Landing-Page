@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
 import { useParams } from "react-router-dom"
@@ -6,44 +6,11 @@ import { ChevronDown } from "lucide-react"
 import HreflangTags from "../Components/HreflangTags"
 import FAQSchema from "../schemas/FAQSchema"
 
-// FAQSchema needs plain text; faq.answer is CMS-sourced innerHTML.
-function stripHtml(html) {
-  if (!html) return ""
-  const doc = new DOMParser().parseFromString(html, "text/html")
-  return doc.body.textContent?.trim() || ""
-}
-
 export default function FAQs() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { lang } = useParams()
-  const [faqs, setFaqs] = useState([])
-  const [loading, setLoading] = useState(true)
+  const faqs = t('faqs.items', { returnObjects: true, defaultValue: [] })
   const [openIndexs, setOpenIndexs] = useState([])
-  const baseUrl = import.meta.env.VITE_BASE_URL
-
-  useEffect(() => {
-    async function fetchFAQs() {
-      const response = await fetch(
-        `${baseUrl}/pages?slug=faqs&lang=${i18n.language}`,
-      )
-      const data = await response.json()
-      const htmlString = data.html
-
-      // Convert the HTML into question/answer pairs
-      const parser = new DOMParser()
-      const doc = parser.parseFromString(htmlString, "text/html")
-      const cards = Array.from(doc.querySelectorAll(".card"))
-      const faqItems = cards.map((card) => {
-        const question = card.querySelector("button")?.textContent.trim()
-        const answer = card.querySelector(".card-body")?.innerHTML.trim()
-        return { question, answer }
-      })
-      setLoading(false)
-      setFaqs(faqItems)
-    }
-
-    fetchFAQs()
-  }, [i18n.language, baseUrl])
 
   const toggleAccordion = (index) => {
     if (openIndexs.includes(index)) {
@@ -70,7 +37,7 @@ export default function FAQs() {
         <meta name="twitter:image" content="https://tareeqk.ae/new/second_img.webp" />
       </Helmet>
       <HreflangTags path="faq" />
-      <FAQSchema faqs={faqs.map((f) => ({ question: f.question, answer: stripHtml(f.answer) }))} />
+      <FAQSchema faqs={faqs} />
       <section
         style={{
           position: "relative",
@@ -131,45 +98,40 @@ export default function FAQs() {
       </section>
 
       <div className="space-y-3 max-w-3xl mx-auto my-4 px-4 sm:px-0" id="faqAccordion">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          faqs.map((faq, idx) => {
-            const open = openIndexs.includes(idx)
-            return (
-              <div
-                data-aos="fade-up"
-                key={idx}
-                className="border rounded-xl overflow-hidden bg-white transition-colors"
-                style={{ borderColor: open ? "var(--primary-yellow)" : "rgba(0,0,0,0.1)" }}
+        {faqs.map((faq, idx) => {
+          const open = openIndexs.includes(idx)
+          return (
+            <div
+              data-aos="fade-up"
+              key={idx}
+              className="border rounded-xl overflow-hidden bg-white transition-colors"
+              style={{ borderColor: open ? "var(--primary-yellow)" : "rgba(0,0,0,0.1)" }}
+            >
+              <button
+                onClick={() => toggleAccordion(idx)}
+                aria-expanded={open}
+                className="w-full text-left px-4 py-3.5 hover:bg-gray-50 flex justify-between items-center gap-3 cursor-pointer"
               >
-                <button
-                  onClick={() => toggleAccordion(idx)}
-                  aria-expanded={open}
-                  className="w-full text-left px-4 py-3.5 hover:bg-gray-50 flex justify-between items-center gap-3 cursor-pointer"
-                >
-                  <span className="text-[14.5px] sm:text-base font-medium">{faq.question}</span>
-                  <ChevronDown
-                    size={18}
-                    className="flex-shrink-0 transition-transform duration-200"
-                    style={{
-                      color: "var(--primary-yellow)",
-                      transform: open ? "rotate(180deg)" : "none",
-                    }}
-                  />
-                </button>
-                <div
-                  className={`transition-max-h duration-400 overflow-hidden ${open ? "max-h-96" : "max-h-0"}`}
-                >
-                  <div
-                    className="urdu-loose-line px-4 py-3 text-[13.5px] sm:text-base text-gray-600"
-                    dangerouslySetInnerHTML={{ __html: faq.answer }}
-                  />
+                <span className="text-[14.5px] sm:text-base font-medium">{faq.question}</span>
+                <ChevronDown
+                  size={18}
+                  className="flex-shrink-0 transition-transform duration-200"
+                  style={{
+                    color: "var(--primary-yellow)",
+                    transform: open ? "rotate(180deg)" : "none",
+                  }}
+                />
+              </button>
+              <div
+                className={`transition-max-h duration-400 overflow-hidden ${open ? "max-h-96" : "max-h-0"}`}
+              >
+                <div className="urdu-loose-line px-4 py-3 text-[13.5px] sm:text-base text-gray-600">
+                  {faq.answer}
                 </div>
               </div>
-            )
-          })
-        )}
+            </div>
+          )
+        })}
       </div>
     </>
   )

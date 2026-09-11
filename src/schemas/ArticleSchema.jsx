@@ -18,7 +18,7 @@ export default function ArticleSchema({ title, description, image, datePublished
     "dateModified": datePublished,
     "author": {
       "@type": "Organization",
-      "name": "Tareeqk",
+      "name": "Tareeqk Editorial Team",
       "url": "https://tareeqk.ae"
     },
     "publisher": {
@@ -26,7 +26,7 @@ export default function ArticleSchema({ title, description, image, datePublished
       "name": "Tareeqk",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://tareeqk.ae/new/logo.webp"
+        "url": "https://tareeqk.ae/new/LogoW.webp"
       }
     },
     "mainEntityOfPage": {

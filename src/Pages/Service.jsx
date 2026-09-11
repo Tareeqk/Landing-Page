@@ -721,7 +721,7 @@ export default function Service({ isSection = false }) {
         <img
           className="svc-card-stage-img"
           src={svc.img}
-          alt=""
+          alt={svc.title}
           aria-hidden="true"
           loading="lazy"
           style={{ objectPosition: svc.photoPosition || 'center' }}

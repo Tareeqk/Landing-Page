@@ -37,7 +37,8 @@
       "availabilityValue": "24/7",
       "availabilityLabel": "Around The Clock",
       "ratingValue": "📡 ",
-      "ratingLabel": "Live tracking"
+      "ratingLabel": "Live tracking",
+      "googleReviewsLabel": "{{count}} Google Reviews"
     },
     "heroTags": {
       "carRecovery": "Car Recovery",
@@ -1106,7 +1107,57 @@
   },
   "faqs": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Find answers to the most common questions about Tareeqk services and how to get the best out of our platform"
+    "subtitle": "Find answers to the most common questions about Tareeqk services and how to get the best out of our platform",
+    "items": [
+      {
+        "question": "What areas of Dubai does Tareeqk cover?",
+        "answer": "Tareeqk operates across all of Dubai, including Dubai Marina, Downtown, Business Bay, Deira, Bur Dubai, JVC, JLT, Al Barsha, Jumeirah, Al Qusais, Al Quoz, Palm Jumeirah, DIFC, and every other district — plus desert and off-road recovery outside the city."
+      },
+      {
+        "question": "What types of vehicles can Tareeqk recover?",
+        "answer": "We recover sedans, SUVs, 4x4s, bikes, and light commercial vehicles. Our flatbed trucks are equipped to handle most passenger vehicle types safely."
+      },
+      {
+        "question": "How much does a recovery or towing service cost?",
+        "answer": "Pricing depends on your vehicle type, distance, and the service required. You always see the exact price in the Tareeqk app before we dispatch, so there are no hidden fees."
+      },
+      {
+        "question": "How fast can Tareeqk reach me in Dubai?",
+        "answer": "Our average response time is 15–20 minutes anywhere in Dubai. Once you request help via the app, call, or WhatsApp, the nearest certified unit is dispatched immediately."
+      },
+      {
+        "question": "Is Tareeqk available 24/7?",
+        "answer": "Yes. We operate around the clock, every day of the year, including weekends and public holidays."
+      },
+      {
+        "question": "What should I do while I wait for help to arrive?",
+        "answer": "Move your car to a safe location if possible, turn on your hazard lights, and stay inside the vehicle if you're on a busy road. Our team will call you to confirm your exact location before arriving."
+      },
+      {
+        "question": "Does Tareeqk handle desert or off-road recovery?",
+        "answer": "Yes. Our desert recovery service is equipped for sand and dune recoveries outside the city, in addition to standard road recovery within Dubai."
+      },
+      {
+        "question": "Can Tareeqk help immediately after an accident?",
+        "answer": "Yes. Our accident recovery service dispatches immediately to safely remove your vehicle from the scene and transport it to a garage or location of your choice."
+      },
+      {
+        "question": "Are your operators licensed and insured?",
+        "answer": "Yes. Tareeqk is an RTA-licensed operator, and all recovery trucks and technicians are fully insured."
+      },
+      {
+        "question": "How do I book a recovery or roadside service?",
+        "answer": "Open the Tareeqk app, call our hotline, or message us on WhatsApp with your location — whichever is fastest for you."
+      },
+      {
+        "question": "Can you jump-start my battery or fix a flat tyre on the spot?",
+        "answer": "Yes. Many battery and tyre issues can be resolved on location without towing. Our technician will assess the problem and recommend the fastest fix."
+      },
+      {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept payment directly through the Tareeqk app, including major cards, alongside cash on arrival for select services."
+      }
+    ]
   },
   "drivers-faqs": {
     "title": "Frequently Drivers Asked Questions",

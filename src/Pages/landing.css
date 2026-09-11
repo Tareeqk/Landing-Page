@@ -227,6 +227,22 @@
   border: 1px solid var(--tk-line);
 }
 
+/* The Google-rating stat is the one card of the four that's an <a>
+   (links out to the real Google reviews page) -- reset the browser's
+   default link underline/color (it would otherwise bleed through to the
+   child spans below, which set their own explicit colors) and add a
+   subtle hover affordance so it actually reads as clickable next to its
+   three static siblings. */
+.tk-hero__stat--link {
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.tk-hero__stat--link:hover,
+.tk-hero__stat--link:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
 .tk-hero__stat-value {
   font-family: var(--tk-display);
   font-weight: 700;

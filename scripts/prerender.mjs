@@ -105,17 +105,51 @@ for (const { path: route } of pages) {
         if (cursor) cursor.remove();
       });
 
-      // The bare "/" route redirects to "/en" via React Router's
-      // <Navigate>, a client-side route change rather than a real HTTP
-      // redirect -- react-helmet-async is supposed to manage a single
-      // <title> node (replace, never duplicate), but that two-phase
-      // mount (first matching "/", then re-mounting Home after the
-      // redirect) was leaving earlier <title> nodes behind instead of
-      // removing them, baking 2-3 duplicate <title> tags into this one
-      // route's static HTML. Keep only the last one -- it reflects
-      // Helmet's final, fully-settled value after every render pass.
-      const titles = document.head.querySelectorAll('title');
-      for (let i = 0; i < titles.length - 1; i++) titles[i].remove();
+      // The two-phase mount described above (an early render with
+      // fallback/default values, settling into the real per-route values
+      // once route params and i18next's async-loaded translations
+      // resolve) doesn't just duplicate <title> -- it leaves an earlier,
+      // stale copy of EVERY Helmet-managed head tag sitting next to the
+      // correct one: <link rel="canonical">, the hreflang alternates,
+      // meta description/robots, og:*/twitter:*, and the JSON-LD schema
+      // scripts. Since the stale copy is always the first one committed,
+      // this was baking the *previous* render's canonical/hreflang/schema
+      // into every route's static HTML alongside the correct one -- e.g.
+      // every non-home page shipped two <link rel="canonical"> tags, one
+      // pointing at itself and one still pointing at "/en/" (GSC's "Google
+      // chose a different canonical than user" reports on tareeqk.ae were
+      // Google resolving that exact conflict on hundreds of pages).
+      // Same fix as <title> above, generalized: for each tag family, keep
+      // only the last element sharing its identity key (the attribute
+      // that makes two tags "the same slot" -- e.g. two hreflang links
+      // are the same slot only if they share an hreflang value; two
+      // JSON-LD scripts are the same slot only if they describe the same
+      // schema.org @type) and drop everything earlier in that group.
+      const dedupeByKey = (selector, keyFn) => {
+        const seen = new Map();
+        document.head.querySelectorAll(selector).forEach((el) => {
+          const key = keyFn(el);
+          if (key == null) return;
+          if (seen.has(key)) seen.get(key).remove();
+          seen.set(key, el);
+        });
+      };
+
+      dedupeByKey('title', () => 'title');
+      dedupeByKey('link[rel="canonical"]', () => 'canonical');
+      dedupeByKey('link[rel="alternate"][hreflang]', (el) => el.getAttribute('hreflang'));
+      dedupeByKey('meta[name="description"]', () => 'description');
+      dedupeByKey('meta[name="robots"]', () => 'robots');
+      dedupeByKey('meta[property^="og:"]', (el) => el.getAttribute('property'));
+      dedupeByKey('meta[name^="twitter:"]', (el) => el.getAttribute('name'));
+      dedupeByKey('script[type="application/ld+json"]', (el) => {
+        try {
+          const type = JSON.parse(el.textContent)['@type'];
+          return Array.isArray(type) ? type.slice().sort().join('+') : String(type);
+        } catch {
+          return el.textContent;
+        }
+      });
     });
 
     // page.content() serializes the LIVE DOM — by this point Chrome has
