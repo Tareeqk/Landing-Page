@@ -4,7 +4,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react"
-import { Menu, X, ChevronDown, LogOut } from "lucide-react"
+import { Menu, X, ChevronDown, LogOut, Building2 } from "lucide-react"
 import { useLocation, Link, useParams } from "react-router-dom"
 import DarkMode from "./DarkMode"
 import LanguageSwitcher from "./LanguageSwitcher"
@@ -28,6 +28,7 @@ export default function Navbar({ isDark, setIsDark }) {
   const { lang } = useParams()
   const { t } = useTranslation()
   const langLink = useLangLink()
+  const fleetLoginUrl = `${import.meta.env.VITE_BASE_URL}/login`
 
   const barePath = lang
     ? location.pathname.replace(`/${lang}`, "")
@@ -156,10 +157,10 @@ export default function Navbar({ isDark, setIsDark }) {
                   : "border-b border-transparent",
               )}
             >
-              <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+              <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1600px]">
                 <div className="flex h-16 sm:h-20 items-center justify-between">
                   {/* Left section */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex shrink-0 items-center gap-2">
                     {/* Mobile menu button */}
                     <div className="flex lg:hidden">
                       <DisclosureButton
@@ -230,8 +231,8 @@ export default function Navbar({ isDark, setIsDark }) {
                   </div>
 
                   {/* Center section - Desktop Navigation */}
-                  <div className="hidden lg:flex mx-4 flex-1 justify-center">
-                    <div className="flex items-center gap-1">
+                  <div className="hidden lg:flex mx-2 xl:mx-4 min-w-0 flex-1 justify-center">
+                    <div className="flex items-center gap-0.5 xl:gap-1">
                       {navigation.map((item) => {
                         // Active state is a light brand-yellow tint + bold
                         // text, never a full solid fill — the solid yellow
@@ -240,7 +241,7 @@ export default function Navbar({ isDark, setIsDark }) {
                         // instead of competing visually with "here's the
                         // page you're on."
                         const linkClasses = classNames(
-                          "relative flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-full transition-all duration-300 whitespace-nowrap",
+                          "relative flex items-center gap-1.5 px-3 xl:px-4 py-2.5 text-sm font-bold rounded-full transition-all duration-300 whitespace-nowrap",
                           FOCUS_RING,
                           item.current
                             ? isDark
@@ -350,7 +351,7 @@ export default function Navbar({ isDark, setIsDark }) {
                   </div>
 
                   {/* Right section */}
-                  <div className="flex items-center gap-2 sm:gap-3 relative">
+                  <div className="flex shrink-0 items-center gap-2 sm:gap-3 relative">
                     <div
                       className={classNames(
                         "flex items-center gap-1 rounded-full p-1",
@@ -388,9 +389,23 @@ export default function Navbar({ isDark, setIsDark }) {
                     />
 
                     <a
+                      href={fleetLoginUrl}
+                      className={classNames(
+                        "hidden lg:inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-105",
+                        isDark
+                          ? "border-white/20 text-white hover:bg-white/10"
+                          : "border-black/15 text-black hover:bg-black/5",
+                        FOCUS_RING,
+                      )}
+                    >
+                      <Building2 className="h-4 w-4" />
+                      {t("navbar.fleetLogin", "Fleet Login")}
+                    </a>
+
+                    <a
                       href="https://booking.tareeqk.ae/login"
                       className={classNames(
-                        "hidden lg:inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(247,178,5,0.5)]",
+                        "hidden lg:inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(247,178,5,0.5)]",
                         FOCUS_RING,
                       )}
                       style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
@@ -593,6 +608,20 @@ export default function Navbar({ isDark, setIsDark }) {
                     open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
                   )}
                 >
+                  <a
+                    href={fleetLoginUrl}
+                    onClick={() => close()}
+                    className={classNames(
+                      "mb-2 flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-transform duration-300 hover:scale-[1.02]",
+                      isDark
+                        ? "border-white/20 text-white"
+                        : "border-black/15 text-black",
+                      FOCUS_RING,
+                    )}
+                  >
+                    <Building2 className="h-4 w-4" />
+                    {t("navbar.fleetLogin", "Fleet Login")}
+                  </a>
                   <a
                     href="https://booking.tareeqk.ae/login"
                     onClick={() => close()}

@@ -1,5 +1,6 @@
 {
   "navbar": {
+    "fleetLogin": "فلیٹ لاگ ان",
     "home": "ہوم",
     "about": "ہمارے بارے میں",
     "service": "سروس",
@@ -387,6 +388,8 @@
       "referralCodeLabel": "ریفرل کوڈ",
       "referralCodePlaceholder": "مثلاً TRQ-AB12",
       "optionalTag": "اختیاری",
+      "tradeLicenseLabel": "ٹریڈ لائسنس *",
+      "tradeLicenseHint": "تصویر یا PDF اپ لوڈ کریں (زیادہ سے زیادہ 10 MB)",
       "submitButton": "درخواست جمع کروائیں",
       "submittingButton": "جمع کروائی جا رہی ہے...",
       "successAlert": "درخواست کامیابی سے جمع ہو گئی! ہماری ٹیم اس کا جائزہ لے کر جلد آپ سے رابطہ کرے گی۔",

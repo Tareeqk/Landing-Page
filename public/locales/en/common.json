@@ -1,5 +1,6 @@
 {
   "navbar": {
+    "fleetLogin": "Fleet Login",
     "home": "Home",
     "about": "About Us",
     "service": "Service",
@@ -535,6 +536,8 @@
       "referralCodeLabel": "Referral Code",
       "referralCodePlaceholder": "e.g. TRQ-AB12",
       "optionalTag": "Optional",
+      "tradeLicenseLabel": "Trade License *",
+      "tradeLicenseHint": "Upload an image or PDF (max 10 MB)",
       "submitButton": "Submit Application",
       "submittingButton": "Submitting...",
       "successAlert": "Application submitted! Our team will review it and get back to you shortly.",

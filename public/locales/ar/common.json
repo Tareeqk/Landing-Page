@@ -1,5 +1,6 @@
 {
   "navbar": {
+    "fleetLogin": "دخول الأسطول",
     "home": "الرئيسية",
     "about": "من نحن",
     "service": "الخدمات",
@@ -570,6 +571,8 @@
       "referralCodeLabel": "رمز الإحالة",
       "referralCodePlaceholder": "مثال: TRQ-AB12",
       "optionalTag": "اختياري",
+      "tradeLicenseLabel": "الرخصة التجارية *",
+      "tradeLicenseHint": "ارفع صورة أو ملف PDF (الحد الأقصى 10 ميغابايت)",
       "submitButton": "إرسال الطلب",
       "submittingButton": "جارٍ الإرسال...",
       "successAlert": "تم إرسال الطلب بنجاح! سيقوم فريقنا بمراجعته والتواصل معك قريبًا.",

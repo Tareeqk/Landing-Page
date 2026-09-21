@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiBriefcase, FiGift, FiMail, FiPhone, FiSend, FiUser } from "react-icons/fi";
+import { FiBriefcase, FiFileText, FiGift, FiMail, FiPhone, FiSend, FiUser } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
 
@@ -80,7 +80,11 @@ const API_FIELD_NAME = {
   email: "email",
   phone: "phone",
   referralCode: "referral_code",
+  tradeLicense: "trade_license",
 };
+
+const MAX_LICENSE_BYTES = 10 * 1024 * 1024;
+const LICENSE_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
 
 export default function PartnerForm({ id = "apply" }) {
   const { t } = useTranslation();
@@ -97,6 +101,24 @@ export default function PartnerForm({ id = "apply" }) {
     phone: "",
     referralCode: "",
   });
+  const [tradeLicense, setTradeLicense] = useState(null);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0] ?? null;
+    if (status) setStatus(null);
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      delete next.tradeLicense;
+      return next;
+    });
+    if (file && (!LICENSE_TYPES.includes(file.type) || file.size > MAX_LICENSE_BYTES)) {
+      setFieldErrors((prev) => ({ ...prev, tradeLicense: t("partnerForm.form.tradeLicenseHint") }));
+      e.target.value = "";
+      setTradeLicense(null);
+      return;
+    }
+    setTradeLicense(file);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -128,16 +150,20 @@ export default function PartnerForm({ id = "apply" }) {
       // is sent as typed rather than prefixed with +971 like the contact
       // form does -- fleets/vendors applying here may be registering from
       // outside the UAE, so the field takes a full international number.
+      // Multipart (not JSON) so the optional trade licence file can ride
+      // along; the browser sets the Content-Type boundary itself.
+      const body = new FormData();
+      body.append("contact_name", formData.contactName);
+      body.append("company_name", formData.companyName);
+      body.append("email", formData.email);
+      body.append("phone", formData.phone);
+      if (formData.referralCode.trim()) body.append("referral_code", formData.referralCode.trim());
+      if (tradeLicense) body.append("trade_license", tradeLicense);
+
       const response = await fetch(`${baseUrl}/api/v1/partner-applications`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          contact_name: formData.contactName,
-          company_name: formData.companyName,
-          email: formData.email,
-          phone: formData.phone,
-          referral_code: formData.referralCode.trim() || null,
-        }),
+        headers: { Accept: "application/json" },
+        body,
       });
       const data = await response.json();
 
@@ -150,6 +176,8 @@ export default function PartnerForm({ id = "apply" }) {
           phone: "",
           referralCode: "",
         });
+        setTradeLicense(null);
+        e.target.reset();
       } else if (data.error?.fields) {
         const nextFieldErrors = {};
         for (const [formKey, apiKey] of Object.entries(API_FIELD_NAME)) {
@@ -349,6 +377,28 @@ export default function PartnerForm({ id = "apply" }) {
             </div>
             {fieldErrors.referralCode && (
               <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.referralCode}</p>
+            )}
+          </div>
+
+          {/* Trade licence -- required image or PDF */}
+          <div>
+            <label className="pf-label mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400">
+              {t("partnerForm.form.tradeLicenseLabel")}
+            </label>
+            <div className="relative">
+              <FiFileText className={FIELD_ICON_CLASS} />
+              <input
+                type="file"
+                name="tradeLicense"
+                required
+                accept="image/jpeg,image/png,image/webp,application/pdf"
+                onChange={handleFileChange}
+                className={`${fieldClass("tradeLicense")} py-2.5 file:me-3 file:rounded-lg file:border-0 file:bg-amber-100 file:px-3 file:py-1 file:text-xs file:font-semibold file:text-amber-800`}
+              />
+            </div>
+            <p className="pf-desc mt-1.5 text-xs text-gray-500">{t("partnerForm.form.tradeLicenseHint")}</p>
+            {fieldErrors.tradeLicense && (
+              <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.tradeLicense}</p>
             )}
           </div>
 
