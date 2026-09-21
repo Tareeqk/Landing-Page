@@ -18,7 +18,7 @@ Request body:
   "company_name": "Ahmed Fleet Services", // required — the fleet/company name
   "email": "ahmed@example.com",      // required
   "phone": "+971501234567",          // required
-  "trade_license_number": "DED-12345" // optional
+  "referral_code": "TRQ-AB12" // optional (replaces trade_license_number; backend TBD)
 }
 ```
 

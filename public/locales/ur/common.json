@@ -360,7 +360,7 @@
         },
         {
           "title": "ہماری ٹیم جائزہ لیتی ہے",
-          "desc": "طریق کا ایڈمن آپ کی کمپنی اور ٹریڈ لائسنس کی تفصیلات کی تصدیق کرتا ہے۔"
+          "desc": "طریق کا ایڈمن آپ کی کمپنی کی تفصیلات کی تصدیق کرتا ہے۔"
         },
         {
           "title": "اپنا پارٹنر کوڈ حاصل کریں",
@@ -384,8 +384,8 @@
       "emailPlaceholder": "ahmed@example.com",
       "phoneLabel": "فون نمبر *",
       "phonePlaceholder": "+971 50 123 4567",
-      "licenseLabel": "ٹریڈ لائسنس نمبر",
-      "licensePlaceholder": "DED-12345",
+      "referralCodeLabel": "ریفرل کوڈ",
+      "referralCodePlaceholder": "مثلاً TRQ-AB12",
       "optionalTag": "اختیاری",
       "submitButton": "درخواست جمع کروائیں",
       "submittingButton": "جمع کروائی جا رہی ہے...",

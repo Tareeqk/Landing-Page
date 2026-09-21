@@ -508,7 +508,7 @@
         },
         {
           "title": "Our Team Reviews It",
-          "desc": "A Tareeqk admin verifies your company and trade license details."
+          "desc": "A Tareeqk admin verifies your company details."
         },
         {
           "title": "Get Your Partner Code",
@@ -532,8 +532,8 @@
       "emailPlaceholder": "ahmed@example.com",
       "phoneLabel": "Phone Number *",
       "phonePlaceholder": "+971 50 123 4567",
-      "licenseLabel": "Trade License Number",
-      "licensePlaceholder": "DED-12345",
+      "referralCodeLabel": "Referral Code",
+      "referralCodePlaceholder": "e.g. TRQ-AB12",
       "optionalTag": "Optional",
       "submitButton": "Submit Application",
       "submittingButton": "Submitting...",

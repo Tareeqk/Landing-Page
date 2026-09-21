@@ -543,7 +543,7 @@
         },
         {
           "title": "يراجعه فريقنا",
-          "desc": "يتحقق أحد مسؤولي طريقك من بيانات شركتك ورخصتك التجارية."
+          "desc": "يتحقق أحد مسؤولي طريقك من بيانات شركتك."
         },
         {
           "title": "احصل على رمز الشريك",
@@ -567,8 +567,8 @@
       "emailPlaceholder": "ahmed@example.com",
       "phoneLabel": "رقم الهاتف *",
       "phonePlaceholder": "+971 50 123 4567",
-      "licenseLabel": "رقم الرخصة التجارية",
-      "licensePlaceholder": "DED-12345",
+      "referralCodeLabel": "رمز الإحالة",
+      "referralCodePlaceholder": "مثال: TRQ-AB12",
       "optionalTag": "اختياري",
       "submitButton": "إرسال الطلب",
       "submittingButton": "جارٍ الإرسال...",

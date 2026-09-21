@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FiBriefcase, FiFileText, FiMail, FiPhone, FiSend, FiUser } from "react-icons/fi";
+import { FiBriefcase, FiGift, FiMail, FiPhone, FiSend, FiUser } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
 
@@ -79,7 +79,7 @@ const API_FIELD_NAME = {
   companyName: "company_name",
   email: "email",
   phone: "phone",
-  tradeLicenseNumber: "trade_license_number",
+  referralCode: "referral_code",
 };
 
 export default function PartnerForm({ id = "apply" }) {
@@ -95,7 +95,7 @@ export default function PartnerForm({ id = "apply" }) {
     companyName: "",
     email: "",
     phone: "",
-    tradeLicenseNumber: "",
+    referralCode: "",
   });
 
   const handleChange = (e) => {
@@ -136,7 +136,7 @@ export default function PartnerForm({ id = "apply" }) {
           company_name: formData.companyName,
           email: formData.email,
           phone: formData.phone,
-          trade_license_number: formData.tradeLicenseNumber || null,
+          referral_code: formData.referralCode.trim() || null,
         }),
       });
       const data = await response.json();
@@ -148,7 +148,7 @@ export default function PartnerForm({ id = "apply" }) {
           companyName: "",
           email: "",
           phone: "",
-          tradeLicenseNumber: "",
+          referralCode: "",
         });
       } else if (data.error?.fields) {
         const nextFieldErrors = {};
@@ -328,27 +328,27 @@ export default function PartnerForm({ id = "apply" }) {
             </div>
           </div>
 
-          {/* Trade license -- optional, called out explicitly in the UI */}
+          {/* Referral code -- optional, called out explicitly in the UI */}
           <div>
             <label className="pf-label mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400">
-              {t("partnerForm.form.licenseLabel")}
+              {t("partnerForm.form.referralCodeLabel")}
               <span className="pf-optional-tag rounded-full bg-gray-100 px-1.5 py-0.5 text-[9px] normal-case tracking-normal text-gray-400">
                 {t("partnerForm.form.optionalTag")}
               </span>
             </label>
             <div className="relative">
-              <FiFileText className={FIELD_ICON_CLASS} />
+              <FiGift className={FIELD_ICON_CLASS} />
               <input
                 type="text"
-                name="tradeLicenseNumber"
-                value={formData.tradeLicenseNumber}
+                name="referralCode"
+                value={formData.referralCode}
                 onChange={handleChange}
-                placeholder={t("partnerForm.form.licensePlaceholder")}
-                className={fieldClass("tradeLicenseNumber")}
+                placeholder={t("partnerForm.form.referralCodePlaceholder")}
+                className={fieldClass("referralCode")}
               />
             </div>
-            {fieldErrors.tradeLicenseNumber && (
-              <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.tradeLicenseNumber}</p>
+            {fieldErrors.referralCode && (
+              <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.referralCode}</p>
             )}
           </div>
 
