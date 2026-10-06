@@ -1,7 +1,89 @@
-import { useEffect, useState } from "react";
-import { FiBriefcase, FiFileText, FiGift, FiMail, FiPhone, FiSend, FiUser } from "react-icons/fi";
+import { useEffect, useRef, useState } from "react";
+import { FiBriefcase, FiFileText, FiGift, FiMail, FiPhone, FiSend, FiShield, FiUser } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
+
+// Turnstile's own list of supported widget-UI languages -- anything else
+// (including a code this site supports but Turnstile doesn't recognize)
+// falls back to "auto" rather than being passed through verbatim, since
+// an unrecognized code isn't guaranteed to gracefully degrade the same
+// way across Cloudflare's rollouts.
+const TURNSTILE_LANGUAGES = new Set(["ar", "en"]);
+
+// Explicit-render Turnstile widget, scoped to this form. index.html loads
+// the script with ?render=explicit (no auto-rendered .cf-turnstile div),
+// so this polls for window.turnstile instead of assuming it's ready --
+// the script tag is `async defer`, and this component can easily mount
+// before it finishes loading. Returns the live token plus a reset()
+// callable so handleSubmit can force a fresh token after every attempt
+// (a Turnstile token is single-use and ~5 min lived).
+//
+// Re-renders (remove + render) whenever `language` changes so switching
+// the site's language mid-visit updates the widget's own UI text too --
+// that invalidates any token the visitor had already solved, same as a
+// normal reset, which is an acceptable trade-off for how rarely someone
+// switches language while mid-form.
+function useTurnstile(siteKey, language) {
+  const containerRef = useRef(null);
+  const widgetIdRef = useRef(null);
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    if (!siteKey) return undefined;
+
+    let cancelled = false;
+    let pollId;
+
+    const render = () => {
+      if (cancelled || !containerRef.current || !window.turnstile) return;
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: siteKey,
+        // Flexible so the widget stretches to the same full width as
+        // every other input in this form instead of Turnstile's default
+        // fixed 300px box, which looked cramped/out of place here.
+        size: "flexible",
+        // Dark mode is force-disabled site-wide right now (see App.jsx's
+        // isDark comment) -- "light" matches that, not "auto", so the
+        // widget can't end up dark on a page that's always light (which
+        // "auto" would do for a visitor whose OS is in dark mode).
+        // Revisit once the dark-mode toggle is restored.
+        theme: "light",
+        language: TURNSTILE_LANGUAGES.has(language) ? language : "auto",
+        callback: (t) => setToken(t),
+        "expired-callback": () => setToken(""),
+        "error-callback": () => setToken(""),
+      });
+    };
+
+    if (window.turnstile) {
+      render();
+    } else {
+      pollId = window.setInterval(() => {
+        if (window.turnstile) {
+          window.clearInterval(pollId);
+          render();
+        }
+      }, 200);
+    }
+
+    return () => {
+      cancelled = true;
+      if (pollId) window.clearInterval(pollId);
+      if (widgetIdRef.current && window.turnstile) {
+        window.turnstile.remove(widgetIdRef.current);
+      }
+    };
+  }, [siteKey, language]);
+
+  const reset = () => {
+    setToken("");
+    if (widgetIdRef.current && window.turnstile) {
+      window.turnstile.reset(widgetIdRef.current);
+    }
+  };
+
+  return { containerRef, token, reset };
+}
 
 // Same "inject a <style> tag keyed off body.dark" convention ContactForm.jsx
 // uses -- Tailwind's dark: variant isn't configured in this project.
@@ -81,15 +163,22 @@ const API_FIELD_NAME = {
   phone: "phone",
   referralCode: "referral_code",
   tradeLicense: "trade_license",
+  captchaToken: "captcha_token",
 };
 
 const MAX_LICENSE_BYTES = 10 * 1024 * 1024;
 const LICENSE_TYPES = ["image/jpeg", "image/png", "image/webp", "application/pdf"];
 
 export default function PartnerForm({ id = "apply" }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const baseUrl = import.meta.env.VITE_BASE_URL;
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY;
   usePartnerFormStyles();
+  const {
+    containerRef: turnstileRef,
+    token: captchaToken,
+    reset: resetCaptcha,
+  } = useTurnstile(turnstileSiteKey, i18n.language);
 
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState(null);
@@ -137,8 +226,38 @@ export default function PartnerForm({ id = "apply" }) {
     }
   };
 
+  // Clears the "please complete the captcha" message the moment a token
+  // actually arrives (widget solved, or a fresh one after resetCaptcha())
+  // -- it isn't routed through handleChange like the other fields since
+  // the token comes from Turnstile's own callback, not an input event.
+  useEffect(() => {
+    if (captchaToken) {
+      setFieldErrors((prev) => {
+        if (!prev.captchaToken) return prev;
+        const next = { ...prev };
+        delete next.captchaToken;
+        return next;
+      });
+    }
+  }, [captchaToken]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Caught client-side before spending a network round trip -- the
+    // widget hasn't finished loading/solving yet, or the visitor's
+    // browser blocked it (extensions, some strict privacy modes). Only
+    // enforced when a site key is actually configured (the widget was
+    // asked to render at all); if VITE_TURNSTILE_SITE_KEY is unset (e.g.
+    // a local env with no key yet), this falls through and the backend's
+    // own "required" rule on captcha_token is what rejects the request --
+    // that backend check is the real security boundary either way, this
+    // is just a UX nicety when the widget is present.
+    if (turnstileSiteKey && !captchaToken) {
+      setStatus(null);
+      setFieldErrors((prev) => ({ ...prev, captchaToken: t("partnerForm.form.captchaRequired") }));
+      return;
+    }
 
     try {
       setLoading(true);
@@ -159,6 +278,7 @@ export default function PartnerForm({ id = "apply" }) {
       body.append("phone", formData.phone);
       if (formData.referralCode.trim()) body.append("referral_code", formData.referralCode.trim());
       if (tradeLicense) body.append("trade_license", tradeLicense);
+      body.append("captcha_token", captchaToken);
 
       const response = await fetch(`${baseUrl}/api/v1/partner-applications`, {
         method: "POST",
@@ -194,6 +314,10 @@ export default function PartnerForm({ id = "apply" }) {
       setStatus({ type: "error", message: t("partnerForm.form.errorAlert") });
     } finally {
       setLoading(false);
+      // Consumed either way -- Turnstile tokens are single-use, so a
+      // retry (whether the first attempt succeeded, a field was invalid,
+      // or captcha verification itself was rejected) needs a fresh one.
+      resetCaptcha();
     }
   };
 
@@ -401,6 +525,31 @@ export default function PartnerForm({ id = "apply" }) {
               <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.tradeLicense}</p>
             )}
           </div>
+
+          {/* Cloudflare Turnstile -- explicit render (see useTurnstile
+              above), so this div is just the mount point; size:"flexible"
+              makes the widget fill it the same way every other w-full
+              input in this form does. Labeled like every other field
+              above for visual consistency rather than dropping in an
+              unlabeled third-party box. min-h reserves the widget's own
+              rendered height up front so the submit button doesn't jump
+              down once the async script finishes loading and the iframe
+              mounts. Silently absent if VITE_TURNSTILE_SITE_KEY isn't set
+              (e.g. a local env with no key yet) rather than rendering a
+              broken container -- the backend's own "required" rule still
+              blocks submission either way. */}
+          {turnstileSiteKey && (
+            <div>
+              <label className="pf-label mb-1.5 flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] font-bold text-gray-400">
+                <FiShield className="text-[11px] text-amber-500" />
+                {t("partnerForm.form.captchaLabel")}
+              </label>
+              <div ref={turnstileRef} className="min-h-[65px]" />
+              {fieldErrors.captchaToken && (
+                <p className="pf-field-error mt-1.5 text-xs text-red-600">{fieldErrors.captchaToken}</p>
+              )}
+            </div>
+          )}
 
           <div className="pt-2">
             <button

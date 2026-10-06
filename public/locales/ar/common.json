@@ -575,6 +575,8 @@
       "tradeLicenseHint": "ارفع صورة أو ملف PDF (الحد الأقصى 10 ميغابايت)",
       "submitButton": "إرسال الطلب",
       "submittingButton": "جارٍ الإرسال...",
+      "captchaLabel": "التحقق",
+      "captchaRequired": "يرجى إكمال التحقق قبل الإرسال.",
       "successAlert": "تم إرسال الطلب بنجاح! سيقوم فريقنا بمراجعته والتواصل معك قريبًا.",
       "genericErrorAlert": "حدث خطأ ما.",
       "validationErrorAlert": "يرجى تصحيح الحقول المميزة والمحاولة مرة أخرى.",

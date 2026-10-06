@@ -26,6 +26,15 @@
     <link rel="preload" href="/poppins/woff2/Poppins-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/poppins/woff2/Poppins-Bold.woff2" as="font" type="font/woff2" crossorigin />
 
+    <!-- Cloudflare Turnstile -- loaded with the explicit render API (no
+         auto-rendered .cf-turnstile div) so PartnerForm.jsx can call
+         window.turnstile.render()/reset() itself once its widget div is
+         mounted, same reasoning as gtag.js below: async/defer only keeps
+         it from blocking parsing, so this stays a single small script tag
+         rather than something deferred to window.load, since the widget
+         needs to be ready by the time a visitor reaches the partner form. -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
     <!-- Google tag (gtag.js) — the library itself is fetched and executed
          lazily (see loadGtagScript below) instead of via a static <script
          async> tag here. async only keeps it from blocking HTML parsing;

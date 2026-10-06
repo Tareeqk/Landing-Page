@@ -189,7 +189,9 @@
       "Bash(identify hero_v2_2940_small.png)",
       "Bash(magick public/hero/truck-nasir.webp -format \"%[channels]\\\\n\" info:)",
       "Bash(magick public/hero/truck-nasir.webp -fuzz 5% -trim +repage -bordercolor none -border 25 public/hero/truck-nasir-cropped.webp)",
-      "Bash(magick public/hero/truck-nasir-cropped.webp -format \"%wx%h\\\\n\" info:)"
+      "Bash(magick public/hero/truck-nasir-cropped.webp -format \"%wx%h\\\\n\" info:)",
+      "Bash(./vendor/bin/pint --test app/Contracts/CaptchaGateway.php app/Services/Captcha/LogCaptchaGateway.php app/Services/Captcha/TurnstileGateway.php app/Rules/ValidCaptcha.php app/Http/Requests/Api/StorePartnerApplicationRequest.php app/Providers/AppServiceProvider.php config/services.php tests/Feature/Api/PartnerApplicationTest.php)",
+      "Bash(kill 88178 88194)"
     ]
   }
 }
