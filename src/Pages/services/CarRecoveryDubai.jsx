@@ -4,12 +4,12 @@ import ServicePageTemplate from './ServicePageTemplate';
 
 const config = {
   slug: 'car-recovery-dubai',
-  metaTitle: 'Car Recovery Dubai – 24/7 Fast Response | Tareeqk',
-  metaDesc: 'Stuck on the road in Dubai? Tareeqk provides 24/7 car recovery with an average 20-minute response. Licensed RTA operator. Call or WhatsApp now.',
+  metaTitle: 'Car Recovery Near Me Dubai – 24/7 Fast Response | Tareeqk',
+  metaDesc: 'Stuck on the road in Dubai? Tareeqk provides 24/7 car recovery with an average 20-minute response. Licensed RTA operator. Looking for car recovery near me? Call or WhatsApp now.',
   title: 'Car Recovery in Dubai – 24/7 Fast Service',
   heroImage: '/new/Recovery_Van.webp',
   heroAlt: 'Car Recovery Service in Dubai',
-  intro: 'Stranded in Dubai? We dispatch a recovery truck to you in 20 minutes or less — day or night, anywhere in the UAE.',
+  intro: 'Stranded in Dubai? We dispatch a recovery truck to you in 20 minutes or less — day or night, anywhere in the UAE. Searching for car recovery near me? We send the closest available truck.',
   responseTime: '20 minutes',
   responseDesc: 'Our dispatch team monitors Dubai 24/7. Once you place a request via the app or call, a certified recovery truck is en route within minutes. Average on-scene time is 20 minutes across Dubai.',
   whatIsService: 'Car recovery Dubai is an emergency roadside service that safely transports your broken-down or damaged vehicle to a garage, dealer, or location of your choice. Tareeqk operates a fleet of flatbed and wheel-lift recovery trucks manned by certified technicians — ready around the clock across all Dubai districts.',
@@ -26,6 +26,10 @@ const config = {
     'RTA-licensed operators with fully insured recovery trucks.',
   ],
   faqs: [
+    {
+      q: 'Is there a car recovery service near me in Dubai?',
+      a: 'Yes. Tareeqk covers all of Dubai 24/7 and dispatches the recovery truck nearest to your location, so you get car recovery near you in about 20 minutes. Share your location through the app, call, or WhatsApp.',
+    },
     {
       q: 'How long does car recovery take in Dubai?',
       a: 'Our average response time is 20 minutes. Actual time depends on your exact location and current traffic in Dubai, but we always dispatch the nearest available unit immediately.',
