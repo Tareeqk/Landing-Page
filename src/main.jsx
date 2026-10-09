@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import "./i18n.js";
+import { initAdsTracking } from "./utils/adsTracking";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -12,6 +13,8 @@ import { HelmetProvider } from "react-helmet-async";
 // and threw it away on every load, doing a full rebuild from scratch before
 // anything was interactive. hydrateRoot reuses it instead, which is strictly
 // cheaper on a throttled mobile CPU and removes that wasted render pass.
+initAdsTracking();
+
 const root = document.getElementById("root");
 const app = (
   <HelmetProvider>

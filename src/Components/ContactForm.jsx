@@ -7,6 +7,7 @@ import {
 } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
+import { trackConversion } from "../utils/adsTracking";
 
 // Built entirely with Tailwind utility classes (bg-white, text-black, etc.)
 // with no dark-mode handling, so it stayed a bright card regardless of the
@@ -168,6 +169,7 @@ export default function ContactSection() {
 
       if (data.success) {
         setStatus({ type: "success", message: t("contact.successAlert") });
+        trackConversion("form_submit", { form_name: "contact" });
 
         setFormData({
           name: "",

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { FiBriefcase, FiFileText, FiGift, FiMail, FiPhone, FiSend, FiShield, FiUser } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
+import { trackConversion } from "../utils/adsTracking";
 
 // Turnstile's own list of supported widget-UI languages -- anything else
 // (including a code this site supports but Turnstile doesn't recognize)
@@ -289,6 +290,7 @@ export default function PartnerForm({ id = "apply" }) {
 
       if (data.success) {
         setStatus({ type: "success", message: t("partnerForm.form.successAlert") });
+        trackConversion("form_submit", { form_name: "partner" });
         setFormData({
           contactName: "",
           companyName: "",
