@@ -192,7 +192,11 @@
       "Bash(magick public/hero/truck-nasir-cropped.webp -format \"%wx%h\\\\n\" info:)",
       "Bash(./vendor/bin/pint --test app/Contracts/CaptchaGateway.php app/Services/Captcha/LogCaptchaGateway.php app/Services/Captcha/TurnstileGateway.php app/Rules/ValidCaptcha.php app/Http/Requests/Api/StorePartnerApplicationRequest.php app/Providers/AppServiceProvider.php config/services.php tests/Feature/Api/PartnerApplicationTest.php)",
       "Bash(kill 88178 88194)",
-      "Bash(grep -rnE \"googletagmanager|gtag|AW-[0-9]+|G-[A-Z0-9]{6,}|GTM-\" . --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git --exclude-dir=.next -I)"
+      "Bash(grep -rnE \"googletagmanager|gtag|AW-[0-9]+|G-[A-Z0-9]{6,}|GTM-\" . --exclude-dir=node_modules --exclude-dir=dist --exclude-dir=.git --exclude-dir=.next -I)",
+      "Bash(grep -rnEi \"gtag|googletagmanager|GTM-|AW-[0-9]|fbq|fbevents|clarity|dataLayer|tiktok|snaptr|G-[A-Z0-9]{8,}\" index.html src public vercel.json NEXT_STEPS.md README.md)",
+      "Bash(curl -sL https://tareeqk.ae/en/)",
+      "Bash(grep -oE \"\\(AW-[0-9]+\\(/[A-Za-z0-9_-]+\\)?|G-[A-Z0-9]{8,}|GTM-[A-Z0-9]+|fbq\\\\\\(|gtag/js\\\\?id=[A-Za-z0-9-]+|ad_storage[^,]*|send_to[^,}]*\\)\")",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code} %{url_effective}\\\\n\" https://tareeqk.ae/en/)"
     ]
   }
 }
