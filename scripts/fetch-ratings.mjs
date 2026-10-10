@@ -29,7 +29,9 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dest = path.join(__dirname, '..', 'src', 'data', 'ratings.json');
 
-const RATINGS_ENDPOINT = 'https://platform.tareeqk.ae/api/v1/ratings';
+// Override with RATINGS_ENDPOINT=http://tareeqk-v2-be.test/api/v1/ratings to
+// test against a local backend; defaults to production.
+const RATINGS_ENDPOINT = process.env.RATINGS_ENDPOINT || 'https://platform.tareeqk.ae/api/v1/ratings';
 
 async function readExisting() {
   try {

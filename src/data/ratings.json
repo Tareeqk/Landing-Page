@@ -1,3 +1,8 @@
 {
-  "google": null
+  "google": {
+    "rating": 5,
+    "review_count": 5,
+    "url": "https://maps.google.com/?cid=7257373017679393430",
+    "fetched_at": "2026-10-10T05:12:56+00:00"
+  }
 }
