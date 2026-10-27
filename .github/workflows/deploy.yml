@@ -36,7 +36,9 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # @sparticuz/chromium (used by the prerender) needs Node ^22.17 or >=24;
+          # Node 20 makes `yarn install` fail on its engines check.
+          node-version: 22
           cache: yarn
 
       # The repo uses yarn (yarn.lock), not npm -- there is no package-lock.json,
