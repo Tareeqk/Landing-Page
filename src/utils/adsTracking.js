@@ -25,15 +25,10 @@ const ADS_DESTINATIONS = [
       form_submit: import.meta.env.VITE_ADS_LABEL_FORM,
     },
   },
-  {
-    // Second account: "Call click" and "WhatsApp click" conversions.
-    // (Conversion labels are public by design; they appear in page source.)
-    id: "AW-18489174358",
-    labels: {
-      call_click: "pDWkCOK7iasdENbSqfBE",
-      whatsapp_click: "nMNtCN-7iasdENbSqfBE",
-    },
-  },
+  // The second account, AW-18489174358 (Call click / WhatsApp click), is NOT
+  // listed here: its conversion snippets are defined verbatim in index.html as
+  // window.tkAdsConversion so Google's tag check can see them in the page
+  // source. They are called below.
 ];
 
 export function trackConversion(eventName, params = {}) {
@@ -46,6 +41,8 @@ export function trackConversion(eventName, params = {}) {
       window.gtag("event", "conversion", { send_to: `${id}/${label}`, ...base });
     }
   }
+  // Fires the AW-18489174358 conversion for call_click / whatsapp_click only.
+  if (typeof window.tkAdsConversion === "function") window.tkAdsConversion(eventName);
 }
 
 function classify(href) {

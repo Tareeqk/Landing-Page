@@ -160,14 +160,21 @@ for (const { path: route } of pages) {
         document.head.prepend(titleEl);
       }
 
-      // The inline gtag bootstrap in index.html injects googletagmanager.com
-      // <script> tags at runtime (loadGtagScript + gtag's own config
-      // loader). Serializing the live DOM bakes those into the static
-      // file, so the real page then loads gtag.js twice. Drop them from
-      // the snapshot; the inline bootstrap re-adds exactly one at runtime.
-      document
-        .querySelectorAll('script[src*="googletagmanager.com/gtag/js"]')
-        .forEach((el) => el.remove());
+      // index.html carries Google's standard <script async src=".../gtag/js?id=G-N8F28JJFW1">
+      // in the page source (so Google Ads / Tag Assistant can detect it). At
+      // runtime the Google tag itself also appends extra gtag/js <script>
+      // elements (e.g. ...?id=AW-...&cx=c&gtm=...) for the other destinations.
+      // Serializing the live DOM would bake those into the static file, so the
+      // real page would load gtag.js twice. Keep ONLY the first, exact, authored
+      // tag and drop everything else.
+      {
+        const AUTHORED_GTAG = 'https://www.googletagmanager.com/gtag/js?id=G-N8F28JJFW1';
+        let keptGtag = false;
+        document.querySelectorAll('script[src*="googletagmanager.com/gtag/js"]').forEach((el) => {
+          if (!keptGtag && el.getAttribute('src') === AUTHORED_GTAG) { keptGtag = true; return; }
+          el.remove();
+        });
+      }
 
       dedupeByKey('link[rel="canonical"]', () => 'canonical');
       dedupeByKey('link[rel="alternate"][hreflang]', (el) => el.getAttribute('hreflang'));
