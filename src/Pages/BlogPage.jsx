@@ -341,13 +341,13 @@ export default function BlogPage() {
         <meta property="og:title" content={blog?.title || 'Article'} />
         <meta property="og:description" content={blog?.description || 'Read our latest article'} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={`https://tareeqk.ae/${lang}/page/${blogSlug}`} />
-        {blog?.image && <meta property="og:image" content={`https://tareeqk.ae${blog.image}`} />}
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/page/${blogSlug}/`} />
+        {blog?.image && <meta property="og:image" content={`https://tareeqk.ae/og${blog.image.replace(/\.webp$/, '.jpg')}`} />}
         {blog?.date && <meta property="article:published_time" content={new Date(blog.date).toISOString()} />}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={blog?.title || 'Article'} />
         <meta name="twitter:description" content={blog?.description || 'Read our latest article'} />
-        {blog?.image && <meta name="twitter:image" content={`https://tareeqk.ae${blog.image}`} />}
+        {blog?.image && <meta name="twitter:image" content={`https://tareeqk.ae/og${blog.image.replace(/\.webp$/, '.jpg')}`} />}
       </Helmet>
       <HreflangTags path={`page/${blogSlug}`} />
       <ArticleSchema
@@ -355,12 +355,12 @@ export default function BlogPage() {
         description={blog?.description}
         image={blog?.image ? `https://tareeqk.ae${blog.image}` : undefined}
         datePublished={blog?.date}
-        url={`https://tareeqk.ae/${lang}/page/${blogSlug}`}
+        url={`https://tareeqk.ae/${lang}/page/${blogSlug}/`}
       />
       <BreadcrumbSchema
         items={[
-          { name: 'Home', url: `https://tareeqk.ae/${lang}` },
-          { name: 'Blog', url: `https://tareeqk.ae/${lang}/blogs` },
+          { name: 'Home', url: `https://tareeqk.ae/${lang}/` },
+          { name: 'Blog', url: `https://tareeqk.ae/${lang}/blogs/` },
           { name: blog?.title },
         ]}
       />

@@ -340,7 +340,7 @@ export default function LegalDocument({ namespace, heroImage = "/new/second_img.
       <Helmet>
         <meta name="robots" content="index, follow" />
         <title>{t(`${namespace}.title`)} | Tareeqk</title>
-        <meta name="description" content={t(`${namespace}.subtitle`)} />
+        <meta name="description" content={t(`${namespace}.metaDescription`)} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/${path}/`} />
       </Helmet>
       <HreflangTags path={path} />

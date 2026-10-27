@@ -158,15 +158,15 @@ export default function Pricing() {
           )}
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://tareeqk.ae/${lang}/pricing`} />
-        <meta property="og:image" content="https://tareeqk.ae/new/pricing_hero_banner.webp" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/pricing/`} />
+        <meta property="og:image" content="https://tareeqk.ae/og/new/pricing_hero_banner.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="https://tareeqk.ae/new/pricing_hero_banner.webp" />
+        <meta name="twitter:image" content="https://tareeqk.ae/og/new/pricing_hero_banner.jpg" />
       </Helmet>
       <HreflangTags path="pricing" />
       <BreadcrumbSchema
         items={[
-          { name: 'Home', url: `https://tareeqk.ae/${lang}` },
+          { name: 'Home', url: `https://tareeqk.ae/${lang}/` },
           { name: t('navbar.pricing', 'Pricing') },
         ]}
       />

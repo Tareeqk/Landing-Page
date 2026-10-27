@@ -103,11 +103,11 @@ export default function AllAreas() {
         <meta property="og:description" content={t('meta.areas.description')} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`https://tareeqk.ae/${lang}/areas/`} />
-        <meta property="og:image" content="https://tareeqk.ae/new/location_hero_banner.webp" />
+        <meta property="og:image" content="https://tareeqk.ae/og/new/location_hero_banner.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t('meta.areas.title')} />
         <meta name="twitter:description" content={t('meta.areas.description')} />
-        <meta name="twitter:image" content="https://tareeqk.ae/new/location_hero_banner.webp" />
+        <meta name="twitter:image" content="https://tareeqk.ae/og/new/location_hero_banner.jpg" />
       </Helmet>
       <HreflangTags path="areas" />
       <BreadcrumbSchema
@@ -217,6 +217,27 @@ export default function AllAreas() {
         body.dark .areas-card { background: var(--dark-bg-surface); border-color: var(--dark-border); }
         body.dark .areas-card-cta { color: var(--dark-text-main); border-top-color: var(--dark-border); }
 
+        .areas-coverage {
+          max-width: 820px; margin: 0 auto; padding: 8px 20px 72px;
+        }
+        .areas-coverage h2 {
+          font-size: clamp(1.25rem, 3vw, 1.6rem); font-weight: 800;
+          letter-spacing: -0.01em; margin: 0 0 14px;
+        }
+        .areas-coverage p {
+          font-size: 15px; line-height: 1.75; color: #4b5563; margin: 0 0 12px;
+        }
+        .areas-coverage-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+        .areas-coverage-links a {
+          display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px;
+          border-radius: 999px; border: 1px solid rgba(0,0,0,0.12);
+          font-size: 13.5px; font-weight: 700; color: inherit; text-decoration: none;
+          transition: border-color 0.2s ease, color 0.2s ease;
+        }
+        .areas-coverage-links a:hover { border-color: var(--primary-yellow); color: var(--primary-yellow); }
+        body.dark .areas-coverage p { color: var(--dark-text-muted, #a1a1aa); }
+        body.dark .areas-coverage-links a { border-color: var(--dark-border); }
+
         /* Single-column list strips on mobile instead of a card grid --
            several area names (Dubai Investment Park (DIP), Dubai Silicon
            Oasis, International City) wrap to 2 lines in a narrow 2-column
@@ -251,6 +272,22 @@ export default function AllAreas() {
           <AreaCard key={slug} slug={slug} langLink={langLink} />
         ))}
       </div>
+
+      {/* Body copy under the link grid. This hub was almost all links with
+          ~460 words of boilerplate; a short, factual explanation of how
+          coverage and dispatch work gives the page something of its own to
+          rank for and answers the "do you cover my area?" question. */}
+      <section className="areas-coverage">
+        <h2>{t('areasPage.coverageTitle')}</h2>
+        <p>{t('areasPage.coverageP1')}</p>
+        <p>{t('areasPage.coverageP2')}</p>
+        <p>{t('areasPage.coverageP3')}</p>
+        <div className="areas-coverage-links">
+          <Link to={langLink('/service')}>{t('areasPage.coverageServicesLink')}</Link>
+          <Link to={langLink('/pricing')}>{t('areasPage.coveragePricingLink')}</Link>
+          <Link to={langLink('/#contact')}>{t('areasPage.coverageContactLink')}</Link>
+        </div>
+      </section>
     </>
   );
 }

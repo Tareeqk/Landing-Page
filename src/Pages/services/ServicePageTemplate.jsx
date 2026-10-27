@@ -10,7 +10,7 @@ import {
   FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock,
   FaTruck, FaMapMarkerAlt, FaCheckCircle, FaUserShield, FaUserCheck,
   FaCar, FaCarBattery, FaTools, FaCarCrash, FaChevronDown, FaHeadset, FaTh,
-  FaMountain, FaMotorcycle,
+  FaMountain, FaMotorcycle, FaGasPump,
 } from 'react-icons/fa';
 // ArrowRight specifically comes from lucide, not react-icons/fa, to match
 // the one arrow style used site-wide (BecomeDriverPartner.jsx's "Apply as a
@@ -33,6 +33,7 @@ const ALL_SERVICES = [
   { label: 'Towing Service Dubai', href: '/towing-service-dubai', Icon: FaTruck },
   { label: 'Desert Recovery Dubai', href: '/desert-recovery-dubai', Icon: FaMountain },
   { label: 'Bike Recovery Dubai', href: '/bike-recovery-dubai', Icon: FaMotorcycle },
+  { label: 'Fuel Delivery Dubai', href: '/fuel-delivery-dubai', Icon: FaGasPump },
 ];
 
 // Matches the Footer's own AREAS list and App.jsx's LOCATION_SLUGS exactly —
@@ -590,18 +591,18 @@ export default function ServicePageTemplate({ config }) {
         <meta property="og:title" content={tc.metaTitle} />
         <meta property="og:description" content={tc.metaDesc} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}`} />
-        <meta property="og:image" content={`https://tareeqk.ae${config.heroImage}`} />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/${config.slug}/`} />
+        <meta property="og:image" content={`https://tareeqk.ae/og${config.heroImage.replace(/\.webp$/, '.jpg')}`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={tc.metaTitle} />
         <meta name="twitter:description" content={tc.metaDesc} />
-        <meta name="twitter:image" content={`https://tareeqk.ae${config.heroImage}`} />
+        <meta name="twitter:image" content={`https://tareeqk.ae/og${config.heroImage.replace(/\.webp$/, '.jpg')}`} />
       </Helmet>
       <HreflangTags path={config.slug} />
       <BreadcrumbSchema
         items={[
-          { name: t('servicePageTemplate.breadcrumbHome', 'Home'), url: `https://tareeqk.ae/${lang}` },
-          { name: t('servicePageTemplate.breadcrumbServices', 'Services'), url: `https://tareeqk.ae/${lang}/service` },
+          { name: t('servicePageTemplate.breadcrumbHome', 'Home'), url: `https://tareeqk.ae/${lang}/` },
+          { name: t('servicePageTemplate.breadcrumbServices', 'Services'), url: `https://tareeqk.ae/${lang}/service/` },
           { name: tc.title },
         ]}
       />
@@ -610,7 +611,7 @@ export default function ServicePageTemplate({ config }) {
       <ServiceSchema
         service={{
           name: tc.schemaName,
-          url: `https://tareeqk.ae/${lang}/${config.slug}`,
+          url: `https://tareeqk.ae/${lang}/${config.slug}/`,
           description: tc.schemaDesc,
           image: `https://tareeqk.ae${config.heroImage}`,
           areas: config.areas,

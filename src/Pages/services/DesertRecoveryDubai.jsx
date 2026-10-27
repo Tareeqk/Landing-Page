@@ -5,7 +5,7 @@ import ServicePageTemplate from './ServicePageTemplate';
 const config = {
   slug: 'desert-recovery-dubai',
   metaTitle: 'Desert Recovery Dubai – 24/7 Sand & Dune Recovery | Tareeqk',
-  metaDesc: 'Stuck in the sand in Dubai? Tareeqk provides 24/7 desert recovery for cars, SUVs, and 4x4s stuck in dunes or off-road terrain. Fast dispatch. Call or WhatsApp now.',
+  metaDesc: 'Stuck in the sand in Dubai? Tareeqk provides 24/7 desert recovery for cars, SUVs and 4x4s in dunes or off-road terrain. Call or WhatsApp now.',
   title: 'Desert Recovery in Dubai – 24/7 Sand & Dune Recovery',
   heroImage: '/new/Recovery_Van.webp',
   heroAlt: 'Desert Recovery Service in Dubai',

@@ -7,7 +7,7 @@ import {
   Car, Battery, Wrench, ChevronRight, ChevronLeft,
   Phone, MessageCircle, Star, Shield, Clock, MapPin,
   Target, Eye, Heart, CheckCircle2, Truck, AlertTriangle,
-  Mountain, Bike,
+  Mountain, Bike, Fuel,
 } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -430,6 +430,7 @@ export default function About({ isSection = false }) {
     { label: t('about.svc2'), href: '/battery-service-dubai',   icon: <Battery size={17} /> },
     { label: t('about.svc3'), href: '/flat-tyre-repair-dubai',  icon: <Wrench size={17} /> },
     { label: t('about.svc4'), href: '/towing-service-dubai',    icon: <Truck size={17} /> },
+    { label: t('about.svc5'), href: '/fuel-delivery-dubai',     icon: <Fuel size={17} /> },
     { label: t('about.svc6'), href: '/accident-recovery-dubai', icon: <AlertTriangle size={17} /> },
     { label: t('about.svc7'), href: '/desert-recovery-dubai',   icon: <Mountain size={17} /> },
     { label: t('about.svc8'), href: '/bike-recovery-dubai',     icon: <Bike size={17} /> },
@@ -451,12 +452,12 @@ export default function About({ isSection = false }) {
             <meta property="og:title" content={t('meta.about.title')} />
             <meta property="og:description" content={t('meta.about.description')} />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content={`https://tareeqk.ae/${lang}/about`} />
-            <meta property="og:image" content="https://tareeqk.ae/new/about_banner_hero.webp" />
+            <meta property="og:url" content={`https://tareeqk.ae/${lang}/about/`} />
+            <meta property="og:image" content="https://tareeqk.ae/og/new/about_banner_hero.jpg" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={t('meta.about.title')} />
             <meta name="twitter:description" content={t('meta.about.description')} />
-            <meta name="twitter:image" content="https://tareeqk.ae/new/about_banner_hero.webp" />
+            <meta name="twitter:image" content="https://tareeqk.ae/og/new/about_banner_hero.jpg" />
           </Helmet>
           <HreflangTags path="about" />
         </>

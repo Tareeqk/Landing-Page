@@ -29,12 +29,12 @@ export default function FAQs() {
         <meta property="og:title" content={t("meta.faqs.title")} />
         <meta property="og:description" content={t("meta.faqs.description")} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://tareeqk.ae/${lang}/faq`} />
-        <meta property="og:image" content="https://tareeqk.ae/new/second_img.webp" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/faq/`} />
+        <meta property="og:image" content="https://tareeqk.ae/og/new/second_img.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t("meta.faqs.title")} />
         <meta name="twitter:description" content={t("meta.faqs.description")} />
-        <meta name="twitter:image" content="https://tareeqk.ae/new/second_img.webp" />
+        <meta name="twitter:image" content="https://tareeqk.ae/og/new/second_img.jpg" />
       </Helmet>
       <HreflangTags path="faq" />
       <FAQSchema faqs={faqs} />

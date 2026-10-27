@@ -5,7 +5,7 @@ import ServicePageTemplate from './ServicePageTemplate';
 const config = {
   slug: 'car-recovery-dubai',
   metaTitle: 'Car Recovery Near Me Dubai – 24/7 Fast Response | Tareeqk',
-  metaDesc: 'Stuck on the road in Dubai? Tareeqk provides 24/7 car recovery with an average 20-minute response. Licensed RTA operator. Looking for car recovery near me? Call or WhatsApp now.',
+  metaDesc: 'Stuck on the road in Dubai? Tareeqk offers 24/7 car recovery with an average 20-minute response. Licensed RTA operator. Call or WhatsApp now.',
   title: 'Car Recovery in Dubai – 24/7 Fast Service',
   heroImage: '/new/Recovery_Van.webp',
   heroAlt: 'Car Recovery Service in Dubai',

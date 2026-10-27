@@ -159,7 +159,8 @@
     "svc6": "Accident Recovery",
     "svc7": "Desert Recovery",
     "svc8": "Bike Recovery",
-    "svc9": "Roadside Assistance"
+    "svc9": "Roadside Assistance",
+    "svc5": "Fuel Delivery"
   },
   "service": {
     "heroTag": "Premium Roadside Care",
@@ -289,7 +290,13 @@
     "ctaSubtitle": "Fast, professional roadside assistance for battery jump starts, tyre repairs, towing, and vehicle recovery across Dubai—available 24/7.",
     "whatsappCta": "Chat on WhatsApp",
     "downloadCta": "Download the App",
-    "learnMore": "Learn more"
+    "learnMore": "Learn more",
+    "svc9Title": "Emergency Fuel Delivery",
+    "svc9Desc": "Ran out of petrol? We bring enough fuel to your exact location to restart your car and reach the nearest station — no tow needed.",
+    "svc9b1": "24/7 dispatch across Dubai",
+    "svc9b2": "Unleaded petrol delivered by certified staff",
+    "svc9b3": "Price shown upfront in the app",
+    "svc9b4": "No towing needed"
   },
   "about2": {
     "about": "Our Services",
@@ -634,7 +641,7 @@
     },
     "contact": {
       "title": "REACH US",
-      "address": "Tareeqk Office #126, Ras Al Khor, Dubai - UAE",
+      "address": "Bel Rasheed Building, Office #126, Al Manama St, Ras Al Khor Industrial Area 2, Dubai, UAE",
       "phone": "+971 4 223 2269",
       "email": "info@tareeqk.ae"
     },
@@ -650,6 +657,7 @@
       "Bike Recovery Dubai",
       "Towing Service Dubai",
       "Accident Recovery",
+      "Fuel Delivery Dubai",
       "Roadside Assistance Dubai"
     ],
     "areasTitle": "Areas We Cover",
@@ -693,6 +701,7 @@
   "policy": {
     "title": "Privacy Policy",
     "subtitle": "Learn how we collect, use, and protect your personal information",
+    "metaDescription": "Learn how Tareeqk collects, uses and protects your personal information, including location data, payments and your rights over your data.",
     "sections": [
       {
         "title": "1. Introduction",
@@ -1180,6 +1189,7 @@
   "terms": {
     "title": "Terms and Conditions",
     "subtitle": "Learn about the terms and conditions that govern your use of the Tareeqk website and application",
+    "metaDescription": "Read the terms and conditions that govern your use of the Tareeqk website and app, including bookings, payments, cancellations and responsibilities.",
     "sections": [
       {
         "title": "1. Introduction",
@@ -1760,7 +1770,7 @@
     },
     "about": {
       "title": "About Us - Tareeqk Dubai",
-      "description": "Learn about Tareeqk, Dubai's trusted towing and roadside assistance service provider operating across the UAE."
+      "description": "Learn about Tareeqk, Dubai's trusted 24/7 towing and roadside assistance provider. Fast response, licensed RTA operator, serving the whole UAE."
     },
     "service": {
       "title": "Our Services - Towing, Recovery & Roadside Assistance Dubai",
@@ -1768,7 +1778,7 @@
     },
     "blogs": {
       "title": "Blog - Car Tips & Roadside Assistance Guides | Tareeqk",
-      "description": "Read Tareeqk's latest articles on car recovery, roadside safety tips, and driving guides for Dubai and the UAE."
+      "description": "Read Tareeqk's latest guides on car recovery, breakdown tips and roadside safety for drivers in Dubai and across the UAE."
     },
     "faqs": {
       "title": "FAQs - Towing & Roadside Assistance Dubai | Tareeqk",
@@ -1788,7 +1798,7 @@
     "phoneLabel": "Phone",
     "emailLabel": "Email",
     "addressLabel": "Address",
-    "addressValue": "Office #126, Bel Rasheed Building, Dubai, UAE",
+    "addressValue": "Bel Rasheed Building, Office #126, Al Manama St, Ras Al Khor Industrial Area 2, Dubai, UAE",
     "mapTitle": "Google Map",
     "formEyebrow": "Send a Message",
     "formHeading": "Need Assistance? Contact Us ",
@@ -1830,7 +1840,14 @@
     "title": "Car Recovery in Every Corner of Dubai",
     "subtitle": "Pick your area to see local response times and get help in minutes — Tareeqk covers all of Dubai, 24/7.",
     "cardCta": "View Details",
-    "respondsIn": "Responds in {{responseTime}}"
+    "respondsIn": "Responds in {{responseTime}}",
+    "coverageTitle": "How Tareeqk coverage works across Dubai",
+    "coverageP1": "Tareeqk dispatches recovery trucks 24 hours a day, 7 days a week, to every district listed above. Request help from the Tareeqk app, by phone or on WhatsApp, share your location, and the closest available truck is sent to you. Average on-scene time across Dubai is about 20 minutes, and you see your fare before you confirm the request.",
+    "coverageP2": "Open any area above to see its local response time. To see everything we handle, from car recovery and towing to battery jump start, flat tyre repair, accident recovery, bike recovery and desert recovery, visit our services page.",
+    "coverageP3": "Can't see your district? Call or WhatsApp us. We cover all of Dubai.",
+    "coverageServicesLink": "Our services",
+    "coveragePricingLink": "How we price a job",
+    "coverageContactLink": "Contact us"
   },
   "locationPageTemplate": {
     "hero": {
@@ -1895,7 +1912,8 @@
         "towingService": "Towing Service",
         "batteryBoost": "Battery Boost",
         "flatTyreRepair": "Flat Tyre Repair",
-        "accidentRecovery": "Accident Recovery"
+        "accidentRecovery": "Accident Recovery",
+        "fuelDelivery": "Fuel Delivery"
       }
     },
     "process": {

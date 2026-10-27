@@ -39,6 +39,7 @@ const AccidentRecoveryDubai = lazy(() => import('./Pages/services/AccidentRecove
 const TowingServiceDubai    = lazy(() => import('./Pages/services/Towingservicedubai'));
 const DesertRecoveryDubai   = lazy(() => import('./Pages/services/DesertRecoveryDubai'));
 const BikeRecoveryDubai     = lazy(() => import('./Pages/services/BikeRecoveryDubai'));
+const FuelDeliveryDubai     = lazy(() => import('./Pages/services/FuelDeliveryDubai'));
 const RoadsideAssistanceDubai = lazy(() => import('./Pages/services/RoadsideAssistanceDubai'));
 
 // ── LOCATION PAGES ────────────────────────────────────────────────
@@ -177,7 +178,7 @@ function App() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        <Route path="/" element={<Navigate to="/en" replace />} />
+        <Route path="/" element={<Navigate to="/en/" replace />} />
 
         <Route path="/:lang" element={<MainLayout isDark={isDark} setIsDark={setIsDark} />}>
           <Route index element={<Home />} />
@@ -200,6 +201,7 @@ function App() {
           <Route path="towing-service-dubai"    element={<TowingServiceDubai />} />
           <Route path="desert-recovery-dubai"   element={<DesertRecoveryDubai />} />
           <Route path="bike-recovery-dubai"     element={<BikeRecoveryDubai />} />
+          <Route path="fuel-delivery-dubai"     element={<FuelDeliveryDubai />} />
           <Route path="roadside-assistance-dubai" element={<RoadsideAssistanceDubai />} />
 
           {/* Location pages — driven by common.json via useTranslation */}

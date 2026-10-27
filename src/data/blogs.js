@@ -21,7 +21,7 @@ export const BLOGS = [
       en: {
         title: 'How to Choose a Trusted Car Recovery Service in Dubai',
         description:
-          'Why choosing the right recovery service matters, what to look for in a provider, and why Tareeqk is built for it.',
+          'Why the right recovery service matters, what to look for in a provider in Dubai, and why Tareeqk is built to be there when you break down.',
         section: 'Guides',
         html: `
           <h2>Why choosing the right recovery service matters</h2>

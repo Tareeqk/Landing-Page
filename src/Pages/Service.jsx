@@ -6,7 +6,7 @@ import {
   Smartphone, MapPin, Tag, ShieldCheck, Clock, Map, Lock, Zap,
   ArrowRight, ArrowLeft, Phone, MessageCircle, Car, Truck,
   Battery, Wrench, AlertTriangle, ChevronRight, ChevronLeft,
-  CheckCircle2, Trophy, DollarSign, HardHat, Download, Mountain, Bike,
+  CheckCircle2, Trophy, DollarSign, HardHat, Download, Mountain, Bike, Fuel,
 } from 'lucide-react';
 
 import useLangLink from '../hooks/useLangLink';
@@ -22,17 +22,18 @@ function ServicesPageSchema() {
     "@type": "ItemList",
     "name": "Tareeqk Roadside Assistance Services Dubai",
     "description": "24/7 roadside assistance services in Dubai including car recovery, towing, battery boost, flat tyre repair, and accident recovery.",
-    "url": "https://tareeqk.ae/service",
+    "url": "https://tareeqk.ae/en/service/",
     "numberOfItems": 8,
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://tareeqk.ae/car-recovery-dubai", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://tareeqk.ae/battery-service-dubai", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://tareeqk.ae/flat-tyre-repair-dubai", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://tareeqk.ae/accident-recovery-dubai", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://tareeqk.ae/towing-service-dubai", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://tareeqk.ae/desert-recovery-dubai", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://tareeqk.ae/bike-recovery-dubai", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
-      { "@type": "ListItem", "position": 8, "item": { "@type": "Service", "name": "Roadside Assistance Dubai", "url": "https://tareeqk.ae/roadside-assistance-dubai", "description": "24/7 roadside assistance in Dubai covering battery jump-starts, flat tyre repair, lockout help, and full vehicle recovery.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 1, "item": { "@type": "Service", "name": "Car Recovery Dubai", "url": "https://tareeqk.ae/en/car-recovery-dubai/", "description": "24/7 car recovery and towing service in Dubai with 20-minute response time.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 2, "item": { "@type": "Service", "name": "Battery Boost & Replacement Dubai", "url": "https://tareeqk.ae/en/battery-service-dubai/", "description": "On-site car battery jump start and replacement across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 3, "item": { "@type": "Service", "name": "Flat Tyre Repair Dubai", "url": "https://tareeqk.ae/en/flat-tyre-repair-dubai/", "description": "Mobile flat tyre repair and replacement at your location in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 4, "item": { "@type": "Service", "name": "Accident Recovery Dubai", "url": "https://tareeqk.ae/en/accident-recovery-dubai/", "description": "Emergency accident recovery and towing for damaged vehicles in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 5, "item": { "@type": "Service", "name": "Towing Service Dubai", "url": "https://tareeqk.ae/en/towing-service-dubai/", "description": "Professional vehicle towing service across all Dubai districts.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 6, "item": { "@type": "Service", "name": "Desert Recovery Dubai", "url": "https://tareeqk.ae/en/desert-recovery-dubai/", "description": "24/7 desert recovery for cars, SUVs, and 4x4s stuck in sand, dunes, or off-road terrain in Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 7, "item": { "@type": "Service", "name": "Bike Recovery Service Dubai", "url": "https://tareeqk.ae/en/bike-recovery-dubai/", "description": "24/7 bike recovery for motorcycles, scooters, and two-wheelers across Dubai.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 8, "item": { "@type": "Service", "name": "Fuel Delivery Dubai", "url": "https://tareeqk.ae/en/fuel-delivery-dubai/", "description": "24/7 emergency petrol delivery in Dubai: enough fuel brought to your exact location to restart your car and reach the nearest station.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
+      { "@type": "ListItem", "position": 9, "item": { "@type": "Service", "name": "Roadside Assistance Dubai", "url": "https://tareeqk.ae/en/roadside-assistance-dubai/", "description": "24/7 roadside assistance in Dubai covering battery jump-starts, flat tyre repair, lockout help, and full vehicle recovery.", "provider": { "@type": "LocalBusiness", "name": "Tareeqk" }, "areaServed": "Dubai" } },
     ],
   };
   const howToSchema = {
@@ -649,6 +650,15 @@ export default function Service({ isSection = false }) {
       bullets: [t('service.svc7b1'), t('service.svc7b2'), t('service.svc7b3'), t('service.svc7b4')],
     },
     {
+      icon: <Fuel size={18} />,
+      href: '/fuel-delivery-dubai',
+      img: '/new/Recovery_Van.webp',
+      tag: null,
+      title: t('service.svc9Title'),
+      desc: t('service.svc9Desc'),
+      bullets: [t('service.svc9b1'), t('service.svc9b2'), t('service.svc9b3'), t('service.svc9b4')],
+    },
+    {
       icon: <ShieldCheck size={18} />,
       href: '/roadside-assistance-dubai',
       img: '/new/Recovery_Van.webp',
@@ -841,12 +851,12 @@ export default function Service({ isSection = false }) {
             <meta property="og:title" content={t('meta.service.title')} />
             <meta property="og:description" content={t('meta.service.description')} />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content={`https://tareeqk.ae/${lang}/service`} />
-            <meta property="og:image" content="https://tareeqk.ae/new/service_banner_hero.webp" />
+            <meta property="og:url" content={`https://tareeqk.ae/${lang}/service/`} />
+            <meta property="og:image" content="https://tareeqk.ae/og/new/service_banner_hero.jpg" />
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={t('meta.service.title')} />
             <meta name="twitter:description" content={t('meta.service.description')} />
-            <meta name="twitter:image" content="https://tareeqk.ae/new/service_banner_hero.webp" />
+            <meta name="twitter:image" content="https://tareeqk.ae/og/new/service_banner_hero.jpg" />
           </Helmet>
           <HreflangTags path="service" />
         </>

@@ -37,11 +37,17 @@ const MainLayout = ({ isDark, setIsDark }) => {
   // the URL. This keeps them in sync on every route change, including the
   // first load.
   useEffect(() => {
-    if (!SUPPORTED_LANGS.includes(lang) || lang === i18n.language) return
-    i18n.changeLanguage(lang)
-    localStorage.setItem("i18nextLng", lang)
+    if (!SUPPORTED_LANGS.includes(lang)) return
+    // Direction and lang are set UNCONDITIONALLY. i18n now starts in the URL's
+    // language (see src/i18n.js), so on first load `lang === i18n.language`
+    // and the old early-return skipped this block -- every /ar/ and /ur/ page
+    // then shipped <html lang="en"> with no dir="rtl".
     document.documentElement.dir = lang === "ar" || lang === "ur" ? "rtl" : "ltr"
     document.documentElement.lang = lang
+    if (lang !== i18n.language) {
+      i18n.changeLanguage(lang)
+      localStorage.setItem("i18nextLng", lang)
+    }
   }, [lang, i18n])
 
   return (

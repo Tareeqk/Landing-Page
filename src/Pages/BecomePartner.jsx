@@ -121,6 +121,15 @@ export default function BecomePartner() {
         <title>{t("meta.becomePartner.title")}</title>
         <meta name="description" content={t("meta.becomePartner.description")} />
         <link rel="canonical" href={`https://tareeqk.ae/${lang}/become-a-partner/`} />
+        <meta property="og:title" content={t("meta.becomePartner.title")} />
+        <meta property="og:description" content={t("meta.becomePartner.description")} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/become-a-partner/`} />
+        <meta property="og:image" content="https://tareeqk.ae/og/new/service_hero_banner.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={t("meta.becomePartner.title")} />
+        <meta name="twitter:description" content={t("meta.becomePartner.description")} />
+        <meta name="twitter:image" content="https://tareeqk.ae/og/new/service_hero_banner.jpg" />
       </Helmet>
       <HreflangTags path="become-a-partner" />
 

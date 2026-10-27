@@ -30,9 +30,14 @@ export default function Navbar({ isDark, setIsDark }) {
   const langLink = useLangLink()
   const fleetLoginUrl = `${import.meta.env.VITE_BASE_URL}/login`
 
-  const barePath = lang
+  // Trailing slash stripped (except for the bare "/" home path) so the
+  // `current` checks below match both "/en/about" and the "/en/about/"
+  // form that every direct load lands on after the host's slash redirect.
+  const rawBarePath = lang
     ? location.pathname.replace(`/${lang}`, "")
     : location.pathname
+  const barePath =
+    rawBarePath.length > 1 ? rawBarePath.replace(/\/+$/, "") : rawBarePath || "/"
 
   // Glass header gains a solid backdrop + soft shadow once the page scrolls,
   // so it stays legible over a hero photo without looking heavy at the top.

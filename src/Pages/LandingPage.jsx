@@ -313,17 +313,17 @@ export default function LandingPage() {
       <Helmet>
         <meta property="og:title" content={t('meta.home.title')} />
         <meta property="og:description" content={t('meta.home.description')} />
-        <meta property="og:image" content="https://tareeqk.ae/new/service_hero_banner.webp" />
-        <meta property="og:image:width" content="2400" />
-        <meta property="og:image:height" content="1029" />
-        <meta property="og:url" content={`https://tareeqk.ae/${lang}`} />
+        <meta property="og:image" content="https://tareeqk.ae/og/new/service_hero_banner.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/`} />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Tareeqk" />
         <meta property="og:locale" content={{ en: 'en_US', ar: 'ar_AR', ur: 'ur_PK' }[i18n.language] || 'en_US'} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t('meta.home.title')} />
         <meta name="twitter:description" content={t('meta.home.description')} />
-        <meta name="twitter:image" content="https://tareeqk.ae/new/service_hero_banner.webp" />
+        <meta name="twitter:image" content="https://tareeqk.ae/og/new/service_hero_banner.jpg" />
       </Helmet>
 
       <section

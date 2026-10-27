@@ -5,7 +5,7 @@ import { ArrowRight, Building2, CheckCircle2, Truck } from "lucide-react";
 import { DownloadApps } from "./DownloadApps";
 import useLangLink from "../hooks/useLangLink";
 
-const DRIVER_IMAGE = "/new/driver-app-mockup.png";
+const DRIVER_IMAGE = "/new/driver-app-mockup.webp";
 // A warm, people-first shot rather than a truck photo -- this card is
 // selling a business partnership, and a smiling handshake reads as more
 // welcoming here than another vehicle image (the truck already appears

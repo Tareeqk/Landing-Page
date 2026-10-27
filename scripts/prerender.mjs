@@ -52,7 +52,14 @@ if (isServerlessBuild) {
   });
 } else {
   const { default: puppeteer } = await import('puppeteer');
-  browser = await puppeteer.launch({ headless: true });
+  // GitHub Actions' Ubuntu runners restrict the user namespaces Chrome's
+  // sandbox needs, so launch fails with "No usable sandbox" there. The runner
+  // is a throwaway VM building our own pages, so disabling the sandbox is safe
+  // in CI; local builds keep the default.
+  browser = await puppeteer.launch({
+    headless: true,
+    args: process.env.CI ? ['--no-sandbox', '--disable-setuid-sandbox'] : [],
+  });
 }
 const page = await browser.newPage();
 
@@ -135,7 +142,33 @@ for (const { path: route } of pages) {
         });
       };
 
-      dedupeByKey('title', () => 'title');
+      // <title> is the one tag where "keep the last" is WRONG. Helmet
+      // inserts its route-specific <title> BEFORE the static fallback that
+      // index.html ships, so the DOM ends up as [route title, fallback].
+      // Keeping the last one baked the homepage fallback title into every
+      // route's static HTML (all 43 /en/ pages, plus /ar/ and /ur/, had
+      // the identical "Car Recovery in Dubai | 24/7 Towing & Roadside
+      // Assistance" title for any crawler that doesn't run JS).
+      // document.title always reads the FIRST <title> in the document,
+      // which is Helmet's, so use it as the source of truth and rebuild a
+      // single <title> from it.
+      {
+        const routeTitle = document.title;
+        document.head.querySelectorAll('title').forEach((el) => el.remove());
+        const titleEl = document.createElement('title');
+        titleEl.textContent = routeTitle;
+        document.head.prepend(titleEl);
+      }
+
+      // The inline gtag bootstrap in index.html injects googletagmanager.com
+      // <script> tags at runtime (loadGtagScript + gtag's own config
+      // loader). Serializing the live DOM bakes those into the static
+      // file, so the real page then loads gtag.js twice. Drop them from
+      // the snapshot; the inline bootstrap re-adds exactly one at runtime.
+      document
+        .querySelectorAll('script[src*="googletagmanager.com/gtag/js"]')
+        .forEach((el) => el.remove());
+
       dedupeByKey('link[rel="canonical"]', () => 'canonical');
       dedupeByKey('link[rel="alternate"][hreflang]', (el) => el.getAttribute('hreflang'));
       dedupeByKey('meta[name="description"]', () => 'description');

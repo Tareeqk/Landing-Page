@@ -28,6 +28,7 @@ const SERVICE_SLUGS = [
   'accident-recovery-dubai',
   'desert-recovery-dubai',
   'bike-recovery-dubai',
+  'fuel-delivery-dubai',
   'roadside-assistance-dubai',
 ];
 
@@ -40,7 +41,7 @@ const TRANSLATIONS = {
     paymentAccepted: 'Cash, Credit Card, Online Payment',
     knowsAbout: [
       'Car Recovery', 'Towing Service', 'Roadside Assistance',
-      'Battery Boost', 'Flat Tyre Repair', 'Accident Recovery', 'Desert Recovery',
+      'Battery Boost', 'Flat Tyre Repair', 'Accident Recovery', 'Desert Recovery', 'Fuel Delivery',
     ],
     areaServed: {
       city: 'Dubai',
@@ -56,6 +57,7 @@ const TRANSLATIONS = {
       'accident-recovery-dubai': 'Accident Recovery Dubai',
       'desert-recovery-dubai': 'Desert Recovery Dubai',
       'bike-recovery-dubai': 'Bike Recovery Dubai',
+      'fuel-delivery-dubai': 'Fuel Delivery Dubai',
       'roadside-assistance-dubai': 'Roadside Assistance Dubai',
     },
   },
@@ -67,7 +69,7 @@ const TRANSLATIONS = {
     paymentAccepted: 'نقدًا، بطاقة ائتمان، أو دفع إلكتروني',
     knowsAbout: [
       'إنقاذ السيارات', 'خدمة السحب', 'المساعدة على الطريق',
-      'شحن البطارية', 'إصلاح الإطارات المسطحة', 'إنقاذ الحوادث', 'إنقاذ الصحراء',
+      'شحن البطارية', 'إصلاح الإطارات المسطحة', 'إنقاذ الحوادث', 'إنقاذ الصحراء', 'توصيل الوقود',
     ],
     areaServed: {
       city: 'دبي',
@@ -85,6 +87,7 @@ const TRANSLATIONS = {
       'accident-recovery-dubai': 'إنقاذ الحوادث في دبي',
       'desert-recovery-dubai': 'إنقاذ الصحراء في دبي',
       'bike-recovery-dubai': 'إنقاذ الدراجات النارية في دبي',
+      'fuel-delivery-dubai': 'توصيل الوقود في دبي',
       'roadside-assistance-dubai': 'المساعدة على الطريق في دبي',
     },
   },
@@ -96,7 +99,7 @@ const TRANSLATIONS = {
     paymentAccepted: 'نقد، کریڈٹ کارڈ، یا آن لائن ادائیگی',
     knowsAbout: [
       'کار ریکوری', 'ٹوئنگ سروس', 'روڈ سائیڈ اسسٹنس',
-      'بیٹری بوسٹ', 'فلیٹ ٹائر مرمت', 'ایکسیڈنٹ ریکوری', 'ڈیزرٹ ریکوری',
+      'بیٹری بوسٹ', 'فلیٹ ٹائر مرمت', 'ایکسیڈنٹ ریکوری', 'ڈیزرٹ ریکوری', 'فیول ڈیلیوری',
     ],
     areaServed: {
       city: 'دبئی',
@@ -112,6 +115,7 @@ const TRANSLATIONS = {
       'accident-recovery-dubai': 'ایکسیڈنٹ ریکوری دبئی',
       'desert-recovery-dubai': 'ڈیزرٹ ریکوری دبئی',
       'bike-recovery-dubai': 'بائیک ریکوری دبئی',
+      'fuel-delivery-dubai': 'فیول ڈیلیوری دبئی',
       'roadside-assistance-dubai': 'روڈ سائیڈ اسسٹنس دبئی',
     },
   },
@@ -130,6 +134,11 @@ function buildSchema(lang) {
     // page they're on.
     '@id': 'https://tareeqk.ae/#business',
     name: 'Tareeqk',
+    // Registered/full business name -- the Google Business Profile is listed
+    // as "Tareeqk Portal". `name` stays the public brand ("Tareeqk") used on
+    // the site, app and signage; legalName ties the two together for search
+    // engines.
+    legalName: 'Tareeqk Portal',
     alternateName: t.alternateName,
     description: t.description,
     // Matches the current page's own self-referencing canonical
@@ -149,17 +158,19 @@ function buildSchema(lang) {
       'https://tareeqk.ae/new/NewBGG.webp',
     ],
     telephone: '+97142232269',
-    email: 'support@tareeqk.ae',
+    // Same address the footer, contact form and legal pages show -- schema
+    // email must match the visible one for NAP consistency.
+    email: 'info@tareeqk.ae',
     address: {
       '@type': 'PostalAddress',
       // Kept in English across all three languages deliberately -- this
-      // is the formal registered address (matches Google Business
-      // Profile / trade license), not marketing copy. Transliterating it
-      // without the actual official Arabic/Urdu rendering on file risks
-      // an address that looks plausible but doesn't match what's
-      // registered elsewhere, which hurts local-SEO NAP consistency
-      // more than an English string on an Arabic page does.
-      streetAddress: 'Tareeqk Office #126, Ras Al Khor',
+      // must match the verified Google Business Profile listing character
+      // for character (Bel Rasheed Building - Office #126 - Al Manama St -
+      // Ras Al Khor Ind. Second - Ras Al Khor Industrial Area 2), plus the
+      // footer/contact address in common.json. It previously read "Tareeqk
+      // Office #126, Ras Al Khor", which matched neither, and inconsistent
+      // name/address/phone across a site and its listing weakens local SEO.
+      streetAddress: 'Bel Rasheed Building, Office #126, Al Manama St, Ras Al Khor Industrial Area 2',
       addressLocality: 'Dubai',
       addressRegion: 'Dubai',
       addressCountry: 'AE',
@@ -179,7 +190,9 @@ function buildSchema(lang) {
       // schema.org's DayOfWeek enumeration expects these literal English
       // tokens (or their schema.org/Monday-style URLs) regardless of
       // page language -- not free text, so this never gets translated.
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      // All 7 days: the site advertises 24/7 dispatch, and Sunday was
+      // missing, which told Google the business is closed on Sundays.
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       opens: '00:00',
       closes: '23:59',
     },
@@ -195,10 +208,15 @@ function buildSchema(lang) {
         },
       })),
     },
+    // Mirrors the social links in Footer.jsx (SOCIALS) exactly so
+    // the profiles Google associates with the entity are the ones users
+    // can actually reach from the site.
     sameAs: [
-      'https://www.instagram.com/tareeqk',
+      'https://www.instagram.com/tareeqk.ae/',
       'https://www.facebook.com/share/1Dv6SMaQx1/?mibextid=wwXIfr',
-      'https://www.tiktok.com/@tareeqk',
+      'https://x.com/Tareeqkportal',
+      'https://www.youtube.com/@tareeqk',
+      'https://www.linkedin.com/company/tareeqk-portal/',
     ],
     priceRange: '$$',
     paymentAccepted: t.paymentAccepted,

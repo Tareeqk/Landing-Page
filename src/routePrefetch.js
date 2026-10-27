@@ -29,6 +29,7 @@ const STATIC_IMPORTS = {
   'towing-service-dubai': () => import('./Pages/services/Towingservicedubai'),
   'desert-recovery-dubai': () => import('./Pages/services/DesertRecoveryDubai'),
   'bike-recovery-dubai': () => import('./Pages/services/BikeRecoveryDubai'),
+  'fuel-delivery-dubai': () => import('./Pages/services/FuelDeliveryDubai'),
   'roadside-assistance-dubai': () => import('./Pages/services/RoadsideAssistanceDubai'),
 };
 
@@ -89,4 +90,32 @@ export function prefetchRoute(path) {
     done.add(slug);
     importFn();
   }
+}
+
+// Everything Home lazy-loads below the hero (same specifiers as the lazy()
+// calls in Pages/Home.jsx).
+const HOME_SECTION_IMPORTS = [
+  () => import('./Components/AboutComponent'),
+  () => import('./Components/CJI'),
+  () => import('./Components/ServiceComponent'),
+  () => import('./Components/Howitworks'),
+  () => import('./Components/BecomeDriverPartner'),
+  () => import('./Components/HomeFAQ'),
+  () => import('./Components/ContactForm'),
+];
+
+// Like prefetchRoute, but returns a promise for every chunk the route needs
+// for its FIRST render. main.jsx awaits this before mounting React so the
+// first commit contains the real page instead of a <Suspense> fallback
+// (which would replace the prerendered HTML with a spinner until the lazy
+// chunks arrive). Unknown paths load the NotFound chunk.
+export function preloadRoute(path) {
+  const segments = String(path || '').split('?')[0].split('#')[0].split('/').filter(Boolean);
+  const slug = segments[1]; // segments[0] is the /:lang prefix
+
+  if (!slug) return Promise.all(HOME_SECTION_IMPORTS.map((load) => load()));
+  if (slug === 'page') return import('./Pages/BlogPage');
+  if (LOCATION_SLUGS.has(slug)) return import('./Pages/locations');
+  const importFn = STATIC_IMPORTS[slug];
+  return importFn ? importFn() : import('./Pages/NotFound');
 }

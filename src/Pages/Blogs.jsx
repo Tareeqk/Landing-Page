@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { Helmet } from "react-helmet-async"
-import { useNavigate, useParams, Link } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { Car, Truck, CarFront, BatteryCharging, ArrowRight } from "lucide-react"
 import { getLocalizedBlogs } from "../data/blogs"
 import useLangLink from "../hooks/useLangLink"
@@ -369,7 +369,6 @@ export default function Blogs() {
   const { lang } = useParams()
   const isRTL = i18n.dir() === "rtl"
   const blogs = getLocalizedBlogs(i18n.language)
-  const navigate = useNavigate()
   const langLink = useLangLink()
   useBlogsStyles()
 
@@ -400,7 +399,9 @@ export default function Blogs() {
   }, [])
 
   const [featured, ...rest] = blogs
-  const goToBlog = (blog) => navigate(langLink(`/page/${blog.slug}`), { state: { blog } })
+  // Real <a href> links (not button + navigate()) so crawlers can discover
+  // and follow every article from this index page.
+  const blogHref = (blog) => langLink(`/page/${blog.slug}`)
 
   return (
     <div className="bl-page" dir={isRTL ? "rtl" : "ltr"}>
@@ -412,12 +413,12 @@ export default function Blogs() {
         <meta property="og:title" content={t("meta.blogs.title")} />
         <meta property="og:description" content={t("meta.blogs.description")} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`https://tareeqk.ae/${lang}/blogs`} />
-        <meta property="og:image" content="https://tareeqk.ae/new/blogs.webp" />
+        <meta property="og:url" content={`https://tareeqk.ae/${lang}/blogs/`} />
+        <meta property="og:image" content="https://tareeqk.ae/og/new/blogs.jpg" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={t("meta.blogs.title")} />
         <meta name="twitter:description" content={t("meta.blogs.description")} />
-        <meta name="twitter:image" content="https://tareeqk.ae/new/blogs.webp" />
+        <meta name="twitter:image" content="https://tareeqk.ae/og/new/blogs.jpg" />
       </Helmet>
       <HreflangTags path="blogs" />
 
@@ -459,12 +460,12 @@ export default function Blogs() {
                       <span>{featured.mins} {t("blogs.mins")}</span>
                     </div>
                     <p className="bl-featured-desc">{featured.description}</p>
-                    <button className="bl-card-link" style={{ fontSize: 15 }} onClick={() => goToBlog(featured)}>
+                    <Link className="bl-card-link" style={{ fontSize: 15 }} to={blogHref(featured)} viewTransition>
                       {t("blogs.readMore")}
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
-                    </button>
+                    </Link>
                   </div>
                 </div>
               )}
@@ -489,12 +490,12 @@ export default function Blogs() {
                         </div>
                         <h3 className="bl-card-title">{blog.title}</h3>
                         <p className="bl-card-desc">{blog.description}</p>
-                        <button className="bl-card-link" onClick={() => goToBlog(blog)}>
+                        <Link className="bl-card-link" to={blogHref(blog)} viewTransition>
                           {t("blogs.readMore")}
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   ))}

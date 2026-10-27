@@ -45,6 +45,7 @@ export const SERVICES = [
   { title: "Bike Recovery Dubai", href: "/bike-recovery-dubai" },
   { title: "Towing Service Dubai", href: "/towing-service-dubai" },
   { title: "Accident Recovery", href: "/accident-recovery-dubai" },
+  { title: "Fuel Delivery Dubai", href: "/fuel-delivery-dubai" },
   { title: "Roadside Assistance Dubai", href: "/roadside-assistance-dubai" },
 ]
 
