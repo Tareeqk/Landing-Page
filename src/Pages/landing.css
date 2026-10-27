@@ -1125,3 +1125,18 @@
    never actually moved to match its own right-aligned text or the rest
    of the right-positioned RTL content column. */
 [dir="rtl"] .tk-hero__subtitle { margin-left: auto; margin-right: 0; }
+/* Hero proof stats: four cards (15-min, 24/7, live tracking, Google rating)
+   stay on ONE row on phones. They share the width equally and the labels
+   wrap onto two lines instead of the cards wrapping onto a second row. */
+@media (max-width: 768px) {
+  .tk-hero__stats { flex-wrap: nowrap; gap: 6px; }
+  .tk-hero__stat {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 8px 6px;
+    align-items: center;
+    text-align: center;
+  }
+  .tk-hero__stat-value { font-size: 13px; white-space: nowrap; }
+  .tk-hero__stat-label { font-size: 9.5px; line-height: 1.25; overflow-wrap: anywhere; }
+}
