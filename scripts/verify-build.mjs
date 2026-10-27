@@ -53,9 +53,14 @@ for (const { path: route } of pages) {
     if (!/lang="en"/.test(root) || /dir="rtl"/.test(root)) fail(`${route}: expected an LTR English <html>, got ${root}`);
   }
 
-  // The inline gtag bootstrap in index.html adds this at runtime; a baked-in
-  // copy means the prerender snapshot leaked it into the static HTML again.
-  if (/<script[^>]+googletagmanager\.com\/gtag\/js/.test(html)) fail(`${route}: gtag.js <script src> baked into static HTML`);
+  // Google's standard tag must be in the page source exactly once, and nothing
+  // else may load gtag.js. A missing tag means Google Ads can't detect the site;
+  // a second one (e.g. a runtime-injected ...&cx=c&gtm=... copy baked in by the
+  // prerender snapshot) makes the real page load gtag.js twice.
+  const gtagSrcs = [...html.matchAll(/<script[^>]+src="(https:\/\/www\.googletagmanager\.com\/gtag\/js[^"]*)"/g)].map((m) => m[1].replace(/&amp;/g, '&'));
+  if (gtagSrcs.length !== 1 || gtagSrcs[0] !== 'https://www.googletagmanager.com/gtag/js?id=G-N8F28JJFW1') {
+    fail(`${route}: expected exactly one standard gtag.js tag, found ${gtagSrcs.length}: ${gtagSrcs.join(' | ') || 'none'}`);
+  }
 }
 
 // Every page should have its own title. The bare "/" and "/en/" are both the

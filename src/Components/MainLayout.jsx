@@ -51,7 +51,7 @@ const MainLayout = ({ isDark, setIsDark }) => {
   }, [lang, i18n])
 
   return (
-    <div className="pt-16 sm:pt-20">
+    <div className="pt-16 sm:pt-20 lg:pt-[117px]">
       <Navbar isDark={isDark} setIsDark={setIsDark} />
       <Nasir />
       <main>

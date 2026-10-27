@@ -1,5 +1,29 @@
 {
   "navbar": {
+    "mega": {
+      "strip": "Serving Dubai, day and night",
+      "eyebrow": "What do you need?",
+      "viewAll": "View all services",
+      "stuckTitle": "Request help in seconds",
+      "stuckBody": "Share your location, see your price and follow your driver live in the Tareeqk app.",
+      "whatsapp": "Chat on WhatsApp",
+      "badges": {
+        "most": "Most requested",
+        "urgent": "Urgent",
+        "all": "All-in-one"
+      },
+      "descs": [
+        "Flatbed and wheel-lift recovery for cars, SUVs and luxury vehicles.",
+        "On-site jump-starts, diagnostics and battery replacement.",
+        "Mobile tyre changes and puncture repair at your location.",
+        "Sand, dune and off-road recovery for 4x4s and SUVs.",
+        "Safe pickup and transport for motorcycles and scooters.",
+        "Light, medium and heavy-duty towing, including inter-emirate.",
+        "Careful recovery after a collision, with documentation help.",
+        "Ran out of fuel? We bring enough to restart.",
+        "One number for battery, tyre, lockout or any breakdown."
+      ]
+    },
     "fleetLogin": "Fleet Login",
     "home": "Home",
     "about": "About Us",
@@ -200,7 +224,7 @@
     "svc2b3": "Damage-free loading guaranteed",
     "svc2b4": "Transparent fixed pricing",
     "svc3Tag": "Urgent",
-    "svc3Title": "Battery Boost & Replacement",
+    "svc3Title": "Battery Jump Start Dubai",
     "svc3Desc": "On-site jump-starts, diagnostics, and battery replacement — for cars, SUVs, and commercial vehicles.",
     "svc3b1": "Free battery health check",
     "svc3b2": "Branded battery replacement",
@@ -291,7 +315,7 @@
     "whatsappCta": "Chat on WhatsApp",
     "downloadCta": "Download the App",
     "learnMore": "Learn more",
-    "svc9Title": "Emergency Fuel Delivery",
+    "svc9Title": "Fuel Delivery Dubai",
     "svc9Desc": "Ran out of petrol? We bring enough fuel to your exact location to restart your car and reach the nearest station — no tow needed.",
     "svc9b1": "24/7 dispatch across Dubai",
     "svc9b2": "Unleaded petrol delivered by certified staff",

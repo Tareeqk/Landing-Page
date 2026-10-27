@@ -137,8 +137,14 @@ function useServiceStyles() {
         transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
                     box-shadow 0.35s ease, border-color 0.25s ease;
         text-decoration: none;
-        display: block;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         cursor: pointer;
+      }
+      .svc-card-more { margin-top: auto !important; }
+      @media (max-width: 1024px) and (min-width: 769px) {
+        .svc-cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
       }
       .svc-card:hover {
         transform: translateY(-6px);
@@ -771,15 +777,15 @@ export default function Service({ isSection = false }) {
           >
             {svc.icon}
           </div>
-          <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '14.5px', color: '#111', letterSpacing: '-0.01em', lineHeight: 1.3, margin: 0 }}>
+          <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '17px', color: '#111', letterSpacing: '-0.01em', lineHeight: 1.3, margin: 0 }}>
             {svc.title}
           </h3>
         </div>
         <p
           className="svc-card-body"
           style={{
-            color: '#6b6b6b', lineHeight: 1.6, fontSize: '12px', marginBottom: '14px',
-            display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
+            color: '#5b5b5b', lineHeight: 1.6, fontSize: '13.5px', marginBottom: '14px',
+            display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
           }}
         >
           {svc.desc}
@@ -789,15 +795,16 @@ export default function Service({ isSection = false }) {
           {svc.bullets.map((b, j) => (
             <div key={j} className="svc-feat-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 9px', borderRadius: '9px', border: '1px solid rgba(0,0,0,0.06)', background: '#fafafa' }}>
               <CheckCircle2 size={11} style={{ color: 'var(--primary-yellow)', flexShrink: 0 }} />
-              <span className="svc-feat-label" style={{ fontSize: '10.5px', fontWeight: 600, color: '#444', lineHeight: 1.25 }}>{b}</span>
+              <span className="svc-feat-label" style={{ fontSize: '12px', fontWeight: 600, color: '#444', lineHeight: 1.3 }}>{b}</span>
             </div>
           ))}
         </div>
 
         <div
+          className="svc-card-more"
           style={{
             marginTop: '16px', paddingTop: '14px', borderTop: '1px solid rgba(0,0,0,0.06)',
-            fontSize: '11.5px', fontWeight: 700, color: 'var(--primary-yellow)',
+            fontSize: '13px', fontWeight: 700, color: 'var(--primary-yellow)',
             display: 'flex', alignItems: 'center', gap: '4px',
           }}
         >
@@ -1166,9 +1173,9 @@ export default function Service({ isSection = false }) {
           {/* Desktop grid — flex-wrap + centered so a trailing partial row
               (7 cards don't divide evenly into any fixed column count)
               centers itself instead of hugging one side with an empty gap. */}
-          <div className="svc-cards-grid" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px' }}>
+          <div className="svc-cards-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: '20px' }}>
             {SERVICES.map((svc, i) => (
-              <div key={i} className="svc-reveal svc-card-slot" data-delay={i * 75} style={{ flex: '1 1 260px', maxWidth: '280px' }}>
+              <div key={i} className="svc-reveal svc-card-slot" data-delay={i * 75} style={{ minWidth: 0 }}>
                 {renderServiceCard(svc, i)}
               </div>
             ))}

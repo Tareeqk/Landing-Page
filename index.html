@@ -35,17 +35,16 @@
          needs to be ready by the time a visitor reaches the partner form. -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 
-    <!-- Google tag (gtag.js) — the library itself is fetched and executed
-         lazily (see loadGtagScript below) instead of via a static <script
-         async> tag here. async only keeps it from blocking HTML parsing;
-         it still competes for main-thread time as soon as it arrives,
-         which was landing well inside Lighthouse's TBT measurement
-         window. Every gtag() call below already queues into dataLayer
-         regardless of whether the library has loaded yet, so deferring
-         the fetch to `window.load` costs nothing analytics-wise — the
-         queued consent/config/pageview calls are processed the moment
-         the script arrives — while moving its parse/execute cost outside
-         the window that TBT/TTI are scored on. -->
+    <!-- Google tag (gtag.js) — Google's standard install: this <script async>
+         tag plus the inline snippet below. It is in the page source (not
+         injected after window.load) so Google Ads / Tag Assistant can detect
+         it. `async` keeps it from blocking HTML parsing. Every gtag() call
+         below queues into dataLayer and is processed once the library
+         arrives, in order, so the Consent Mode default is always applied
+         before the config calls. scripts/prerender.mjs keeps exactly this one
+         tag; scripts/verify-build.mjs fails the build if it is missing or
+         duplicated. -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N8F28JJFW1"></script>
     <script>
       window.dataLayer = window.dataLayer || []
       function gtag() {
@@ -89,19 +88,23 @@
       gtag("js", new Date())
 
       gtag("config", "G-N8F28JJFW1")
-      gtag("config", "AW-17286502381")
       gtag("config", "AW-18489174358")
 
-      function loadGtagScript() {
-        var script = document.createElement("script")
-        script.async = true
-        script.src = "https://www.googletagmanager.com/gtag/js?id=G-N8F28JJFW1"
-        document.head.appendChild(script)
-      }
-      if (document.readyState === "complete") {
-        loadGtagScript()
-      } else {
-        window.addEventListener("load", loadGtagScript)
+      // Google Ads conversion snippets for account AW-18489174358, exactly as
+      // Google Ads issued them. They live here, in the page source, so Google's
+      // tag check can find them -- but they are NOT run on page load (that
+      // would count every page view as a conversion). src/utils/adsTracking.js
+      // calls window.tkAdsConversion() only when a visitor clicks a tel: or
+      // WhatsApp link.
+      window.tkAdsConversion = function (name) {
+        if (name === "call_click") {
+          // Event snippet for Call click conversion
+          gtag('event', 'conversion', {'send_to': 'AW-18489174358/pDWkCOK7iasdENbSqfBE'});
+        }
+        if (name === "whatsapp_click") {
+          // Event snippet for WhatsApp click conversion
+          gtag('event', 'conversion', {'send_to': 'AW-18489174358/nMNtCN-7iasdENbSqfBE'});
+        }
       }
     </script>
     <!-- Noto Kufi Arabic / Noto Nastaliq Urdu are only needed for ar/ur
