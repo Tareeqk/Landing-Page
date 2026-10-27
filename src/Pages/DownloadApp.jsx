@@ -90,7 +90,7 @@ export default function DownloadApp() {
             <span className="inline-block rounded-full border border-black/10 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[#7a5200]">
               {t("downloadPage.eyebrow")}
             </span>
-            <h1 className="mt-4 text-balance text-3xl font-extrabold leading-[1.15] tracking-tight sm:text-4xl lg:text-[42px]">
+            <h1 className="mt-4 whitespace-nowrap text-[clamp(1.05rem,4.7vw,2.25rem)] font-extrabold leading-[1.2] tracking-tight">
               {t("downloadPage.title")}
             </h1>
             <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-[#5b6068] sm:text-base">
