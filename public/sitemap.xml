@@ -171,6 +171,34 @@
   </url>
 
   <url>
+    <loc>https://tareeqk.ae/en/download/</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://tareeqk.ae/en/download/"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://tareeqk.ae/ar/download/"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://tareeqk.ae/ur/download/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tareeqk.ae/en/download/"/>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tareeqk.ae/ar/download/</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://tareeqk.ae/en/download/"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://tareeqk.ae/ar/download/"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://tareeqk.ae/ur/download/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tareeqk.ae/en/download/"/>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://tareeqk.ae/ur/download/</loc>
+    <xhtml:link rel="alternate" hreflang="en"        href="https://tareeqk.ae/en/download/"/>
+    <xhtml:link rel="alternate" hreflang="ar"        href="https://tareeqk.ae/ar/download/"/>
+    <xhtml:link rel="alternate" hreflang="ur"        href="https://tareeqk.ae/ur/download/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tareeqk.ae/en/download/"/>
+    <lastmod>2026-10-27</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://tareeqk.ae/en/blogs/</loc>
     <xhtml:link rel="alternate" hreflang="en"        href="https://tareeqk.ae/en/blogs/"/>
     <xhtml:link rel="alternate" hreflang="ar"        href="https://tareeqk.ae/ar/blogs/"/>

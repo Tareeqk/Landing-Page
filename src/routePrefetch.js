@@ -21,6 +21,7 @@ const STATIC_IMPORTS = {
   terms: () => import('./Pages/TermsAndConditions'),
   'privacy-policy': () => import('./Pages/PrivacyAndPolicy'),
   'become-a-partner': () => import('./Pages/BecomePartner'),
+  'download': () => import('./Pages/DownloadApp'),
   areas: () => import('./Pages/AllAreas'),
   'car-recovery-dubai': () => import('./Pages/services/CarRecoveryDubai'),
   'battery-service-dubai': () => import('./Pages/services/BatteryServiceDubai'),

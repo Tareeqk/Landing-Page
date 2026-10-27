@@ -7,8 +7,9 @@ import {
   Car, Battery, Wrench, ChevronRight, ChevronLeft,
   Phone, MessageCircle, Star, Shield, Clock, MapPin,
   Target, Eye, Heart, CheckCircle2, Truck, AlertTriangle,
-  Mountain, Bike, Fuel,
+  Mountain, Bike, Fuel, Download,
 } from 'lucide-react';
+import useDownloadLink from '../hooks/useDownloadLink';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import LocalBusinessSchema from '../schemas/LocalBusinessSchema';
@@ -394,6 +395,7 @@ export default function About({ isSection = false }) {
   const { t, i18n } = useTranslation();
   const { lang } = useParams();
   const langLink = useLangLink();
+  const dl = useDownloadLink();
   const isRTL = i18n.dir() === 'rtl';
   useAboutStyles();
   const HeadingTag = isSection ? 'h2' : 'h1';
@@ -585,8 +587,8 @@ export default function About({ isSection = false }) {
                 data-delay="240"
                 style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '44px' }}
               >
-                <a
-                  href="tel:+97142232269"
+                <Link
+                  {...dl.linkProps}
                   className="abt-btn-cta getTow-btn"
                   style={{
                     background: 'var(--primary-yellow)',
@@ -602,9 +604,11 @@ export default function About({ isSection = false }) {
                     gap: '8px',
                   }}
                 >
-                  <Phone size={16} />
-                  {t('about.heroCta')}
-                </a>
+                  <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#000', color: 'var(--primary-yellow)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Download size={13} />
+                  </span>
+                  {t('service.downloadApp', 'Download App')}
+                </Link>
                 {/* Was href="/contact" -- not a real route (no /contact page
                     exists; the contact section lives on the homepage at
                     #contact), so this link 404'd. HashLink so the
@@ -1192,8 +1196,8 @@ export default function About({ isSection = false }) {
                 {t('about.ctaSubtitle')}
               </p>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <a
-                  href="tel:+97142232269"
+                <Link
+                  {...dl.linkProps}
                   className="abt-btn-cta getTow-btn"
                   style={{
                     background: 'var(--primary-yellow)', color: '#000',
@@ -1202,9 +1206,11 @@ export default function About({ isSection = false }) {
                     letterSpacing: '0.01em', display: 'inline-flex', alignItems: 'center', gap: '8px',
                   }}
                 >
-                  <Phone size={16} />
-                  {t('about.callNow')}
-                </a>
+                  <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#000', color: 'var(--primary-yellow)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Download size={13} />
+                  </span>
+                  {t('service.downloadApp', 'Download App')}
+                </Link>
                 <a
                   href="https://wa.me/97142232269"
                   target="_blank"

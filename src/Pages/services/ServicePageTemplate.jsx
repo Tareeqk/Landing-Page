@@ -17,6 +17,7 @@ import {
 // Partner" button) -- react-icons' FaArrowRight is a visibly different,
 // heavier glyph than every other CTA arrow on the site.
 import { ArrowRight } from 'lucide-react';
+import useDownloadLink from '../../hooks/useDownloadLink';
 import ServiceSchema from '../../schemas/ServiceSchema';
 import FAQSchema from '../../schemas/FAQSchema';
 import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
@@ -514,6 +515,7 @@ const MOBILE_CSS = `
 export default function ServicePageTemplate({ config }) {
   const { lang } = useParams();
   const langLink = useLangLink();
+  const dl = useDownloadLink();
   const { t } = useTranslation();
 
   // Ar/ur copy lives in common.json under servicePages.<slug>.* — config's
@@ -550,15 +552,8 @@ export default function ServicePageTemplate({ config }) {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  const handleCall = () => { window.location.href = 'tel:+97142232269'; };
   const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
-  const handleDownload = () => {
-    const ua = navigator.userAgent || '';
-    const isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
-    window.location.href = isIOS
-      ? 'https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854'
-      : 'https://play.google.com/store/apps/details?id=com.tareeqk.order';
-  };
+  const handleDownload = dl.go;
 
   const relatedServices = ALL_SERVICES.filter(s => !s.href.includes(config.slug));
   const showAreaToggle = isMobile && config.areas.length > MOBILE_AREA_LIMIT;
@@ -891,7 +886,7 @@ export default function ServicePageTemplate({ config }) {
               data-aos="fade-up"
               data-aos-delay="180"
             >
-              <button onClick={handleCall} style={styles.btnPrimary}><FaPhoneAlt size={13} /> {t('servicePageTemplate.callNow', 'Call Now')}</button>
+              <Link {...dl.linkProps} style={{ ...styles.btnPrimary, textDecoration: 'none' }}><FaMobileAlt size={13} /> {t('servicePageTemplate.downloadApp', 'Download The App')}</Link>
               <button onClick={handleWhatsApp} style={styles.btnGreen}><FaWhatsapp size={16} /> {t('servicePageTemplate.whatsapp', 'WhatsApp')}</button>
             </div>
           </div>

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from "react-helmet-async";
 import useLangLink from '../hooks/useLangLink';
+import useDownloadLink from '../hooks/useDownloadLink';
 import ratings from '../data/ratings.json';
 import './landing.css';
 
@@ -255,15 +256,8 @@ export default function LandingPage() {
     });
   }
 
-  const handleDownloadRedirect = () => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const iosUrl     = 'https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854';
-    const androidUrl = 'https://play.google.com/store/apps/details?id=com.tareeqk.order';
-    const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    const isMacOS = navigator.platform.toUpperCase().includes('MAC') ||
-      (navigator.userAgent.includes('Mac') && !('ontouchend' in document));
-    window.location.href = (isIOSDevice || isMacOS) ? iosUrl : androidUrl;
-  };
+  const dl = useDownloadLink();
+  const handleDownloadRedirect = dl.go;
 
   // The floating store badges (position: fixed, bottom-anchored — see
   // .tk-store-badges--floating in landing.css) sit at a real viewport-
