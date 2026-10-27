@@ -121,18 +121,18 @@ export default function DownloadApp() {
                 >
                   <span
                     className={
-                      "w-fit rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] " +
+                      "order-1 w-fit rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-[0.14em] " +
                       (isCustomer ? "bg-[var(--primary-yellow)] text-black" : "bg-[#0b0d10] text-white")
                     }
                   >
                     {t(`downloadPage.${app.key}.badge`)}
                   </span>
-                  <h2 className="mt-3 text-xl font-bold sm:text-2xl">{t(`downloadPage.${app.key}.title`)}</h2>
-                  <p className="mt-2 max-w-md text-sm leading-relaxed text-[#5b6068]">
+                  <h2 className="order-2 mt-3 text-xl font-bold sm:text-2xl">{t(`downloadPage.${app.key}.title`)}</h2>
+                  <p className="order-3 mt-2 max-w-md text-sm leading-relaxed text-[#5b6068]">
                     {t(`downloadPage.${app.key}.desc`)}
                   </p>
 
-                  <ul className="mt-4 flex flex-col gap-2">
+                  <ul className="order-5 mt-4 flex flex-col gap-2">
                     {Array.isArray(points) &&
                       points.map((p) => (
                         <li key={p} className="flex items-start gap-2.5 text-[13px] text-[#2b2e34]">
@@ -150,10 +150,10 @@ export default function DownloadApp() {
                     width="1200"
                     height="900"
                     loading="lazy"
-                    className="mx-auto -my-5 w-full max-w-[300px] sm:max-w-[340px] drop-shadow-[0_24px_30px_rgba(0,0,0,0.18)]"
+                    className="order-6 mx-auto -my-4 w-full max-w-[250px] sm:max-w-[340px] drop-shadow-[0_24px_30px_rgba(0,0,0,0.18)]"
                   />
 
-                  <div className="mt-auto flex flex-wrap items-center gap-2.5">
+                  <div className="order-4 mt-4 flex items-center gap-2 lg:order-7 lg:mt-auto lg:gap-2.5">
                     <a
                       href={app.play}
                       target="_blank"
@@ -161,7 +161,7 @@ export default function DownloadApp() {
                       aria-label={t("downloadPage.googlePlay")}
                       className="transition-transform duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-yellow)] rounded-lg"
                     >
-                      <img src={PLAY_BADGE} alt={t("downloadPage.googlePlay")} loading="lazy" className="h-10 w-auto" />
+                      <img src={PLAY_BADGE} alt={t("downloadPage.googlePlay")} loading="lazy" className="h-9 w-auto sm:h-10" />
                     </a>
                     <a
                       href={app.ios}
@@ -170,7 +170,7 @@ export default function DownloadApp() {
                       aria-label={t("downloadPage.appStore")}
                       className="transition-transform duration-200 hover:scale-105 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-yellow)] rounded-lg"
                     >
-                      <img src={IOS_BADGE} alt={t("downloadPage.appStore")} loading="lazy" className="h-10 w-auto" />
+                      <img src={IOS_BADGE} alt={t("downloadPage.appStore")} loading="lazy" className="h-9 w-auto sm:h-10" />
                     </a>
                   </div>
                 </article>
