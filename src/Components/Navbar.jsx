@@ -4,7 +4,24 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react"
-import { Menu, X, ChevronDown, LogOut, Building2 } from "lucide-react"
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ArrowRight,
+  Building2,
+  Download,
+  MessageCircle,
+  Truck,
+  BatteryCharging,
+  CircleDot,
+  Mountain,
+  Bike,
+  Cable,
+  TriangleAlert,
+  Fuel,
+  ShieldCheck,
+} from "lucide-react"
 import { useLocation, Link, useParams } from "react-router-dom"
 import DarkMode from "./DarkMode"
 import LanguageSwitcher from "./LanguageSwitcher"
@@ -22,6 +39,31 @@ function classNames(...classes) {
 // instead of the browser's default blue outline, which clashed with the
 // yellow/black identity on keyboard focus.
 const FOCUS_RING = "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-yellow)]"
+
+// One icon per SERVICES entry, same order as SERVICES in Footer.jsx:
+// car, battery, tyre, desert, bike, towing, accident, fuel, roadside.
+const SERVICE_ICONS = [
+  Truck,
+  BatteryCharging,
+  CircleDot,
+  Mountain,
+  Bike,
+  Cable,
+  TriangleAlert,
+  Fuel,
+  ShieldCheck,
+]
+
+// Same store targets as the "Download The App" button on the service pages:
+// App Store on iOS, Google Play everywhere else. The delegated click tracker
+// (utils/adsTracking.js) classifies these as app_download_click.
+const PLAY_URL = "https://play.google.com/store/apps/details?id=com.tareeqk.order"
+const IOS_URL = "https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
+const WHATSAPP_URL = "https://wa.me/97142232269"
+function pickStoreOnClick(e) {
+  const ua = navigator.userAgent || ""
+  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) e.currentTarget.href = IOS_URL
+}
 
 export default function Navbar({ isDark, setIsDark }) {
   const location = useLocation()
@@ -74,9 +116,20 @@ export default function Navbar({ isDark, setIsDark }) {
   // Labels come from footer.services (i18n) by index, same as Footer.jsx —
   // SERVICES itself keeps its English .title as the untranslated fallback.
   const serviceLabels = t("footer.services", { returnObjects: true, defaultValue: [] })
+  // English labels drop the trailing " Dubai" in the menus (it is on every
+  // item, so it only adds width); the full label stays in the footer and on
+  // the pages. Arabic/Urdu labels are used as written.
+  const menuLabel = (label) => (lang === "en" || !lang ? label.replace(/ Dubai$/, "") : label)
+  const megaDescs = t("navbar.mega.descs", { returnObjects: true, defaultValue: [] })
+  const megaBadges = t("navbar.mega.badges", { returnObjects: true, defaultValue: {} })
+  const serviceBadge = (i) =>
+    i === 0 ? megaBadges.most : i === 1 ? megaBadges.urgent : i === 8 ? megaBadges.all : null
   const serviceLinks = SERVICES.map((service, i) => ({
-    label: serviceLabels[i] || service.title,
+    label: menuLabel(serviceLabels[i] || service.title),
     href: langLink(service.href),
+    Icon: SERVICE_ICONS[i],
+    desc: Array.isArray(megaDescs) ? megaDescs[i] : "",
+    badge: serviceBadge(i),
   }))
 
   // Area names are proper nouns and stay in English across all locales
@@ -102,6 +155,7 @@ export default function Navbar({ isDark, setIsDark }) {
         barePath === "/service" ||
         SERVICES.some((service) => barePath === service.href),
       dropdown: serviceLinks,
+      mega: true,
     },
     {
       name: t("navbar.locations"),
@@ -121,6 +175,7 @@ export default function Navbar({ isDark, setIsDark }) {
       href: langLink("/about"),
       current: companyPaths.includes(barePath) || barePath.startsWith("/page/"),
       dropdown: companyLinks,
+      footerLink: { label: t("navbar.fleetLogin", "Fleet Login"), href: fleetLoginUrl },
     },
     { name: t("navbar.contact"), href: langLink("/#contact") },
   ]
@@ -154,7 +209,7 @@ export default function Navbar({ isDark, setIsDark }) {
               ref={barRef}
               className={classNames(
                 "relative backdrop-blur-xl transition-all duration-300",
-                isDark ? "bg-[#0b0d10]/90" : "bg-white/90",
+                isDark ? "bg-[#0b0d10]" : "bg-white",
                 scrolled
                   ? isDark
                     ? "shadow-[0_8px_30px_rgba(0,0,0,0.35)] border-b border-white/[0.06]"
@@ -162,6 +217,29 @@ export default function Navbar({ isDark, setIsDark }) {
                   : "border-b border-transparent",
               )}
             >
+              {/* Utility strip (desktop only): live-dispatch signal, contact
+                  and fleet login. Sits inside the measured bar div so the
+                  mobile drawer offset and the mega menu anchor still line up. */}
+              <div className="hidden lg:block bg-[#0b0d10] border-b border-white/[0.08]">
+                <div className="mx-auto flex h-9 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1600px] text-xs text-white/70">
+                  <div className="flex items-center gap-2.5">
+                    <span className="relative flex h-1.5 w-1.5 shrink-0">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary-yellow)] opacity-75" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--primary-yellow)]" />
+                    </span>
+                    <span className="font-semibold uppercase tracking-wider text-white">24/7 Dispatch</span>
+                  </div>
+                  <div className="flex items-center gap-5">
+                    <a href={fleetLoginUrl} className={classNames("inline-flex items-center gap-1.5 hover:text-white", FOCUS_RING)}>
+                      <Building2 className="h-3.5 w-3.5" />
+                      {t("navbar.fleetLogin", "Fleet Login")}
+                    </a>
+                    <span className="h-3 w-px bg-white/20" aria-hidden="true" />
+                    <a href="mailto:info@tareeqk.ae" className={classNames("hover:text-white", FOCUS_RING)}>info@tareeqk.ae</a>
+                  </div>
+                </div>
+              </div>
+
               <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl 2xl:max-w-[1600px]">
                 <div className="flex h-16 sm:h-20 items-center justify-between">
                   {/* Left section */}
@@ -211,27 +289,6 @@ export default function Navbar({ isDark, setIsDark }) {
                         />
                       </span>
 
-                      <span
-                        className={classNames(
-                          "hidden md:inline-flex shrink-0 items-center gap-1 lg:gap-1.5 rounded-full border px-2 py-0.5 lg:px-2.5 lg:py-1 whitespace-nowrap",
-                          isDark
-                            ? "border-white/10 bg-white/5"
-                            : "border-black/10 bg-black/5",
-                        )}
-                      >
-                        <span className="relative flex h-1.5 w-1.5 shrink-0">
-                          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary-yellow)] opacity-75" />
-                          <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--primary-yellow)]" />
-                        </span>
-                        <span
-                          className={classNames(
-                            "text-[8.5px] lg:text-[10px] font-semibold uppercase tracking-wider whitespace-nowrap",
-                            isDark ? "text-white/60" : "text-gray-500",
-                          )}
-                        >
-                          24/7 Dispatch
-                        </span>
-                      </span>
                     </Link>
                   </div>
 
@@ -275,8 +332,19 @@ export default function Navbar({ isDark, setIsDark }) {
                         // Dropdown items get their own wrapper so hovering
                         // the trigger OR the panel below it keeps it open.
                         if (item.dropdown) {
+                          // Mega menus anchor to the full-width bar (their
+                          // wrapper is `static`), plain dropdowns anchor to
+                          // their own trigger. The trigger wrapper is as
+                          // tall as the bar so the pointer never leaves the
+                          // hover area on its way down to the panel.
                           return (
-                            <div key={item.name} className="relative group">
+                            <div
+                              key={item.name}
+                              className={classNames(
+                                "group flex h-16 sm:h-20 items-center",
+                                item.mega ? "static" : "relative",
+                              )}
+                            >
                               <Link
                                 to={item.href}
                                 onClick={() => window.scrollTo(0, 0)}
@@ -289,12 +357,149 @@ export default function Navbar({ isDark, setIsDark }) {
                                 {underline}
                               </Link>
 
+                              {item.mega ? (
+                                <div
+                                  className={classNames(
+                                    "absolute left-1/2 top-full z-50 -translate-x-1/2",
+                                    "w-[min(1120px,calc(100vw-48px))]",
+                                    "opacity-0 invisible -translate-y-1",
+                                    "transition-all duration-200",
+                                    "group-hover:opacity-100 group-hover:visible group-hover:translate-y-0",
+                                    "group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0",
+                                  )}
+                                >
+                                  <div
+                                    className={classNames(
+                                      "flex overflow-hidden rounded-b-3xl border border-t-0 shadow-[0_30px_70px_rgba(0,0,0,0.22)]",
+                                      isDark
+                                        ? "bg-[#0b0d10] border-white/10"
+                                        : "bg-white border-black/5",
+                                    )}
+                                  >
+                                    <div className="flex-1 min-w-0 p-6 pb-5">
+                                      <div className="mb-3 flex items-baseline justify-between gap-4 px-2">
+                                        <span
+                                          className={classNames(
+                                            "text-[11px] font-bold uppercase tracking-[0.16em]",
+                                            isDark ? "text-[var(--primary-yellow)]" : "text-[#7a5200]",
+                                          )}
+                                        >
+                                          {t("navbar.mega.eyebrow")}
+                                        </span>
+                                        <Link
+                                          to={item.href}
+                                          onClick={() => window.scrollTo(0, 0)}
+                                          viewTransition
+                                          className={classNames(
+                                            "inline-flex items-center gap-1.5 text-[13px] font-semibold",
+                                            FOCUS_RING,
+                                            isDark ? "text-white" : "text-black",
+                                          )}
+                                        >
+                                          {t("navbar.mega.viewAll")}
+                                          <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
+                                        </Link>
+                                      </div>
+                                      <div className="grid grid-cols-3 gap-1.5">
+                                        {item.dropdown.map((sub) => (
+                                          <Link
+                                            key={sub.href}
+                                            to={sub.href}
+                                            onClick={() => window.scrollTo(0, 0)}
+                                            onMouseEnter={() => prefetchRoute(sub.href)}
+                                            viewTransition
+                                            className={classNames(
+                                              "flex items-start gap-3 rounded-2xl p-3 transition-colors",
+                                              FOCUS_RING,
+                                              isDark ? "hover:bg-white/10" : "hover:bg-[#f6f4ec]",
+                                            )}
+                                          >
+                                            <span
+                                              className={classNames(
+                                                "flex h-10 w-10 shrink-0 items-center justify-center rounded-xl",
+                                                isDark
+                                                  ? "bg-white/10 text-[var(--primary-yellow)]"
+                                                  : "bg-[#fff3cc] text-[#6b4700]",
+                                              )}
+                                            >
+                                              <sub.Icon className="h-5 w-5" aria-hidden="true" />
+                                            </span>
+                                            <span className="flex min-w-0 flex-col gap-0.5">
+                                              <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                                                <span
+                                                  className={classNames(
+                                                    "text-sm font-semibold leading-snug",
+                                                    isDark ? "text-white" : "text-[#0b0d10]",
+                                                  )}
+                                                >
+                                                  {sub.label}
+                                                </span>
+                                                {sub.badge && (
+                                                  <span className="rounded-full bg-[#0b0d10] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[var(--primary-yellow)]">
+                                                    {sub.badge}
+                                                  </span>
+                                                )}
+                                              </span>
+                                              {sub.desc && (
+                                                <span
+                                                  className={classNames(
+                                                    "text-[12.5px] leading-snug",
+                                                    isDark ? "text-white/60" : "text-[#5b6068]",
+                                                  )}
+                                                >
+                                                  {sub.desc}
+                                                </span>
+                                              )}
+                                            </span>
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </div>
+
+                                    <div className="hidden xl:flex w-[300px] shrink-0 flex-col gap-3 bg-[#0b0d10] p-7 text-white">
+                                      <span className="text-xl font-bold leading-tight">
+                                        {t("navbar.mega.stuckTitle")}
+                                      </span>
+                                      <span className="text-[13px] leading-relaxed text-white/65">
+                                        {t("navbar.mega.stuckBody")}
+                                      </span>
+                                      <a
+                                        href={PLAY_URL}
+                                        onClick={pickStoreOnClick}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={classNames(
+                                          "mt-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-black",
+                                          FOCUS_RING,
+                                        )}
+                                        style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
+                                      >
+                                        <Download className="h-[18px] w-[18px]" />
+                                        {t("service.downloadApp", "Download App")}
+                                      </a>
+                                      <a
+                                        href={WHATSAPP_URL}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className={classNames(
+                                          "inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-white/25 text-[15px] font-semibold text-white hover:bg-white/10",
+                                          FOCUS_RING,
+                                        )}
+                                      >
+                                        <MessageCircle className="h-[18px] w-[18px]" />
+                                        {t("navbar.mega.whatsapp")}
+                                      </a>
+                                    </div>
+                                  </div>
+                                </div>
+                              ) : (
                               <div
                                 className={classNames(
-                                  "absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3",
+                                  "absolute left-1/2 top-full z-50 -translate-x-1/2 pt-0",
                                   "opacity-0 invisible -translate-y-1",
                                   "transition-all duration-200",
                                   "group-hover:opacity-100 group-hover:visible group-hover:translate-y-0",
+                                  "group-focus-within:opacity-100 group-focus-within:visible group-focus-within:translate-y-0",
                                 )}
                               >
                                 <div
@@ -324,8 +529,24 @@ export default function Navbar({ isDark, setIsDark }) {
                                       {sub.label}
                                     </Link>
                                   ))}
+                                  {item.footerLink && (
+                                    <a
+                                      href={item.footerLink.href}
+                                      className={classNames(
+                                        "mt-1 flex items-center gap-2.5 rounded-xl border-t px-4 py-2.5 text-sm font-medium transition-colors",
+                                        FOCUS_RING,
+                                        isDark
+                                          ? "border-white/10 text-white/75 hover:bg-white/10 hover:text-white"
+                                          : "border-black/5 text-gray-600 hover:bg-black/5 hover:text-black",
+                                      )}
+                                    >
+                                      <Building2 className="h-4 w-4" />
+                                      {item.footerLink.label}
+                                    </a>
+                                  )}
                                 </div>
                               </div>
+                              )}
                             </div>
                           )
                         }
@@ -394,17 +615,20 @@ export default function Navbar({ isDark, setIsDark }) {
                     />
 
                     <a
-                      href={fleetLoginUrl}
+                      href={PLAY_URL}
+                      onClick={pickStoreOnClick}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={classNames(
                         "hidden lg:inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-105",
                         isDark
                           ? "border-white/20 text-white hover:bg-white/10"
-                          : "border-black/15 text-black hover:bg-black/5",
+                          : "border-black/80 text-black hover:bg-black/5",
                         FOCUS_RING,
                       )}
                     >
-                      <Building2 className="h-4 w-4" />
-                      {t("navbar.fleetLogin", "Fleet Login")}
+                      <Download className="h-4 w-4" />
+                      {t("service.downloadApp", "Download App")}
                     </a>
 
                     <a
@@ -415,8 +639,8 @@ export default function Navbar({ isDark, setIsDark }) {
                       )}
                       style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                     >
-                      <LogOut className="h-4 w-4" />
                       {t("landing.book", "Book Now")}
+                      <ArrowRight className="h-4 w-4 rtl:rotate-180" />
                     </a>
                   </div>
                 </div>
@@ -568,8 +792,26 @@ export default function Navbar({ isDark, setIsDark }) {
                                     : "text-gray-600 hover:bg-black/5 hover:text-black",
                                 )}
                               >
-                                <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--primary-yellow)]" />
-                                {sub.label}
+                                {sub.Icon ? (
+                                  <span
+                                    className={classNames(
+                                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg",
+                                      isDark
+                                        ? "bg-white/10 text-[var(--primary-yellow)]"
+                                        : "bg-[#fff3cc] text-[#6b4700]",
+                                    )}
+                                  >
+                                    <sub.Icon className="h-4 w-4" aria-hidden="true" />
+                                  </span>
+                                ) : (
+                                  <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[var(--primary-yellow)]" />
+                                )}
+                                <span className="flex-1">{sub.label}</span>
+                                {sub.badge && (
+                                  <span className="rounded-full bg-[#0b0d10] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[var(--primary-yellow)]">
+                                    {sub.badge}
+                                  </span>
+                                )}
                               </Link>
                             ))}
                           </div>
@@ -614,31 +856,49 @@ export default function Navbar({ isDark, setIsDark }) {
                   )}
                 >
                   <a
-                    href={fleetLoginUrl}
-                    onClick={() => close()}
+                    href={PLAY_URL}
+                    onClick={(e) => {
+                      pickStoreOnClick(e)
+                      close()
+                    }}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={classNames(
-                      "mb-2 flex items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-transform duration-300 hover:scale-[1.02]",
-                      isDark
-                        ? "border-white/20 text-white"
-                        : "border-black/15 text-black",
-                      FOCUS_RING,
-                    )}
-                  >
-                    <Building2 className="h-4 w-4" />
-                    {t("navbar.fleetLogin", "Fleet Login")}
-                  </a>
-                  <a
-                    href="https://booking.tareeqk.ae/login"
-                    onClick={() => close()}
-                    className={classNames(
-                      "flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]",
+                      "mb-2 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]",
                       FOCUS_RING,
                     )}
                     style={{ background: "linear-gradient(135deg, var(--seconday-yellow), var(--primary-yellow))" }}
                   >
-                    <LogOut className="h-4 w-4" />
-                    {t("landing.book", "Book Now")}
+                    <Download className="h-4 w-4" />
+                    {t("service.downloadApp", "Download App")}
                   </a>
+                  <div className="flex gap-2">
+                    <a
+                      href="https://booking.tareeqk.ae/login"
+                      onClick={() => close()}
+                      className={classNames(
+                        "flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-transform duration-300 hover:scale-[1.02]",
+                        isDark ? "bg-white text-black" : "bg-[#0b0d10] text-white",
+                        FOCUS_RING,
+                      )}
+                    >
+                      {t("landing.book", "Book Now")}
+                    </a>
+                    <a
+                      href={fleetLoginUrl}
+                      onClick={() => close()}
+                      className={classNames(
+                        "flex flex-1 items-center justify-center gap-2 rounded-xl border px-4 py-3 text-sm font-semibold transition-transform duration-300 hover:scale-[1.02]",
+                        isDark
+                          ? "border-white/20 text-white"
+                          : "border-black/15 text-black",
+                        FOCUS_RING,
+                      )}
+                    >
+                      <Building2 className="h-4 w-4" />
+                      {t("navbar.fleetLogin", "Fleet Login")}
+                    </a>
+                  </div>
                 </div>
               </div>
             </DisclosurePanel>

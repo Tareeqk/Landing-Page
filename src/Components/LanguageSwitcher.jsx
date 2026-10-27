@@ -12,20 +12,13 @@ function LanguageSwitcher() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  // Each label needs its own script's font explicitly, not the ambient
-  // `html[lang]` one -- index.css swaps the *entire* document's
-  // font-family per active language (Poppins/Noto Kufi Arabic/Noto
-  // Nastaliq Urdu), so without this every label here -- including
-  // "English" -- silently renders in whichever font the currently
-  // active language happens to use, not its own. Nastaliq Urdu also has
-  // a visibly larger x-height than the other two at the same declared
-  // size, hence the smaller compensating fontSize on "ur" below --
-  // without it "اردو" reads noticeably larger than "English"/"العربية"
-  // even once each is in its correct font.
+  // Short Latin codes for every language, so the labels all render in the
+  // same font and width. `name` is the full name for screen readers and the
+  // tooltip.
   const languages = [
-    { code: "en", label: "English", fontFamily: '"Poppins", "Poppins Fallback", sans-serif', fontSize: undefined },
-    { code: "ar", label: "العربية", fontFamily: '"Noto Kufi Arabic", sans-serif', fontSize: undefined },
-    { code: "ur", label: "اردو", fontFamily: '"Noto Nastaliq Urdu", serif', fontSize: "0.85em" },
+    { code: "en", label: "EN", name: "English" },
+    { code: "ar", label: "AR", name: "العربية" },
+    { code: "ur", label: "UR", name: "اردو" },
   ]
 
   const currentLanguage = languages.find((lang) => lang.code === i18n.language)
@@ -73,6 +66,8 @@ function LanguageSwitcher() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
+        aria-label={currentLanguage?.name}
+        aria-expanded={isOpen}
         className="flex items-center space-x-1 
                    px-2 py-1 text-xs
                    sm:px-3 sm:py-1.5 sm:text-sm
@@ -80,11 +75,7 @@ function LanguageSwitcher() {
                    transition-colors border-2 border-gray-500 
                    cursor-pointer"
       >
-        <span
-          className="font-medium"
-          lang={currentLanguage?.code}
-          style={{ fontFamily: currentLanguage?.fontFamily, fontSize: currentLanguage?.fontSize }}
-        >
+        <span className="font-medium">
           {currentLanguage?.label}
         </span>
         <ChevronDown
@@ -99,9 +90,9 @@ function LanguageSwitcher() {
           {languages.map((lang) => (
             <button
               key={lang.code}
-              lang={lang.code}
               onClick={() => changeLang(lang.code)}
-              style={{ fontFamily: lang.fontFamily, fontSize: lang.fontSize }}
+              aria-label={lang.name}
+              title={lang.name}
               className={`block w-full text-start px-3 py-1 text-xs sm:text-sm
                 ${
                   i18n.language === lang.code
