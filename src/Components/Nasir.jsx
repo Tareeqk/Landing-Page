@@ -1,49 +1,96 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { FaWhatsapp } from "react-icons/fa"
+import "./Nasir.css"
+
+const WHATSAPP_NUMBER = "97142232269"
+
+// Inlined instead of pulling react-icons for one glyph — this widget is
+// rendered on every page via MainLayout, so it's always in the critical
+// bundle. Path data copied verbatim from react-icons' FaWhatsapp so the
+// mark stays pixel-identical (same Font Awesome glyph), just without the
+// library's parse/execute cost.
+function WhatsAppIcon(props) {
+  return (
+    <svg viewBox="0 0 448 512" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+    </svg>
+  )
+}
+
+// Hero sections on About/Service/service-detail pages are short enough that
+// their second-section heading lands at y=0's bottom-left corner — right
+// where this fixed widget sits — so it visually covers the heading and
+// creates a competing tap target on first paint. Keeping the widget hidden
+// until the page has actually been scrolled avoids every verified overlap
+// case without needing per-page exclusion zones.
+const SCROLL_REVEAL_THRESHOLD = 260
 
 export default function Nasir() {
-  const [show, setShow] = useState(true)
-  const handleShow = () => setShow(false)
   const { t, i18n } = useTranslation()
+  const isRtl = i18n.dir() === "rtl"
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SCROLL_REVEAL_THRESHOLD)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  const visible = mounted && scrolled
+  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}`
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 flex items-start space-x-2 rtl:left-auto rtl:right-4">
-      {show && (
-        <>
-          {/* Nasir Head */}
+    <div
+      dir={i18n.dir()}
+      className={`fixed bottom-4 z-50 ${isRtl ? "right-4" : "left-4"} ${
+        visible ? "" : "pointer-events-none"
+      }`}
+    >
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={t("nasir.cta", "Chat with us on WhatsApp")}
+        tabIndex={visible ? 0 : -1}
+        className={`nasir-group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-green-400 focus-visible:ring-offset-2 rounded-full ${
+          visible ? "nasir-pop-in" : "opacity-0"
+        }`}
+      >
+        <span className="nasir-glow absolute inset-0 rounded-full" aria-hidden="true" />
+
+        <span className="nasir-float nasir-badge relative flex items-center justify-center rounded-full">
           <img
             src="/new/Nasir_Head.webp"
-            alt="desert recovery dubai"
-            className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 object-contain"
-            style={{ transform: i18n.dir() === "rtl" ? "scaleX(-1)" : "none" }}
+            alt={t(
+              "nasir.avatarAlt",
+              "Tareeqk car recovery Dubai support assistant"
+            )}
+            className="h-11 w-11 object-contain sm:h-14 sm:w-14 md:h-16 md:w-16"
+            style={{ transform: isRtl ? "scaleX(-1)" : "none" }}
+            loading="lazy"
           />
 
-          {/* Chat Bubble */}
-          <div className="relative bg-green-500 text-white font-semibold text-xs sm:text-sm md:text-base px-3 sm:px-4 py-1.5 sm:py-2 rounded-2xl shadow-lg flex items-center space-x-2">
-            {/* WhatsApp Link */}
-            <a
-              href="https://wa.me/97142232269"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center space-x-1 sm:space-x-2"
-            >
-              <FaWhatsapp className="text-sm sm:text-lg" />
-              <span className="hover:text-gray-100 transition">
-                {t("whatsapp")}
-              </span>
-            </a>
+          {/* WhatsApp icon badge */}
+          <span
+            className={`absolute bottom-0 flex h-6 w-6 items-center justify-center rounded-full bg-green-500 text-white shadow-md sm:h-7 sm:w-7 ${
+              isRtl ? "left-0" : "right-0"
+            }`}
+          >
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-50" />
+            <WhatsAppIcon className="relative h-3 w-3 sm:h-3.5 sm:w-3.5" />
+          </span>
+        </span>
 
-            {/* Close Button */}
-            <span
-              onClick={handleShow}
-              className="ml-1 sm:ml-2 text-white hover:text-gray-800 transition cursor-pointer text-sm sm:text-base"
-            >
-              &#x2715;
-            </span>
-          </div>
-        </>
-      )}
+        <span className="nasir-tooltip">
+          {t("nasir.cta", "Chat with us on WhatsApp")}
+        </span>
+      </a>
     </div>
   )
 }

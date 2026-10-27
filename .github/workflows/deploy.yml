@@ -1,0 +1,87 @@
+# Deploys the site to cPanel (LiteSpeed) over FTPS on every push to main.
+#
+# One-time setup (see the notes at the bottom of this file):
+#   GitHub repo -> Settings -> Secrets and variables -> Actions -> New secret
+#     FTP_SERVER    the host's own server name (wardah.tasjeel.ae). cPanel's
+#                   "Configure FTP Client" suggests ftp.luxeglideelite.ae, but the
+#                   server's TLS certificate is issued for wardah.tasjeel.ae, so
+#                   the ftp. name fails certificate verification over FTPS.
+#     FTP_USERNAME  a cPanel FTP account whose Directory is the tareeqk.ae folder
+#                   (/home/luxeglid/tareeqk.ae) -- NOT public_html, which belongs
+#                   to this cPanel account's primary domain
+#     FTP_PASSWORD  that account's password
+#
+# The VITE_* build values live in the tracked .env.production (all public:
+# Turnstile site key, ads labels, API base URL), so no extra secrets are needed
+# for the build itself.
+name: Deploy to cPanel
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # "Run workflow" button in the Actions tab for manual redeploys
+
+# Never run two deploys at once (they would fight over the same FTP sync state),
+# and never cancel one half-way through an upload.
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      # The repo uses yarn (yarn.lock), not npm -- there is no package-lock.json,
+      # so `npm ci` would fail.
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # `yarn build` runs the whole pipeline from package.json:
+      #   prebuild  -> fetch Google rating, regenerate sitemap.xml
+      #   build     -> vite build
+      #   postbuild -> prerender every route to static HTML (headless Chrome)
+      - name: Build
+        run: yarn build
+        env:
+          CI: "true"
+
+      # Fails the run (and so skips the upload) if the output regresses, e.g. the
+      # same <title> on every page, a missing prerendered route, or no 404 page.
+      - name: Verify build output
+        run: node scripts/verify-build.mjs
+
+      - name: Upload to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./ # relative to the FTP account's home = the tareeqk.ae folder
+
+# Notes
+# -----
+# * Do NOT add the usual SPA catch-all (RewriteRule . /index.html [L]) to
+#   public/.htaccess. Every route here is a real prerendered file, and the site
+#   relies on unknown URLs returning a genuine 404 (ErrorDocument 404 /404.html).
+#   A catch-all would turn every bad URL into a 200 homepage (soft 404).
+# * If the upload step fails with a TLS / certificate error, the FTP hostname
+#   probably doesn't match the host's certificate. Use the server's own hostname
+#   as FTP_SERVER, or as a last resort change `protocol` to `ftp`.
+# * The FTP account must be created with Directory = tareeqk.ae. An FTP account is
+#   locked to its home directory, so that is what stops a deploy from touching
+#   public_html or booking.tareeqk.ae.
+# * The action keeps a state file (.ftp-deploy-sync-state.json) on the server so
+#   later deploys only upload what changed. public/.htaccess blocks public access
+#   to it.
+# * Rolling back: re-run this workflow on an older commit (Actions -> Run
+#   workflow -> pick a ref), or restore from a cPanel backup.

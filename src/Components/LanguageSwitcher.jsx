@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import { useTranslation } from "react-i18next"
-import { ChevronDownIcon } from "@heroicons/react/20/solid"
+import { ChevronDown } from "lucide-react"
 import { useNavigate, useLocation } from "react-router-dom"
 
 const LANG_PREFIXES = ["ar", "ur"] // English has no prefix
@@ -12,48 +12,52 @@ function LanguageSwitcher() {
   const navigate = useNavigate()
   const location = useLocation()
 
+  // Each label needs its own script's font explicitly, not the ambient
+  // `html[lang]` one -- index.css swaps the *entire* document's
+  // font-family per active language (Poppins/Noto Kufi Arabic/Noto
+  // Nastaliq Urdu), so without this every label here -- including
+  // "English" -- silently renders in whichever font the currently
+  // active language happens to use, not its own. Nastaliq Urdu also has
+  // a visibly larger x-height than the other two at the same declared
+  // size, hence the smaller compensating fontSize on "ur" below --
+  // without it "اردو" reads noticeably larger than "English"/"العربية"
+  // even once each is in its correct font.
   const languages = [
-    { code: "en", label: "English" },
-    { code: "ar", label: "العربية" },
-    { code: "ur", label: "اردو" },
+    { code: "en", label: "English", fontFamily: '"Poppins", "Poppins Fallback", sans-serif', fontSize: undefined },
+    { code: "ar", label: "العربية", fontFamily: '"Noto Kufi Arabic", sans-serif', fontSize: undefined },
+    { code: "ur", label: "اردو", fontFamily: '"Noto Nastaliq Urdu", serif', fontSize: "0.85em" },
   ]
 
   const currentLanguage = languages.find((lang) => lang.code === i18n.language)
 
   const changeLang = (lng) => {
-    i18n.changeLanguage(lng)
-    localStorage.setItem("i18nextLng", lng)
-    document.documentElement.dir = lng === "ar" || lng === "ur" ? "rtl" : "ltr"
-    document.documentElement.lang = lng
-    setIsOpen(false)
+  i18n.changeLanguage(lng);
+  localStorage.setItem("i18nextLng", lng);
+  document.documentElement.dir = (lng === "ar" || lng === "ur") ? "rtl" : "ltr";
+  document.documentElement.lang = lng;
+  setIsOpen(false);
 
-    const segments = location.pathname.split("/") // e.g. ["", "ar", "about"] or ["", "about"]
-    const currentLangPrefix = LANG_PREFIXES.includes(segments[1])
-      ? segments[1]
-      : null
+  // 1. Get current segments, e.g., ["", "ar", "about"]
+  const segments = location.pathname.split("/");
+  
+  // 2. Determine if the current path already has a language prefix
+  const hasLangPrefix = ["en", "ar", "ur"].includes(segments[1]);
 
-    let newPath
-    if (lng === "en") {
-      // Going to English: strip the lang prefix
-      // ["", "ar", "about"] → "/about"
-      // ["", "about"] → "/about" (already English, no change)
-      newPath = currentLangPrefix
-        ? "/" + segments.slice(2).join("/")
-        : location.pathname
-    } else {
-      // Going to Arabic/Urdu: swap or add the lang prefix
-      // ["", "ar", "about"] → "/ur/about"  (swap)
-      // ["", "about"] → "/ar/about"         (add)
-      newPath = currentLangPrefix
-        ? "/" + lng + "/" + segments.slice(2).join("/")
-        : "/" + lng + location.pathname
-    }
-
-    // Clean up double slashes e.g. /ar/ → /ar
-    newPath = newPath.replace(/\/+$/, "") || "/"
-
-    navigate(newPath + location.search + location.hash)
+  let newPath;
+  if (hasLangPrefix) {
+    // Replace the existing language prefix with the new one
+    // e.g., ["", "ar", "about"] -> ["", "en", "about"] -> "/en/about"
+    segments[1] = lng;
+    newPath = segments.join("/");
+  } else {
+    // No prefix found (shouldn't happen with your new App.jsx, but safe to handle)
+    // e.g., "/about" -> "/en/about"
+    newPath = `/${lng}${location.pathname}`;
   }
+
+  // 3. Navigate
+  navigate(newPath + location.search + location.hash);
+};
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -76,8 +80,14 @@ function LanguageSwitcher() {
                    transition-colors border-2 border-gray-500 
                    cursor-pointer"
       >
-        <span className="font-medium">{currentLanguage?.label}</span>
-        <ChevronDownIcon
+        <span
+          className="font-medium"
+          lang={currentLanguage?.code}
+          style={{ fontFamily: currentLanguage?.fontFamily, fontSize: currentLanguage?.fontSize }}
+        >
+          {currentLanguage?.label}
+        </span>
+        <ChevronDown
           className={`h-3 w-3 sm:h-4 sm:w-4 transition-transform ${
             isOpen ? "rotate-180" : ""
           }`}
@@ -85,12 +95,14 @@ function LanguageSwitcher() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-24 sm:w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
+        <div className="absolute end-0 mt-2 w-24 sm:w-20 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
           {languages.map((lang) => (
             <button
               key={lang.code}
+              lang={lang.code}
               onClick={() => changeLang(lang.code)}
-              className={`block w-full text-left px-3 py-1 text-xs sm:text-sm
+              style={{ fontFamily: lang.fontFamily, fontSize: lang.fontSize }}
+              className={`block w-full text-start px-3 py-1 text-xs sm:text-sm
                 ${
                   i18n.language === lang.code
                     ? "bg-[var(--primary-yellow)] text-[var(--primary-dark-bg)]"

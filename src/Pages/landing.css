@@ -1,0 +1,1127 @@
+:root {
+  --tk-ink:         #0b0d10;
+  --tk-ink-2:       #141820;
+  --tk-ink-3:       #1b2029;
+  --tk-line:        rgba(255, 255, 255, 0.08);
+  --tk-line-strong: rgba(255, 255, 255, 0.18);
+  --tk-text:        #ECECEE;
+  --tk-text-soft:   rgba(236, 236, 238, 0.72);
+  --tk-text-mute:   rgba(236, 236, 238, 0.55);
+
+  --tk-amber:       #F5B301;
+  --tk-amber-2:     #FFC94A;
+  --tk-amber-deep:  #C98A00;
+
+  --tk-radius-lg:   22px;
+  --tk-radius-md:   14px;
+  --tk-radius-pill: 999px;
+
+  --tk-display: "Poppins", ui-sans-serif, system-ui, -apple-system,
+                "Segoe UI", Roboto, sans-serif;
+  --tk-body:    "Poppins", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+                Roboto, sans-serif;
+}
+
+/* ============================================================
+   HERO SHELL
+   Full-bleed photo slider, content anchored bottom-left —
+   matches the reference layout (badge → title → subtitle → CTAs).
+   ============================================================ */
+.tk-hero {
+  position: relative;
+  width: 100%;
+  /* Flips the sign of the X-translate half of the "inset-inline-end +
+     translate(50%,-50%)" centering trick used by .tk-hero__glow,
+     .tk-hero__truck, and .tk-hero__tag below. That trick only
+     self-cancels an element's own width in LTR: right:E + translateX
+     (+50%-of-own-width) puts the center at (container_right − E),
+     independent of the element's size. transform percentages are
+     NOT direction-aware (always physically rightward for a positive
+     value), but inset-inline-end DOES flip to physical `left` under
+     RTL — so the same +50% translate no longer cancels the element's
+     own width, it ADDS it instead: center = container_left + E + W.
+     Differently-sized elements (the ~430px glow, ~320px truck, 40px
+     icons) each drifted by a different amount, which is why the whole
+     composition looked inconsistent/uncentered specifically in RTL.
+     Flipping to translateX(-50%) under RTL restores the cancellation:
+     center = container_left + E, independent of W, matching LTR. */
+  --tk-flip: 1;
+  /* Full screen: fills the viewport height below the fixed navbar (h-16/
+     sm:h-20 in Navbar.jsx — MainLayout's pt-16/sm:pt-20 reserves that
+     same space, so subtracting 80px here lines up with the ≥640px navbar
+     height) with nothing else visible until the visitor scrolls. dvh
+     avoids the vh jump when a mobile browser's URL bar shows/hides; vh
+     is kept first as a fallback for browsers without dvh support. This
+     is taller than object-fit: cover's crop-free sweet spot for
+     hero_image.png's 2.33:1 photo (see the LANDSCAPE BACKGROUND comment
+     below) — on typical 1440-1920px desktops it'll crop a bit of the
+     photo's width to fill the height, which is the accepted tradeoff for
+     an actually full-screen hero. Portrait phones/tablets keep their own
+     height below; their images and crop math were tuned separately. */
+  min-height: max(560px, calc(100vh - 80px));
+  min-height: max(560px, calc(100dvh - 80px));
+  color: var(--tk-text);
+  font-family: var(--tk-body);
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--tk-ink);
+}
+
+[dir="rtl"] .tk-hero {
+  --tk-flip: -1;
+}
+
+.tk-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* .tk-hero__inner's own max-width (see below) tops out at 2200px, so on
+   wider monitors it stops growing and leaves dead margin outside itself
+   on both sides. The skyline photo is full-bleed across .tk-hero__bg
+   regardless, so that margin was still showing its (55%-opacity) tint
+   instead of flat black — most noticeable on the truck/circle side,
+   where there's no text drawing the eye away from it. Fades just that
+   physical edge strip to solid black; only kicks in once the margin
+   actually exists, and everything inside it (the photo, the truck,
+   the circle) is untouched. */
+@media (min-width: 1900px) {
+  .tk-hero__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent, transparent calc(100% - 260px), #000 100%);
+    pointer-events: none;
+  }
+
+  [dir="rtl"] .tk-hero__bg::after {
+    background: linear-gradient(to left, transparent, transparent calc(100% - 260px), #000 100%);
+  }
+}
+
+/* Ambient skyline — decorative full-bleed background. Mirrored under RTL
+   so it faces the same direction as the truck/circle (which move to the
+   left column there — see .tk-hero__visual below), instead of staying
+   static while everything in front of it flips. */
+.tk-hero__skyline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 75%;
+  opacity: 0.55;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+[dir="rtl"] .tk-hero__skyline {
+  transform: scaleX(-1);
+}
+
+/* Reproduces WEBSITE IMAGE AND ICONS ASSET/CIRCLE DESIGN.png — measured
+   directly from the source PNG (pixel-sampled, not eyeballed): it is
+   TWO CONCENTRIC CIRCLES, not a soft blurred radial glow like this
+   used to be. Both use a plain HORIZONTAL LINEAR gradient (bright
+   amber → black; confirmed by sampling a vertical line at fixed X —
+   the color only changes with X, never Y). Outer circle: ~30% opacity
+   (measured alpha 77/255). Inner circle (.tk-hero__glow::after):
+   fully opaque, diameter exactly 41% of the outer circle's (measured
+   891px / 2171px in the source asset) — see there for the inner
+   circle. No blur in the source asset, so none applied here either.
+   inset-inline-end (not right/left) so it stays behind whichever side
+   .tk-hero__visual actually lands on under RTL. --sphere-x/--sphere-y
+   (set on .tk-hero__visual) mark the sphere's center point; this
+   anchors inset-inline-end/top to that point and uses translate(50%,
+   -50%) — rather than the box's own edge — so the glow is centered ON
+   the point instead of merely tucked near it. The gradient angle also
+   flips via --tk-flip (see .tk-hero for why) so the bright side keeps
+   facing the text column in both LTR and RTL, matching the source
+   asset's apparent "light source toward the content" intent.
+   .tk-hero__truck below shares the exact same anchor so the truck
+   artwork lands dead-center on the sphere regardless of either box's
+   own width/height. */
+.tk-hero__glow {
+  position: absolute;
+  top: var(--sphere-y, 50%);
+  inset-inline-end: var(--sphere-x, 8%);
+  transform: translate(calc(var(--tk-flip, 1) * 50%), -50%);
+  /* Sized off this column's own width (not vw) — vw ignored how much
+     room .tk-hero__visual actually had, so the sphere came out nearly
+     as wide as the whole column and left the curved tags (below) no
+     space to clear it without their labels overflowing. */
+  width: min(84%, 420px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: linear-gradient(
+    calc(90deg * var(--tk-flip, 1)),
+    rgba(201, 138, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  pointer-events: none;
+  /* Slow ambient breathing so the sphere doesn't sit dead-still — kept
+     to a subtle scale/opacity shift, not a color or size change big
+     enough to distract from the truck it sits behind. */
+  animation: tk-glow-pulse 5s ease-in-out infinite;
+}
+
+.tk-hero__glow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 41%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: linear-gradient(
+    calc(90deg * var(--tk-flip, 1)),
+    var(--tk-amber-deep) 0%,
+    #000 100%
+  );
+}
+
+/* RTL swaps the CSS-reproduced gradient for the actual source artwork
+   (public/WEBSITE IMAGE AND ICONS ASSET/CIRCLE LEFT SIDE_rtl.png) — both
+   circles come pre-composited in that image, so the ::after inner circle
+   is switched off rather than layered on top of it. */
+[dir="rtl"] .tk-hero__glow {
+  background: url('/hero/circle-rtl.webp') center / contain no-repeat;
+}
+
+[dir="rtl"] .tk-hero__glow::after {
+  content: none;
+}
+
+@keyframes tk-glow-pulse {
+  0%, 100% { transform: translate(calc(var(--tk-flip, 1) * 50%), -50%) scale(1); opacity: 1; }
+  50%      { transform: translate(calc(var(--tk-flip, 1) * 50%), -50%) scale(1.035); opacity: 0.92; }
+}
+
+/* ============================================================
+   TRUST STATS — inline in the content column, right after the CTAs
+   (see LandingPage.jsx). Used to be position: absolute in the
+   top-right corner and display: none below 900px — that hid real
+   proof numbers from every mobile visitor and put them where the eye
+   doesn't naturally land after reading the headline. Inline keeps
+   them visible at every breakpoint, right where someone is already
+   looking when deciding whether to tap a CTA.
+   ============================================================ */
+.tk-hero__stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.tk-hero__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  min-width: 84px;
+  padding: 10px 14px;
+  border-radius: var(--tk-radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--tk-line);
+}
+
+/* The Google-rating stat is the one card of the four that's an <a>
+   (links out to the real Google reviews page) -- reset the browser's
+   default link underline/color (it would otherwise bleed through to the
+   child spans below, which set their own explicit colors) and add a
+   subtle hover affordance so it actually reads as clickable next to its
+   three static siblings. */
+.tk-hero__stat--link {
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.tk-hero__stat--link:hover,
+.tk-hero__stat--link:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+.tk-hero__stat-value {
+  font-family: var(--tk-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.15;
+}
+
+.tk-hero__stat-label {
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--tk-text-mute);
+}
+
+/* ============================================================
+   CONTENT + VISUAL — a real two-column flex row instead of a single
+   text column anchored over a flattened background photo. Flexbox
+   mirrors this automatically under [dir="rtl"] (text column moves to
+   the right, .tk-hero__visual to the left) with no extra rules needed —
+   the old approach fought RTL by forcing `direction: ltr` back onto
+   this container specifically because the background photo couldn't
+   mirror itself; now that the truck/tags are real elements, letting
+   the row flip is the correct behavior, not something to undo.
+   ============================================================ */
+.tk-hero__inner {
+  position: relative;
+  z-index: 2;
+  /* Fixed 1400px used to leave a growing dead margin on wide Windows
+     desktop monitors (commonly 1920–2560 logical px, and wider ultra-
+     wide/high-DPI screens beyond that) while barely being reached on
+     Mac laptops (commonly ~1440–1728 logical px) — floors at the old
+     1400px for those narrower screens, then grows with the viewport.
+     1760px wasn't actually enough of a ceiling: on anything wider than
+     ~1955px it still centers with large empty margins on both sides,
+     dragging the visual column (truck/sphere) away from the true edge
+     toward the middle — visible in both LTR and RTL, not RTL-specific.
+     2200px pushes that stalling point out much further.
+     (This is only a ceiling — max-width doesn't force the box to BE
+     1400px on a narrower viewport, it can still shrink below that via
+     the block's own width:auto, so the 1400px floor here is safe.) */
+  max-width: clamp(1400px, 92vw, 2200px);
+  margin: 0 auto;
+  height: 100%;
+  min-height: inherit;
+  padding: clamp(64px, 10vw, 130px) clamp(20px, 4vw, 56px) clamp(48px, 8vw, 88px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(24px, 4vw, 64px);
+  flex-wrap: wrap;
+}
+
+.tk-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 620px;
+  /* Logical "start", not physical "left" — the dispatch chip (span)
+     and title (h1, made inline-flex by .tk-hero__title--typing) are
+     inline-level, so THEIR horizontal position is governed by this
+     container's text-align, not their own block layout. A physical
+     "left" here never flips under [dir="rtl"], so those two elements
+     stayed glued to this column's left edge even in RTL — which, since
+     the column sits on the right side of the mirrored row, put them
+     right at the boundary with .tk-hero__visual, overlapping the
+     sphere. The subtitle <p> (block-level, fills full width regardless
+     of text-align) wasn't affected, which is why only the chip/title
+     looked broken. "start" auto-resolves to left/right per direction,
+     so no separate [dir="rtl"] override is needed here at all. */
+  text-align: start;
+  flex: 1 1 420px;
+}
+
+/* ============================================================
+   VISUAL COLUMN — service tags + truck artwork. A flex child like
+   .tk-hero__content, so it reflows/reorders/hides per breakpoint via
+   plain CSS instead of needing a hand-composed image per breakpoint.
+   Reference composition: plain white label text directly beside a bare
+   icon-in-ring (the ring is baked into each icon asset already — no
+   pill/chip background behind them), six tags evenly spaced top-to-
+   bottom, with the truck sitting inside a modest glow roughly centered
+   in the lower-middle of this column — not a wall-to-wall chip list.
+   ============================================================ */
+.tk-hero__visual {
+  position: relative;
+  z-index: 1;
+  flex: 1 1 380px;
+  /* Widened again from clamp(480px,34vw,580px) — the sphere (up to
+     420px) and the icon arc both compete for this column's width, so
+     a narrow cap forced a tradeoff between edge margin and
+     icon-to-sphere clearance. More room lets both grow together
+     instead of trading off. Floor bumped 520px→550px alongside the
+     larger --tk-arc-r below, so the arc still clears the truck at the
+     narrowest end of this range instead of the tags 3/4 running past
+     this column's own edge. */
+  max-width: clamp(550px, 40vw, 680px);
+  align-self: stretch;
+  min-height: 460px;
+  /* Shared center point for the glow + truck (see .tk-hero__glow /
+     .tk-hero__truck) — one knob to move the whole sphere composition.
+     translate(calc(var(--tk-flip, 1) * 50%), -50%) on the glow/truck shifts them right by half
+     their OWN width past this inset-inline-end anchor, so at 12-20%
+     they still bled close to the true viewport edge. 36% brings the
+     sphere's own edge further inside this column, matching the extra
+     width above, and pairs with the wider tag margins below to open
+     up real space between the icons and the circle. */
+  --sphere-x: 36%;
+  --sphere-y: 50%;
+  /* Radius the tag arc is sampled on (see .tk-hero__tag below) — tied
+     directly to .tk-hero__glow's own width formula (min(84%,420px)),
+     NOT .tk-hero__truck's, even though the truck is what visually
+     needs to stay enclosed: the truck is a rectangular image, and a
+     rectangle's corners reach further from center than its own half-
+     width would suggest (its half-diagonal, not half-width, is what
+     can poke past a circular clearance radius) — so this radius is
+     sized generously past the glow specifically to clear the truck's
+     corners too, rather than trying to compute the truck's actual
+     diagonal. 110px = ~90px gap off the glow's edge + 20px (half of
+     the 40px icon, see .tk-hero__tag-icon). See also .tk-hero__truck's
+     width, trimmed alongside this so the arc doesn't have to keep
+     growing indefinitely to clear an ever-larger rectangle. */
+  --tk-arc-r: calc(min(84%, 420px) / 2 + 110px);
+}
+
+.tk-hero__truck {
+  position: absolute;
+  inset-inline-end: var(--sphere-x, 8%);
+  top: var(--sphere-y, 50%);
+  transform: translate(calc(var(--tk-flip, 1) * 50%), -50%);
+  /* Trimmed three times now — 74%/360px → 66%/320px → 56%/268px → this —
+     smaller alongside --tk-arc-r (see .tk-hero__visual) so the icon arc
+     has an easier time actually clearing this rectangular image's
+     corners without needing an ever-larger radius that starves the
+     icons' own spacing, and so the truck reads as sitting inside the
+     glow rather than dominating it. */
+  width: min(50%, 240px);
+  height: auto;
+  filter: drop-shadow(0 24px 32px rgba(0,0,0,0.45));
+  /* Gentle idle float — small sign of life without being flashy;
+     reduced-motion visitors get the static pose (see the query at the
+     bottom of this file, next to the typing cursor's own override). */
+  animation: tk-truck-float 4.5s ease-in-out infinite;
+}
+
+@keyframes tk-truck-float {
+  0%, 100% { transform: translate(calc(var(--tk-flip, 1) * 50%), -50%) translateY(0); }
+  50%      { transform: translate(calc(var(--tk-flip, 1) * 50%), -50%) translateY(-8px); }
+}
+
+.tk-hero__tags {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+}
+
+/* Mobile-only replacement for the arc (see .tk-hero__tags above and the
+   max-width:860px block below) — hidden by default, shown there instead.
+   Rendered as a sibling of .tk-hero__visual, not a child, so it lands by
+   normal document flow (always above the circle) rather than depending
+   on any box the circle's own geometry is sized against. */
+.tk-hero__mobile-tag-grid {
+  display: none;
+}
+
+/* True circular arc, not an approximation — each tag is placed by
+   actual trigonometry around the sphere's own center point (the same
+   --sphere-x/--sphere-y anchor .tk-hero__glow and .tk-hero__truck
+   use), instead of the old flexbox column + tiered margin-inline-end/
+   margin-block-start stagger, which could only fake a curve in three
+   steps. Each nth-child below multiplies --tk-arc-r (see
+   .tk-hero__visual — a radius tied to the glow's own width formula,
+   not a fixed px guess) by a precomputed cos/sin pair sampled at six
+   angles spanning ±58° (tightened from ±72° — same radius/shape, just
+   less arc-length between adjacent icons) from the sphere's
+   3-o'clock-from-the-left axis, so the whole arc rescales correctly
+   at every breakpoint instead of overflowing on narrower screens (a
+   fixed-px version of this did exactly that on mobile — see the git
+   history/PR notes). This shared rule then places every tag at
+   (sphere center − tag-x horizontally, sphere center + tag-y
+   vertically) and re-centers the icon on that point exactly like the
+   glow/truck centering trick above. */
+.tk-hero__tag {
+  position: absolute;
+  inset-inline-end: calc(var(--sphere-x, 30%) + var(--tag-x, 0px));
+  top: calc(var(--sphere-y, 50%) + var(--tag-y, 0px));
+  transform: translate(calc(var(--tk-flip, 1) * 50%), -50%);
+}
+
+.tk-hero__tag:nth-child(1) { --tag-x: calc(var(--tk-arc-r) * 0.5299); --tag-y: calc(var(--tk-arc-r) * -0.848); }
+.tk-hero__tag:nth-child(2) { --tag-x: calc(var(--tk-arc-r) * 0.8211); --tag-y: calc(var(--tk-arc-r) * -0.5707); }
+.tk-hero__tag:nth-child(3) { --tag-x: calc(var(--tk-arc-r) * 0.9795); --tag-y: calc(var(--tk-arc-r) * -0.2011); }
+.tk-hero__tag:nth-child(4) { --tag-x: calc(var(--tk-arc-r) * 0.9795); --tag-y: calc(var(--tk-arc-r) * 0.2011); }
+.tk-hero__tag:nth-child(5) { --tag-x: calc(var(--tk-arc-r) * 0.8211); --tag-y: calc(var(--tk-arc-r) * 0.5707); }
+.tk-hero__tag:nth-child(6) { --tag-x: calc(var(--tk-arc-r) * 0.5299); --tag-y: calc(var(--tk-arc-r) * 0.848); }
+
+/* One fixed size at every breakpoint (no per-breakpoint override) —
+   54px was fine on desktop but left too little of this column's width
+   for the arc to clear on narrow phones, which is what pushed tags 3/4
+   past the edge. 40px keeps a consistent, deliberate size across all
+   screens instead of silently shrinking near the edge on some. */
+.tk-hero__tag-icon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  object-fit: contain;
+  transition: transform 0.2s ease;
+}
+
+/* These icons (tow truck, crash, etc.) are drawn facing left — correct
+   for LTR, where the arc/pill sits to the right of the truck and the
+   icons read toward it. Under RTL the whole composition mirrors (arc/
+   pill moves to the left column — see --tk-flip elsewhere in this file)
+   so the icons need to face the other way too, or they'd visually point
+   away from the truck instead of toward it. Plain scaleX(-1) is safe
+   here (unlike .tk-hero__truck, which needed a dedicated re-composited
+   RTL asset) because these icons have no baked-in text/logo to come out
+   backwards. */
+[dir="rtl"] .tk-hero__tag-icon {
+  transform: scaleX(-1);
+}
+
+.tk-hero__tag:focus-within .tk-hero__tag-icon {
+  transform: scale(1.08);
+}
+
+[dir="rtl"] .tk-hero__tag:focus-within .tk-hero__tag-icon {
+  transform: scaleX(-1) scale(1.08);
+}
+
+/* hover: hover excludes touchscreens — without it a real tap leaves this
+   "hovered" (scaled up) until the visitor taps elsewhere, since there's
+   no pointer to move away and clear the state. Desktop mouse users still
+   get the effect; DevTools' touch emulation never surfaces this bug
+   because it resolves :hover from your desktop cursor either way. */
+@media (hover: hover) and (pointer: fine) {
+  .tk-hero__tag:hover .tk-hero__tag-icon {
+    transform: scale(1.08);
+  }
+
+  [dir="rtl"] .tk-hero__tag:hover .tk-hero__tag-icon {
+    transform: scaleX(-1) scale(1.08);
+  }
+}
+
+/* Hidden-but-accessible by default (see the ≥861px override below) —
+   same visually-hidden technique .tk-visually-hidden uses, kept
+   inline here rather than sharing that class so the desktop override
+   only has to touch the properties that actually change. Below 861px
+   there isn't enough spare width beside a 40px icon for a label
+   without crowding the sphere/truck (see .tk-hero__visual's width),
+   so it stays screen-reader/SEO text only there, same as before. */
+.tk-hero__tag-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (min-width: 861px) {
+  .tk-hero__tag-label {
+    /* Anchored to the icon (its containing block, since .tk-hero__tag
+       is position:absolute) on the side facing the text column —
+       inset-inline-end:100% puts the label's own end edge flush with
+       the icon's start edge, then the margin opens a gap. Auto-flips
+       under RTL like everything else in this composition. */
+    inset-inline-end: 100%;
+    top: 50%;
+    margin-inline-end: 10px;
+    margin-block: 0;
+    transform: translateY(-50%);
+    width: max-content;
+    height: auto;
+    max-width: 160px;
+    padding: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: nowrap;
+    border: 0;
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+    pointer-events: none;
+  }
+}
+
+.tk-cta-row,
+.tk-store-badges {
+  justify-content: flex-start;
+}
+
+/* Dispatch chip — replaces a generic pill+arrow badge (the kind every
+   template hero reaches for) with something that reads like a live
+   ops status readout: a pulsing dot plus tracked-out uppercase text,
+   echoing the "Live tracking" trust stat below. Reuses the existing
+   translated landing.eyebrow copy, so no new i18n strings needed
+   across en/ar/ur. */
+.tk-dispatch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  /* Logical padding-inline (start end), not physical left/right — auto-
+     flips under [dir="rtl"] so the dedicated override rule below isn't
+     needed at all. */
+  padding-block: 8px;
+  padding-inline: 14px 16px;
+  border: 1px solid var(--tk-line-strong);
+  border-radius: var(--tk-radius-pill);
+  background: rgba(245, 179, 1, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tk-amber-2);
+  margin-bottom: 22px;
+}
+
+.tk-dispatch-chip__dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tk-amber);
+  flex-shrink: 0;
+}
+
+.tk-dispatch-chip__dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--tk-amber);
+  animation: tk-dispatch-pulse 2s ease-out infinite;
+}
+
+@keyframes tk-dispatch-pulse {
+  0%   { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+.tk-hero__title {
+  margin: 0 0 18px;
+  font-family: var(--tk-display);
+  font-weight: 800;
+  font-size: clamp(34px, 5.2vw, 68px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #FFFFFF;
+  text-wrap: balance;
+  max-width: 16ch;
+}
+
+/* Arabic/Urdu phrases (e.g. "خدمة إنقاذ السيارات") run noticeably wider
+   per character than their English equivalent ("Car Recovery"), which
+   pushed them past the 16ch cap onto a second line. The typing title
+   should always read as one line, so it's forced to nowrap and scaled
+   down for RTL instead of being allowed to wrap. */
+[dir="rtl"] .tk-hero__title {
+  font-size: clamp(22px, 4vw, 46px);
+  max-width: none;
+}
+
+.tk-hero__subtitle {
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.65;
+  color: var(--tk-text-soft);
+  max-width: 46ch;
+  margin-bottom: 30px;
+}
+
+/* ============================================================
+   TYPING-ANIMATION TITLE
+   ============================================================ */
+.tk-hero__title--typing {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  max-width: 100%;
+  min-height: 1.1em; /* keeps layout stable as phrases change width */
+}
+
+.tk-typing-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.tk-typing-cursor {
+  display: inline-block;
+  width: 3px;
+  margin-inline-start: 4px;
+  height: 0.85em;
+  background: var(--tk-amber);
+  animation: tk-caret-blink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes tk-caret-blink {
+  0%, 50%  { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-typing-cursor { animation: none; opacity: 1; }
+  .tk-hero__truck { animation: none; }
+  .tk-hero__glow { animation: none; }
+  .tk-dispatch-chip__dot::after { animation: none; opacity: 0.4; }
+  .tk-hero__tag-icon { transition: none; }
+  .tk-hero__mobile-tag { transition: none; }
+}
+
+/* Visually hidden but still readable to screen readers / crawlers */
+.tk-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------- CTAs ---------- */
+.tk-cta-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.tk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 8px;
+  padding-inline: 24px 8px;
+  border-radius: var(--tk-radius-pill);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tk-btn--primary {
+  color: #111;
+  background: linear-gradient(180deg, var(--tk-amber-2) 0%, var(--tk-amber) 100%);
+  box-shadow: 0 10px 24px rgba(245, 179, 1, 0.3);
+}
+
+.tk-btn--ghost {
+  color: #FFFFFF;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--tk-line-strong);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tk-btn:hover { transform: translateY(-2px); }
+}
+
+/* Circular arrow chip, matches the reference pill+circle CTA pattern */
+.tk-btn__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.14);
+  flex-shrink: 0;
+}
+
+.tk-btn--ghost .tk-btn__arrow {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ============================================================
+   APP STORE BADGES
+   ============================================================ */
+.tk-store-badges {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.tk-store-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 46px;
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
+.tk-store-badge__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tk-store-badge:hover {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — content stays bottom-anchored and centered
+   on narrower viewports so nothing crowds the photo
+   ============================================================ */
+@media (max-width: 768px) {
+  .tk-hero__content {
+    max-width: 100%;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .tk-hero__title { max-width: none; }
+
+  .tk-cta-row,
+  .tk-store-badges {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .tk-hero__inner { padding: 16px 16px 36px; }
+
+  .tk-hero__title { font-size: 32px; }
+  [dir="rtl"] .tk-hero__title { font-size: 22px; }
+
+  .tk-dispatch-chip { font-size: 11px; margin-bottom: 16px; }
+
+  .tk-hero__subtitle { margin-bottom: 22px; font-size: 14px; }
+
+  .tk-cta-row { gap: 10px; margin-bottom: 18px; }
+
+  .tk-hero__stats { gap: 8px; margin-bottom: 20px; }
+  .tk-hero__stat { min-width: 72px; padding: 8px 10px; }
+  .tk-hero__stat-value { font-size: 14px; }
+  .tk-hero__stat-label { font-size: 10px; }
+
+  /* The primary "Download The App" button above already redirects to the
+     right store for the visitor's OS (see handleDownloadRedirect in
+     LandingPage.jsx), so this in-flow pair repeating both badges right in
+     the content stack is redundant on mobile — the floating pair below
+     replaces it there. Kept for desktop, where a visitor can't be
+     redirected the same way and might be screenshotting/sharing. */
+  .tk-store-badges:not(.tk-store-badges--floating) { display: none; }
+}
+
+/* ── Floating variant — mobile only ──
+   A second, separate instance of the same two badges (see LandingPage.jsx)
+   rendered as a sibling of the hero <section>, not inside it: the in-flow
+   pair above lives inside .tk-hero__content, which gets an AOS fade-up
+   transform, and a transform on any ancestor becomes the containing block
+   for a position:fixed descendant — that was silently anchoring a fixed
+   attempt to the hero's text column instead of the viewport corner.
+   Pulled out of the content stack entirely so it costs no height in the
+   hero column and stays reachable for the rest of the scroll. Opposite
+   corner from Nasir's WhatsApp bubble (src/Components/Nasir.jsx) so the
+   two floating elements never meet.
+
+   bottom:16px is correctly anchored to the real viewport edge on every
+   browser — the bug this fixes wasn't a mispositioned fixed element, it
+   was a false assumption about how much vertical room existed above that
+   edge. Chrome DevTools' mobile emulation gives the page the FULL device
+   height as content viewport (no browser chrome simulated), so the arc
+   below always had headroom to clear this badge there. A real phone's
+   own address bar + bottom toolbar eat a large chunk of that same height
+   (confirmed on a real iOS Safari screenshot, not an emulator — see PR
+   discussion), so the identical CSS left no such headroom and the badges
+   sat on top of the arc's lower tags on first paint. Same fix Nasir's
+   WhatsApp bubble already uses for this exact class of problem (see its
+   own comment): stay invisible/non-interactive while the hero is still
+   substantially on screen, so there is no viewport height this can
+   collide at, on any device, instead of chasing a pixel margin that only
+   happens to work for the chrome height of whichever phone was tested. */
+.tk-store-badges--floating {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .tk-store-badges--floating {
+    display: flex;
+    position: fixed;
+    right: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    z-index: 40;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    filter: drop-shadow(0 6px 16px rgba(0,0,0,0.35));
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .tk-store-badges--floating.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  [dir="rtl"] .tk-store-badges--floating {
+    right: auto;
+    left: 16px;
+    align-items: flex-start;
+  }
+  .tk-store-badges--floating .tk-store-badge {
+    width: 100px;
+    height: 30px;
+  }
+}
+
+/* ============================================================
+   NARROW / PORTRAIT — the visual column (truck + tags) is real DOM now,
+   not pixels baked into a hand-composed portrait image, so narrow
+   viewports just reflow the same two flex children instead of needing a
+   whole second image asset. Below 860px there isn't room for both
+   columns side by side without the tags crowding the text, so the
+   visual column drops below the text and shrinks; the skyline+glow stay
+   as ambient background throughout since they cost nothing extra.
+   ============================================================ */
+@media (max-width: 860px) {
+  /* Text + the tall visual column both need real room stacked vertically
+     now, so the hero is allowed to grow past one viewport height here
+     (natural scroll) rather than being capped at 100dvh - 80px like the
+     desktop side-by-side layout is. */
+  .tk-hero { min-height: auto; }
+
+  .tk-hero__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: clamp(68px, 12vw, 88px);
+    /* Overrides the base row layout's clamp(24px, 4vw, 64px) — that was
+       sized for the desktop two-column row; stacked as a column here it
+       read as too much empty space between the text block and the
+       circle below it. */
+    gap: 20px;
+  }
+
+  .tk-hero__content {
+    max-width: 100%;
+    text-align: center;
+    flex: none;
+  }
+
+  .tk-hero__title { max-width: none; }
+
+  .tk-cta-row,
+  .tk-store-badges {
+    justify-content: center;
+  }
+
+  /* Below the text on mobile, the truck+glow illustration stays centered
+     the same way it does on desktop. The six service tags drop the
+     circular arc here — a position:absolute composition whose
+     radius/anchor math depends on this column's own width — in favor of
+     a static 3-per-row grid of real links, in normal document flow (see
+     .tk-hero__mobile-tag-grid below). Nothing here is positioned relative
+     to the viewport or this column's size, so there is no geometry that
+     can come out wrong on a given device. */
+  .tk-hero__visual {
+    width: 100%;
+    max-width: 460px;
+    min-height: calc(min(58vw, 260px) + 24px);
+    margin: 0 auto;
+    align-self: center;
+    /* 38% (a desktop leftover, tuned so the arc's tag labels had room to
+       clear the sphere) left the glow+truck visibly off-center once the
+       arc is replaced by the mobile pill row below -- 50% centers the
+       sphere/truck composition itself within this now-centered column. */
+    --sphere-x: 50%;
+    --sphere-y: 50%;
+    /* This box's own layout height (~380px, driven by min-height's
+       formula plus how flex sizes it here) is taller than the visible
+       circle graphic inside it, and the mobile pill rows are pulled up
+       to overlap it (see .tk-hero__mobile-tag-grid's negative margin) --
+       so its transparent, "empty-looking" edges were sitting on top of
+       and intercepting clicks on the pills underneath, even though
+       nothing was visible there. Nothing inside this box needs to be
+       clickable at this breakpoint (.tk-hero__tags, the only
+       interactive content it can contain, is display:none here), so
+       this is safe to disable outright rather than needing to punch a
+       hole for specific children. */
+    pointer-events: none;
+  }
+
+  .tk-hero__glow {
+    width: min(58vw, 260px);
+  }
+
+  .tk-hero__truck {
+    width: min(40vw, 165px);
+  }
+
+  /* The arc itself is desktop/tablet only below 861px — see
+     .tk-hero__mobile-tag-grid below for the mobile replacement. */
+  .tk-hero__tags {
+    display: none;
+  }
+
+  /* Three pill tags per row (all six visible across two rows) instead of
+     one pill cycling through them — each is a real link to that
+     service's page, not a decorative label. Equal 1fr columns rather
+     than content-sized ones: sizing a 3-column-times-2-row grid to each
+     COLUMN's widest item (max-content) coupled the two rows' widths
+     together and overflowed narrow phones for the longer labels
+     ("Battery Jump Start") — 1fr always divides the available width
+     exactly, so it can wrap a label to a second line on narrow screens
+     but can never overflow it. */
+  .tk-hero__mobile-tag-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 8px;
+    row-gap: 16px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    /* .tk-hero__inner's flex `gap: 20px` already spaces every child from
+       its neighbor -- fine between the hero text and the first row, but
+       stacked with the arc's own upward curve (see --tag-y above) it
+       left a noticeably bigger gap between the pills and the truck
+       circle than intended. Pulling just this edge in (not the whole
+       flex gap, which would also shrink the text-to-pills spacing)
+       tightens that one gap specifically. */
+    margin-bottom: -75px;
+  }
+
+  /* Bottom row (after .tk-hero__visual): same tightening, opposite edge. */
+  .tk-hero__visual ~ .tk-hero__mobile-tag-grid {
+    margin-bottom: 0;
+    margin-top: -75px;
+  }
+
+  .tk-hero__mobile-tag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    /* Explicit, not relying on grid's default stretch -- this <Link> is
+       itself the pill (background/border/radius all live here), so its
+       own box needs to fill the whole grid cell for the whole visible
+       pill to be tappable, not just a content-sized area in the middle
+       of it. */
+    width: 100%;
+    height: 100%;
+    /* Keeps the tap target close to the 44px touch-target minimum even
+       though the pill itself is visually shorter. */
+    min-height: 44px;
+    padding: 9px 8px;
+    border-radius: var(--tk-radius-pill);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--tk-line);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    /* Set per-position below; read here so :active only ever adds a
+       scale on top of whatever curve offset is already in place. */
+    --tag-y: 0px;
+    transform: translateY(var(--tag-y));
+  }
+
+  .tk-hero__mobile-tag:active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--tk-line-strong);
+    transform: translateY(var(--tag-y)) scale(0.97);
+  }
+
+  /* Curved, not a flat row — a single clean dome/cup shape (middle pill
+     is the only one that moves; the flanking two stay put) reads as an
+     arch much more clearly than also rotating the flanking pills did —
+     tilted pill text looked like it was crooked rather than curved, so
+     that's dropped. Purely vertical, so it's symmetric left/right and
+     needs no RTL mirroring. The top row (rendered before
+     .tk-hero__visual) arcs like the cap of the circle: middle pill
+     highest. The bottom row (after .tk-hero__visual — selected via the
+     general sibling combinator, since both rows share the same classes)
+     mirrors that for the circle's underside: middle pill lowest. */
+  .tk-hero__mobile-tag-grid .tk-hero__mobile-tag:nth-child(2) {
+    --tag-y: -18px;
+  }
+  .tk-hero__visual ~ .tk-hero__mobile-tag-grid .tk-hero__mobile-tag:nth-child(2) {
+    --tag-y: 18px;
+  }
+
+  .tk-hero__mobile-tag-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    object-fit: contain;
+  }
+
+  /* Same mirroring as the desktop arc's .tk-hero__tag-icon — these icons
+     are drawn facing left, correct for LTR only. */
+  [dir="rtl"] .tk-hero__mobile-tag-icon {
+    transform: scaleX(-1);
+  }
+
+  .tk-hero__mobile-tag-label {
+    font-size: 10px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .tk-hero__inner { padding: 16px 16px 36px; }
+  .tk-hero__title { font-size: 32px; }
+  [dir="rtl"] .tk-hero__title { font-size: 22px; }
+  .tk-dispatch-chip { font-size: 11px; margin-bottom: 16px; }
+  .tk-hero__subtitle { margin-bottom: 22px; font-size: 14px; }
+  /* Download + Call Now stay side by side even on the narrowest phones
+     (~320px) instead of wrapping to two stacked rows -- flex-wrap:wrap
+     on the base .tk-cta-row rule was letting that happen once "Download
+     The App" (now just "Download") plus "Call Now" ran out of room.
+     Tightened button padding/font/gap here claws back just enough width
+     that nowrap doesn't overflow instead. */
+  .tk-cta-row { gap: 8px; margin-bottom: 18px; flex-wrap: nowrap; }
+  .tk-btn { padding-inline: 16px 6px; font-size: 13.5px; gap: 8px; }
+  .tk-hero__stats { gap: 8px; margin-bottom: 18px; }
+  .tk-hero__stat { min-width: 66px; padding: 7px 9px; }
+}
+
+/* Landscape phones — short viewport height, so the hero is floored at a
+   workable height rather than being squashed further, and the visual
+   column (which needs vertical room for the truck + tag pills) steps
+   aside for the text instead of fighting it for space. */
+@media (max-width: 900px) and (orientation: landscape) {
+  .tk-hero { min-height: 520px; }
+  .tk-hero__inner { padding-bottom: 24px; }
+  .tk-hero__visual { display: none; }
+}
+
+/* Tablet landscape (iPad etc.) — already uses the normal desktop
+   two-column layout above 860px wide, so the icons render at the base
+   40px size same as any desktop window. At the narrower end of tablet
+   landscape widths that reads a bit small against the sphere/truck
+   this orientation has room for, so bump it up a little here. */
+@media (orientation: landscape) and (min-width: 901px) and (max-width: 1200px) {
+  .tk-hero__tag-icon { width: 48px; height: 48px; }
+  /* Keeps the gap off the glow proportional to the bigger icon (24px
+     half-icon instead of 20px) and the desktop rule's 110px enclosure
+     margin, same formula as the base rule. */
+  .tk-hero__visual { --tk-arc-r: calc(min(84%, 420px) / 2 + 114px); }
+}
+
+/* RTL — flexbox mirrors .tk-hero__inner's two columns on its own under
+   dir="rtl" (text moves right, .tk-hero__visual moves left), which is
+   the correct, intentional behavior now that the visual side is real
+   content rather than a fixed background photo. Only the prose itself
+   needs an explicit rule, for text alignment/direction. */
+[dir="rtl"] .tk-hero__title,
+[dir="rtl"] .tk-hero__subtitle {
+  direction: rtl;
+  text-align: right;
+}
+/* margin-left:auto (not margin-right:auto) — the auto margin needs to
+   sit on the side OPPOSITE the edge the box should hug. This was
+   backwards before: margin-right:auto absorbs the slack on the right,
+   which keeps the box flush-LEFT — the same position as plain LTR —
+   so the subtitle (narrower than .tk-hero__content via max-width:46ch)
+   never actually moved to match its own right-aligned text or the rest
+   of the right-positioned RTL content column. */
+[dir="rtl"] .tk-hero__subtitle { margin-left: auto; margin-right: 0; }

@@ -6,53 +6,144 @@
       name="google-site-verification"
       content="SHcEJ1cQid9Mxm2IEY5P1DeiSnVaz5T6BWokuH_I9Gw"
     />
-    <link rel="icon" href="Logo_White.png" type="image/x-icon" />
+    <!-- Absolute path -- a relative href here resolves against the
+         *current* document path, so on any nested prerendered route (e.g.
+         /en/car-recovery-dubai/) the browser was requesting
+         /en/car-recovery-dubai/Logo_White.png, which doesn't exist and
+         fell through to the SPA's index.html (176KB fetched for a
+         favicon, on every one of the 104 non-root pages). type is
+         image/png to match the actual file -- image/x-icon is for .ico. -->
+    <link rel="icon" href="/Logo_White.png" type="image/png" />
 
-    <!-- Google tag (gtag.js) -->
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-N8F28JJFW1"
-    ></script>
+    <!-- Preload the Poppins weights used above the fold (body copy +
+         headings). Without this the browser doesn't discover these fonts
+         until it parses index.css, so text first paints in a fallback
+         font and reflows once Poppins arrives — that swap was the single
+         biggest layout-shift contributor in Lighthouse (CLS). Preloading
+         gets the font byte-identical to its final layout before text is
+         ever painted. -->
+    <link rel="preload" href="/poppins/woff2/Poppins-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/poppins/woff2/Poppins-SemiBold.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/poppins/woff2/Poppins-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Cloudflare Turnstile -- loaded with the explicit render API (no
+         auto-rendered .cf-turnstile div) so PartnerForm.jsx can call
+         window.turnstile.render()/reset() itself once its widget div is
+         mounted, same reasoning as gtag.js below: async/defer only keeps
+         it from blocking parsing, so this stays a single small script tag
+         rather than something deferred to window.load, since the widget
+         needs to be ready by the time a visitor reaches the partner form. -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
+    <!-- Google tag (gtag.js) — the library itself is fetched and executed
+         lazily (see loadGtagScript below) instead of via a static <script
+         async> tag here. async only keeps it from blocking HTML parsing;
+         it still competes for main-thread time as soon as it arrives,
+         which was landing well inside Lighthouse's TBT measurement
+         window. Every gtag() call below already queues into dataLayer
+         regardless of whether the library has loaded yet, so deferring
+         the fetch to `window.load` costs nothing analytics-wise — the
+         queued consent/config/pageview calls are processed the moment
+         the script arrives — while moving its parse/execute cost outside
+         the window that TBT/TTI are scored on. -->
     <script>
       window.dataLayer = window.dataLayer || []
       function gtag() {
         dataLayer.push(arguments)
       }
+
+      // Google Consent Mode v2: default to denied so no analytics/ad
+      // cookies are set until the visitor accepts in the cookie banner
+      // (src/Components/CookieConsent.jsx). If they already chose
+      // "accept" on a previous visit, honor that immediately instead of
+      // flashing "denied" for a returning visitor.
+      ;(function () {
+        // CONSENT_VERSION and the 6-month max-age here must match
+        // src/utils/cookieConsent.js's CONSENT_VERSION / CONSENT_MAX_AGE_MS
+        // -- this inline script runs before any JS module loads, so it
+        // can't import them and duplicates the values instead (same
+        // reason the storage key itself is duplicated here). A stale or
+        // outdated-version record is treated as no decision at all, same
+        // as getStoredConsent() does, so this default can't grant
+        // analytics based on a choice that's since expired.
+        var CONSENT_VERSION = 1
+        var CONSENT_MAX_AGE_MS = 182 * 24 * 60 * 60 * 1000
+        var granted = false
+        try {
+          var stored = JSON.parse(localStorage.getItem("tk_cookie_consent") || "null")
+          var isCurrent =
+            stored &&
+            stored.version === CONSENT_VERSION &&
+            typeof stored.timestamp === "number" &&
+            Date.now() - stored.timestamp <= CONSENT_MAX_AGE_MS
+          granted = !!(isCurrent && stored.analytics)
+        } catch (e) {}
+        gtag("consent", "default", {
+          analytics_storage: granted ? "granted" : "denied",
+          ad_storage: granted ? "granted" : "denied",
+          ad_user_data: granted ? "granted" : "denied",
+          ad_personalization: granted ? "granted" : "denied",
+        })
+      })()
+
       gtag("js", new Date())
 
       gtag("config", "G-N8F28JJFW1")
+      gtag("config", "AW-17286502381")
+      gtag("config", "AW-18489174358")
+
+      function loadGtagScript() {
+        var script = document.createElement("script")
+        script.async = true
+        script.src = "https://www.googletagmanager.com/gtag/js?id=G-N8F28JJFW1"
+        document.head.appendChild(script)
+      }
+      if (document.readyState === "complete") {
+        loadGtagScript()
+      } else {
+        window.addEventListener("load", loadGtagScript)
+      }
     </script>
-    <meta name="robots" content="index, follow" />
-
+    <!-- Noto Kufi Arabic / Noto Nastaliq Urdu are only needed for ar/ur
+         visitors, but a plain <link rel="stylesheet"> here blocks first
+         paint for EVERY visitor — the browser has to open a new
+         connection to fonts.googleapis.com (then fonts.gstatic.com for
+         the actual font files) and download that CSS before it can
+         render anything, on every page load, in every language. On
+         Lighthouse's throttled mobile profile that round-trip chain was
+         costing seconds of FCP/LCP for English visitors who never even
+         use these fonts. preconnect warms both connections early; the
+         media="print" swapped to "all" onload is the standard non-
+         blocking stylesheet pattern (loadCSS) — it still loads and
+         applies the fonts, just without holding up the first paint. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope&family=Noto+Kufi+Arabic&family=Noto+Nastaliq+Urdu&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Noto+Nastaliq+Urdu&display=swap"
+      media="print"
+      onload="this.media='all'"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic&family=Noto+Nastaliq+Urdu&display=swap"
+      />
+    </noscript>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
-    <title>Car Recovery Service in Dubai</title>
-    <meta
-      name="description"
-      content="Tareeqk offers a fast and reliable car recovery service in Dubai with 24/7 towing, roadside assistance, and quick response across Dubai."
-    />
-
-    <meta property="og:title" content="Car Recovery in Dubai" />
-    <meta
-      property="og:description"
-      content="Tareeqk provides fast and professional car recovery in Dubai, offering roadside assistance and reliable vehicle recovery across the city."
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tareeqk.ae" />
-    <meta property="og:image" content="https://tareeqk.ae/og-image.jpg" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Car Recovery in Dubai" />
-    <meta
-      name="twitter:description"
-      content="Tareeqk delivers reliable car recovery service in Dubai, offering fast vehicle recovery and 24/7 towing services across the city."
-    />
-    <meta name="twitter:image" content="https://tareeqk.ae/og-image.jpg" />
+    <!-- Fallback title only -- every route sets its own title, description,
+         robots, and og:*/twitter:* tags via react-helmet-async (see
+         src/Pages/*.jsx). A static description/robots/og/twitter block used
+         to live here too; react-helmet-async doesn't remove tags it didn't
+         render, so those static ones stayed in the DOM after Helmet added
+         its per-page versions, and crawlers were reading whichever set
+         happened to be first in document order (the static, wrong one) --
+         same homepage title/description/og:image on all 105 prerendered
+         pages regardless of route. The bare <title> stays because Helmet
+         manages the single <title> element specially (replaces it, never
+         duplicates it), so it's safe as a pre-hydration fallback. -->
+    <title>Car Recovery in Dubai | 24/7 Towing & Roadside Assistance</title>
   </head>
 
   <body>

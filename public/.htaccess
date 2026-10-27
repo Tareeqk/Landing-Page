@@ -1,0 +1,121 @@
+# ── Rules that already existed on the live server ─────────────────────
+# These were on the server's .htaccess but NOT in the repo, so deploying the
+# repo's version would have silently removed them (http->https and www->bare
+# redirects would stop working). They are kept here, unchanged, so the repo is
+# now the single source of truth for this file.
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php8_module>
+   php_value error_log "/home/luxeglid/logs/php.error.log"
+   php_flag log_errors On
+</IfModule>
+<IfModule lsapi_module>
+   php_value error_log "/home/luxeglid/logs/php.error.log"
+   php_flag log_errors On
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+# Force https://tareeqk.ae (no www); leave SSL renewal checks alone.
+# Must stay first so every other rule below only ever sees the final
+# https://tareeqk.ae host (the original query string is carried over).
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/\.well-known/
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://tareeqk.ae%{REQUEST_URI} [L,R=301]
+
+# Serves the real prerendered 404.html on any unmatched URL, keeping the
+# actual HTTP 404 status (ErrorDocument does not redirect, unlike a normal
+# rewrite/redirect rule) -- every valid route on this site already exists
+# as a real prerendered file (see scripts/prerender.mjs), so an unmatched
+# path is genuinely invalid and should 404, not silently serve the
+# homepage.
+ErrorDocument 404 /404.html
+
+# ── Caching ────────────────────────────────────────────────────────────
+# Everything under /assets/ is content-hashed by Vite (index-CgrYMyTY.js),
+# so a changed file always gets a new URL and the old one can be cached
+# forever. It was served with max-age=604800 (1 week), which forced
+# returning visitors to revalidate every bundle weekly for no benefit.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^assets/ - [E=TK_IMMUTABLE:1]
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Cache-Control "public, max-age=31536000, immutable" env=TK_IMMUTABLE
+</IfModule>
+
+# ── Security headers ──────────────────────────────────────────────────
+# Deliberately no Content-Security-Policy: index.html has an inline gtag
+# bootstrap and third-party scripts (GTM, Cloudflare Turnstile), and a CSP
+# needs to be built and tested against those separately. HSTS has no
+# includeSubDomains because platform./booking. are separate deployments.
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ── Legacy / removed URLs ─────────────────────────────────────────────
+# Search Console still lists these (Page indexing > Not found 404), and
+# older sitemaps + the www. host pointed at them. 301 only where there is a
+# real equivalent page, so link equity moves and Google doesn't treat the
+# redirect as a soft 404. (Fuel delivery is a live page again at
+# /{en,ar,ur}/fuel-delivery-dubai/, so it must NOT be redirected or removed here.)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Pre-i18n, language-less URLs (listed in the 2025 sitemap).
+  RewriteRule ^(about|faq|service|privacy-policy|terms)/?$ /en/$1/ [R=301,L,NC]
+  RewriteRule ^(driver-registration|vendor-registration)/?$ /en/become-a-partner/ [R=301,L,NC]
+  RewriteRule ^drivers-faqs/?$ /en/faq/ [R=301,L,NC]
+  # Removed pages under a language prefix.
+  RewriteRule ^(en|ar|ur)/(driver-registration|vendor-registration)/?$ /$1/become-a-partner/ [R=301,L,NC]
+  RewriteRule ^(en|ar|ur)/drivers-faqs/?$ /$1/faq/ [R=301,L,NC]
+</IfModule>
+
+# Old URL shapes Search Console still lists (crawled Aug-Oct 2026):
+#  - /service/<slug> : an older URL structure for the same service/location pages
+#  - desert-recovery-dubai-<place> : per-place desert pages (Bab Al Shams, Al Qudra,
+#    Big Red, Lehbab, Al Marmoom...) that were removed; the desert recovery
+#    service page is their real equivalent.
+# Slugs are listed explicitly (from scripts/site-routes.mjs) so an unknown
+# slug still 404s instead of redirecting to another 404.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^service/desert-recovery-dubai-[a-z0-9-]+/?$ /en/desert-recovery-dubai/ [R=301,L,NC]
+  RewriteRule ^(en|ar|ur)/desert-recovery-dubai-[a-z0-9-]+/?$ /$1/desert-recovery-dubai/ [R=301,L,NC]
+  RewriteRule ^service/(car-recovery-dubai|battery-service-dubai|flat-tyre-repair-dubai|accident-recovery-dubai|towing-service-dubai|desert-recovery-dubai|bike-recovery-dubai|roadside-assistance-dubai|car-recovery-dubai-marina|car-recovery-business-bay|car-recovery-downtown-dubai|car-recovery-deira|car-recovery-bur-dubai|car-recovery-al-barsha|car-recovery-jumeirah|car-recovery-jvc|car-recovery-jlt|car-recovery-dubai-silicon-oasis|car-recovery-international-city|car-recovery-dubai-investment-park|car-recovery-dubai-sports-city|car-recovery-motor-city|car-recovery-mirdif|car-recovery-al-qusais|car-recovery-al-quoz|car-recovery-jebel-ali|car-recovery-palm-jumeirah|car-recovery-difc|car-recovery-dubai-hills-estate|car-recovery-discovery-gardens|car-recovery-al-nahda|car-recovery-barsha-heights)/?$ /en/$1/ [R=301,L,NC]
+</IfModule>
+
+# ── Homepage consolidation ────────────────────────────────────────────
+# Search Console (Jul-Oct 2026) shows the homepage's impressions split across
+# four URLs: / (7,837), /en/ (5,109), /en (615) and www.tareeqk.ae/ (524).
+# One URL should hold all of that. The default-language homepage is /en/
+# (it is also the hreflang x-default), so send the bare root there. The query
+# string is preserved by default, so ad click IDs (?gclid=...) survive.
+# Also catch the old home.html / homepage.html entry points and the nested
+# home.html/<slug> URLs Google crawled (relative-link leftovers).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^$ /en/ [R=301,L]
+  RewriteRule ^home(page)?\.html/?$ /en/ [R=301,L,NC]
+  RewriteRule ^home\.html/(car-recovery-dubai|battery-service-dubai|flat-tyre-repair-dubai|accident-recovery-dubai|towing-service-dubai|desert-recovery-dubai|bike-recovery-dubai|roadside-assistance-dubai|car-recovery-dubai-marina|car-recovery-business-bay|car-recovery-downtown-dubai|car-recovery-deira|car-recovery-bur-dubai|car-recovery-al-barsha|car-recovery-jumeirah|car-recovery-jvc|car-recovery-jlt|car-recovery-dubai-silicon-oasis|car-recovery-international-city|car-recovery-dubai-investment-park|car-recovery-dubai-sports-city|car-recovery-motor-city|car-recovery-mirdif|car-recovery-al-qusais|car-recovery-al-quoz|car-recovery-jebel-ali|car-recovery-palm-jumeirah|car-recovery-difc|car-recovery-dubai-hills-estate|car-recovery-discovery-gardens|car-recovery-al-nahda|car-recovery-barsha-heights)/?$ /en/$1/ [R=301,L,NC]
+</IfModule>
+
+# ── Deploy state file ────────────────────────────────────────────────
+# The GitHub Actions FTP deploy keeps a state file in the web root so later
+# deploys only upload what changed. It lists every file and hash, so keep it
+# private.
+<FilesMatch "^\.ftp-deploy-sync-state\.json$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+  </IfModule>
+</FilesMatch>

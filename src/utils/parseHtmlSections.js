@@ -28,7 +28,7 @@ export function parseHtmlSections(htmlString, language = "en") {
         ? '"Noto Kufi Arabic", sans-serif'
         : language === "ur"
         ? '"Noto Nastaliq Urdu", serif'
-        : '"Manrope", sans-serif';
+        : '"Poppins", sans-serif';
 
     node.style.fontFamily = family;
     node.style.fontSize = "16px";
