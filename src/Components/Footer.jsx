@@ -1,8 +1,10 @@
 import React, { useState } from "react"
+import useDownloadLink from "../hooks/useDownloadLink"
 import {
   Phone,
   Mail,
   MapPin,
+  Download,
   ArrowRight,
   ChevronDown,
   Clock,
@@ -133,6 +135,7 @@ const SOCIALS = [
 const Footer = () => {
   const { t } = useTranslation()
   const langLink = useLangLink()
+  const dl = useDownloadLink()
 
   // Services/Areas collapse to accordions on mobile only — CSS forces them
   // open at desktop widths regardless of this state, so it only matters
@@ -708,10 +711,10 @@ const Footer = () => {
                 </a>
               </div>
 
-              <a href="tel:+97142232269" className="tk-cta-btn">
-                <Phone />
-                {t("footer.emergencyCall")}
-              </a>
+              <Link {...dl.linkProps} className="tk-cta-btn">
+                <Download />
+                {t("service.downloadApp", "Download App")}
+              </Link>
 
               <div className="tk-legal-links">
                 <Link to={langLink("/privacy-policy")} onMouseEnter={() => prefetchRoute(langLink("/privacy-policy"))} viewTransition className="tk-legal-link">

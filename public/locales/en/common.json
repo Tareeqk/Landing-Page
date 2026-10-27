@@ -1,6 +1,39 @@
 {
+  "downloadPage": {
+    "eyebrow": "Tareeqk apps",
+    "title": "Roadside help, one tap away",
+    "subtitle": "Pick the app that fits you. Available on iPhone and Android.",
+    "customer": {
+      "badge": "For customers",
+      "title": "Tareeqk Customer App",
+      "desc": "Request recovery, towing, battery jump start, tyre repair and fuel delivery from your phone.",
+      "points": [
+        "Share your location in seconds",
+        "See your price before you confirm",
+        "Follow your driver live on the map"
+      ]
+    },
+    "driver": {
+      "badge": "For drivers",
+      "title": "Tareeqk Driver App",
+      "desc": "For registered driver partners. Receive nearby requests, manage your tasks and track your earnings.",
+      "points": [
+        "Receive job requests near you",
+        "Manage active and completed tasks",
+        "Track your wallet and earnings"
+      ]
+    },
+    "googlePlay": "Get it on Google Play",
+    "appStore": "Download on the App Store",
+    "partnerQ": "Not a driver partner yet?",
+    "partnerLink": "Register your interest"
+  },
   "navbar": {
     "mega": {
+      "areasEyebrow": "Popular areas",
+      "areasViewAll": "View all areas",
+      "companyDescs": ["Who we are and how Tareeqk works.", "Guides for UAE drivers: breakdowns, recovery and car care.", "Drive or run a recovery fleet with Tareeqk."],
+      "fleetDesc": "Sign in to your fleet account.",
       "strip": "Serving Dubai, day and night",
       "eyebrow": "What do you need?",
       "viewAll": "View all services",
@@ -1783,6 +1816,10 @@
     "home": {
       "title": "Car Recovery in Dubai | 24/7 Towing & Roadside Assistance",
       "description": "Fast, reliable towing and roadside assistance in Dubai. Available 24/7 for car recovery, battery jump start, tire change and more."
+    },
+    "download": {
+      "title": "Download the Tareeqk App | iOS & Android Customer and Driver Apps",
+      "description": "Get the Tareeqk app for iPhone and Android. Request roadside assistance and track your driver live, or join as a driver partner with the Tareeqk Driver app."
     },
     "becomePartner": {
       "title": "Become a Partner - Fleet & Vendor Registration | Tareeqk",

@@ -1,6 +1,7 @@
 // pages/Service.jsx
 import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
+import useDownloadLink from '../hooks/useDownloadLink';
 import { useTranslation } from 'react-i18next';
 import {
   Smartphone, MapPin, Tag, ShieldCheck, Clock, Map, Lock, Zap,
@@ -574,15 +575,8 @@ export default function Service({ isSection = false }) {
   // exist anywhere on this page (only DriverRegistration renders that id),
   // so every "Download" button here was a silent no-op. Same OS-detect
   // redirect as the landing page and service pages instead.
-  const handleDownloadRedirect = () => {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const iosUrl     = 'https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854';
-    const androidUrl = 'https://play.google.com/store/apps/details?id=com.tareeqk.order';
-    const isIOSDevice = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    const isMacOS = navigator.platform.toUpperCase().includes('MAC') ||
-      (navigator.userAgent.includes('Mac') && !('ontouchend' in document));
-    window.location.href = (isIOSDevice || isMacOS) ? iosUrl : androidUrl;
-  };
+  const dl = useDownloadLink();
+  const handleDownloadRedirect = dl.go;
 
   // ── Data (i18n-driven) ─────────────────────────────────────────────────
   const SERVICES = [
@@ -658,7 +652,7 @@ export default function Service({ isSection = false }) {
     {
       icon: <Fuel size={18} />,
       href: '/fuel-delivery-dubai',
-      img: '/new/Recovery_Van.webp',
+      img: '/services/fuel-delivery.webp',
       tag: null,
       title: t('service.svc9Title'),
       desc: t('service.svc9Desc'),
@@ -1318,8 +1312,8 @@ export default function Service({ isSection = false }) {
                   </p>
                 </div>
                 <div>
-                  <a
-                    href="tel:+97142232269"
+                  <Link
+                    {...dl.linkProps}
                     style={{
                       display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                       padding: '14px', background: '#000', color: '#fff',
@@ -1327,9 +1321,11 @@ export default function Service({ isSection = false }) {
                       textDecoration: 'none', fontSize: '14px', marginBottom: '8px',
                     }}
                   >
-                    <Phone size={16} />
-                    {t('service.callBtn')}
-                  </a>
+                    <span style={{ width: 26, height: 26, borderRadius: '50%', background: 'var(--primary-yellow)', color: '#000', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <Download size={14} />
+                    </span>
+                    {t('service.downloadApp')}
+                  </Link>
                   <a
                     href="https://wa.me/97142232269"
                     target="_blank"

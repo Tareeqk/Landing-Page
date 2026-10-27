@@ -20,6 +20,7 @@ export const STATIC_PAGES = [
   { slug: 'areas', priority: '0.8' },
   { slug: 'pricing', priority: '0.8' },
   { slug: 'become-a-partner', priority: '0.7' },
+  { slug: 'download', priority: '0.7' },
   { slug: 'blogs', priority: '0.7' },
   { slug: 'faq', priority: '0.7' },
   { slug: 'terms', priority: '0.6' },

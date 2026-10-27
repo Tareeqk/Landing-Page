@@ -17,6 +17,7 @@ import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
 import { prefetchRoute } from '../../routePrefetch';
 import { Icon } from 'lucide-react';
+import useDownloadLink from '../../hooks/useDownloadLink';
 
 // ─────────────────────────── ICONS ───────────────────────────
 // All custom inline SVGs — no external dependency
@@ -527,11 +528,11 @@ const stagger = (index, step = 80, base = 0, max = 480) =>
 export default function LocationPageTemplate({ config }) {
   const { lang } = useParams();
   const langLink = useLangLink();
+  const dl = useDownloadLink();
   const { t } = useTranslation();
   const schemaFaqs = config.faqs.map(f => ({ question: f.q, answer: f.a }));
   const [openFaq, setOpenFaq] = React.useState(null);
 
-  const handleCall = () => { window.location.href = 'tel:+97142232269'; };
   const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
 
   const currentHref = `/${config.slug}`;
@@ -687,16 +688,16 @@ export default function LocationPageTemplate({ config }) {
               </Reveal>
 
               <Reveal as="div" direction="up" delay={440} style={S.heroCtaRow} className="tk-hero-cta-row">
-                <button onClick={handleCall} className="tk-cta-btn"
-                  style={{ ...S.heroBtn, background: 'var(--primary-yellow)', color: '#000' }}>
+                <Link {...dl.linkProps} className="tk-cta-btn"
+                  style={{ ...S.heroBtn, background: 'var(--primary-yellow)', color: '#000', textDecoration: 'none' }}>
                   <IconPhone size={18} color="#000" />
                   <span>
-                    <div style={S.heroBtnTitle}>{t('locationPageTemplate.hero.callNow', { defaultValue: 'Call Now' })}</div>
+                    <div style={S.heroBtnTitle}>{t('service.downloadApp', 'Download App')}</div>
                     <div style={{ ...S.heroBtnSub, color: 'rgba(0,0,0,0.6)' }}>
                       {t('locationPageTemplate.hero.callNowSub', { defaultValue: 'Instant Response' })}
                     </div>
                   </span>
-                </button>
+                </Link>
                 <button onClick={handleWhatsApp} className="tk-cta-btn"
                   style={{ ...S.heroBtn, background: '#25D366', color: '#fff' }}>
                   <IconWhatsApp size={18} color="#fff" />
@@ -1007,16 +1008,16 @@ export default function LocationPageTemplate({ config }) {
               display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap',
               marginBottom: '28px',
             }} className="tk-cta2-btn-row">
-              <button onClick={handleCall} className="tk-cta2-btn" style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px',
+              <Link {...dl.linkProps} className="tk-cta2-btn" style={{
+                display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none',
                 background: 'var(--primary-yellow)', color: '#000', border: 'none',
                 padding: '15px 30px', borderRadius: '100px',
                 fontSize: '15px', fontWeight: 800, cursor: 'pointer',
                 fontFamily: 'inherit', transition: 'filter 0.2s, transform 0.2s',
               }}>
                 <IconPhone size={17} color="#000" />
-                {t('locationPageTemplate.cta.callTitle', { defaultValue: 'Call Now' })}
-              </button>
+                {t('service.downloadApp', 'Download App')}
+              </Link>
 
               <button onClick={handleWhatsApp} className="tk-cta2-btn" style={{
                 display: 'inline-flex', alignItems: 'center', gap: '10px',

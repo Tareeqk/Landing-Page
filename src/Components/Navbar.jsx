@@ -21,6 +21,10 @@ import {
   TriangleAlert,
   Fuel,
   ShieldCheck,
+  MapPin,
+  Info,
+  BookOpen,
+  Handshake,
 } from "lucide-react"
 import { useLocation, Link, useParams } from "react-router-dom"
 import DarkMode from "./DarkMode"
@@ -30,6 +34,7 @@ import { HashLink } from "react-router-hash-link"
 import useLangLink from "../hooks/useLangLink"
 import { SERVICES, AREAS } from "./Footer"
 import { prefetchRoute } from "../routePrefetch"
+import useDownloadLink from "../hooks/useDownloadLink"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -57,19 +62,14 @@ const SERVICE_ICONS = [
 // Same store targets as the "Download The App" button on the service pages:
 // App Store on iOS, Google Play everywhere else. The delegated click tracker
 // (utils/adsTracking.js) classifies these as app_download_click.
-const PLAY_URL = "https://play.google.com/store/apps/details?id=com.tareeqk.order"
-const IOS_URL = "https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854"
 const WHATSAPP_URL = "https://wa.me/97142232269"
-function pickStoreOnClick(e) {
-  const ua = navigator.userAgent || ""
-  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) e.currentTarget.href = IOS_URL
-}
 
 export default function Navbar({ isDark, setIsDark }) {
   const location = useLocation()
   const { lang } = useParams()
   const { t } = useTranslation()
   const langLink = useLangLink()
+  const dl = useDownloadLink()
   const fleetLoginUrl = `${import.meta.env.VITE_BASE_URL}/login`
 
   // Trailing slash stripped (except for the bare "/" home path) so the
@@ -137,12 +137,22 @@ export default function Navbar({ isDark, setIsDark }) {
   const locationLinks = AREAS.map((area) => ({
     label: area.label,
     href: langLink(area.href),
+    Icon: MapPin,
   }))
 
+  const companyDescs = t("navbar.mega.companyDescs", { returnObjects: true, defaultValue: [] })
+  const companyDesc = (i) => (Array.isArray(companyDescs) ? companyDescs[i] : "")
   const companyLinks = [
-    { label: t("navbar.about"), href: langLink("/about") },
-    { label: t("navbar.blogs"), href: langLink("/blogs") },
-    { label: t("navbar.partners"), href: langLink("/become-a-partner") },
+    { label: t("navbar.about"), href: langLink("/about"), Icon: Info, desc: companyDesc(0) },
+    { label: t("navbar.blogs"), href: langLink("/blogs"), Icon: BookOpen, desc: companyDesc(1) },
+    { label: t("navbar.partners"), href: langLink("/become-a-partner"), Icon: Handshake, desc: companyDesc(2) },
+    {
+      label: t("navbar.fleetLogin", "Fleet Login"),
+      href: fleetLoginUrl,
+      Icon: Building2,
+      desc: t("navbar.mega.fleetDesc"),
+      external: true,
+    },
   ]
   const companyPaths = ["/about", "/blogs", "/become-a-partner"]
 
@@ -155,7 +165,10 @@ export default function Navbar({ isDark, setIsDark }) {
         barePath === "/service" ||
         SERVICES.some((service) => barePath === service.href),
       dropdown: serviceLinks,
-      mega: true,
+      mega: "wide",
+      megaCols: "grid-cols-3",
+      megaEyebrow: t("navbar.mega.eyebrow"),
+      megaViewAll: t("navbar.mega.viewAll"),
     },
     {
       name: t("navbar.locations"),
@@ -164,6 +177,10 @@ export default function Navbar({ isDark, setIsDark }) {
         barePath === "/areas" ||
         AREAS.some((area) => barePath === area.href),
       dropdown: locationLinks,
+      mega: "areas",
+      megaCols: "grid-cols-2",
+      megaEyebrow: t("navbar.mega.areasEyebrow"),
+      megaViewAll: t("navbar.mega.areasViewAll"),
     },
     {
       name: t("navbar.pricing"),
@@ -175,7 +192,8 @@ export default function Navbar({ isDark, setIsDark }) {
       href: langLink("/about"),
       current: companyPaths.includes(barePath) || barePath.startsWith("/page/"),
       dropdown: companyLinks,
-      footerLink: { label: t("navbar.fleetLogin", "Fleet Login"), href: fleetLoginUrl },
+      mega: "list",
+      megaCols: "grid-cols-1",
     },
     { name: t("navbar.contact"), href: langLink("/#contact") },
   ]
@@ -342,7 +360,7 @@ export default function Navbar({ isDark, setIsDark }) {
                               key={item.name}
                               className={classNames(
                                 "group flex h-16 sm:h-20 items-center",
-                                item.mega ? "static" : "relative",
+                                item.mega === "wide" ? "static" : "relative",
                               )}
                             >
                               <Link
@@ -361,7 +379,11 @@ export default function Navbar({ isDark, setIsDark }) {
                                 <div
                                   className={classNames(
                                     "absolute left-1/2 top-full z-50 -translate-x-1/2",
-                                    "w-[min(1120px,calc(100vw-48px))]",
+                                    item.mega === "wide"
+                                      ? "w-[min(1120px,calc(100vw-48px))]"
+                                      : item.mega === "areas"
+                                        ? "w-[min(720px,calc(100vw-48px))]"
+                                        : "w-[min(460px,calc(100vw-48px))]",
                                     "opacity-0 invisible -translate-y-1",
                                     "transition-all duration-200",
                                     "group-hover:opacity-100 group-hover:visible group-hover:translate-y-0",
@@ -377,6 +399,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                     )}
                                   >
                                     <div className="flex-1 min-w-0 p-6 pb-5">
+                                      {item.megaEyebrow && (
                                       <div className="mb-3 flex items-baseline justify-between gap-4 px-2">
                                         <span
                                           className={classNames(
@@ -384,7 +407,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                             isDark ? "text-[var(--primary-yellow)]" : "text-[#7a5200]",
                                           )}
                                         >
-                                          {t("navbar.mega.eyebrow")}
+                                          {item.megaEyebrow}
                                         </span>
                                         <Link
                                           to={item.href}
@@ -396,20 +419,29 @@ export default function Navbar({ isDark, setIsDark }) {
                                             isDark ? "text-white" : "text-black",
                                           )}
                                         >
-                                          {t("navbar.mega.viewAll")}
+                                          {item.megaViewAll}
                                           <ArrowRight className="h-3.5 w-3.5 rtl:rotate-180" />
                                         </Link>
                                       </div>
-                                      <div className="grid grid-cols-3 gap-1.5">
-                                        {item.dropdown.map((sub) => (
-                                          <Link
+                                      )}
+                                      <div className={classNames("grid gap-1.5", item.megaCols)}>
+                                        {item.dropdown.map((sub) => {
+                                          const SubTag = sub.external ? "a" : Link
+                                          const subProps = sub.external
+                                            ? { href: sub.href }
+                                            : {
+                                                to: sub.href,
+                                                onClick: () => window.scrollTo(0, 0),
+                                                onMouseEnter: () => prefetchRoute(sub.href),
+                                                viewTransition: true,
+                                              }
+                                          return (
+                                          <SubTag
                                             key={sub.href}
-                                            to={sub.href}
-                                            onClick={() => window.scrollTo(0, 0)}
-                                            onMouseEnter={() => prefetchRoute(sub.href)}
-                                            viewTransition
+                                            {...subProps}
                                             className={classNames(
-                                              "flex items-start gap-3 rounded-2xl p-3 transition-colors",
+                                              "flex gap-3 rounded-2xl p-3 transition-colors",
+                                              sub.desc ? "items-start" : "items-center",
                                               FOCUS_RING,
                                               isDark ? "hover:bg-white/10" : "hover:bg-[#f6f4ec]",
                                             )}
@@ -451,11 +483,13 @@ export default function Navbar({ isDark, setIsDark }) {
                                                 </span>
                                               )}
                                             </span>
-                                          </Link>
-                                        ))}
+                                          </SubTag>
+                                          )
+                                        })}
                                       </div>
                                     </div>
 
+                                    {item.mega === "wide" && (
                                     <div className="hidden xl:flex w-[300px] shrink-0 flex-col gap-3 bg-[#0b0d10] p-7 text-white">
                                       <span className="text-xl font-bold leading-tight">
                                         {t("navbar.mega.stuckTitle")}
@@ -463,11 +497,8 @@ export default function Navbar({ isDark, setIsDark }) {
                                       <span className="text-[13px] leading-relaxed text-white/65">
                                         {t("navbar.mega.stuckBody")}
                                       </span>
-                                      <a
-                                        href={PLAY_URL}
-                                        onClick={pickStoreOnClick}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                      <Link
+                                        {...dl.linkProps}
                                         className={classNames(
                                           "mt-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl text-[15px] font-bold text-black",
                                           FOCUS_RING,
@@ -476,7 +507,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                       >
                                         <Download className="h-[18px] w-[18px]" />
                                         {t("service.downloadApp", "Download App")}
-                                      </a>
+                                      </Link>
                                       <a
                                         href={WHATSAPP_URL}
                                         target="_blank"
@@ -490,6 +521,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                         {t("navbar.mega.whatsapp")}
                                       </a>
                                     </div>
+                                    )}
                                   </div>
                                 </div>
                               ) : (
@@ -614,22 +646,21 @@ export default function Navbar({ isDark, setIsDark }) {
                       aria-hidden="true"
                     />
 
-                    <a
-                      href={PLAY_URL}
-                      onClick={pickStoreOnClick}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      {...dl.linkProps}
                       className={classNames(
-                        "hidden lg:inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-full border px-4 py-2.5 text-sm font-semibold transition-all duration-300 hover:scale-105",
+                        "hidden lg:inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap rounded-full py-1.5 ps-1.5 pe-4 text-sm font-semibold transition-all duration-300 hover:scale-105",
                         isDark
-                          ? "border-white/20 text-white hover:bg-white/10"
-                          : "border-black/80 text-black hover:bg-black/5",
+                          ? "bg-white text-black hover:bg-white/90"
+                          : "bg-[#0b0d10] text-white hover:bg-black",
                         FOCUS_RING,
                       )}
                     >
-                      <Download className="h-4 w-4" />
+                      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--primary-yellow)] text-black">
+                        <Download className="h-4 w-4" />
+                      </span>
                       {t("service.downloadApp", "Download App")}
-                    </a>
+                    </Link>
 
                     <a
                       href="https://booking.tareeqk.ae/login"
@@ -774,7 +805,7 @@ export default function Navbar({ isDark, setIsDark }) {
 
                         {isGroupOpen && (
                           <div className="flex flex-col gap-1 py-1 pl-4">
-                            {item.dropdown.map((sub) => (
+                            {item.dropdown.filter((sub) => !sub.external).map((sub) => (
                               <Link
                                 key={sub.href}
                                 to={sub.href}
@@ -855,14 +886,12 @@ export default function Navbar({ isDark, setIsDark }) {
                     open ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4",
                   )}
                 >
-                  <a
-                    href={PLAY_URL}
+                  <Link
+                    {...dl.linkProps}
                     onClick={(e) => {
-                      pickStoreOnClick(e)
+                      dl.onClick(e)
                       close()
                     }}
-                    target="_blank"
-                    rel="noopener noreferrer"
                     className={classNames(
                       "mb-2 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-black shadow-[0_8px_24px_rgba(247,178,5,0.3)] transition-transform duration-300 hover:scale-[1.02]",
                       FOCUS_RING,
@@ -871,7 +900,7 @@ export default function Navbar({ isDark, setIsDark }) {
                   >
                     <Download className="h-4 w-4" />
                     {t("service.downloadApp", "Download App")}
-                  </a>
+                  </Link>
                   <div className="flex gap-2">
                     <a
                       href="https://booking.tareeqk.ae/login"

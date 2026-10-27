@@ -11,8 +11,9 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { MapPinned, Wrench, Eye, ChevronDown, Phone, MessageCircle } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { MapPinned, Wrench, Eye, ChevronDown, Download, MessageCircle } from 'lucide-react';
+import useDownloadLink from '../hooks/useDownloadLink';
 import HreflangTags from '../Components/HreflangTags';
 import BreadcrumbSchema from '../schemas/BreadcrumbSchema';
 import FAQSchema from '../schemas/FAQSchema';
@@ -70,6 +71,7 @@ const PRICING_CSS = `
 export default function Pricing() {
   const { t } = useTranslation();
   const { lang } = useParams();
+  const dl = useDownloadLink();
 
   const paths = [
     {
@@ -133,7 +135,6 @@ export default function Pricing() {
   const [headlineBeforeRoute, headlineRestAfterRoute = ''] = headlineTemplate.split('{route}');
   const [headlineMid, headlineAfterFixed = ''] = headlineRestAfterRoute.split('{fixed}');
 
-  const handleCall = () => { window.location.href = 'tel:+97142232269'; };
   const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
 
   return (
@@ -394,17 +395,20 @@ export default function Pricing() {
             {t('pricing.cta.body', 'Open the app, share your location, and see the exact price before you confirm.')}
           </p>
           <div className="pr-cta-actions" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button
-              onClick={handleCall}
+            <Link
+              {...dl.linkProps}
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '9px',
-                background: COLORS.gold, color: '#000', border: 'none',
+                background: COLORS.gold, color: '#000', border: 'none', textDecoration: 'none',
                 padding: '14px 26px', borderRadius: '11px', fontSize: '14.5px',
                 fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit',
               }}
             >
-              <Phone size={15} /> {t('pricing.cta.call', 'Call Now')}
-            </button>
+              <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#000', color: COLORS.gold, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Download size={13} />
+              </span>
+              {t('service.downloadApp', 'Download App')}
+            </Link>
             <button
               onClick={handleWhatsApp}
               style={{

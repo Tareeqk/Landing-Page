@@ -27,6 +27,7 @@ const PrivacyAndPolicy   = lazy(() => import('./Pages/PrivacyAndPolicy'));
 const Blogs              = lazy(() => import('./Pages/Blogs'));
 const BlogPage           = lazy(() => import('./Pages/BlogPage'));
 const BecomePartner      = lazy(() => import('./Pages/BecomePartner'));
+const DownloadApp        = lazy(() => import('./Pages/DownloadApp'));
 const AllAreas            = lazy(() => import('./Pages/AllAreas'));
 const Pricing             = lazy(() => import('./Pages/Pricing'));
 const NotFound           = lazy(() => import('./Pages/NotFound'));
@@ -190,6 +191,7 @@ function App() {
           <Route path="terms" element={<TermsAndConditions />} />
           <Route path="privacy-policy" element={<PrivacyAndPolicy />} />
           <Route path="become-a-partner" element={<BecomePartner />} />
+          <Route path="download" element={<DownloadApp />} />
           <Route path="areas" element={<AllAreas />} />
           <Route path="pricing" element={<Pricing />} />
 

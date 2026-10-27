@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { parseHtmlSections } from '../utils/parseHtmlSections';
 import { getBlogBySlugOrId } from '../data/blogs';
 import useLangLink from '../hooks/useLangLink';
+import useDownloadLink from '../hooks/useDownloadLink';
 import HreflangTags from '../Components/HreflangTags';
 import ArticleSchema from '../schemas/ArticleSchema';
 import BreadcrumbSchema from '../schemas/BreadcrumbSchema';
@@ -303,6 +304,7 @@ export default function BlogPage() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === 'rtl';
   const langLink = useLangLink();
+  const dl = useDownloadLink();
   useBlogPageStyles();
 
   const blog = getBlogBySlugOrId(blogSlug, i18n.language);
@@ -449,10 +451,10 @@ export default function BlogPage() {
                 <Phone size={14} />
                 {t('blogs.ctaCall', 'Call Now')}
               </a>
-              <a href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854" target="_blank" rel="noopener noreferrer" className="bp-toc-cta-btn bp-toc-cta-btn--ghost">
+              <Link {...dl.linkProps} className="bp-toc-cta-btn bp-toc-cta-btn--ghost">
                 <Download size={14} />
                 {t('blogs.ctaDownload', 'Download the App')}
-              </a>
+              </Link>
             </div>
           </aside>
         )}
@@ -468,10 +470,10 @@ export default function BlogPage() {
               {t('blogs.ctaDesc', 'Download the Tareeqk app for fast, verified recovery, towing, and roadside assistance across Dubai — or call our 24/7 line.')}
             </p>
             <div className="bp-cta-actions">
-              <a href="https://apps.apple.com/in/app/tareeqk-roadside-assistances/id6480442854" target="_blank" rel="noopener noreferrer" className="bp-cta-btn bp-cta-btn--primary">
+              <Link {...dl.linkProps} className="bp-cta-btn bp-cta-btn--primary">
                 <Download size={16} />
                 {t('blogs.ctaDownload', 'Download the App')}
-              </a>
+              </Link>
               <a href="tel:+97142232269" className="bp-cta-btn bp-cta-btn--ghost">
                 <Phone size={16} />
                 {t('blogs.ctaCall', 'Call Now')}
