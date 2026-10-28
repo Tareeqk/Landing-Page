@@ -149,6 +149,7 @@
 
 /* Root color variables */
 :root {
+  color-scheme: only light;
   --primary-yellow: #f7b205;
   --seconday-yellow: #f5d608;
 
