@@ -182,6 +182,24 @@ for (const { path: route } of pages) {
       dedupeByKey('meta[name="robots"]', () => 'robots');
       dedupeByKey('meta[property^="og:"]', (el) => el.getAttribute('property'));
       dedupeByKey('meta[name^="twitter:"]', (el) => el.getAttribute('name'));
+      // Link-preview crawlers (WhatsApp, Facebook, iMessage, Slack) only read
+      // the start of the document. The runtime-injected <style> blocks from
+      // lazily loaded components land in <head> before Helmet's tags, which
+      // pushed og:title/description/image ~75KB down the file. Hoist the
+      // social/SEO tags to sit right after <title> so a crawler sees them
+      // immediately. Order among them is preserved.
+      {
+        const titleEl = document.head.querySelector('title');
+        const hoist = [...document.head.querySelectorAll(
+          'meta[name="description"], meta[name="robots"], link[rel="canonical"], meta[property^="og:"], meta[name^="twitter:"]'
+        )];
+        let anchor = titleEl;
+        for (const el of hoist) {
+          anchor.after(el);
+          anchor = el;
+        }
+      }
+
       dedupeByKey('script[type="application/ld+json"]', (el) => {
         try {
           const type = JSON.parse(el.textContent)['@type'];
