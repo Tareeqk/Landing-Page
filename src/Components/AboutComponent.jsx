@@ -49,7 +49,7 @@ export default function AboutPreview() {
         /* Top padding trimmed well below the bottom value — a full 9vw
            top gap read as dead white space right under the hero; the
            bottom gap before the next section stays generous. */
-        padding: clamp(24px, 3vw, 44px) 0 clamp(56px, 9vw, 110px);
+        padding: clamp(24px, 3vw, 44px) 0 clamp(48px, 6vw, 72px);
         overflow: hidden;
         background: #fff;
       }

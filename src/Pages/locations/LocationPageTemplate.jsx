@@ -286,7 +286,7 @@ const S = {
     color: '#e5e7eb', textTransform: 'uppercase',
   },
   heroH1: {
-    fontSize: 'clamp(2rem, 4.4vw, 3rem)', fontWeight: 800,
+    fontSize: 'clamp(1.8rem, 3.6vw, 2.4rem)', fontWeight: 800,
     lineHeight: 1.07, letterSpacing: '-0.025em', color: '#fff', margin: 0,
   },
   heroH1Accent: { display: 'block', color: 'var(--primary-yellow)' },
@@ -320,7 +320,7 @@ const S = {
     marginBottom: '12px', display: 'block',
   },
   h2: {
-    fontSize: 'clamp(1.5rem, 3.2vw, 2.3rem)', fontWeight: 800,
+    fontSize: 'clamp(1.4rem, 2.6vw, 1.9rem)', fontWeight: 800,
     color: 'var(--primary-dark-bg)', marginBottom: '14px', letterSpacing: '-0.022em',
     lineHeight: 1.18,
   },
@@ -972,7 +972,7 @@ export default function LocationPageTemplate({ config }) {
             </Reveal>
 
             <Reveal as="h2" direction="up" delay={220} style={{
-              fontSize: 'clamp(1.7rem,3.6vw,2.6rem)', fontWeight: 800,
+              fontSize: 'clamp(1.5rem,3vw,2.1rem)', fontWeight: 800,
               color: '#fff', letterSpacing: '-0.025em', lineHeight: 1.12,
               marginBottom: '14px',
             }}>

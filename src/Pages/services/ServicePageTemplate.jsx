@@ -175,7 +175,7 @@ const styles = {
     fontSize: '13px', color: '#d6d8dc', maxWidth: '540px',
     margin: '0 auto 36px', lineHeight: 1.65,
   },
-  heroCtas: { display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '48px' },
+  heroCtas: { display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '36px' },
   btnPrimary: {
     display: 'inline-flex', alignItems: 'center', gap: '9px',
     background: COLORS.gold, color: '#000', border: 'none',
@@ -220,7 +220,7 @@ const styles = {
   },
 
   // Section scaffolding
-  section: { padding: '88px 0' },
+  section: { padding: '60px 0' },
   sectionInner: { maxWidth: '1140px', margin: '0 auto', padding: '0 24px' },
   eyebrow: {
     fontSize: '11px', fontWeight: 700, letterSpacing: '2.5px',
@@ -272,7 +272,7 @@ const styles = {
     color: '#fff', position: 'relative', overflow: 'hidden',
     backgroundImage: 'radial-gradient(circle at 100% 0%, rgba(251,191,36,0.14) 0%, transparent 55%)',
   },
-  trustCardRating: { fontFamily: "'Poppins', sans-serif", fontSize: '44px', fontWeight: 800, lineHeight: 1 },
+  trustCardRating: { fontFamily: "'Poppins', sans-serif", fontSize: '34px', fontWeight: 800, lineHeight: 1 },
   trustCardSub: { color: '#9ca3af', fontSize: '13px', fontWeight: 600, marginTop: '8px' },
   trustCardDivider: { height: '1px', background: 'rgba(255,255,255,0.12)', margin: '28px 0' },
   trustCardRow: {
@@ -327,7 +327,7 @@ const styles = {
   ctaSection: {
     position: 'relative', overflow: 'hidden',
     background: `linear-gradient(135deg, ${COLORS.ink}, #15171c)`, borderRadius: '28px',
-    padding: '56px 48px', color: '#fff',
+    padding: '40px 36px', color: '#fff',
     margin: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
     gap: '32px', flexWrap: 'wrap',
     boxShadow: `0 0 90px rgba(251,191,36,0.13)`,
@@ -365,7 +365,7 @@ const styles = {
   // Areas section — left column
   areasH2: {
     fontFamily: "'Poppins', sans-serif",
-    fontSize: 'clamp(2.1rem, 4.2vw, 3.1rem)', fontWeight: 800,
+    fontSize: 'clamp(1.9rem, 3.4vw, 2.5rem)', fontWeight: 800,
     color: COLORS.ink, marginBottom: '14px', letterSpacing: '-0.03em', lineHeight: 1.05,
   },
   contactPill: {

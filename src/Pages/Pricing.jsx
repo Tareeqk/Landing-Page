@@ -37,7 +37,7 @@ const S = {
     textTransform: 'uppercase', color: COLORS.gold, marginBottom: '12px', display: 'block',
   },
   h2: {
-    fontSize: 'clamp(1.5rem, 3.2vw, 2.2rem)', fontWeight: 800,
+    fontSize: 'clamp(1.4rem, 2.6vw, 1.9rem)', fontWeight: 800,
     color: COLORS.ink, marginBottom: '14px', letterSpacing: '-0.022em', lineHeight: 1.18,
   },
   p: { color: COLORS.muted, lineHeight: 1.75, fontSize: '16px' },
@@ -219,7 +219,7 @@ export default function Pricing() {
               {t('pricing.hero.eyebrow', 'Pricing')}
             </span>
             <h1 style={{
-              fontSize: 'clamp(1.9rem, 4.6vw, 3rem)', fontWeight: 800,
+              fontSize: 'clamp(1.8rem, 3.6vw, 2.4rem)', fontWeight: 800,
               letterSpacing: '-0.025em', lineHeight: 1.15, margin: '0 0 16px',
             }}>
               {t('pricing.hero.title', 'Two Ways We Price a Job')}

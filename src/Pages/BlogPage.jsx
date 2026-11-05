@@ -95,7 +95,7 @@ function useBlogPageStyles() {
         margin-bottom: 16px;
       }
       .bp-hero-title {
-        font-size: clamp(26px, 4.2vw, 44px);
+        font-size: clamp(24px, 3.4vw, 36px);
         font-weight: 900;
         line-height: 1.12;
         color: #fff;

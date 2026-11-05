@@ -175,7 +175,7 @@ function useServiceStyles() {
          read as one designed thing instead of a stock photo pasted on. */
       .svc-card-stage {
         position: relative; z-index: 0;
-        height: 150px;
+        height: 120px;
         overflow: hidden;
       }
       .svc-card-stage-img {
@@ -759,12 +759,12 @@ export default function Service({ isSection = false }) {
           up into the photo (negative margin) instead of sitting inside a
           flat block below it, so the title reads as introduced by the
           image instead of following a disconnected caption. */}
-      <div style={{ position: 'relative', zIndex: 1, padding: '0 20px 20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '-22px', marginBottom: '14px' }}>
+      <div style={{ position: 'relative', zIndex: 1, padding: '0 18px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '-20px', marginBottom: '10px' }}>
           <div
             className="svc-card-icon"
             style={{
-              width: '46px', height: '46px', borderRadius: '13px', background: '#fff',
+              width: '40px', height: '40px', borderRadius: '12px', background: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               boxShadow: '0 6px 16px rgba(0,0,0,0.14)', border: '1px solid rgba(0,0,0,0.05)',
               transition: 'background 0.25s ease', color: 'var(--svc-accent, var(--primary-yellow))', flexShrink: 0,
@@ -772,14 +772,14 @@ export default function Service({ isSection = false }) {
           >
             {svc.icon}
           </div>
-          <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '17px', color: '#111', letterSpacing: '-0.01em', lineHeight: 1.3, margin: 0 }}>
+          <h3 className="svc-card-title" style={{ fontWeight: 700, fontSize: '16px', color: '#111', letterSpacing: '-0.01em', lineHeight: 1.3, margin: 0 }}>
             {svc.title}
           </h3>
         </div>
         <p
           className="svc-card-body"
           style={{
-            color: '#5b5b5b', lineHeight: 1.6, fontSize: '13.5px', marginBottom: '14px',
+            color: '#5b5b5b', lineHeight: 1.55, fontSize: '13px', marginBottom: '12px',
             display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
           }}
         >
@@ -788,9 +788,9 @@ export default function Service({ isSection = false }) {
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
           {svc.bullets.map((b, j) => (
-            <div key={j} className="svc-feat-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 9px', borderRadius: '9px', border: '1px solid rgba(0,0,0,0.06)', background: '#fafafa' }}>
+            <div key={j} className="svc-feat-item" style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 8px', borderRadius: '8px', border: '1px solid rgba(0,0,0,0.06)', background: '#fafafa' }}>
               <CheckCircle2 size={11} style={{ color: 'var(--primary-yellow)', flexShrink: 0 }} />
-              <span className="svc-feat-label" style={{ fontSize: '12px', fontWeight: 600, color: '#444', lineHeight: 1.3 }}>{b}</span>
+              <span className="svc-feat-label" style={{ fontSize: '11.5px', fontWeight: 600, color: '#444', lineHeight: 1.3 }}>{b}</span>
             </div>
           ))}
         </div>
@@ -944,7 +944,7 @@ export default function Service({ isSection = false }) {
                 className="svc-reveal"
                 data-delay="80"
                 style={{
-                  fontSize: 'clamp(2rem, 4.5vw, 3.4rem)',
+                  fontSize: 'clamp(1.9rem, 3.8vw, 2.8rem)',
                   fontWeight: 800, color: '#fff',
                   letterSpacing: '-0.03em', lineHeight: 1.04, margin: '0 0 20px',
                 }}
@@ -1008,7 +1008,7 @@ export default function Service({ isSection = false }) {
       {!isSection && (
         <section
           className="svc-intro-section"
-          style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+          style={{ padding: '56px 0', overflow: 'hidden', backgroundColor: '#fff' }}
         >
           <div className="svc-inner" style={inner}>
             <div
@@ -1028,7 +1028,7 @@ export default function Service({ isSection = false }) {
                   className="svc-h2 svc-reveal svc-left"
                   data-delay="70"
                   style={{
-                    fontSize: 'clamp(1.75rem, 3vw, 2.6rem)', fontWeight: 800,
+                    fontSize: 'clamp(1.5rem, 2.6vw, 2.1rem)', fontWeight: 800,
                     color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em',
                     lineHeight: 1.1, marginBottom: '20px', marginTop: '6px',
                   }}
@@ -1148,16 +1148,16 @@ export default function Service({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-cards-section"
-        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
+        style={{ padding: '56px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
       >
         <div className="svc-inner" style={inner}>
-          <div className="svc-reveal" style={{ marginBottom: '48px' }}>
+          <div className="svc-reveal" style={{ marginBottom: '32px' }}>
             <span style={eyebrow}>{t('service.whatWeOfferTag')}</span>
             <h2
               className="svc-h2"
               style={{
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 800,
-                color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '480px',
+                fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', fontWeight: 800,
+                color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1.12, maxWidth: '520px',
               }}
             >
               {t('service.whatWeOfferTitle')}{' '}
@@ -1190,15 +1190,15 @@ export default function Service({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-why-section"
-        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: '#fff' }}
+        style={{ padding: '56px 0', overflow: 'hidden', backgroundColor: '#fff' }}
       >
         <div className="svc-inner" style={inner}>
-          <div className="svc-reveal" style={{ marginBottom: '48px' }}>
+          <div className="svc-reveal" style={{ marginBottom: '32px' }}>
             <span style={eyebrow}>{t('service.whyTag')}</span>
             <h2
               className="svc-h2"
               style={{
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 800,
+                fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', fontWeight: 800,
                 color: 'var(--primary-dark-bg)', letterSpacing: '-0.03em', lineHeight: 1.1, maxWidth: '460px',
               }}
             >
@@ -1227,7 +1227,7 @@ export default function Service({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-coverage-section"
-        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+        style={{ padding: '56px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="svc-inner" style={inner}>
           <div
@@ -1239,7 +1239,7 @@ export default function Service({ isSection = false }) {
               <span style={eyebrow}>{t('service.coverageTag')}</span>
               <h2
                 style={{
-                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)', fontWeight: 800,
+                  fontSize: 'clamp(1.5rem, 2.6vw, 2rem)', fontWeight: 800,
                   color: '#fff', letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: '18px',
                 }}
               >
@@ -1353,7 +1353,7 @@ export default function Service({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="svc-cta-section"
-        style={{ padding: '96px 0', backgroundColor: '#fff' }}
+        style={{ padding: '64px 0', backgroundColor: '#fff' }}
       >
         <div className="svc-inner" style={inner}>
           <div
@@ -1376,7 +1376,7 @@ export default function Service({ isSection = false }) {
               </span>
               <h2
                 style={{
-                  fontSize: 'clamp(2rem, 4.2vw, 3rem)', fontWeight: 800, color: '#fff',
+                  fontSize: 'clamp(1.75rem, 3.4vw, 2.5rem)', fontWeight: 800, color: '#fff',
                   letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: '14px',
                 }}
               >

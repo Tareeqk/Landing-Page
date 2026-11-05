@@ -745,7 +745,8 @@ export default function WhatWeOffer() {
         .s4-icon-circle img { width: 32px; height: 32px; }
         .s4-card-title { font-size: 18px; }
         .s4-card-desc, .s4-feature { font-size: 12.5px; }
-        .s4-badge { font-size: 11px; padding: 4px 10px 4px 8px; top: 16px; }
+        .s4-badge { font-size: 11px; padding: 4px 10px 4px 8px; top: 8px; }
+        .s4-card { padding-top: 32px; }
         [dir="ltr"] .s4-badge { right: 16px; }
         [dir="rtl"] .s4-badge { left: 16px; }
         .s4-learn { font-size: 14px; margin-top: 18px; padding-bottom: 20px; }
@@ -842,6 +843,38 @@ export default function WhatWeOffer() {
       .s4-dot.active {
         width: 24px;
         background: #FFCC00;
+      }
+
+      /* ════════════ SCALE-DOWN (desktop / tablet) ════════════ */
+      @media (min-width: 769px) {
+        .s4-section { padding: 52px 0 64px; }
+        .s4-container { max-width: 1160px; padding: 0 28px; }
+        .s4-hero-img-wrap { height: 250px; }
+        .s4-hero-text { padding-bottom: 28px; }
+        .s4-eyebrow { font-size: 11px; margin-bottom: 12px; }
+        .s4-title { font-size: clamp(28px, 2.9vw, 36px); margin-bottom: 14px; line-height: 1.1; }
+        .s4-desc { font-size: 14px; line-height: 1.7; max-width: 440px; }
+        .s4-stats-desktop { margin: -32px 0 32px; gap: 12px; }
+        .s4-stat { padding: 12px 14px; gap: 10px; border-radius: 14px; }
+        .s4-stat-icon { width: 38px; height: 38px; }
+        .s4-stat-icon img { width: 20px; height: 20px; }
+        .s4-stat-value { font-size: 20px; }
+        .s4-stat-label { font-size: 12px; }
+        .s4-grid { gap: 18px; }
+        .s4-card { padding: 22px 20px 0; border-radius: 18px; gap: 12px; }
+        .s4-icon-circle { width: 50px; height: 50px; min-width: 50px; }
+        .s4-icon-circle img { width: 32px; height: 32px; }
+        .s4-card-title { font-size: 18px; }
+        .s4-card-desc { font-size: 13px; line-height: 1.6; margin-bottom: 14px; }
+        .s4-features { gap: 8px; }
+        .s4-feature { font-size: 13px; }
+        .s4-check { width: 20px; height: 20px; }
+        .s4-learn { font-size: 14px; }
+        /* Badge sits in the card's top margin, clear of the title row */
+        .s4-badge { top: 8px; font-size: 11px; padding: 4px 10px 4px 8px; }
+        [dir="ltr"] .s4-badge { right: 14px; }
+        [dir="rtl"] .s4-badge { left: 14px; right: auto; }
+        .s4-card { padding-top: 30px; }
       }
     `;
     document.head.appendChild(style);

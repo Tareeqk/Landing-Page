@@ -75,7 +75,7 @@ function useBlogsStyles() {
         border-radius: 2px;
       }
       .bl-hero-title {
-        font-size: clamp(30px, 4.5vw, 52px);
+        font-size: clamp(28px, 3.6vw, 40px);
         font-weight: 900;
         line-height: 1.08;
         color: #fff;

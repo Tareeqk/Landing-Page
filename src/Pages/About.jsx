@@ -545,7 +545,7 @@ export default function About({ isSection = false }) {
                 className="abt-reveal"
                 data-delay="80"
                 style={{
-                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  fontSize: 'clamp(1.9rem, 3.4vw, 2.5rem)',
                   fontWeight: 800,
                   color: '#ffffff',
                   letterSpacing: '-0.03em',
@@ -670,7 +670,7 @@ export default function About({ isSection = false }) {
               <h2
                 className="abt-h2"
                 style={{
-                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                  fontSize: 'clamp(1.5rem, 2.6vw, 2rem)',
                   fontWeight: 800,
                   color: 'var(--primary-dark-bg)',
                   letterSpacing: '-0.03em',
@@ -815,13 +815,13 @@ export default function About({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="abt-mv-section"
-        style={{ padding: '80px 0', backgroundColor: '#fff' }}
+        style={{ padding: '56px 0', backgroundColor: '#fff' }}
       >
         <div className="abt-inner" style={inner}>
           {/* Mission / Vision cards */}
           <div
             className="abt-mv-grid"
-            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '56px' }}
+            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '40px' }}
           >
             <div
               className="abt-reveal abt-left abt-mv-card"
@@ -896,7 +896,7 @@ export default function About({ isSection = false }) {
             <h2
               className="abt-h2"
               style={{
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                fontSize: 'clamp(1.5rem, 2.6vw, 2rem)',
                 fontWeight: 800,
                 color: 'var(--primary-dark-bg)',
                 letterSpacing: '-0.03em',
@@ -947,7 +947,7 @@ export default function About({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="abt-values-section"
-        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
+        style={{ padding: '56px 0', overflow: 'hidden', backgroundColor: 'var(--secondary-light-gray)' }}
       >
         <div className="abt-inner" style={inner}>
           <div className="abt-reveal" style={{ marginBottom: '40px' }}>
@@ -955,7 +955,7 @@ export default function About({ isSection = false }) {
             <h2
               className="abt-h2"
               style={{
-                fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                fontSize: 'clamp(1.5rem, 2.6vw, 2rem)',
                 fontWeight: 800,
                 color: 'var(--primary-dark-bg)',
                 letterSpacing: '-0.03em',
@@ -1033,7 +1033,7 @@ export default function About({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="abt-coverage-section"
-        style={{ padding: '80px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
+        style={{ padding: '56px 0', overflow: 'hidden', backgroundColor: 'var(--primary-dark-bg)' }}
       >
         <div className="abt-inner" style={inner}>
           {/* Was a 1fr/0.72fr split reserving a right column for a yellow
@@ -1054,7 +1054,7 @@ export default function About({ isSection = false }) {
               <span style={eyebrow}>{t('about.coverageTag')}</span>
               <h2
                 style={{
-                  fontSize: 'clamp(1.75rem, 3.2vw, 2.5rem)',
+                  fontSize: 'clamp(1.5rem, 2.6vw, 2rem)',
                   fontWeight: 800,
                   color: '#fff',
                   letterSpacing: '-0.03em',
@@ -1153,7 +1153,7 @@ export default function About({ isSection = false }) {
       ══════════════════════════════════════════════════════════════════ */}
       <section
         className="abt-cta-section"
-        style={{ padding: '96px 0', backgroundColor: '#fff' }}
+        style={{ padding: '64px 0', backgroundColor: '#fff' }}
       >
         <div className="abt-inner" style={inner}>
           <div
@@ -1182,7 +1182,7 @@ export default function About({ isSection = false }) {
               </span>
               <h2
                 style={{
-                  fontSize: 'clamp(2rem, 4.2vw, 3rem)',
+                  fontSize: 'clamp(1.75rem, 3.4vw, 2.5rem)',
                   fontWeight: 800,
                   color: '#fff',
                   letterSpacing: '-0.03em',
