@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet-async";
 import useLangLink from '../hooks/useLangLink';
 import useDownloadLink from '../hooks/useDownloadLink';
 import ratings from '../data/ratings.json';
+import { whatsappLinkProps } from '../utils/whatsapp';
 import './landing.css';
 
 // Keys map to `landing.services.<key>` in each locale file.
@@ -26,8 +27,8 @@ const HERO_TRUCK_RTL = '/hero/truck-nasir-rtl.webp';
 
 // Keys map to `landing.heroTags.<key>` in each locale file. `link` is the
 // route (post-/:lang) for that service, matching the paths in App.jsx --
-// used by <MobileServiceGrid> below so each tag is a real link, not just
-// a label.
+// used by the service ring in <HeroVisual> below so each tag is a real link,
+// not just a label.
 const HERO_SERVICE_TAGS = [
   { key: 'carRecovery', icon: '/hero/icon-car-recovery.webp', link: '/car-recovery-dubai' },
   { key: 'batteryJumpStart', icon: '/hero/icon-battery-jumpstart.webp', link: '/battery-service-dubai' },
@@ -109,61 +110,18 @@ function HeroBackground() {
   );
 }
 
-// Mobile (≤860px) replacement for the arc — used to be a single pill
-// (icon + title) that crossfaded through all six tags one at a time; now
-// a static grid showing three tags per row (all six visible across two
-// rows, no cycling/waiting), each a real link to that service's page
-// instead of a decorative label.
-function MobileServiceGrid({ tags }) {
-  const { t } = useTranslation();
-  const langLink = useLangLink();
-
-  return (
-    <div className="tk-hero__mobile-tag-grid" data-testid="landing-hero-tags-mobile">
-      {tags.map((tag) => (
-        <Link
-          key={tag.key}
-          to={langLink(tag.link)}
-          onClick={() => window.scrollTo(0, 0)}
-          className="tk-hero__mobile-tag"
-          // The visible label is a short, one-word version ("Battery") for
-          // layout reasons -- aria-label gives screen readers the full
-          // "Battery Jump Start"-style name instead, since a link
-          // announced out of context just as "Battery" is a lot less
-          // clear than what a sighted visitor gets from the surrounding
-          // hero (truck illustration, "services" grouping, etc.).
-          aria-label={t(`landing.heroTags.${tag.key}`)}
-        >
-          <img src={tag.icon} alt={t(`landing.heroTags.${tag.key}`)} className="tk-hero__mobile-tag-icon" loading="lazy" width="22" height="22" />
-          <span className="tk-hero__mobile-tag-label" aria-hidden="true">
-            {t(`landing.heroTagsShort.${tag.key}`)}
-          </span>
-        </Link>
-      ))}
-    </div>
-  );
-}
-
 // Truck artwork + service tags move and reflow together as one unit (flex
 // sibling of .tk-hero__content, see .tk-hero__visual in landing.css) —
 // unlike the skyline, which is pure background ambiance and stays
 // full-bleed behind everything regardless of language or breakpoint. The
-// six tags render as a real circular arc above 860px (see .tk-hero__tag
-// in landing.css); below that, <MobileServiceGrid> replaces it.
+// six tags render as a circular arc above 860px and as a full ring around the
+// truck below it (see .tk-hero__tag in landing.css).
 function HeroVisual() {
   const { t, i18n } = useTranslation();
   const isRtl = i18n.dir() === 'rtl';
   const langLink = useLangLink();
   return (
     <>
-      {/* Sibling of .tk-hero__visual, not a child of it — renders before it
-          in normal flow, so on mobile (.tk-hero__inner: flex-direction:
-          column) three tags land above the circle and the other three
-          below it (see the second <MobileServiceGrid> after
-          .tk-hero__visual), rather than all six stacked above it.
-          Hidden entirely above 860px (see .tk-hero__mobile-tag-grid in
-          landing.css). */}
-      <MobileServiceGrid tags={HERO_SERVICE_TAGS.slice(0, 3)} />
       <div className="tk-hero__visual">
       {/* Radial glow behind the truck — was a hand-drawn gradient PNG
           (WEBSITE IMAGE AND ICONS ASSET/CIRCLE DESIGN.png); reproduced in
@@ -202,16 +160,14 @@ function HeroVisual() {
             className="tk-hero__tag"
           >
             <span className="tk-hero__tag-label">{t(`landing.heroTags.${tag.key}`)}</span>
-            <img src={tag.icon} alt={t(`landing.heroTags.${tag.key}`)} className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
+            <img src={tag.icon} alt="" className="tk-hero__tag-icon" loading="lazy" width="28" height="28" />
+            {/* One-word label for the phone ring (see the 860px block in
+                landing.css); hidden above that, where the full label shows. */}
+            <span className="tk-hero__tag-short" aria-hidden="true">{t(`landing.heroTagsShort.${tag.key}`)}</span>
           </Link>
         ))}
       </div>
     </div>
-    {/* Second row, mobile-only (see .tk-hero__mobile-tag-grid's 860px
-        media query) -- sibling AFTER .tk-hero__visual so it lands below
-        the circle in document flow, sandwiching the truck/glow between
-        the two rows of tags. */}
-    <MobileServiceGrid tags={HERO_SERVICE_TAGS.slice(3, 6)} />
     </>
   );
 }
@@ -234,10 +190,12 @@ export default function LandingPage() {
   const phrases = SERVICE_KEYS.map((key) => t(`landing.services.${key}`));
   const { text, reduceMotion } = useTypingSlideCycle(phrases);
 
+  // `short` is the one-line label the phone strip shows (see the 860px block
+  // in landing.css); `pin` swaps the satellite emoji for an SVG map pin there.
   const trustStats = [
-    { value: t('landing.trust.dispatchValue'), label: t('landing.trust.dispatchLabel') },
-    { value: t('landing.trust.availabilityValue'), label: t('landing.trust.availabilityLabel') },
-    { value: t('landing.trust.ratingValue'), label: t('landing.trust.ratingLabel') },
+    { value: t('landing.trust.dispatchValue'), label: t('landing.trust.dispatchLabel'), short: t('landing.trustShort.dispatch') },
+    { value: t('landing.trust.availabilityValue'), label: t('landing.trust.availabilityLabel'), short: t('landing.trustShort.availability') },
+    { value: t('landing.trust.ratingValue'), label: t('landing.trust.ratingLabel'), short: t('landing.trustShort.tracking'), pin: true },
   ];
 
   // Only added once a real value has been synced from Google (see
@@ -249,6 +207,7 @@ export default function LandingPage() {
     trustStats.push({
       value: `${googleRating.rating}★`,
       label: t('landing.trust.googleReviewsLabel', { count: googleRating.review_count }),
+      short: t('landing.trustShort.rating'),
       // Only this stat gets a url -- lets a visitor verify the rating
       // themselves on Google instead of just trusting a number on the
       // page, and is the one card of the four actually worth linking out.
@@ -359,15 +318,21 @@ export default function LandingPage() {
                 </span>
               </button>
 
+              {/* WhatsApp replaces the old "Call now" button: it is the
+                  fastest way for a stranded driver to share a location. Same
+                  look as the other hero buttons. The click is counted by the
+                  delegated tracker in utils/adsTracking.js. */}
               <a
-                href="tel:+97142232269"
+                {...whatsappLinkProps()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="tk-btn tk-btn--ghost"
-                data-testid="landing-call-btn"
+                data-testid="landing-whatsapp-btn"
               >
-                {t('landing.callNow')}
+                {t('whatsapp', 'WhatsApp us')}
                 <span className="tk-btn__arrow" aria-hidden="true">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="18" height="18" viewBox="0 0 448 512" fill="#25D366">
+                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
                   </svg>
                 </span>
               </a>
@@ -381,8 +346,15 @@ export default function LandingPage() {
               {trustStats.map((stat) => {
                 const content = (
                   <>
-                    <span className="tk-hero__stat-value">{stat.value}</span>
+                    <span className={`tk-hero__stat-value${stat.pin ? ' tk-hero__stat-value--emoji' : ''}`}>{stat.value}</span>
+                    {stat.pin && (
+                      <svg className="tk-hero__stat-pin" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z" stroke="#F5B301" strokeWidth="2" strokeLinejoin="round" />
+                        <circle cx="12" cy="10.5" r="2.3" fill="#F5B301" />
+                      </svg>
+                    )}
                     <span className="tk-hero__stat-label">{stat.label}</span>
+                    <span className="tk-hero__stat-short" aria-hidden="true">{stat.short}</span>
                   </>
                 );
 

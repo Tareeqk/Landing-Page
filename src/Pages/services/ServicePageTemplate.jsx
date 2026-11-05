@@ -23,6 +23,8 @@ import FAQSchema from '../../schemas/FAQSchema';
 import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
 import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
+import { openWhatsApp } from '../../utils/whatsapp';
+import HeroButton, { WhatsAppIcon } from '../../Components/HeroButton';
 import { prefetchRoute } from '../../routePrefetch';
 
 const ALL_SERVICES = [
@@ -552,7 +554,7 @@ export default function ServicePageTemplate({ config }) {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
+  const handleWhatsApp = () => openWhatsApp(config.serviceType ? config.serviceType.toLowerCase() : undefined);
   const handleDownload = dl.go;
 
   const relatedServices = ALL_SERVICES.filter(s => !s.href.includes(config.slug));
@@ -632,9 +634,9 @@ export default function ServicePageTemplate({ config }) {
             <h1 style={styles.heroH1} className="svc-hero-h1" data-aos="fade-up" data-aos-delay="140">{tc.title}</h1>
             <p style={styles.heroSubtitle} className="svc-hero-subtitle" data-aos="fade-up" data-aos-delay="300">{tc.intro}</p>
             <div style={styles.heroCtas} className="svc-hero-ctas" data-aos="fade-up" data-aos-delay="440">
-              <button onClick={handleDownload} style={styles.btnPrimary} aria-label={t('servicePageTemplate.downloadAppAria', 'Download Tareeqk App')}>
-                <FaMobileAlt size={13} /> {t('servicePageTemplate.downloadApp', 'Download The App')}
-              </button>
+              <HeroButton onClick={handleDownload} aria-label={t('servicePageTemplate.downloadAppAria', 'Download Tareeqk App')}>
+                {t('servicePageTemplate.downloadApp', 'Download The App')}
+              </HeroButton>
             </div>
 
           </div>
@@ -886,8 +888,8 @@ export default function ServicePageTemplate({ config }) {
               data-aos="fade-up"
               data-aos-delay="180"
             >
-              <Link {...dl.linkProps} style={{ ...styles.btnPrimary, textDecoration: 'none' }}><FaMobileAlt size={13} /> {t('servicePageTemplate.downloadApp', 'Download The App')}</Link>
-              <button onClick={handleWhatsApp} style={styles.btnGreen}><FaWhatsapp size={16} /> {t('servicePageTemplate.whatsapp', 'WhatsApp')}</button>
+              <HeroButton as={Link} {...dl.linkProps}>{t('servicePageTemplate.downloadApp', 'Download The App')}</HeroButton>
+              <HeroButton variant="ghost" icon={<WhatsAppIcon />} onClick={handleWhatsApp}>{t('whatsapp', 'WhatsApp us')}</HeroButton>
             </div>
           </div>
         </div>

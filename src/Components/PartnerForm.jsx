@@ -3,6 +3,7 @@ import { FiBriefcase, FiFileText, FiGift, FiMail, FiPhone, FiSend, FiShield, FiU
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
 import { trackConversion } from "../utils/adsTracking";
+import { appendAttribution, getAttribution } from "../utils/attribution";
 
 // Turnstile's own list of supported widget-UI languages -- anything else
 // (including a code this site supports but Turnstile doesn't recognize)
@@ -280,6 +281,8 @@ export default function PartnerForm({ id = "apply" }) {
       if (formData.referralCode.trim()) body.append("referral_code", formData.referralCode.trim());
       if (tradeLicense) body.append("trade_license", tradeLicense);
       body.append("captcha_token", captchaToken);
+      // Where the visitor came from; only present once they accepted analytics cookies.
+      appendAttribution(body, getAttribution());
 
       const response = await fetch(`${baseUrl}/api/v1/partner-applications`, {
         method: "POST",

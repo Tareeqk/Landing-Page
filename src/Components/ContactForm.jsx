@@ -8,6 +8,7 @@ import {
 import { useTranslation } from "react-i18next";
 import FormStatusBanner from "./FormStatusBanner";
 import { trackConversion } from "../utils/adsTracking";
+import { getAttribution } from "../utils/attribution";
 
 // Built entirely with Tailwind utility classes (bg-white, text-black, etc.)
 // with no dark-mode handling, so it stayed a bright card regardless of the
@@ -154,6 +155,7 @@ export default function ContactSection() {
       // `/contact-us` with a made-up {status, message} response shape --
       // that endpoint never existed on the backend at all, so submitting
       // this form has always silently failed.
+      const attribution = getAttribution();
       const response = await fetch(`${baseUrl}/api/v1/contact-us`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -163,6 +165,8 @@ export default function ContactSection() {
           phone: formData.mobile ? `+971${formData.mobile}` : null,
           subject: formData.subject,
           message: formData.message,
+          // Where the visitor came from; only present once they accepted analytics cookies.
+          ...(attribution ? { attribution } : {}),
         }),
       });
       const data = await response.json();

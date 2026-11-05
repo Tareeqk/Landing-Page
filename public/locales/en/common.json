@@ -99,6 +99,12 @@
       "ratingLabel": "Live tracking",
       "googleReviewsLabel": "{{count}} Google Reviews"
     },
+    "trustShort": {
+      "dispatch": "Avg. dispatch",
+      "availability": "Always open",
+      "tracking": "Live tracking",
+      "rating": "Google rating"
+    },
     "heroTags": {
       "carRecovery": "Car Recovery",
       "batteryJumpStart": "Battery Jump Start",

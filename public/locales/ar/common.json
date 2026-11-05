@@ -99,6 +99,12 @@
       "ratingLabel": "تتبع مباشر",
       "googleReviewsLabel": "{{count}} تقييم على جوجل"
     },
+    "trustShort": {
+      "dispatch": "متوسط الوصول",
+      "availability": "متاح دائماً",
+      "tracking": "تتبع مباشر",
+      "rating": "تقييم جوجل"
+    },
     "heroTags": {
       "carRecovery": "استعادة السيارات",
       "batteryJumpStart": "شحن البطارية",
