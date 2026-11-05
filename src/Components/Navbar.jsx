@@ -35,6 +35,7 @@ import useLangLink from "../hooks/useLangLink"
 import { SERVICES, AREAS } from "./Footer"
 import { prefetchRoute } from "../routePrefetch"
 import useDownloadLink from "../hooks/useDownloadLink"
+import { whatsappLinkProps } from "../utils/whatsapp"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ")
@@ -62,7 +63,6 @@ const SERVICE_ICONS = [
 // Same store targets as the "Download The App" button on the service pages:
 // App Store on iOS, Google Play everywhere else. The delegated click tracker
 // (utils/adsTracking.js) classifies these as app_download_click.
-const WHATSAPP_URL = "https://wa.me/97142232269"
 
 export default function Navbar({ isDark, setIsDark }) {
   const location = useLocation()
@@ -509,7 +509,7 @@ export default function Navbar({ isDark, setIsDark }) {
                                         {t("service.downloadApp", "Download App")}
                                       </Link>
                                       <a
-                                        href={WHATSAPP_URL}
+                                        {...whatsappLinkProps()}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className={classNames(

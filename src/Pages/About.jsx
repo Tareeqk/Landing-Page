@@ -15,6 +15,7 @@ import { HashLink } from 'react-router-hash-link';
 import LocalBusinessSchema from '../schemas/LocalBusinessSchema';
 import HreflangTags from '../Components/HreflangTags';
 import useLangLink from '../hooks/useLangLink';
+import { whatsappLinkProps } from '../utils/whatsapp';
 import { prefetchRoute } from '../routePrefetch';
 
 // ── Styles ─────────────────────────────────────────────────────────────────
@@ -544,7 +545,7 @@ export default function About({ isSection = false }) {
                 className="abt-reveal"
                 data-delay="80"
                 style={{
-                  fontSize: 'clamp(2rem, 4.5vw, 3.4rem)',
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
                   fontWeight: 800,
                   color: '#ffffff',
                   letterSpacing: '-0.03em',
@@ -1125,7 +1126,7 @@ export default function About({ isSection = false }) {
                   {t('about.callBtn')}
                 </a>
                 <a
-                  href="https://wa.me/97142232269"
+                  {...whatsappLinkProps()}
                   target="_blank"
                   rel="noreferrer"
                   style={{
@@ -1212,7 +1213,7 @@ export default function About({ isSection = false }) {
                   {t('service.downloadApp', 'Download App')}
                 </Link>
                 <a
-                  href="https://wa.me/97142232269"
+                  {...whatsappLinkProps()}
                   target="_blank"
                   rel="noreferrer"
                   style={{

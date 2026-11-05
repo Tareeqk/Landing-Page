@@ -99,6 +99,12 @@
       "ratingLabel": "لائیو ٹریکنگ",
       "googleReviewsLabel": "گوگل پر {{count}} جائزے"
     },
+    "trustShort": {
+      "dispatch": "اوسط ڈسپیچ",
+      "availability": "ہمیشہ کھلا",
+      "tracking": "لائیو ٹریکنگ",
+      "rating": "گوگل ریٹنگ"
+    },
     "heroTags": {
       "carRecovery": "کار ریکوری",
       "batteryJumpStart": "بیٹری جمپ اسٹارٹ",

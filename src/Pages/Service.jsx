@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 
 import useLangLink from '../hooks/useLangLink';
+import { whatsappLinkProps } from '../utils/whatsapp';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import HreflangTags from '../Components/HreflangTags';
@@ -981,7 +982,7 @@ export default function Service({ isSection = false }) {
                   {t('service.heroCta')}
                 </button>
                 <a
-                  href="https://wa.me/97142232269"
+                  {...whatsappLinkProps()}
                   target="_blank"
                   rel="noreferrer"
                   className="svc-btn-ghost"
@@ -1327,7 +1328,7 @@ export default function Service({ isSection = false }) {
                     {t('service.downloadApp')}
                   </Link>
                   <a
-                    href="https://wa.me/97142232269"
+                    {...whatsappLinkProps()}
                     target="_blank"
                     rel="noreferrer"
                     style={{
@@ -1389,7 +1390,7 @@ export default function Service({ isSection = false }) {
               </p>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <a
-                  href="https://wa.me/97142232269"
+                  {...whatsappLinkProps()}
                   target="_blank"
                   rel="noreferrer"
                   className="svc-btn-whatsapp"

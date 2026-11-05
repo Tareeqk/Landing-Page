@@ -58,8 +58,8 @@
      photo's width to fill the height, which is the accepted tradeoff for
      an actually full-screen hero. Portrait phones/tablets keep their own
      height below; their images and crop math were tuned separately. */
-  min-height: max(560px, calc(100vh - 80px));
-  min-height: max(560px, calc(100dvh - 80px));
+  min-height: max(520px, calc(100vh - 130px));
+  min-height: max(520px, calc(100dvh - 130px));
   color: var(--tk-text);
   font-family: var(--tk-body);
   isolation: isolate;
@@ -221,7 +221,7 @@
   align-items: flex-start;
   gap: 2px;
   min-width: 84px;
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: var(--tk-radius-md);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--tk-line);
@@ -246,7 +246,7 @@
 .tk-hero__stat-value {
   font-family: var(--tk-display);
   font-weight: 700;
-  font-size: 16px;
+  font-size: 15px;
   color: #fff;
   line-height: 1.15;
 }
@@ -255,6 +255,12 @@
   font-size: 11px;
   line-height: 1.3;
   color: var(--tk-text-mute);
+}
+
+/* Phone-only parts of a stat (see the 860px block): hidden on desktop. */
+.tk-hero__stat-short,
+.tk-hero__stat-pin {
+  display: none;
 }
 
 /* ============================================================
@@ -363,7 +369,10 @@
      the 40px icon, see .tk-hero__tag-icon). See also .tk-hero__truck's
      width, trimmed alongside this so the arc doesn't have to keep
      growing indefinitely to clear an ever-larger rectangle. */
-  --tk-arc-r: calc(min(84%, 420px) / 2 + 110px);
+  /* Gap off the glow scales with the viewport (not a fixed 110px), so on
+     narrower desktops the arc tightens around the sphere instead of its
+     outer icons running into the text column. */
+  --tk-arc-r: calc(min(84%, 420px) / 2 + clamp(56px, 4.4vw, 84px));
 }
 
 .tk-hero__truck {
@@ -397,15 +406,6 @@
   height: 100%;
 }
 
-/* Mobile-only replacement for the arc (see .tk-hero__tags above and the
-   max-width:860px block below) — hidden by default, shown there instead.
-   Rendered as a sibling of .tk-hero__visual, not a child, so it lands by
-   normal document flow (always above the circle) rather than depending
-   on any box the circle's own geometry is sized against. */
-.tk-hero__mobile-tag-grid {
-  display: none;
-}
-
 /* True circular arc, not an approximation — each tag is placed by
    actual trigonometry around the sphere's own center point (the same
    --sphere-x/--sphere-y anchor .tk-hero__glow and .tk-hero__truck
@@ -428,6 +428,10 @@
   inset-inline-end: calc(var(--sphere-x, 30%) + var(--tag-x, 0px));
   top: calc(var(--sphere-y, 50%) + var(--tag-y, 0px));
   transform: translate(calc(var(--tk-flip, 1) * 50%), -50%);
+  /* Size to the icon alone. The label is absolutely positioned, but without
+     this an absolute box shrinks to the space left of its anchor, which
+     squashed the two outer icons on the left of the arc on narrower screens. */
+  width: max-content;
 }
 
 .tk-hero__tag:nth-child(1) { --tag-x: calc(var(--tk-arc-r) * 0.5299); --tag-y: calc(var(--tk-arc-r) * -0.848); }
@@ -493,6 +497,10 @@
    there isn't enough spare width beside a 40px icon for a label
    without crowding the sphere/truck (see .tk-hero__visual's width),
    so it stays screen-reader/SEO text only there, same as before. */
+.tk-hero__tag-short {
+  display: none;
+}
+
 .tk-hero__tag-label {
   position: absolute;
   width: 1px;
@@ -505,7 +513,10 @@
   border: 0;
 }
 
-@media (min-width: 861px) {
+/* Labels need about 130px of room beside the outer icons, which only exists
+   once the viewport is wide enough. Below that the arc shows icons only (the
+   label stays as screen-reader text). */
+@media (min-width: 1200px) {
   .tk-hero__tag-label {
     /* Anchored to the icon (its containing block, since .tk-hero__tag
        is position:absolute) on the side facing the text column —
@@ -593,8 +604,8 @@
   margin: 0 0 18px;
   font-family: var(--tk-display);
   font-weight: 800;
-  font-size: clamp(34px, 5.2vw, 68px);
-  line-height: 1.04;
+  font-size: clamp(32px, 4.2vw, 54px);
+  line-height: 1.06;
   letter-spacing: -0.02em;
   color: #FFFFFF;
   text-wrap: balance;
@@ -612,11 +623,11 @@
 }
 
 .tk-hero__subtitle {
-  font-size: clamp(15px, 1.2vw, 17px);
-  line-height: 1.65;
+  font-size: clamp(14.5px, 1.1vw, 16px);
+  line-height: 1.6;
   color: var(--tk-text-soft);
   max-width: 46ch;
-  margin-bottom: 30px;
+  margin-bottom: 24px;
 }
 
 /* ============================================================
@@ -656,7 +667,6 @@
   .tk-hero__glow { animation: none; }
   .tk-dispatch-chip__dot::after { animation: none; opacity: 0.4; }
   .tk-hero__tag-icon { transition: none; }
-  .tk-hero__mobile-tag { transition: none; }
 }
 
 /* Visually hidden but still readable to screen readers / crawlers */
@@ -684,11 +694,11 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding-block: 8px;
-  padding-inline: 24px 8px;
+  padding-block: 6px;
+  padding-inline: 22px 6px;
   border-radius: var(--tk-radius-pill);
   font-weight: 600;
-  font-size: 15px;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
@@ -718,8 +728,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.14);
   flex-shrink: 0;
@@ -743,8 +753,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 150px;
-  height: 46px;
+  width: 136px;
+  height: 42px;
   flex-shrink: 0;
   opacity: 0.92;
 }
@@ -791,13 +801,6 @@
   .tk-dispatch-chip { font-size: 11px; margin-bottom: 16px; }
 
   .tk-hero__subtitle { margin-bottom: 22px; font-size: 14px; }
-
-  .tk-cta-row { gap: 10px; margin-bottom: 18px; }
-
-  .tk-hero__stats { gap: 8px; margin-bottom: 20px; }
-  .tk-hero__stat { min-width: 72px; padding: 8px 10px; }
-  .tk-hero__stat-value { font-size: 14px; }
-  .tk-hero__stat-label { font-size: 10px; }
 
   /* The primary "Download The App" button above already redirects to the
      right store for the visitor's OS (see handleDownloadRedirect in
@@ -910,159 +913,83 @@
     justify-content: center;
   }
 
-  /* Below the text on mobile, the truck+glow illustration stays centered
-     the same way it does on desktop. The six service tags drop the
-     circular arc here — a position:absolute composition whose
-     radius/anchor math depends on this column's own width — in favor of
-     a static 3-per-row grid of real links, in normal document flow (see
-     .tk-hero__mobile-tag-grid below). Nothing here is positioned relative
-     to the viewport or this column's size, so there is no geometry that
-     can come out wrong on a given device. */
+  /* Phone and tablet-portrait layout: the truck sits in the middle of a
+     square and the six services form a full ring around it, each with its
+     icon and one-word label.
+     Why it holds on every screen: the square always fills the available
+     width (capped at 420px), and every size and position inside it is a
+     percentage of that square (cqw for the icon and text), so the whole
+     ring scales as one piece. Nothing depends on the viewport, on a fixed
+     pixel radius, or on flex wrapping. Icons never go under 34px and text
+     never under 10px.
+     RTL: the tags are placed with inset-inline-end (see .tk-hero__tag), so
+     the ring mirrors on its own, with no per-direction rules. */
   .tk-hero__visual {
     width: 100%;
-    max-width: 460px;
-    min-height: calc(min(58vw, 260px) + 24px);
+    max-width: 420px;
+    min-height: 0;
+    aspect-ratio: 1 / 1;
     margin: 0 auto;
     align-self: center;
-    /* 38% (a desktop leftover, tuned so the arc's tag labels had room to
-       clear the sphere) left the glow+truck visibly off-center once the
-       arc is replaced by the mobile pill row below -- 50% centers the
-       sphere/truck composition itself within this now-centered column. */
+    flex: none;
+    container-type: inline-size;
     --sphere-x: 50%;
     --sphere-y: 50%;
-    /* This box's own layout height (~380px, driven by min-height's
-       formula plus how flex sizes it here) is taller than the visible
-       circle graphic inside it, and the mobile pill rows are pulled up
-       to overlap it (see .tk-hero__mobile-tag-grid's negative margin) --
-       so its transparent, "empty-looking" edges were sitting on top of
-       and intercepting clicks on the pills underneath, even though
-       nothing was visible there. Nothing inside this box needs to be
-       clickable at this breakpoint (.tk-hero__tags, the only
-       interactive content it can contain, is display:none here), so
-       this is safe to disable outright rather than needing to punch a
-       hole for specific children. */
+    /* The box itself ignores taps; only the six links inside take them. */
     pointer-events: none;
   }
 
   .tk-hero__glow {
-    width: min(58vw, 260px);
+    width: 52%;
   }
 
   .tk-hero__truck {
-    width: min(40vw, 165px);
+    width: 44%;
   }
 
-  /* The arc itself is desktop/tablet only below 861px — see
-     .tk-hero__mobile-tag-grid below for the mobile replacement. */
   .tk-hero__tags {
-    display: none;
+    position: absolute;
+    inset: 0;
+    height: auto;
   }
 
-  /* Three pill tags per row (all six visible across two rows) instead of
-     one pill cycling through them — each is a real link to that
-     service's page, not a decorative label. Equal 1fr columns rather
-     than content-sized ones: sizing a 3-column-times-2-row grid to each
-     COLUMN's widest item (max-content) coupled the two rows' widths
-     together and overflowed narrow phones for the longer labels
-     ("Battery Jump Start") — 1fr always divides the available width
-     exactly, so it can wrap a label to a second line on narrow screens
-     but can never overflow it. */
-  .tk-hero__mobile-tag-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 8px;
-    row-gap: 16px;
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    /* .tk-hero__inner's flex `gap: 20px` already spaces every child from
-       its neighbor -- fine between the hero text and the first row, but
-       stacked with the arc's own upward curve (see --tag-y above) it
-       left a noticeably bigger gap between the pills and the truck
-       circle than intended. Pulling just this edge in (not the whole
-       flex gap, which would also shrink the text-to-pills spacing)
-       tightens that one gap specifically. */
-    margin-bottom: -75px;
-  }
+  /* Ring positions: radius 38% of the square. Six tags 60 degrees apart,
+     starting at the top. tag-x is measured toward the start side (left in
+     LTR, right in RTL), tag-y downward. 32.9% = 38% x cos 30 degrees and
+     19% = 38% x sin 30 degrees. */
+  .tk-hero__tag:nth-child(1) { --tag-x: 0%;     --tag-y: -38%; }
+  .tk-hero__tag:nth-child(2) { --tag-x: -32.9%; --tag-y: -19%; }
+  .tk-hero__tag:nth-child(3) { --tag-x: -32.9%; --tag-y: 19%; }
+  .tk-hero__tag:nth-child(4) { --tag-x: 0%;     --tag-y: 38%; }
+  .tk-hero__tag:nth-child(5) { --tag-x: 32.9%;  --tag-y: 19%; }
+  .tk-hero__tag:nth-child(6) { --tag-x: 32.9%;  --tag-y: -19%; }
 
-  /* Bottom row (after .tk-hero__visual): same tightening, opposite edge. */
-  .tk-hero__visual ~ .tk-hero__mobile-tag-grid {
-    margin-bottom: 0;
-    margin-top: -75px;
-  }
-
-  .tk-hero__mobile-tag {
+  .tk-hero__tag {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
-    /* Explicit, not relying on grid's default stretch -- this <Link> is
-       itself the pill (background/border/radius all live here), so its
-       own box needs to fill the whole grid cell for the whole visible
-       pill to be tappable, not just a content-sized area in the middle
-       of it. */
-    width: 100%;
-    height: 100%;
-    /* Keeps the tap target close to the 44px touch-target minimum even
-       though the pill itself is visually shorter. */
-    min-height: 44px;
-    padding: 9px 8px;
-    border-radius: var(--tk-radius-pill);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--tk-line);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    gap: 3px;
+    width: max-content;
+    min-width: 44px;
+    pointer-events: auto;
     text-decoration: none;
-    transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-    /* Set per-position below; read here so :active only ever adds a
-       scale on top of whatever curve offset is already in place. */
-    --tag-y: 0px;
-    transform: translateY(var(--tag-y));
   }
 
-  .tk-hero__mobile-tag:active {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: var(--tk-line-strong);
-    transform: translateY(var(--tag-y)) scale(0.97);
+  .tk-hero__tag-icon {
+    width: max(34px, 11cqw);
+    height: max(34px, 11cqw);
   }
 
-  /* Curved, not a flat row — a single clean dome/cup shape (middle pill
-     is the only one that moves; the flanking two stay put) reads as an
-     arch much more clearly than also rotating the flanking pills did —
-     tilted pill text looked like it was crooked rather than curved, so
-     that's dropped. Purely vertical, so it's symmetric left/right and
-     needs no RTL mirroring. The top row (rendered before
-     .tk-hero__visual) arcs like the cap of the circle: middle pill
-     highest. The bottom row (after .tk-hero__visual — selected via the
-     general sibling combinator, since both rows share the same classes)
-     mirrors that for the circle's underside: middle pill lowest. */
-  .tk-hero__mobile-tag-grid .tk-hero__mobile-tag:nth-child(2) {
-    --tag-y: -18px;
-  }
-  .tk-hero__visual ~ .tk-hero__mobile-tag-grid .tk-hero__mobile-tag:nth-child(2) {
-    --tag-y: 18px;
-  }
-
-  .tk-hero__mobile-tag-icon {
-    width: 18px;
-    height: 18px;
-    flex-shrink: 0;
-    object-fit: contain;
-  }
-
-  /* Same mirroring as the desktop arc's .tk-hero__tag-icon — these icons
-     are drawn facing left, correct for LTR only. */
-  [dir="rtl"] .tk-hero__mobile-tag-icon {
-    transform: scaleX(-1);
-  }
-
-  .tk-hero__mobile-tag-label {
-    font-size: 10px;
+  /* The full label stays in the DOM for screen readers; the short one is
+     what people see in the ring. */
+  .tk-hero__tag-short {
+    display: block;
+    font-size: max(10px, 3.1cqw);
     line-height: 1.2;
     font-weight: 600;
     color: #fff;
-    text-align: center;
+    white-space: nowrap;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
   }
 }
 
@@ -1072,16 +999,6 @@
   [dir="rtl"] .tk-hero__title { font-size: 22px; }
   .tk-dispatch-chip { font-size: 11px; margin-bottom: 16px; }
   .tk-hero__subtitle { margin-bottom: 22px; font-size: 14px; }
-  /* Download + Call Now stay side by side even on the narrowest phones
-     (~320px) instead of wrapping to two stacked rows -- flex-wrap:wrap
-     on the base .tk-cta-row rule was letting that happen once "Download
-     The App" (now just "Download") plus "Call Now" ran out of room.
-     Tightened button padding/font/gap here claws back just enough width
-     that nowrap doesn't overflow instead. */
-  .tk-cta-row { gap: 8px; margin-bottom: 18px; flex-wrap: nowrap; }
-  .tk-btn { padding-inline: 16px 6px; font-size: 13.5px; gap: 8px; }
-  .tk-hero__stats { gap: 8px; margin-bottom: 18px; }
-  .tk-hero__stat { min-width: 66px; padding: 7px 9px; }
 }
 
 /* Landscape phones — short viewport height, so the hero is floored at a
@@ -1104,7 +1021,7 @@
   /* Keeps the gap off the glow proportional to the bigger icon (24px
      half-icon instead of 20px) and the desktop rule's 110px enclosure
      margin, same formula as the base rule. */
-  .tk-hero__visual { --tk-arc-r: calc(min(84%, 420px) / 2 + 114px); }
+  .tk-hero__visual { --tk-arc-r: calc(min(84%, 420px) / 2 + 64px); }
 }
 
 /* RTL — flexbox mirrors .tk-hero__inner's two columns on its own under
@@ -1125,18 +1042,145 @@
    never actually moved to match its own right-aligned text or the rest
    of the right-positioned RTL content column. */
 [dir="rtl"] .tk-hero__subtitle { margin-left: auto; margin-right: 0; }
-/* Hero proof stats: four cards (15-min, 24/7, live tracking, Google rating)
-   stay on ONE row on phones. They share the width equally and the labels
-   wrap onto two lines instead of the cards wrapping onto a second row. */
-@media (max-width: 768px) {
-  .tk-hero__stats { flex-wrap: nowrap; gap: 6px; }
+
+/* ============================================================
+   PHONE POLISH (860px and under) -- kept last in the file on purpose, so it
+   wins over the older per-breakpoint rules above.
+   - Two equal 52px action buttons, stacking on very narrow phones.
+   - The four proof stats become one strip (lines instead of boxes) with
+     one-line short labels.
+   - A faint dashed orbit line behind the service ring, and a dark disc
+     behind each service icon so the line passes cleanly behind them.
+   - A soft amber light behind the headline.
+   ============================================================ */
+@media (max-width: 860px) {
+  .tk-hero__content { position: relative; }
+  .tk-hero__content::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: -90px;
+    width: 420px;
+    height: 320px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(245, 179, 1, 0.14), rgba(245, 179, 1, 0));
+    pointer-events: none;
+  }
+
+  .tk-cta-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 20px;
+  }
+
+  .tk-btn {
+    min-height: 52px;
+    justify-content: space-between;
+    padding-block: 8px;
+    padding-inline: 20px 8px;
+    font-size: 15px;
+    gap: 8px;
+    touch-action: manipulation;
+  }
+
+  .tk-btn__arrow { width: 36px; height: 36px; }
+
+  .tk-hero__stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 20px;
+    padding: 12px 0;
+    border-block: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
   .tk-hero__stat {
-    flex: 1 1 0;
     min-width: 0;
-    padding: 8px 6px;
+    padding: 0 4px;
+    border: 0;
+    border-radius: 0;
+    background: none;
     align-items: center;
     text-align: center;
+    gap: 2px;
   }
-  .tk-hero__stat-value { font-size: 13px; white-space: nowrap; }
-  .tk-hero__stat-label { font-size: 9.5px; line-height: 1.25; overflow-wrap: anywhere; }
+
+  .tk-hero__stat + .tk-hero__stat { border-inline-start: 1px solid rgba(255, 255, 255, 0.12); }
+
+  .tk-hero__stat-value {
+    font-size: clamp(14px, 4.2vw, 16px);
+    line-height: 22px;
+    white-space: nowrap;
+  }
+
+  .tk-hero__stat-value--emoji { display: none; }
+  .tk-hero__stat-pin { display: block; height: 22px; }
+
+  /* Full label stays for screen readers; the short one is what shows. */
+  .tk-hero__stat-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .tk-hero__stat-short {
+    display: block;
+    font-size: clamp(9.5px, 2.9vw, 11px);
+    line-height: 1.3;
+    color: var(--tk-text-mute);
+    white-space: nowrap;
+  }
+
+  .tk-hero__stat--link:hover,
+  .tk-hero__stat--link:focus-visible { background: none; border-color: transparent; }
+
+  .tk-hero__visual::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 76%;
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px dashed rgba(245, 179, 1, 0.28);
+    pointer-events: none;
+  }
+
+  .tk-hero__tag-icon {
+    border-radius: 50%;
+    background: #07090C;
+  }
+
+  .tk-hero__tag-short { font-size: max(10.5px, 3.1cqw); }
+}
+
+/* On narrower phones the WhatsApp label is the longer one (especially in
+   Arabic and Urdu), so it gets a little more width, a slightly smaller font,
+   and is allowed to wrap to two lines instead of running into its icon. */
+@media (max-width: 430px) {
+  .tk-cta-row { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); }
+  .tk-btn {
+    font-size: 14px;
+    line-height: 1.2;
+    white-space: normal;
+    text-align: start;
+    padding-inline: 16px 8px;
+  }
+}
+
+/* Below about 350px two buttons no longer fit side by side with their labels. */
+@media (max-width: 350px) {
+  .tk-cta-row { grid-template-columns: 1fr; }
 }

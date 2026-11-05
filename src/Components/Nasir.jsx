@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
+import { whatsappLinkProps } from "../utils/whatsapp"
 import "./Nasir.css"
 
-const WHATSAPP_NUMBER = "97142232269"
 
 // Inlined instead of pulling react-icons for one glyph — this widget is
 // rendered on every page via MainLayout, so it's always in the critical
@@ -43,7 +43,6 @@ export default function Nasir() {
   }, [])
 
   const visible = mounted && scrolled
-  const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}`
 
   return (
     <div
@@ -53,7 +52,7 @@ export default function Nasir() {
       }`}
     >
       <a
-        href={whatsappHref}
+        {...whatsappLinkProps()}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={t("nasir.cta", "Chat with us on WhatsApp")}

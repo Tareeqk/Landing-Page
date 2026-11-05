@@ -15,6 +15,8 @@ import FAQSchema from '../../schemas/FAQSchema';
 import BreadcrumbSchema from '../../schemas/BreadcrumbSchema';
 import HreflangTags from '../../Components/HreflangTags';
 import useLangLink from '../../hooks/useLangLink';
+import { openWhatsApp } from '../../utils/whatsapp';
+import HeroButton, { WhatsAppIcon } from '../../Components/HeroButton';
 import { prefetchRoute } from '../../routePrefetch';
 import { Icon } from 'lucide-react';
 import useDownloadLink from '../../hooks/useDownloadLink';
@@ -284,7 +286,7 @@ const S = {
     color: '#e5e7eb', textTransform: 'uppercase',
   },
   heroH1: {
-    fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 800,
+    fontSize: 'clamp(2rem, 4.4vw, 3rem)', fontWeight: 800,
     lineHeight: 1.07, letterSpacing: '-0.025em', color: '#fff', margin: 0,
   },
   heroH1Accent: { display: 'block', color: 'var(--primary-yellow)' },
@@ -533,7 +535,7 @@ export default function LocationPageTemplate({ config }) {
   const schemaFaqs = config.faqs.map(f => ({ question: f.q, answer: f.a }));
   const [openFaq, setOpenFaq] = React.useState(null);
 
-  const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
+  const handleWhatsApp = () => openWhatsApp(`car recovery in ${config.area}`);
 
   const currentHref = `/${config.slug}`;
   const otherLocations = ALL_LOCATIONS.filter(l => l.href !== currentHref);
@@ -688,26 +690,12 @@ export default function LocationPageTemplate({ config }) {
               </Reveal>
 
               <Reveal as="div" direction="up" delay={440} style={S.heroCtaRow} className="tk-hero-cta-row">
-                <Link {...dl.linkProps} className="tk-cta-btn"
-                  style={{ ...S.heroBtn, background: 'var(--primary-yellow)', color: '#000', textDecoration: 'none' }}>
-                  <IconPhone size={18} color="#000" />
-                  <span>
-                    <div style={S.heroBtnTitle}>{t('service.downloadApp', 'Download App')}</div>
-                    <div style={{ ...S.heroBtnSub, color: 'rgba(0,0,0,0.6)' }}>
-                      {t('locationPageTemplate.hero.callNowSub', { defaultValue: 'Instant Response' })}
-                    </div>
-                  </span>
-                </Link>
-                <button onClick={handleWhatsApp} className="tk-cta-btn"
-                  style={{ ...S.heroBtn, background: '#25D366', color: '#fff' }}>
-                  <IconWhatsApp size={18} color="#fff" />
-                  <span>
-                    <div style={S.heroBtnTitle}>{t('locationPageTemplate.hero.whatsapp', { defaultValue: 'WhatsApp' })}</div>
-                    <div style={{ ...S.heroBtnSub, color: 'rgba(255,255,255,0.82)' }}>
-                      {t('locationPageTemplate.hero.whatsappSub', { defaultValue: 'Chat Now' })}
-                    </div>
-                  </span>
-                </button>
+                <HeroButton as={Link} {...dl.linkProps}>
+                  {t('service.downloadApp', 'Download App')}
+                </HeroButton>
+                <HeroButton variant="ghost" icon={<WhatsAppIcon />} onClick={handleWhatsApp}>
+                  {t('whatsapp', 'WhatsApp us')}
+                </HeroButton>
               </Reveal>
             </div>
           </div>
@@ -1008,28 +996,12 @@ export default function LocationPageTemplate({ config }) {
               display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap',
               marginBottom: '28px',
             }} className="tk-cta2-btn-row">
-              <Link {...dl.linkProps} className="tk-cta2-btn" style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none',
-                background: 'var(--primary-yellow)', color: '#000', border: 'none',
-                padding: '15px 30px', borderRadius: '100px',
-                fontSize: '15px', fontWeight: 800, cursor: 'pointer',
-                fontFamily: 'inherit', transition: 'filter 0.2s, transform 0.2s',
-              }}>
-                <IconPhone size={17} color="#000" />
+              <HeroButton as={Link} {...dl.linkProps}>
                 {t('service.downloadApp', 'Download App')}
-              </Link>
-
-              <button onClick={handleWhatsApp} className="tk-cta2-btn" style={{
-                display: 'inline-flex', alignItems: 'center', gap: '10px',
-                background: 'transparent', color: '#fff',
-                border: '1.5px solid rgba(255,255,255,0.25)',
-                padding: '15px 30px', borderRadius: '100px',
-                fontSize: '15px', fontWeight: 700, cursor: 'pointer',
-                fontFamily: 'inherit', transition: 'filter 0.2s, transform 0.2s, border-color 0.2s',
-              }}>
-                <IconWhatsApp size={17} color="#25D366" />
-                {t('locationPageTemplate.cta.whatsappTitle', { defaultValue: 'WhatsApp' })}
-              </button>
+              </HeroButton>
+              <HeroButton variant="ghost" icon={<WhatsAppIcon />} onClick={handleWhatsApp}>
+                {t('whatsapp', 'WhatsApp us')}
+              </HeroButton>
             </Reveal>
 
             {/* Trust row — plain inline text with dot separators, not pill badges */}

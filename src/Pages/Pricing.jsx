@@ -14,6 +14,8 @@ import { useTranslation } from 'react-i18next';
 import { useParams, Link } from 'react-router-dom';
 import { MapPinned, Wrench, Eye, ChevronDown, Download, MessageCircle } from 'lucide-react';
 import useDownloadLink from '../hooks/useDownloadLink';
+import { openWhatsApp } from '../utils/whatsapp';
+import HeroButton, { WhatsAppIcon } from '../Components/HeroButton';
 import HreflangTags from '../Components/HreflangTags';
 import BreadcrumbSchema from '../schemas/BreadcrumbSchema';
 import FAQSchema from '../schemas/FAQSchema';
@@ -135,7 +137,7 @@ export default function Pricing() {
   const [headlineBeforeRoute, headlineRestAfterRoute = ''] = headlineTemplate.split('{route}');
   const [headlineMid, headlineAfterFixed = ''] = headlineRestAfterRoute.split('{fixed}');
 
-  const handleWhatsApp = () => { window.open('https://wa.me/97142232269', '_blank'); };
+  const handleWhatsApp = () => openWhatsApp('a price quote');
 
   return (
     <>
@@ -395,31 +397,12 @@ export default function Pricing() {
             {t('pricing.cta.body', 'Open the app, share your location, and see the exact price before you confirm.')}
           </p>
           <div className="pr-cta-actions" style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link
-              {...dl.linkProps}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '9px',
-                background: COLORS.gold, color: '#000', border: 'none', textDecoration: 'none',
-                padding: '14px 26px', borderRadius: '11px', fontSize: '14.5px',
-                fontWeight: 800, cursor: 'pointer', fontFamily: 'inherit',
-              }}
-            >
-              <span style={{ width: 24, height: 24, borderRadius: '50%', background: '#000', color: COLORS.gold, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Download size={13} />
-              </span>
+            <HeroButton as={Link} {...dl.linkProps}>
               {t('service.downloadApp', 'Download App')}
-            </Link>
-            <button
-              onClick={handleWhatsApp}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: '9px',
-                background: COLORS.green, color: '#fff', border: 'none',
-                padding: '14px 26px', borderRadius: '11px', fontSize: '14.5px',
-                fontWeight: 700, cursor: 'pointer', fontFamily: 'inherit',
-              }}
-            >
-              <MessageCircle size={16} /> {t('pricing.cta.whatsapp', 'WhatsApp')}
-            </button>
+            </HeroButton>
+            <HeroButton variant="ghost" icon={<WhatsAppIcon />} onClick={handleWhatsApp}>
+              {t('whatsapp', 'WhatsApp us')}
+            </HeroButton>
           </div>
         </div>
       </section>

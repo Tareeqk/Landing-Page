@@ -5,6 +5,7 @@ import "./index.css";
 import { i18nReady } from "./i18n.js";
 import { preloadRoute } from "./routePrefetch";
 import { initAdsTracking } from "./utils/adsTracking";
+import { captureAttribution } from "./utils/attribution";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
@@ -23,6 +24,7 @@ import { HelmetProvider } from "react-helmet-async";
 // mount once. The first commit already contains the real page, so the
 // prerendered HTML is swapped for identical live markup with no spinner.
 initAdsTracking();
+captureAttribution();
 
 const root = document.getElementById("root");
 const app = (
