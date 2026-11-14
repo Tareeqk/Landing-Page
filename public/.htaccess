@@ -64,8 +64,7 @@ ErrorDocument 404 /404.html
 # Search Console still lists these (Page indexing > Not found 404), and
 # older sitemaps + the www. host pointed at them. 301 only where there is a
 # real equivalent page, so link equity moves and Google doesn't treat the
-# redirect as a soft 404. (Fuel delivery is temporarily hidden — /{en,ar,ur}/fuel-delivery-dubai/ now 404s
-# by design while hidden; it will return, so do NOT 301 it anywhere.)
+# redirect as a soft 404. (A service page that is temporarily offline is deliberately left to 404 here.)
 <IfModule mod_rewrite.c>
   RewriteEngine On
   # Pre-i18n, language-less URLs (listed in the 2025 sitemap).

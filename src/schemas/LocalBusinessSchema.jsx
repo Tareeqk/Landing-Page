@@ -9,7 +9,6 @@
 // service names) never showed a single Arabic or Urdu word to Google or
 // an AI crawler on 2 of the 3 language versions of the homepage.
 
-import { FUEL_DELIVERY_ENABLED } from '../config/features.mjs';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import ratings from '../data/ratings.json';
@@ -29,7 +28,6 @@ const SERVICE_SLUGS = [
   'accident-recovery-dubai',
   'desert-recovery-dubai',
   'bike-recovery-dubai',
-  ...(FUEL_DELIVERY_ENABLED ? ['fuel-delivery-dubai'] : []),
   'roadside-assistance-dubai',
 ];
 
@@ -43,7 +41,6 @@ const TRANSLATIONS = {
     knowsAbout: [
       'Car Recovery', 'Towing Service', 'Roadside Assistance',
       'Battery Boost', 'Flat Tyre Repair', 'Accident Recovery', 'Desert Recovery',
-      ...(FUEL_DELIVERY_ENABLED ? ['Fuel Delivery'] : []),
     ],
     areaServed: {
       city: 'Dubai',
@@ -59,7 +56,6 @@ const TRANSLATIONS = {
       'accident-recovery-dubai': 'Accident Recovery Dubai',
       'desert-recovery-dubai': 'Desert Recovery Dubai',
       'bike-recovery-dubai': 'Bike Recovery Dubai',
-      'fuel-delivery-dubai': 'Fuel Delivery Dubai',
       'roadside-assistance-dubai': 'Roadside Assistance Dubai',
     },
   },
@@ -71,7 +67,7 @@ const TRANSLATIONS = {
     paymentAccepted: 'نقدًا، بطاقة ائتمان، أو دفع إلكتروني',
     knowsAbout: [
       'إنقاذ السيارات', 'خدمة السحب', 'المساعدة على الطريق',
-      'شحن البطارية', 'إصلاح الإطارات المسطحة', 'إنقاذ الحوادث', 'إنقاذ الصحراء', 'توصيل الوقود',
+      'شحن البطارية', 'إصلاح الإطارات المسطحة', 'إنقاذ الحوادث', 'إنقاذ الصحراء',
     ],
     areaServed: {
       city: 'دبي',
@@ -89,7 +85,6 @@ const TRANSLATIONS = {
       'accident-recovery-dubai': 'إنقاذ الحوادث في دبي',
       'desert-recovery-dubai': 'إنقاذ الصحراء في دبي',
       'bike-recovery-dubai': 'إنقاذ الدراجات النارية في دبي',
-      'fuel-delivery-dubai': 'توصيل الوقود في دبي',
       'roadside-assistance-dubai': 'المساعدة على الطريق في دبي',
     },
   },
@@ -101,7 +96,7 @@ const TRANSLATIONS = {
     paymentAccepted: 'نقد، کریڈٹ کارڈ، یا آن لائن ادائیگی',
     knowsAbout: [
       'کار ریکوری', 'ٹوئنگ سروس', 'روڈ سائیڈ اسسٹنس',
-      'بیٹری بوسٹ', 'فلیٹ ٹائر مرمت', 'ایکسیڈنٹ ریکوری', 'ڈیزرٹ ریکوری', 'فیول ڈیلیوری',
+      'بیٹری بوسٹ', 'فلیٹ ٹائر مرمت', 'ایکسیڈنٹ ریکوری', 'ڈیزرٹ ریکوری',
     ],
     areaServed: {
       city: 'دبئی',
@@ -117,7 +112,6 @@ const TRANSLATIONS = {
       'accident-recovery-dubai': 'ایکسیڈنٹ ریکوری دبئی',
       'desert-recovery-dubai': 'ڈیزرٹ ریکوری دبئی',
       'bike-recovery-dubai': 'بائیک ریکوری دبئی',
-      'fuel-delivery-dubai': 'فیول ڈیلیوری دبئی',
       'roadside-assistance-dubai': 'روڈ سائیڈ اسسٹنس دبئی',
     },
   },

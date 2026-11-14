@@ -53,7 +53,6 @@
         "Safe pickup and transport for motorcycles and scooters.",
         "Light, medium and heavy-duty towing, including inter-emirate.",
         "Careful recovery after a collision, with documentation help.",
-        "Ran out of fuel? We bring enough to restart.",
         "One number for battery, tyre, lockout or any breakdown."
       ]
     },
@@ -222,8 +221,7 @@
     "svc6": "Accident Recovery",
     "svc7": "Desert Recovery",
     "svc8": "Bike Recovery",
-    "svc9": "Roadside Assistance",
-    "svc5": "Fuel Delivery"
+    "svc9": "Roadside Assistance"
   },
   "service": {
     "heroTag": "Premium Roadside Care",
@@ -353,13 +351,7 @@
     "ctaSubtitle": "Fast, professional roadside assistance for battery jump starts, tyre repairs, towing, and vehicle recovery across Dubai—available 24/7.",
     "whatsappCta": "Chat on WhatsApp",
     "downloadCta": "Download the App",
-    "learnMore": "Learn more",
-    "svc9Title": "Fuel Delivery Dubai",
-    "svc9Desc": "Ran out of petrol? We bring enough fuel to your exact location to restart your car and reach the nearest station — no tow needed.",
-    "svc9b1": "24/7 dispatch across Dubai",
-    "svc9b2": "Unleaded petrol delivered by certified staff",
-    "svc9b3": "Price shown upfront in the app",
-    "svc9b4": "No towing needed"
+    "learnMore": "Learn more"
   },
   "about2": {
     "about": "Our Services",
@@ -720,7 +712,6 @@
       "Bike Recovery Dubai",
       "Towing Service Dubai",
       "Accident Recovery",
-      "Fuel Delivery Dubai",
       "Roadside Assistance Dubai"
     ],
     "areasTitle": "Areas We Cover",
@@ -1979,8 +1970,7 @@
         "towingService": "Towing Service",
         "batteryBoost": "Battery Boost",
         "flatTyreRepair": "Flat Tyre Repair",
-        "accidentRecovery": "Accident Recovery",
-        "fuelDelivery": "Fuel Delivery"
+        "accidentRecovery": "Accident Recovery"
       }
     },
     "process": {

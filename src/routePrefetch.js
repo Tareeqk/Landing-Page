@@ -1,4 +1,3 @@
-import { FUEL_DELIVERY_ENABLED } from './config/features.mjs';
 // routePrefetch.js
 //
 // Every route below is lazy-loaded in App.jsx (React.lazy + dynamic
@@ -31,7 +30,6 @@ const STATIC_IMPORTS = {
   'towing-service-dubai': () => import('./Pages/services/Towingservicedubai'),
   'desert-recovery-dubai': () => import('./Pages/services/DesertRecoveryDubai'),
   'bike-recovery-dubai': () => import('./Pages/services/BikeRecoveryDubai'),
-  ...(FUEL_DELIVERY_ENABLED ? { 'fuel-delivery-dubai': () => import('./Pages/services/FuelDeliveryDubai') } : {}),
   'roadside-assistance-dubai': () => import('./Pages/services/RoadsideAssistanceDubai'),
 };
 

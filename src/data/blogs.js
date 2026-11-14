@@ -156,7 +156,7 @@ export const BLOGS = [
           },
           {
             name: 'Look for the obvious problem',
-            text: 'If it is safe, check for common causes such as a flat tyre, dead battery, overheating, or an empty fuel tank. If you see smoke, smell burning, or notice a fluid leak, stop driving and wait for help instead.',
+            text: 'If it is safe, check for common causes such as a flat tyre, dead battery, or overheating. If you see smoke, smell burning, or notice a fluid leak, stop driving and wait for help instead.',
           },
           {
             name: 'Call for roadside assistance early',
@@ -170,14 +170,14 @@ export const BLOGS = [
         html: `
           <h2>Car breakdowns happen without warning</h2>
           <p>A car breakdown in Dubai can happen at any time, especially in heavy traffic or extreme heat. When your vehicle stops working suddenly, the most important thing is to stay calm, move to safety, and call for professional help as soon as possible.</p>
-          <p>Dubai's roads are busy, fast-moving, and often exposed to high temperatures. That means even a small issue, such as a dead battery, flat tyre, overheating engine, or fuel problem, can quickly turn into a stressful situation. Knowing what to do after a breakdown can help protect you, your passengers, and your vehicle.</p>
+          <p>Dubai's roads are busy, fast-moving, and often exposed to high temperatures. That means even a small issue, such as a dead battery, flat tyre, or overheating engine, can quickly turn into a stressful situation. Knowing what to do after a breakdown can help protect you, your passengers, and your vehicle.</p>
 
           <h2>Move your car to a safe place</h2>
           <p>If your car starts losing power or behaving strangely, slow down carefully and try to pull over in a safe location. A parking area, roadside shoulder, or quiet side street is much safer than stopping in traffic.</p>
           <p>Once you stop, turn on your hazard lights immediately. This alerts other drivers that your car is disabled and helps reduce the risk of an accident. If you have warning triangles and it is safe to place them, they can also help improve visibility.</p>
 
           <h2>Look for the obvious problem</h2>
-          <p>If it is safe, check for any obvious signs of trouble. Common causes of a car breakdown in Dubai include a flat tire, dead battery, overheating, or an empty fuel tank.</p>
+          <p>If it is safe, check for any obvious signs of trouble. Common causes of a car breakdown in Dubai include a flat tire, dead battery, or overheating.</p>
           <p>If you see smoke, smell burning, or notice fluid leaking from under the car, do not keep driving. In these situations, the best option is to wait for <a href="/en/roadside-assistance-dubai/">roadside assistance in Dubai</a> or a <a href="/en/car-recovery-dubai/">car recovery service</a>.</p>
 
           <h2>Call for roadside assistance early</h2>
@@ -210,7 +210,7 @@ export const BLOGS = [
           },
           {
             name: 'ابحث عن المشكلة الواضحة',
-            text: 'إذا كان الأمر آمنًا، تحقق من الأسباب الشائعة مثل إطار مثقوب، أو بطارية فارغة، أو ارتفاع حرارة المحرك، أو نفاد الوقود. إذا رأيت دخانًا أو شممت رائحة احتراق أو لاحظت تسرب سوائل، توقف عن القيادة وانتظر المساعدة.',
+            text: 'إذا كان الأمر آمنًا، تحقق من الأسباب الشائعة مثل إطار مثقوب، أو بطارية فارغة، أو ارتفاع حرارة المحرك. إذا رأيت دخانًا أو شممت رائحة احتراق أو لاحظت تسرب سوائل، توقف عن القيادة وانتظر المساعدة.',
           },
           {
             name: 'اطلب المساعدة على الطريق مبكرًا',
@@ -224,14 +224,14 @@ export const BLOGS = [
         html: `
           <h2>أعطال السيارات تحدث دون سابق إنذار</h2>
           <p>قد يحدث عطل في سيارتك في دبي في أي وقت، خاصة في حالات الازدحام المروري الشديد أو درجات الحرارة المرتفعة. عندما تتوقف سيارتك فجأة عن العمل، فإن أهم شيء هو أن تحافظ على هدوئك، وتنتقل إلى مكان آمن، وتطلب المساعدة المتخصصة في أسرع وقت ممكن.</p>
-          <p>طرق دبي مزدحمة وسريعة الحركة، وغالبًا ما تكون معرضة لدرجات حرارة مرتفعة. هذا يعني أن مشكلة بسيطة، مثل بطارية فارغة، أو إطار مثقوب، أو محرك ساخن، أو نفاد الوقود، يمكن أن تتحول بسرعة إلى موقف مرهق. معرفة ما يجب فعله بعد العطل يمكن أن يساعد في حمايتك أنت وركابك وسيارتك.</p>
+          <p>طرق دبي مزدحمة وسريعة الحركة، وغالبًا ما تكون معرضة لدرجات حرارة مرتفعة. هذا يعني أن مشكلة بسيطة، مثل بطارية فارغة، أو إطار مثقوب، أو محرك ساخن، يمكن أن تتحول بسرعة إلى موقف مرهق. معرفة ما يجب فعله بعد العطل يمكن أن يساعد في حمايتك أنت وركابك وسيارتك.</p>
 
           <h2>انقل سيارتك إلى مكان آمن</h2>
           <p>إذا بدأت سيارتك تفقد قوتها أو تتصرف بشكل غير طبيعي، قلل من سرعتك بحذر وحاول التوقف في مكان آمن. تُعد منطقة انتظار السيارات، أو كتف الطريق، أو شارع جانبي هادئ أكثر أمانًا بكثير من التوقف وسط حركة المرور.</p>
           <p>بمجرد التوقف، شغّل أضواء التحذير (الفلاشر) فورًا. فهذا ينبه السائقين الآخرين إلى أن سيارتك متعطلة ويساعد على تقليل خطر وقوع حادث. وإذا كان لديك مثلثات تحذيرية ومن الآمن وضعها، فهي تساعد أيضًا على تحسين الرؤية.</p>
 
           <h2>ابحث عن المشكلة الواضحة</h2>
-          <p>إذا كان الأمر آمنًا، تحقق من وجود أي علامات واضحة للمشكلة. من الأسباب الشائعة لعطل السيارات في دبي الإطار المثقوب، أو البطارية الفارغة، أو ارتفاع حرارة المحرك، أو نفاد الوقود.</p>
+          <p>إذا كان الأمر آمنًا، تحقق من وجود أي علامات واضحة للمشكلة. من الأسباب الشائعة لعطل السيارات في دبي الإطار المثقوب، أو البطارية الفارغة، أو ارتفاع حرارة المحرك.</p>
           <p>إذا رأيت دخانًا، أو شممت رائحة احتراق، أو لاحظت تسرب سوائل من أسفل السيارة، فلا تستمر في القيادة. في مثل هذه الحالات، الخيار الأفضل هو انتظار <a href="/ar/roadside-assistance-dubai/">خدمة المساعدة على الطريق في دبي</a> أو <a href="/ar/car-recovery-dubai/">خدمة سحب السيارات</a>.</p>
 
           <h2>اطلب المساعدة على الطريق مبكرًا</h2>
@@ -264,7 +264,7 @@ export const BLOGS = [
           },
           {
             name: 'واضح مسئلے کو تلاش کریں',
-            text: 'اگر محفوظ ہو تو ٹائر پنکچر، بیٹری ختم ہونا، انجن کا زیادہ گرم ہونا، یا فیول ختم ہونے جیسی عام وجوہات چیک کریں۔ اگر دھواں، جلنے کی بو، یا مائع رستا نظر آئے تو گاڑی چلانا بند کریں اور مدد کا انتظار کریں۔',
+            text: 'اگر محفوظ ہو تو ٹائر پنکچر، بیٹری ختم ہونا، یا انجن کا زیادہ گرم ہونے جیسی عام وجوہات چیک کریں۔ اگر دھواں، جلنے کی بو، یا مائع رستا نظر آئے تو گاڑی چلانا بند کریں اور مدد کا انتظار کریں۔',
           },
           {
             name: 'جلدی روڈ سائیڈ اسسٹنس کے لیے کال کریں',
@@ -278,14 +278,14 @@ export const BLOGS = [
         html: `
           <h2>گاڑی کسی بھی وقت بغیر اطلاع کے خراب ہو سکتی ہے</h2>
           <p>دبئی میں گاڑی کسی بھی وقت خراب ہو سکتی ہے، خاص طور پر شدید ٹریفک یا سخت گرمی میں۔ جب آپ کی گاڑی اچانک کام کرنا بند کر دے، تو سب سے اہم بات یہ ہے کہ پرسکون رہیں، محفوظ جگہ کی طرف جائیں، اور جتنی جلدی ممکن ہو پیشہ ور مدد کے لیے کال کریں۔</p>
-          <p>دبئی کی سڑکیں مصروف، تیز رفتار، اور اکثر شدید گرمی کا شکار ہوتی ہیں۔ اس کا مطلب ہے کہ ایک چھوٹا سا مسئلہ، جیسے بیٹری کا ختم ہونا، ٹائر پنکچر، انجن کا زیادہ گرم ہونا، یا فیول ختم ہونا، تیزی سے ایک پریشان کن صورتحال بن سکتا ہے۔ گاڑی خراب ہونے کے بعد کیا کرنا ہے یہ جاننا آپ کو، آپ کے ساتھیوں کو، اور آپ کی گاڑی کو محفوظ رکھنے میں مدد دے سکتا ہے۔</p>
+          <p>دبئی کی سڑکیں مصروف، تیز رفتار، اور اکثر شدید گرمی کا شکار ہوتی ہیں۔ اس کا مطلب ہے کہ ایک چھوٹا سا مسئلہ، جیسے بیٹری کا ختم ہونا، ٹائر پنکچر، یا انجن کا زیادہ گرم ہونا، تیزی سے ایک پریشان کن صورتحال بن سکتا ہے۔ گاڑی خراب ہونے کے بعد کیا کرنا ہے یہ جاننا آپ کو، آپ کے ساتھیوں کو، اور آپ کی گاڑی کو محفوظ رکھنے میں مدد دے سکتا ہے۔</p>
 
           <h2>اپنی گاڑی کو محفوظ جگہ پر لے جائیں</h2>
           <p>اگر آپ کی گاڑی طاقت کھونے لگے یا عجیب انداز میں چلنے لگے، تو احتیاط سے رفتار کم کریں اور کسی محفوظ جگہ پر گاڑی روکنے کی کوشش کریں۔ پارکنگ ایریا، سڑک کا کنارہ، یا کوئی خاموش سائیڈ روڈ ٹریفک میں رکنے کی نسبت کہیں زیادہ محفوظ ہے۔</p>
           <p>رکنے کے بعد فوراً اپنی ہزارڈ لائٹس آن کر دیں۔ اس سے دوسرے ڈرائیورز کو پتا چلتا ہے کہ آپ کی گاڑی خراب ہے اور حادثے کا خطرہ کم ہو جاتا ہے۔ اگر آپ کے پاس وارننگ ٹرائی اینگلز ہیں اور انہیں رکھنا محفوظ ہو، تو یہ بھی نمایاں ہونے میں مدد دیتے ہیں۔</p>
 
           <h2>واضح مسئلے کو تلاش کریں</h2>
-          <p>اگر محفوظ ہو تو خرابی کی واضح نشانیاں چیک کریں۔ دبئی میں گاڑی خراب ہونے کی عام وجوہات میں ٹائر پنکچر، بیٹری ختم ہونا، انجن کا زیادہ گرم ہونا، یا فیول ختم ہونا شامل ہیں۔</p>
+          <p>اگر محفوظ ہو تو خرابی کی واضح نشانیاں چیک کریں۔ دبئی میں گاڑی خراب ہونے کی عام وجوہات میں ٹائر پنکچر، بیٹری ختم ہونا، یا انجن کا زیادہ گرم ہونا شامل ہیں۔</p>
           <p>اگر آپ کو دھواں نظر آئے، جلنے کی بو محسوس ہو، یا گاڑی کے نیچے سے کوئی مائع رستا دکھائی دے، تو گاڑی چلاتے نہ رہیں۔ ایسی صورتحال میں بہترین آپشن یہ ہے کہ دبئی میں <a href="/ur/roadside-assistance-dubai/">روڈ سائیڈ اسسٹنس</a> یا <a href="/ur/car-recovery-dubai/">کار ریکوری سروس</a> کا انتظار کریں۔</p>
 
           <h2>جلدی روڈ سائیڈ اسسٹنس کے لیے کال کریں</h2>

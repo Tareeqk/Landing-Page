@@ -1,5 +1,4 @@
 // pages/About.jsx
-import { FUEL_DELIVERY_ENABLED } from '../config/features.mjs';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
@@ -8,7 +7,7 @@ import {
   Car, Battery, Wrench, ChevronRight, ChevronLeft,
   Phone, MessageCircle, Star, Shield, Clock, MapPin,
   Target, Eye, Heart, CheckCircle2, Truck, AlertTriangle,
-  Mountain, Bike, Fuel, Download,
+  Mountain, Bike, Download,
 } from 'lucide-react';
 import useDownloadLink from '../hooks/useDownloadLink';
 import { useParams, Link } from 'react-router-dom';
@@ -434,7 +433,6 @@ export default function About({ isSection = false }) {
     { label: t('about.svc2'), href: '/battery-service-dubai',   icon: <Battery size={17} /> },
     { label: t('about.svc3'), href: '/flat-tyre-repair-dubai',  icon: <Wrench size={17} /> },
     { label: t('about.svc4'), href: '/towing-service-dubai',    icon: <Truck size={17} /> },
-    ...(FUEL_DELIVERY_ENABLED ? [{ label: t('about.svc5'), href: '/fuel-delivery-dubai',     icon: <Fuel size={17} /> }] : []),
     { label: t('about.svc6'), href: '/accident-recovery-dubai', icon: <AlertTriangle size={17} /> },
     { label: t('about.svc7'), href: '/desert-recovery-dubai',   icon: <Mountain size={17} /> },
     { label: t('about.svc8'), href: '/bike-recovery-dubai',     icon: <Bike size={17} /> },

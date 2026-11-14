@@ -5,7 +5,6 @@
 //     IntersectionObserver Reveal component (previous v3: richer visuals,
 //     inline SVG illustrations, "Read more/less", full responsiveness).
 
-import { FUEL_DELIVERY_ENABLED } from '../../config/features.mjs';
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -73,15 +72,6 @@ const IconTruck = ({ size = 22, color = 'currentColor' }) => (
     <path d="M16 8h4l3 5v4h-7V8z" />
     <circle cx="5.5" cy="18.5" r="2.5" />
     <circle cx="18.5" cy="18.5" r="2.5" />
-  </svg>
-);
-const IconGas = ({ size = 20, color = 'currentColor' }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color}
-    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M3 22V8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14" />
-    <path d="M2 22h12" />
-    <path d="M13 8h2l2 2v3l-2 1v4" />
-    <path d="M7 10v4" />
   </svg>
 );
 const IconBolt = ({ size = 20, color = 'currentColor' }) => (
@@ -163,7 +153,6 @@ const SERVICE_ICONS = {
   'Battery Boost': <IconBolt size={26} color="#92400e" />,
   'Flat Tyre Repair': <IconWrench size={26} color="#92400e" />,
   'Accident Recovery': <IconAlert size={26} color="#92400e" />,
-  'Fuel Delivery': <IconGas size={26} color="#92400e" />,
 };
 
 // ─────────────────────── HELPERS ────────────────────────────────
@@ -207,7 +196,6 @@ const ALL_SERVICES = [
   { name: 'Accident Recovery', nameKey: 'accidentRecovery', href: '/accident-recovery-dubai' },
   { name: 'Desert Recovery', nameKey: 'desertRecovery', href: '/desert-recovery-dubai' },
   { name: 'Bike Recovery', nameKey: 'bikeRecovery', href: '/bike-recovery-dubai' },
-  ...(FUEL_DELIVERY_ENABLED ? [{ name: 'Fuel Delivery', nameKey: 'fuelDelivery', href: '/fuel-delivery-dubai' }] : []),
 ];
 
 const ALL_LOCATIONS = [

@@ -1,5 +1,4 @@
 // pages/Service.jsx
-import { FUEL_DELIVERY_ENABLED } from '../config/features.mjs';
 import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useDownloadLink from '../hooks/useDownloadLink';
@@ -8,7 +7,7 @@ import {
   Smartphone, MapPin, Tag, ShieldCheck, Clock, Map, Lock, Zap,
   ArrowRight, ArrowLeft, Phone, MessageCircle, Car, Truck,
   Battery, Wrench, AlertTriangle, ChevronRight, ChevronLeft,
-  CheckCircle2, Trophy, DollarSign, HardHat, Download, Mountain, Bike, Fuel,
+  CheckCircle2, Trophy, DollarSign, HardHat, Download, Mountain, Bike,
 } from 'lucide-react';
 
 import useLangLink from '../hooks/useLangLink';
@@ -650,15 +649,6 @@ export default function Service({ isSection = false }) {
       desc: t('service.svc7Desc'),
       bullets: [t('service.svc7b1'), t('service.svc7b2'), t('service.svc7b3'), t('service.svc7b4')],
     },
-    ...(FUEL_DELIVERY_ENABLED ? [{
-      icon: <Fuel size={18} />,
-      href: '/fuel-delivery-dubai',
-      img: '/services/fuel-delivery.webp',
-      tag: null,
-      title: t('service.svc9Title'),
-      desc: t('service.svc9Desc'),
-      bullets: [t('service.svc9b1'), t('service.svc9b2'), t('service.svc9b3'), t('service.svc9b4')],
-    }] : []),
     {
       icon: <ShieldCheck size={18} />,
       href: '/roadside-assistance-dubai',

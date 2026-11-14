@@ -1,7 +1,6 @@
 // pages/services/ServicePageTemplate.jsx
 // Premium redesign — editorial SaaS aesthetic for the Tareeqk brand
 
-import { FUEL_DELIVERY_ENABLED } from '../../config/features.mjs';
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -11,7 +10,7 @@ import {
   FaPhoneAlt, FaWhatsapp, FaMobileAlt, FaShieldAlt, FaBolt, FaClock,
   FaTruck, FaMapMarkerAlt, FaCheckCircle, FaUserShield, FaUserCheck,
   FaCar, FaCarBattery, FaTools, FaCarCrash, FaChevronDown, FaHeadset, FaTh,
-  FaMountain, FaMotorcycle, FaGasPump,
+  FaMountain, FaMotorcycle,
 } from 'react-icons/fa';
 // ArrowRight specifically comes from lucide, not react-icons/fa, to match
 // the one arrow style used site-wide (BecomeDriverPartner.jsx's "Apply as a
@@ -37,7 +36,6 @@ const ALL_SERVICES = [
   { label: 'Towing Service Dubai', href: '/towing-service-dubai', Icon: FaTruck },
   { label: 'Desert Recovery Dubai', href: '/desert-recovery-dubai', Icon: FaMountain },
   { label: 'Bike Recovery Dubai', href: '/bike-recovery-dubai', Icon: FaMotorcycle },
-  ...(FUEL_DELIVERY_ENABLED ? [{ label: 'Fuel Delivery Dubai', href: '/fuel-delivery-dubai', Icon: FaGasPump }] : []),
 ];
 
 // Matches the Footer's own AREAS list and App.jsx's LOCATION_SLUGS exactly —

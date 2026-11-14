@@ -1,4 +1,3 @@
-import { FUEL_DELIVERY_ENABLED } from '../config/features.mjs';
 import React, { useState } from "react"
 import useDownloadLink from "../hooks/useDownloadLink"
 import {
@@ -48,7 +47,6 @@ export const SERVICES = [
   { title: "Bike Recovery Dubai", href: "/bike-recovery-dubai" },
   { title: "Towing Service Dubai", href: "/towing-service-dubai" },
   { title: "Accident Recovery", href: "/accident-recovery-dubai" },
-  { title: "Fuel Delivery Dubai", href: "/fuel-delivery-dubai", hidden: !FUEL_DELIVERY_ENABLED },
   { title: "Roadside Assistance Dubai", href: "/roadside-assistance-dubai" },
 ]
 
@@ -645,7 +643,7 @@ const Footer = () => {
                 className={`tk-accordion-content${openSections.services ? " is-open" : ""}`}
               >
                 <div className="tk-accordion-inner">
-                  {SERVICES.map((service, i) => service.hidden ? null : (
+                  {SERVICES.map((service, i) => (
                     <FooterLink key={service.href} to={langLink(service.href)}>
                       {serviceLabels[i] || service.title}
                     </FooterLink>

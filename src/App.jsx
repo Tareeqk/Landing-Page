@@ -1,4 +1,3 @@
-import { FUEL_DELIVERY_ENABLED } from './config/features.mjs';
 import { useEffect, useState, lazy, Suspense } from 'react';
 import './App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -41,7 +40,6 @@ const AccidentRecoveryDubai = lazy(() => import('./Pages/services/AccidentRecove
 const TowingServiceDubai    = lazy(() => import('./Pages/services/Towingservicedubai'));
 const DesertRecoveryDubai   = lazy(() => import('./Pages/services/DesertRecoveryDubai'));
 const BikeRecoveryDubai     = lazy(() => import('./Pages/services/BikeRecoveryDubai'));
-const FuelDeliveryDubai     = FUEL_DELIVERY_ENABLED ? lazy(() => import('./Pages/services/FuelDeliveryDubai')) : null;
 const RoadsideAssistanceDubai = lazy(() => import('./Pages/services/RoadsideAssistanceDubai'));
 
 // ── LOCATION PAGES ────────────────────────────────────────────────
@@ -204,7 +202,6 @@ function App() {
           <Route path="towing-service-dubai"    element={<TowingServiceDubai />} />
           <Route path="desert-recovery-dubai"   element={<DesertRecoveryDubai />} />
           <Route path="bike-recovery-dubai"     element={<BikeRecoveryDubai />} />
-          {FUEL_DELIVERY_ENABLED && <Route path="fuel-delivery-dubai"     element={<FuelDeliveryDubai />} />}
           <Route path="roadside-assistance-dubai" element={<RoadsideAssistanceDubai />} />
 
           {/* Location pages — driven by common.json via useTranslation */}

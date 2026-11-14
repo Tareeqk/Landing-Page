@@ -19,7 +19,6 @@ import {
   Bike,
   Cable,
   TriangleAlert,
-  Fuel,
   ShieldCheck,
   MapPin,
   Info,
@@ -47,7 +46,7 @@ function classNames(...classes) {
 const FOCUS_RING = "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-yellow)]"
 
 // One icon per SERVICES entry, same order as SERVICES in Footer.jsx:
-// car, battery, tyre, desert, bike, towing, accident, fuel, roadside.
+// car, battery, tyre, desert, bike, towing, accident, roadside.
 const SERVICE_ICONS = [
   Truck,
   BatteryCharging,
@@ -56,7 +55,6 @@ const SERVICE_ICONS = [
   Bike,
   Cable,
   TriangleAlert,
-  Fuel,
   ShieldCheck,
 ]
 
@@ -123,17 +121,14 @@ export default function Navbar({ isDark, setIsDark }) {
   const megaDescs = t("navbar.mega.descs", { returnObjects: true, defaultValue: [] })
   const megaBadges = t("navbar.mega.badges", { returnObjects: true, defaultValue: {} })
   const serviceBadge = (i) =>
-    i === 0 ? megaBadges.most : i === 1 ? megaBadges.urgent : i === 8 ? megaBadges.all : null
-  // Index i stays tied to the full SERVICES list (labels/descs/icons are by
-  // index), so hidden entries are filtered out after mapping.
+    i === 0 ? megaBadges.most : i === 1 ? megaBadges.urgent : i === 7 ? megaBadges.all : null
   const serviceLinks = SERVICES.map((service, i) => ({
-    hidden: service.hidden,
     label: menuLabel(serviceLabels[i] || service.title),
     href: langLink(service.href),
     Icon: SERVICE_ICONS[i],
     desc: Array.isArray(megaDescs) ? megaDescs[i] : "",
     badge: serviceBadge(i),
-  })).filter((link) => !link.hidden)
+  }))
 
   // Area names are proper nouns and stay in English across all locales
   // (same convention as Footer.jsx's own AREAS list).
@@ -166,7 +161,7 @@ export default function Navbar({ isDark, setIsDark }) {
       href: langLink("/service"),
       current:
         barePath === "/service" ||
-        SERVICES.some((service) => !service.hidden && barePath === service.href),
+        SERVICES.some((service) => barePath === service.href),
       dropdown: serviceLinks,
       mega: "wide",
       megaCols: "grid-cols-3",
