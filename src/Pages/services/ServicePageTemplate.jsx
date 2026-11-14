@@ -1,6 +1,7 @@
 // pages/services/ServicePageTemplate.jsx
 // Premium redesign — editorial SaaS aesthetic for the Tareeqk brand
 
+import { FUEL_DELIVERY_ENABLED } from '../../config/features.mjs';
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -36,7 +37,7 @@ const ALL_SERVICES = [
   { label: 'Towing Service Dubai', href: '/towing-service-dubai', Icon: FaTruck },
   { label: 'Desert Recovery Dubai', href: '/desert-recovery-dubai', Icon: FaMountain },
   { label: 'Bike Recovery Dubai', href: '/bike-recovery-dubai', Icon: FaMotorcycle },
-  { label: 'Fuel Delivery Dubai', href: '/fuel-delivery-dubai', Icon: FaGasPump },
+  ...(FUEL_DELIVERY_ENABLED ? [{ label: 'Fuel Delivery Dubai', href: '/fuel-delivery-dubai', Icon: FaGasPump }] : []),
 ];
 
 // Matches the Footer's own AREAS list and App.jsx's LOCATION_SLUGS exactly —

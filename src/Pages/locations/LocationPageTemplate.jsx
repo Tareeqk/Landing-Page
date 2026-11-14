@@ -5,6 +5,7 @@
 //     IntersectionObserver Reveal component (previous v3: richer visuals,
 //     inline SVG illustrations, "Read more/less", full responsiveness).
 
+import { FUEL_DELIVERY_ENABLED } from '../../config/features.mjs';
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
@@ -206,7 +207,7 @@ const ALL_SERVICES = [
   { name: 'Accident Recovery', nameKey: 'accidentRecovery', href: '/accident-recovery-dubai' },
   { name: 'Desert Recovery', nameKey: 'desertRecovery', href: '/desert-recovery-dubai' },
   { name: 'Bike Recovery', nameKey: 'bikeRecovery', href: '/bike-recovery-dubai' },
-  { name: 'Fuel Delivery', nameKey: 'fuelDelivery', href: '/fuel-delivery-dubai' },
+  ...(FUEL_DELIVERY_ENABLED ? [{ name: 'Fuel Delivery', nameKey: 'fuelDelivery', href: '/fuel-delivery-dubai' }] : []),
 ];
 
 const ALL_LOCATIONS = [

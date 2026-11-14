@@ -9,6 +9,8 @@
 // LOCATION_SLUGS) and with src/data/blogs.js. If you add a route in
 // App.jsx, add its slug here too.
 
+import { FUEL_DELIVERY_ENABLED } from '../src/config/features.mjs';
+
 export const DOMAIN = 'https://tareeqk.ae';
 export const LANGS = ['en', 'ar', 'ur'];
 
@@ -36,7 +38,7 @@ export const SERVICE_PAGES = [
   'towing-service-dubai',
   'desert-recovery-dubai',
   'bike-recovery-dubai',
-  'fuel-delivery-dubai',
+  ...(FUEL_DELIVERY_ENABLED ? ['fuel-delivery-dubai'] : []),
   'roadside-assistance-dubai',
 ];
 

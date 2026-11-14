@@ -9,6 +9,7 @@
 // service names) never showed a single Arabic or Urdu word to Google or
 // an AI crawler on 2 of the 3 language versions of the homepage.
 
+import { FUEL_DELIVERY_ENABLED } from '../config/features.mjs';
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import ratings from '../data/ratings.json';
@@ -28,7 +29,7 @@ const SERVICE_SLUGS = [
   'accident-recovery-dubai',
   'desert-recovery-dubai',
   'bike-recovery-dubai',
-  'fuel-delivery-dubai',
+  ...(FUEL_DELIVERY_ENABLED ? ['fuel-delivery-dubai'] : []),
   'roadside-assistance-dubai',
 ];
 
@@ -41,7 +42,8 @@ const TRANSLATIONS = {
     paymentAccepted: 'Cash, Credit Card, Online Payment',
     knowsAbout: [
       'Car Recovery', 'Towing Service', 'Roadside Assistance',
-      'Battery Boost', 'Flat Tyre Repair', 'Accident Recovery', 'Desert Recovery', 'Fuel Delivery',
+      'Battery Boost', 'Flat Tyre Repair', 'Accident Recovery', 'Desert Recovery',
+      ...(FUEL_DELIVERY_ENABLED ? ['Fuel Delivery'] : []),
     ],
     areaServed: {
       city: 'Dubai',
