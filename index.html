@@ -94,8 +94,8 @@
       // Google Ads issued them. They live here, in the page source, so Google's
       // tag check can find them -- but they are NOT run on page load (that
       // would count every page view as a conversion). src/utils/adsTracking.js
-      // calls window.tkAdsConversion() only when a visitor clicks a tel: or
-      // WhatsApp link.
+      // calls window.tkAdsConversion() only when a visitor clicks a tel:,
+      // WhatsApp or App Store / Google Play link.
       window.tkAdsConversion = function (name) {
         if (name === "call_click") {
           // Event snippet for Call click conversion
@@ -104,6 +104,10 @@
         if (name === "whatsapp_click") {
           // Event snippet for WhatsApp click conversion
           gtag('event', 'conversion', {'send_to': 'AW-18489174358/nMNtCN-7iasdENbSqfBE'});
+        }
+        if (name === "app_download_click") {
+          // Event snippet for App download click conversion
+          gtag('event', 'conversion', {'send_to': 'AW-18489174358/crF6CPjkpbsdENbSqfBE'});
         }
       }
     </script>
